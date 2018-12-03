@@ -13,7 +13,7 @@ app.get('*.js', function (req, res, next) {
 
 app.use(express.static(path.join(__dirname, 'dist')))
 
-app.get('/', (req, res)=>{
+app.get('/*', (req, res)=>{
   //console.log(req.query);
   res.sendFile(path.join(__dirname, 'dist/index.html'), (err) => {
     if (err) {

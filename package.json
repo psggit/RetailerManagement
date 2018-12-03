@@ -7,7 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "NODE_ENV=production webpack --config webpack.prod.js",
-    "start:dev": "NODE_ENV=development webpack-dev-server --open --config webpack.dev.js",
+    "start:dev": "NODE_ENV=development webpack-dev-server --config webpack.dev.js --history-api-fallback",
     "start": "NODE_ENV=production node server.js"
   },
   "keywords": [],
@@ -35,9 +35,11 @@
     "webpack-merge": "^4.1.4"
   },
   "dependencies": {
+    "abspath-webpack-plugin": "0.0.1",
     "compression-webpack-plugin": "^1.1.0",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
+    "react-router-dom": "^4.3.1",
     "webpack": "^4.6.0"
   }
 }
