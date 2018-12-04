@@ -1,28 +1,11 @@
-// import React from 'react';
-
-// class Dashboard extends React.Component {
-//     constructor() {
-//         super()
-//     }
-
-//     render() {
-//         return <div> Dashboard </div>
-//     }
-// }
-
-// export default Dashboard
-
 import React from 'react'
 import SideMenu from 'Components/sidemenu'
 import Navbar from 'Components/navbar'
 import createHistory from 'history/createBrowserHistory'
 import { Route, Switch } from 'react-router-dom'
 import { Router } from 'react-router'
-// import Account from './Account'
-// import LiveOttp from './live-ottp-list'
-// import HistoryOttp from './history-ottp-list'
-// import { Alert } from '@auth0/cosmos'
-// import unmountNotify from 'Components/notify/utils'
+import ManageOrganization from './manage-organization'
+import ManageRetailer from './manage-retailer'
 
 const history = createHistory()
 
@@ -56,39 +39,48 @@ class Dashboard extends React.Component {
           overflow: 'auto'
         }}
       >
-        <Navbar />
+        <Navbar
+          history={history} 
+          menuItems={[
+            { label: 'Manage Retailer', value: 'manage-retailer' },
+            { label: 'Manage Organization', value: 'manage-organization' }
+          ]}
+          currentRoute={this.state.currentRoute}
+        />
         <div style={{ display: 'flex' }}>
           <SideMenu
             history={history}
             menuItems={[
               { label: 'Manage Retailer', value: 'manage-retailer' },
-              { label: 'Manage Organization', value: 'manager-organization' }
+              { label: 'Manage Organization', value: 'manage-organization' }
             ]}
             currentRoute={this.state.currentRoute}
           />
-          {/* <Router history={history}>
+          <Router history={history}>
             <Switch>
               <Route
                 exact
-                path="/home/account"
-                render={
-                  props => (
-                    <Account {...props} />
-                  )
-                }
+                path="/home/manage-organization"
+                component={ManageOrganization}
+                // render={
+                //   props => (
+                //     <ManageOrganization {...props} />
+                //   )
+                // }
               />
 
               <Route
                 exact
-                path="/home/live-ottp"
-                render={
-                  props => (
-                    <LiveOttp {...props} />
-                  )
-                }
-              />
+                path="/home/manage-retailer"
+                component={ManageRetailer}
+                // render={
+                //   props => (
+                //     <ManageRetailer {...props} />
+                //   )
+                // }
+              /> 
 
-              <Route
+              {/* <Route
                 exact
                 path="/home/history-ottp"
                 render={
@@ -96,9 +88,9 @@ class Dashboard extends React.Component {
                     <HistoryOttp {...props} />
                   )
                 }
-              />
+              />  */}
             </Switch>
-          </Router> */}
+          </Router>
         </div>
       </div>
     )

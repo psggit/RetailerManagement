@@ -6,7 +6,14 @@ class Navbar extends React.Component {
     constructor() {
         super()
     }
+
+    handleChangeRoute(e, currentRoute) {
+        e.preventDefault()
+        this.props.history.push(`/home/${currentRoute}`)
+    }
+
     handleLogout() {
+
         const fetchOptions = {
             method: 'get',
             credentials: 'include',
@@ -32,11 +39,13 @@ class Navbar extends React.Component {
             localStorage.clear()
             location.href = '/login'
         })
+
     }
     render() {
+        const { menuItems } = this.props
         return <div className="navbar" style={style}>
             <div className="title">
-                <h4>Retailer Management</h4>
+                <h4 onClick={(e) => { this.handleChangeRoute(e, menuItems[0].value) }}>Retailer Management</h4>
             </div>
             <div className="logout" onClick={() => this.handleLogout()}>
                 Logout
