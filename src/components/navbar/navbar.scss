@@ -1,5 +1,5 @@
 .navbar {
-    padding: 0px 20px;
+    // padding: 0px 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -7,6 +7,18 @@
     color: #ffffff;
     height: 60px;
     box-shadow: 1px 1px 5px 0 rgba(21, 19, 19, 0.9);
+
+    position: fixed;
+    top: 0;
+    // left: 0;
+    //height: 62px;
+    z-index: 2;
+    width: 100%;
+    max-width: 1440px;
+    //font-size: 0;
+    padding: 15px 20px;
+    //background-color: #475f6c;
+    //box-shadow: 1px 1px 5px 0 rgba(21, 19, 19, 0.9);
 
     .title {
         cursor: pointer;
@@ -16,3 +28,89 @@
         cursor: pointer;
     }
 }
+
+// .navbar {
+//     * {
+//       font-family: 'Montserrat', sans-serif;
+//     }
+  
+//     position: fixed;
+//     top: 0;
+//     // left: 0;
+//       height: 62px;
+//     z-index: 2;
+//       width: 100%;
+//     max-width: 1440px;
+//     font-size: 0;
+//     padding: 15px 20px;
+//       background-color: #475f6c;
+//       box-shadow: 1px 1px 5px 0 rgba(21, 19, 19, 0.9);
+//     // background-image: url("https://www.transparenttextures.com/patterns/az-subtle.png");
+  
+//     .col {
+//       font-size: 16px;
+//       display: inline-block;
+//       vertical-align: middle;
+//     }
+  
+//     .navbar-brand {
+//       width: 10%;
+//       h4 {
+//         color: #fff;
+//         font-weight: 600;
+//         font-family: 'Montserrat', sans-serif;
+//         letter-spacing: 1px;
+//         font-size: 20px;
+//         span {
+//           &:first-child {
+//             font-weight: 400;
+//           }
+//           &:last-child {
+//             font-weight: 700;
+//           }
+//         }
+//       }
+//     }
+  
+//     .menu-items {
+//       width: 80%;
+//       a {
+//         cursor: pointer;
+//         height: 32px;
+//         line-height: 32px;
+//         font-size: 14px;
+//         // font-weight: 300;
+//         padding: 0 30px;
+//         border-radius: 32px;
+//         color: #fff;
+//         transition: background 0.2s ease;
+//         &.active, &:hover {
+//           color: #3e3e40;
+//           background-color: #fff;
+//           // font-weight: 400;
+//           transition: background 0.2s ease;
+//         }
+//         text-decoration: none;
+//       }
+//       .menu-items-inner {
+//         display: flex;
+//         visibility: hidden;
+//         justify-content: space-between;
+//       }
+//     }
+  
+//     .logout {
+//       cursor: pointer;
+//       text-align: right;
+//       width: 10%;
+//       font-size: 14px;
+//       span:first-child {
+//         vertical-align: middle;
+//       }
+//       span:last-child {
+//         color: #fff;
+//         margin-left: 8px;
+//       }
+//     }
+//   }
+  

@@ -5,7 +5,7 @@ const Layout = ({title, children}) => {
         <div
             style={{
                 marginLeft: '240px',
-                //marginTop: '60px',
+                marginTop: '60px',
                 padding: '20px',
                 width: 'calc(100% - 240px)'
             }}
