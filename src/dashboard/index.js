@@ -5,6 +5,7 @@ import createHistory from 'history/createBrowserHistory'
 import { Route, Switch } from 'react-router-dom'
 import { Router } from 'react-router'
 import ManageOrganization from './manage-organization'
+import CreateOrganization from './create-organization'
 import ManageRetailer from './manage-retailer'
 
 const history = createHistory()
@@ -63,6 +64,17 @@ class Dashboard extends React.Component {
                 exact
                 path="/home/manage-organization"
                 component={ManageOrganization}
+                // render={
+                //   props => (
+                //     <ManageOrganization {...props} />
+                //   )
+                // }
+              />
+
+              <Route
+                exact
+                path="/home/manage-organization/create-organization"
+                component={CreateOrganization}
                 // render={
                 //   props => (
                 //     <ManageOrganization {...props} />

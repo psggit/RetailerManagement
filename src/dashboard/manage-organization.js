@@ -8,6 +8,7 @@ import {organizationData} from './../mockData'
 import Pagination from 'Components/pagination'
 import Notify from 'Components/notify'
 import { getQueryObj, getQueryUri } from 'Utils/url-utils'
+import { NavLink } from 'react-router-dom'
 
 class ManageOrganization extends React.Component {
 
@@ -162,9 +163,12 @@ class ManageOrganization extends React.Component {
         const { activePage, pageOffset, itemCount} = this.state
         return (
             <Layout title="Manage Organization">
-                <div style={{marginTop: '20px'}}>
-                    <Button> Create Organisation </Button>
-                </div>
+                <NavLink to={`/home/manage-organization/create-organization`}>
+                    <div style={{marginTop: '20px'}}>
+                        <Button> Create Organisation </Button>
+                    </div>
+                </NavLink>
+               
                 <div style={{marginTop: '20px'}}>
                     <div style={{
                             width: '240px',
