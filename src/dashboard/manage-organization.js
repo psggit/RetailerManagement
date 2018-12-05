@@ -2,7 +2,7 @@ import React from 'react'
 import Layout from 'Components/layout'
 import { Table } from '@auth0/cosmos'
 import { Icon, Spinner, List } from '@auth0/cosmos'
-//import { Select } from '@auth0/cosmos'
+import { Select, TextInput } from '@auth0/cosmos'
 import { Button } from '@auth0/cosmos'
 import {organizationData} from './../mockData'
 import Pagination from 'Components/pagination'
@@ -11,15 +11,26 @@ class ManageOrganization extends React.Component {
 
     constructor() {
         super()
+        this.defaultFilters = {
+           searchField: 'all',
+           searchOperator: '',
+           searchText: ''
+        }
         this.state = {
             activePage: 1,
             pageOffset: 0,
             loading: false,
-            itemsCount: 100
+            itemsCount: 100,
+            ...this.defaultFilters
         }
     
         this.pagesLimit = 5
         this.handlePageChange = this.handlePageChange.bind(this)
+        this.getFilteredOrganisationList = this.getFilteredOrganisationList.bind(this)
+    }
+
+    getFilteredOrganisationList() {
+        console.log("Filtered params", "field", this.state.searchField, "operatr", this.state.searchOperator, "text", this.state.searchText)
     }
 
     handlePageChange(pageObj) {
@@ -27,15 +38,88 @@ class ManageOrganization extends React.Component {
         this.setState({activePage: pageObj.activePage, pageOffset: pageObj.offset})
     }
 
+    handleChange(e) {
+        //console.log("event", e.target.value, e.target.name)
+        this.setState({[e.target.name]: e.target.value})   
+    }
+
     render() {
         const { activePage, pageOffset, itemCount} = this.state
         return (
             <Layout title="Manage Organization">
-                <div style={{marginTop: '20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+                <div style={{marginTop: '20px'}}>
                     <Button> Create Organisation </Button>
-                    <Button> Filter </Button>
                 </div>
+                <div style={{marginTop: '20px'}}>
+                    <div style={{
+                            width: '240px',
+                            display: 'inline-block',
+                            verticalAlign: 'bottom',
+                            marginRight: '20px'
+                        }}
+                    >
+                        <p style={{ margin: '10px 0' }}>Organisation field</p>
+                        <Select
+                            placeholder="Select organisation field..."
+                            value={this.state.searchField}
+                            name="searchField"
+                            options={[
+                                { text: 'All', value: 'all' },
+                                { text: 'ID', value: 'Id' },
+                                { text: 'ORGANISATION NAME', value: 'Organisation name' },
+                                { text: 'STATE', value: 'State'}
+                            ]}
+                            onChange={(e) => this.handleChange(e)}
+                        />
+                    </div>
 
+                    <div style={{
+                            width: '240px',
+                            display: 'inline-block',
+                            verticalAlign: 'bottom',
+                            marginRight: '20px'
+                        }}
+                    >
+                        <p style={{ margin: '10px 0' }}>Select operator</p>
+                        <Select
+                            placeholder="Select an option..."
+                            value={this.state.searchOperator}
+                            name="searchOperator"
+                            options={[
+                                { text: 'EQUAL', value: 'EQUAL' },
+                                { text: 'LIKE', value: 'LIKE' },
+                                { text: 'IGNORE CASE', value: 'IGNORE CASE' }
+                            ]}
+                            onChange={(e) => this.handleChange(e)}
+                        />
+                    </div>
+
+                    <div style={{
+                            width: '240px',
+                            display: 'inline-block',
+                            verticalAlign: 'bottom',
+                            marginRight: '20px'
+                        }}
+                    >
+                        <p style={{ margin: '10px 0' }}>Search Text</p>
+                        <TextInput
+                            placeholder="Contains"
+                            type="text"
+                            size="default"
+                            name="searchText"
+                            value={this.state.searchText}
+                            onChange={(e) => this.handleChange(e)}
+                        />
+                    </div>
+                    <div
+                        style={{
+                        verticalAlign: 'bottom',
+                        display: 'inline-block',
+                        }}
+                    >
+                        <Button onClick={() => this.getFilteredOrganisationList()}>Search</Button>
+                    </div>
+                </div>
                 {
                     this.state.loading &&
                     <div style={{ marginTop: '40px'}}>

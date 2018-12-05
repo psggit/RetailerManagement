@@ -8,7 +8,7 @@ class ManageRetailer extends React.Component {
     render() {
         return (
             <Layout title="Manage Retailer">
-                 <div> manageretailer</div>
+                 <div> manage rtailer</div> 
             </Layout>
         )
     }
