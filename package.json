@@ -35,11 +35,15 @@
     "webpack-merge": "^4.1.4"
   },
   "dependencies": {
+    "@auth0/cosmos": "^0.9.3",
     "abspath-webpack-plugin": "0.0.1",
     "compression-webpack-plugin": "^1.1.0",
+    "history": "^4.7.2",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
+    "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
+    "styled-components": "^4.1.2",
     "webpack": "^4.6.0"
   }
 }
