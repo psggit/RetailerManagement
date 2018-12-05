@@ -6,13 +6,15 @@ import { Select, TextInput } from '@auth0/cosmos'
 import { Button } from '@auth0/cosmos'
 import {organizationData} from './../mockData'
 import Pagination from 'Components/pagination'
+import Notify from 'Components/notify'
+import { getQueryObj, getQueryUri } from 'Utils/url-utils'
 
 class ManageOrganization extends React.Component {
 
     constructor() {
         super()
         this.defaultFilters = {
-           searchField: 'all',
+           searchField: '',
            searchOperator: '',
            searchText: ''
         }
@@ -20,17 +22,115 @@ class ManageOrganization extends React.Component {
             activePage: 1,
             pageOffset: 0,
             loading: false,
-            itemsCount: 100,
+            organisationCount: 0,
+            data: [],
+            operators:  [
+                {text: 'ID', value: 'ID'},
+                {text: 'LIKE', value: 'LIKE'},
+                {text: 'IGNORE CASE', value: 'IGNORE CASE'},
+            ],
             ...this.defaultFilters
+        }
+
+        this.filter = {
+            searchField: '',
+            searchOperator: '',
+            searchText: ''
         }
     
         this.pagesLimit = 5
         this.handlePageChange = this.handlePageChange.bind(this)
+        this.resetFilter = this.resetFilter.bind(this)
+        this.handleChange = this.handleChange.bind(this)
         this.getFilteredOrganisationList = this.getFilteredOrganisationList.bind(this)
+        this.fetchDefaultData = this.fetchDefaultData.bind(this)
+        this.fetchOrganisationList = this.fetchOrganisationList.bind(this)
+        this.setData = this.setData.bind(this)
+    }
+
+    fetchDefaultData() {
+        this.fetchOrganisationList({
+            offset: 0,
+            limit: this.pagesLimit,
+            filter: null
+        }, this.setData)
+    }
+
+    componentDidMount() {
+        if (location.search.length) {
+            this.setQueryParamas()
+        } else {
+            this.fetchDefaultData()
+        }
+    }
+    
+    setQueryParamas() {
+        const queryUri = location.search.slice(1)
+        const queryObj = getQueryObj(queryUri)
+
+        Object.entries(queryObj).forEach((item) => {
+            this.setState({ [item[0]]: item[1] })
+            this.filter[item[0]] = item[1]
+        })
+
+        this.fetchOrganisationList({
+            offset: queryObj.offset ? parseInt(queryObj.offset) : 0,
+            limit: this.pagesLimit,
+            filter: this.filter
+        }, this.setData)
+    }
+
+    fetchOrganisationList(payloadObj, successCallback) {
+        console.log("payload obj", payloadObj)
+        this.setState({ data: [], organisationCount: 0 })
+        // POST({
+        //   api: '/excisePortal/ottpHistory',
+        //   apiBase: 'agamotto',
+        //   handleError: true,
+        //   data: payloadObj
+        // })
+        //   .then((json) => {
+        //     this.setState({
+        //       data: json.data,
+        //       count: json.count,
+        //       loading: false
+        //     })
+               //successCallback(json)
+        //   })
+        //   .catch(err => {
+        //     err.response.json().then(json => { Notify("danger", json.message) })
+        //   })
     }
 
     getFilteredOrganisationList() {
-        console.log("Filtered params", "field", this.state.searchField, "operatr", this.state.searchOperator, "text", this.state.searchText)
+        const { searchField, searchOperator, searchText } = this.state
+
+        this.filter = {
+            searchField: searchField,
+            searchOperator: searchOperator,
+            searchText: searchText
+        }
+        //console.log("Filtered params", "field", searchField, "operatr", searchOperator, "text", searchText)
+        
+        const queryObj = {
+            searchField: searchField,
+            searchOperator: searchOperator,
+            searchText: searchText,
+            offset: 0,
+            activePage: 1,
+        }
+    
+        history.pushState(queryObj, "organisation listing", `/home/manage-organization?${getQueryUri(queryObj)}`)
+    
+        this.fetchOrganisationList({
+            limit: this.pagesLimit,
+            offset: 0,
+            filter: this.filter
+        }, this.setData)
+    }
+
+    setData(response) {
+        console.log("response", response)
     }
 
     handlePageChange(pageObj) {
@@ -39,8 +139,23 @@ class ManageOrganization extends React.Component {
     }
 
     handleChange(e) {
-        //console.log("event", e.target.value, e.target.name)
-        this.setState({[e.target.name]: e.target.value})   
+        console.log("event", e.target.value, e.target.name)
+        this.setState({[e.target.name]: e.target.value})  
+        if(e.target.name === "searchField" && e.target.value === "ID") {
+            this.setState({
+                operators: [
+                    {text: 'ID', value: 'ID'},
+                ]
+            })
+        }
+    }
+
+    resetFilter() {
+        this.setState({
+            searchField: '',
+            searchOperator: '',
+            searchText: ''
+        })
     }
 
     render() {
@@ -58,14 +173,14 @@ class ManageOrganization extends React.Component {
                             marginRight: '20px'
                         }}
                     >
-                        <p style={{ margin: '10px 0' }}>Organisation field</p>
+                        <p style={{ margin: '10px 0' }}>Organisation Field</p>
                         <Select
-                            placeholder="Select organisation field..."
+                            placeholder="Select an field..."
                             value={this.state.searchField}
                             name="searchField"
                             options={[
-                                { text: 'All', value: 'all' },
-                                { text: 'ID', value: 'Id' },
+                                // { text: 'All', value: 'all' },
+                                { text: 'ID', value: 'ID' },
                                 { text: 'ORGANISATION NAME', value: 'Organisation name' },
                                 { text: 'STATE', value: 'State'}
                             ]}
@@ -80,16 +195,12 @@ class ManageOrganization extends React.Component {
                             marginRight: '20px'
                         }}
                     >
-                        <p style={{ margin: '10px 0' }}>Select operator</p>
+                        <p style={{ margin: '10px 0' }}>Operator</p>
                         <Select
-                            placeholder="Select an option..."
+                            placeholder="Select an operator..."
                             value={this.state.searchOperator}
                             name="searchOperator"
-                            options={[
-                                { text: 'EQUAL', value: 'EQUAL' },
-                                { text: 'LIKE', value: 'LIKE' },
-                                { text: 'IGNORE CASE', value: 'IGNORE CASE' }
-                            ]}
+                            options={this.state.operators}
                             onChange={(e) => this.handleChange(e)}
                         />
                     </div>
@@ -113,11 +224,20 @@ class ManageOrganization extends React.Component {
                     </div>
                     <div
                         style={{
-                        verticalAlign: 'bottom',
-                        display: 'inline-block',
+                            verticalAlign: 'bottom',
+                            display: 'inline-block',
+                            marginRight: '20px'
                         }}
                     >
                         <Button onClick={() => this.getFilteredOrganisationList()}>Search</Button>
+                    </div>
+                    <div
+                        style={{
+                            verticalAlign: 'bottom',
+                            display: 'inline-block',
+                        }}
+                    >
+                        <Button onClick={() => this.resetFilter()}>Reset</Button>
                     </div>
                 </div>
                 {
@@ -157,11 +277,11 @@ class ManageOrganization extends React.Component {
                     </div>
                 }
                 {
-                    organizationData.length > 0 &&
+                    this.state.data.length > 0 &&
                     <Pagination 
                         activePage={this.state.activePage}
                         itemsCountPerPage={this.pagesLimit}
-                        totalItemsCount={this.state.itemsCount}
+                        totalItemsCount={this.state.organisationCount}
                         setPage={this.handlePageChange}
                     />
                 }
