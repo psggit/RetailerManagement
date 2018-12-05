@@ -33,7 +33,8 @@ class Dashboard extends React.Component {
         style={{
           backgroundColor: '#fbfbfb',
           width: '100%',
-          maxWidth: '1440px',
+          maxWidth: '1920px',
+          //maxWidth: '1440px',
           margin: '0 auto',
           height: '100vh',
           overflow: 'auto'
