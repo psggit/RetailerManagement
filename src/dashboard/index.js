@@ -6,6 +6,7 @@ import { Route, Switch } from 'react-router-dom'
 import { Router } from 'react-router'
 import ManageOrganization from './manage-organization'
 import CreateOrganization from './create-organization'
+import EditOrganization from './edit-organization'
 import ManageRetailer from './manage-retailer'
 
 const history = createHistory()
@@ -63,12 +64,12 @@ class Dashboard extends React.Component {
               <Route
                 exact
                 path="/home/manage-organization"
-                component={ManageOrganization}
-                // render={
-                //   props => (
-                //     <ManageOrganization {...props} />
-                //   )
-                // }
+                //component={ManageOrganization}
+                render={
+                  props => (
+                    <ManageOrganization {...props} />
+                  )
+                }
               />
 
               <Route
@@ -77,9 +78,20 @@ class Dashboard extends React.Component {
                 component={CreateOrganization}
                 // render={
                 //   props => (
-                //     <ManageOrganization {...props} />
+                //     <CreateOrganization {...props} />
                 //   )
                 // }
+              />
+
+              <Route
+                exact
+                path="/home/manage-organization/edit-organization"
+                //component={EditOrganization}
+                render={
+                  props => (
+                    <EditOrganization {...props} />
+                  )
+                }
               />
 
               <Route

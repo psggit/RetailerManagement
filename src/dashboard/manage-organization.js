@@ -47,6 +47,7 @@ class ManageOrganization extends React.Component {
         this.fetchDefaultData = this.fetchDefaultData.bind(this)
         this.fetchOrganisationList = this.fetchOrganisationList.bind(this)
         this.setData = this.setData.bind(this)
+        this.handleEditOrg = this.handleEditOrg.bind(this)
     }
 
     fetchDefaultData() {
@@ -151,6 +152,11 @@ class ManageOrganization extends React.Component {
         }
     }
 
+    handleEditOrg(item, action) {
+        console.log("item", item, this.props.history)
+        this.props.history.push('/home/manage-organization/edit-organization', item)
+    }
+
     resetFilter() {
         this.setState({
             searchField: '',
@@ -250,15 +256,15 @@ class ManageOrganization extends React.Component {
                         <Table
                             loading
                             items={[]}
-                        >
+                        >   
                             <Table.Column field="id" title="ID" width="7%" />
-                            <Table.Column field="org_name" title="Organisation Name" width="15%"/>
-                            <Table.Column field="org_type" title="Organisation Type" width="15%"/>
-                            <Table.Column field="outlets_count" title="Outlets Count" width="13%"/>
-                            <Table.Column field="kyc_status" title="KYC Status" width="10%"/>
-                            <Table.Column field="org_status" title="Organisation Status" width="15%"/>
-                            <Table.Column field="pan_no" title="PAN Number" width="10%"/>
-                            <Table.Column field="cin_no" title="CIN Number" width="15%"/>
+                            <Table.Column field="organizationName" title="Organisation Name" width="15%"/>
+                            <Table.Column field="organizationType" title="Organisation Type" width="15%"/>
+                            <Table.Column field="outletsCount" title="Outlets Count" width="13%"/>
+                            <Table.Column field="selectedKycIdx" title="KYC Status" width="10%"/>
+                            <Table.Column field="selectedOrganizationStatusIdx" title="Organisation Status" width="15%"/>
+                            <Table.Column field="panNumber" title="PAN Number" width="10%"/>
+                            <Table.Column field="cinNumber" title="CIN Number" width="15%"/>
                         </Table>
                     </div>
                 }
@@ -269,14 +275,19 @@ class ManageOrganization extends React.Component {
                             emptyMessage={this.state.loading ? <Spinner /> : 'No records found'}
                             items={organizationData}
                         >
+                            <Table.Column field="actions">
+                                {item => (
+                                    <Button icon="pencil" onClick={() => this.handleEditOrg(item, 'edit')} />
+                                )}
+                            </Table.Column>
                             <Table.Column field="id" title="ID" width="7%" />
-                            <Table.Column field="org_name" title="Organisation Name" width="15%"/>
-                            <Table.Column field="org_type" title="Organisation Type" width="15%"/>
-                            <Table.Column field="outlets_count" title="Outlets Count" width="13%"/>
-                            <Table.Column field="kyc_status" title="KYC Status" width="10%"/>
-                            <Table.Column field="org_status" title="Organisation Status" width="15%"/>
-                            <Table.Column field="pan_no" title="PAN Number" width="10%"/>
-                            <Table.Column field="cin_no" title="CIN Number" width="15%"/>
+                            <Table.Column field="organizationName" title="Organisation Name" width="15%"/>
+                            <Table.Column field="organizationType" title="Organisation Type" width="15%"/>
+                            <Table.Column field="outletsCount" title="Outlets Count" width="13%"/>
+                            <Table.Column field="selectedKycIdx" title="KYC Status" width="10%"/>
+                            <Table.Column field="selectedOrganizationStatusIdx" title="Organisation Status" width="15%"/>
+                            <Table.Column field="panNumber" title="PAN Number" width="10%"/>
+                            <Table.Column field="cinNumber" title="CIN Number" width="10%"/>
                         </Table>
                     </div>
                 }

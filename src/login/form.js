@@ -80,7 +80,7 @@ class Form extends React.Component {
           <div className="logo"> <span style={{ width:'40px', height: '40px'}}> {getIcon('logo')} </span> </div>
           <span> RETAILER MANAGEM </span>
         </div>
-        {/* <div className="form-wrapper"> */}
+        {/* <div className="form-wrapper" style={{width: '100%'}}> */}
           <div className="form-group">
             <input
               placeholder="Username"
@@ -109,7 +109,7 @@ class Form extends React.Component {
           </button>
           { this.state.error ? <p style={{ color: '#ff3b30' }}>Wrong username or password</p> : ''}
         </div>
-      
+      // </div>
     )
   }
 }
