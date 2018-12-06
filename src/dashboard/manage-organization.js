@@ -171,7 +171,7 @@ class ManageOrganization extends React.Component {
                
                 <div style={{marginTop: '20px'}}>
                     <div style={{
-                            width: '240px',
+                            width: '210px',
                             display: 'inline-block',
                             verticalAlign: 'bottom',
                             marginRight: '20px'
@@ -193,7 +193,7 @@ class ManageOrganization extends React.Component {
                     </div>
 
                     <div style={{
-                            width: '240px',
+                            width: '180px',
                             display: 'inline-block',
                             verticalAlign: 'bottom',
                             marginRight: '20px'

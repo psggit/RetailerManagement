@@ -6,7 +6,7 @@ const Layout = ({title, children}) => {
             style={{
                 marginLeft: '240px',
                 marginTop: '60px',
-                padding: '20px',
+                padding: '60px',
                 width: 'calc(100% - 240px)'
             }}
         >

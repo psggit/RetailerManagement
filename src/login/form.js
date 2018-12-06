@@ -5,7 +5,7 @@ import {  Api } from 'Utils/config'
 import 'Sass/_input.scss'
 import 'Sass/_form.scss'
 import 'Sass/_button.scss'
-// import {getIcon} from 'Utils/icon-utils'
+import {getIcon} from 'Utils/icon-utils'
 
 class Form extends React.Component {
   constructor() {
@@ -77,13 +77,13 @@ class Form extends React.Component {
     return (
       <div className="form">
         <div className="login-header">
-          {/* <div className="logo"> <span style={{ width:'40px', height: '40px'}}> {getIcon('logo')} </span> </div> */}
-          <span> RETAILER MANAGEMENT SYSTEM </span>
+          <div className="logo"> <span style={{ width:'40px', height: '40px'}}> {getIcon('logo')} </span> </div>
+          <span> RETAILER MANAGEM </span>
         </div>
-        <div className="form-wrapper">
+        {/* <div className="form-wrapper"> */}
           <div className="form-group">
             <input
-              placeholder="username"
+              placeholder="Username"
               type="text"
               name="username"
               onChange={this.handleChange}
@@ -92,7 +92,7 @@ class Form extends React.Component {
           </div>
           <div className="form-group">
             <input
-              placeholder="password"
+              placeholder="Password"
               type="password"
               name="password"
               onChange={this.handleChange}
@@ -102,14 +102,14 @@ class Form extends React.Component {
           <button
             disabled={this.state.isSubmitting}
             onClick={this.handleSubmit}
-            style={{ marginTop: '20px', width: '100%', height: '40px', background: '#735AB8', cursor: this.state.isSubmitting ? 'progress' : '' }}
+            style={{ marginTop: '20px', width: '100%', height: '40px', background: '#616161', cursor: this.state.isSubmitting ? 'progress' : '' }}
             className="btn btn--primary"
           >
             Login
           </button>
           { this.state.error ? <p style={{ color: '#ff3b30' }}>Wrong username or password</p> : ''}
         </div>
-      </div>
+      
     )
   }
 }
