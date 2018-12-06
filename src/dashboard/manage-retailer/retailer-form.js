@@ -41,6 +41,7 @@ class RetailerForm extends React.Component {
             cancelledCheck: props.data ? props.data.cancelledCheck : false,
             exciseLicense: props.data ? props.data.exciseLicense : false,
             outletPhoto: props.data ? props.data.outletPhoto : false,
+            errorFound: true,
             
             ksbclCodeErr: {
                 value: '',
@@ -122,6 +123,9 @@ class RetailerForm extends React.Component {
         this.handleNumberChange = this.handleNumberChange.bind(this) 
         this.handleSelectChange = this.handleSelectChange.bind(this)
         this.getData = this.getData.bind(this)
+        this.validateTextField = this.validateTextField.bind(this)
+        this.validateNumberField = this.validateNumberField.bind(this)
+        this.validateEmail = this.validateEmail.bind(this)
     }
 
     getData() {
@@ -129,7 +133,7 @@ class RetailerForm extends React.Component {
     }
 
     handleChange(e) {
-        console.log("handle change", e.target.value, e.target.name, e.target.type)
+        //console.log("handle change", e.target.value, e.target.name, e.target.type)
         this.setState({
             [e.target.name]: e.target.value
         })
@@ -149,9 +153,9 @@ class RetailerForm extends React.Component {
         this.length = 0
     
         switch(e.target.name) {
-            case 'panNumber':
-                length = 11
-            break;
+            // case 'panNumber':
+            //     length = 11
+            // break;
 
             // case 'cinNumber':
             //     length = 10
@@ -197,11 +201,13 @@ class RetailerForm extends React.Component {
 
     validateTextField(value, fieldName) {
         if (!value.length) {
+          //this.setState({errorFound: true})
           return {
             status: true,
             value: `${fieldName} is required`
           }
         }
+        this.setState({errorFound: false})
         return {
           status: false,
           value: ''
@@ -210,17 +216,19 @@ class RetailerForm extends React.Component {
 
     validateNumberField({value, length, fieldName}) {
         if (!value.length) {
+          //this.setState({errorFound: true})
           return {
             status: true,
             value: `${fieldName} is required`
           }
         } else if (isNaN(value) || value.length !== length) {
+          //this.setState({errorFound: true})
           return {
             status: true,
             value: `${fieldName} is invalid`
           }
         }
-      
+        this.setState({errorFound: false})
         return {
           status: false,
           value: ''
@@ -229,16 +237,19 @@ class RetailerForm extends React.Component {
 
     validateEmail(email) {
         if (!email.length) {
+          //this.setState({errorFound: true})
           return {
             status: true,
             value: 'Email is required'
           }
         } else if (!emailRegex.test(email)) {
+          //this.setState({errorFound: true})
           return {
             status: true,
             value: 'Email is invalid'
           }
         }
+        this.setState({errorFound: false})
         return {
           status: false,
           value: ''
@@ -266,7 +277,7 @@ class RetailerForm extends React.Component {
             emailIdErr,
             gpsCoordinatesErr
         } = this.state
-        const {mobileNo, pincode} = this.props.data
+        //const {mobileNo, pincode} = this.props.data
         return(
             <Form layout="label-on-top">
                 <Form.FieldSet label="Organization Details">
@@ -490,7 +501,7 @@ class RetailerForm extends React.Component {
                         label="Mobile No*"
                         //type="text"
                         //maxLength={10}
-                        defaultValue={this.props.data ? mobileNo : ''}
+                        defaultValue={this.props.data ? this.props.data.mobileNo : ''}
                         name="mobileNo"
                         error={mobileNoErr.status ? mobileNoErr.value : ''}
                         //value={this.state.mobileNo}
@@ -518,7 +529,7 @@ class RetailerForm extends React.Component {
                         label="Pincode*"
                         type="text"
                         name="pincode"
-                        defaultValue={this.props.data ? pincode : ''}
+                        defaultValue={this.props.data ? this.props.data.pincode : ''}
                         //value={this.state.pincode}
                         error={pincodeErr.status ? pincodeErr.value : ''}
                         onKeyDown={(e) => this.handleNumberChange(e)}

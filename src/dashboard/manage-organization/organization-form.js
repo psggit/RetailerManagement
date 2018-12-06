@@ -8,7 +8,6 @@ class OrganizationForm extends React.Component {
 
     constructor(props) {
         super(props)
-
         this.state = {
             organizationName: props.data ? props.data.organizationName : '',
             organizationType: props.data ? props.data.organizationType : 'proprietorship',
@@ -39,6 +38,7 @@ class OrganizationForm extends React.Component {
             pvtPancard: props.data ? props.data.pvtPancard : false,
             pvtCOI: props.data ? props.data.pvtCOI : false,
             pvtLOA: props.data ? props.data.pvtLOA : false,
+            errorFound: true,
             
             organizationNameErr: {
                 value: '',
@@ -103,18 +103,15 @@ class OrganizationForm extends React.Component {
         }
 
         this.handleChange = this.handleChange.bind(this)
-        //this.handleSave = this.handleSave.bind(this)
-        //this.handleKycFieldChange = this.handleKycFieldChange.bind(this)
-        //this.handleOrganizationstatusChange = this.handleOrganizationstatusChange.bind(this)
-        //this.handleNumberChange = this.handleNumberChange.bind(this)
         this.handleTextChange = this.handleTextChange.bind(this)
         this.handleNumberChange = this.handleNumberChange.bind(this)
         this.handleEmailChange = this.handleEmailChange.bind(this) 
         this.handleSelectChange = this.handleSelectChange.bind(this)
-        //this.handleDropdownChange = this.handleDropdownChange.bind(this)
         this.getData = this.getData.bind(this)
+        this.validateTextField = this.validateTextField.bind(this)
+        this.validateNumberField = this.validateNumberField.bind(this)
+        this.validateEmail = this.validateEmail.bind(this)
     }
-
 
     handleChange(e) {
         //console.log("handle change", e.target.value, e.target.name, e.target.type)
@@ -188,21 +185,19 @@ class OrganizationForm extends React.Component {
     //     this.setState({selectedOrganizationStatusIdx: e.target.value})
     // }
 
-    handleChange(e) {
-        this.setState({[e.target.name]: e.target.value})
-    }
-
     handleSelectChange(e) {
         this.setState({[e.target.name]: e.target.checked})
     }
 
     validateTextField(value, fieldName) {
         if (!value.length) {
+          //this.setState({errorFound: true})
           return {
             status: true,
             value: `${fieldName} is required`
           }
         }
+        this.setState({errorFound: false})
         return {
           status: false,
           value: ''
@@ -211,16 +206,19 @@ class OrganizationForm extends React.Component {
 
     validateEmail(email) {
         if (!email.length) {
+          //this.setState({errorFound: true})
           return {
             status: true,
             value: 'Email is required'
           }
         } else if (!emailRegex.test(email)) {
+          //this.setState({errorFound: true})
           return {
             status: true,
             value: 'Email is invalid'
           }
         }
+        this.setState({errorFound: false})
         return {
           status: false,
           value: ''
@@ -229,17 +227,19 @@ class OrganizationForm extends React.Component {
 
     validateNumberField({value, length, fieldName}) {
         if (!value.length) {
+          //this.setState({errorFound: true})
           return {
             status: true,
             value: `${fieldName} is required`
           }
         } else if (isNaN(value) || value.length !== length) {
+          //this.setState({errorFound: true})
           return {
             status: true,
             value: `${fieldName} is invalid`
           }
         }
-      
+        this.setState({errorFound: false})
         return {
           status: false,
           value: ''
@@ -265,266 +265,261 @@ class OrganizationForm extends React.Component {
             mobileNoErr,
             emailIdErr
         } = this.state
-        const {mobileNo, pincode} = this.props.data
+        //const {mobileNo, pincode} = this.props.data
         return (
-            // <Card width="800px">
-                <Form layout="label-on-top">
-                    <Form.FieldSet label="Organization Details">
-                        <Form.TextInput
-                            label="Organization Name*"
-                            type="text"
-                            name="organizationName"
-                            value={this.state.organizationName}
-                            error={organizationNameErr.status ? organizationNameErr.value : ''}
-                            onChange={(e) => this.handleTextChange(e)}
-                        />
-                        <Form.TextInput
-                            label="Date of Incorporation*"
-                            type="date"
-                            name="incorporationDate"
-                            value={this.state.incorporationDate}
-                            error={incorporationDateErr.status ? incorporationDateErr.value : ''}
-                            onChange={(e) => this.handleTextChange(e)}
-                        />
-                        <Form.Radio
-                            name="organizationType"
-                            label="Organization Type*"
-                            type="radio"
-                            selected={this.state.organizationType}
-                            onChange={e => this.handleChange(e)}
-                            align="horizontal"
+            <Form layout="label-on-top">
+                <Form.FieldSet label="Organization Details">
+                    <Form.TextInput
+                        label="Organization Name*"
+                        type="text"
+                        name="organizationName"
+                        value={this.state.organizationName}
+                        error={organizationNameErr.status ? organizationNameErr.value : ''}
+                        onChange={(e) => this.handleTextChange(e)}
+                    />
+                    <Form.TextInput
+                        label="Date of Incorporation*"
+                        type="date"
+                        name="incorporationDate"
+                        value={this.state.incorporationDate}
+                        error={incorporationDateErr.status ? incorporationDateErr.value : ''}
+                        onChange={(e) => this.handleTextChange(e)}
+                    />
+                    <Form.Radio
+                        name="organizationType"
+                        label="Organization Type*"
+                        type="radio"
+                        selected={this.state.organizationType}
+                        onChange={e => this.handleChange(e)}
+                        align="horizontal"
+                    >
+                        <Form.Radio.Option value="proprietorship">Proprietorship</Form.Radio.Option>
+                        <Form.Radio.Option value="partnership">Partnership</Form.Radio.Option>
+                        <Form.Radio.Option value="pvtltd">Pvt Ltd</Form.Radio.Option>
+                        <Form.Radio.Option value="others">Others</Form.Radio.Option>
+                    </Form.Radio>
+                    <Form.TextInput
+                        label="PAN Number*"
+                        type="text"
+                        name="panNumber"
+                        value={this.state.panNumber}
+                        error={panNumberErr.status ? panNumberErr.value : ''}
+                        onChange={(e) => this.handleTextChange(e)}
+                        //onKeyDown={(e) => this.handleTextChange(e)}
+                    />
+                    <Form.TextInput
+                        label="CIN Number*"
+                        type="text"
+                        name="cinNumber"
+                        value={this.state.cinNumber}
+                        error={cinNumberErr.status ? cinNumberErr.value : ''}
+                        onChange={(e) => this.handleTextChange(e)}
+                    />
+                    <Form.TextInput
+                        label="No of Outlets*"
+                        type="number"
+                        name="outletsCount"
+                        value={this.state.outletsCount}
+                        error={outletsCountErr.status ? outletsCountErr.value : ''}
+                        onChange={(e) => this.handleChange(e)}
+                    />
+                    <Form.Select
+                        label="KYC Verification Status*"
+                        value={this.state.selectedKycIdx}
+                        name="selectedKycIdx"
+                        options={[
+                            { text: 'Verified', value: '1' },
+                            { text: 'Not Verified', value: '2' },
+                        ]}
+                        onChange={(e) => this.handleChange(e)}
+                    />
+                    <Form.Select
+                        label="Organization Status*"
+                        value={this.state.selectedOrganizationStatusIdx}
+                        name="selectedOrganizationStatusIdx"
+                        options={[
+                            { text: 'Active', value: '1' },
+                            { text: 'Inactive', value: '2' },
+                        ]}
+                        onChange={(e) => this.handleChange(e)}
+                    />
+                </Form.FieldSet>
+                <Form.FieldSet label="Organization Contact Details">
+                    <Form.TextArea 
+                        label="Organization Address*" 
+                        name="organizationAddress"
+                        error={organizationAddressErr.status ? organizationAddressErr.value : ''}
+                        value={this.state.organizationAddress}
+                        onChange={(e) => this.handleTextChange(e)} 
+                    />
+                    <Form.TextInput
+                        label="City*"
+                        type="text"
+                        name="city"
+                        value={this.state.city}
+                        error={cityErr.status ? cityErr.value : ''}
+                        onChange={(e) => this.handleTextChange(e)}
+                    />
+                    <Form.TextInput
+                        label="State*"
+                        type="text"
+                        name="state"
+                        error={stateErr.status ? stateErr.value : ''}
+                        value={this.state.state}
+                        onChange={(e) => this.handleTextChange(e)}
+                    />
+                    <Form.TextInput
+                        label="Pincode*"
+                        type="text"
+                        name="pincode"
+                        //value={this.state.pincode}
+                        defaultValue={this.props.data ? this.props.data.pincode : ''}
+                        error={pincodeErr.status ? pincodeErr.value : ''}
+                        onKeyDown={(e) => this.handleNumberChange(e)}
+                        onKeyUp={(e) => this.handleNumberChange(e)}
+                        //onChange={(e) => this.handleNumberChange(e)}
+                    />
+                    <Form.TextInput
+                        label="Landline No*"
+                        type="text"
+                        name="landlineNo"
+                        error={landlineNoErr.status ? landlineNoErr.value : ''}
+                        value={this.state.landlineNo}
+                        onChange={(e) => this.handleTextChange(e)}
+                    />
+                    <Form.TextInput
+                        label="Authorized Person Name*"
+                        type="text"
+                        name="authorizedPerson"
+                        error={authorizedPersonErr.status ? authorizedPersonErr.value : ''}
+                        value={this.state.authorizedPerson}
+                        onChange={(e) => this.handleTextChange(e)}
+                    />
+                    <Form.TextInput
+                        label="Mobile No*"
+                        type="text"
+                        //maxLength={10}
+                        name="mobileNo"
+                        error={mobileNoErr.status ? mobileNoErr.value : ''}
+                        //value={this.state.mobileNo}
+                        //onChange={(e) => this.handleNumberChange(e)}
+                        defaultValue={this.props.data ? this.props.data.mobileNo : ''}
+                        onKeyDown={(e) => {this.handleNumberChange(e)}}
+                        onKeyUp={(e) => this.handleNumberChange(e)}
+                    />
+                    <Form.TextInput
+                        label="Email*"
+                        type="text"
+                        name="emailId"
+                        error={emailIdErr.status ? emailIdErr.value : ''}
+                        value={this.state.emailId}
+                        onChange={(e) => this.handleEmailChange(e)}
+                    />
+                </Form.FieldSet>
+                <Form.FieldSet label="Documents Submitted as Proof">
+                    <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: '20px'}}>    
+                        <Checkbox
+                            name="photo"
+                            onChange={e => this.handleSelectChange(e)}
+                            value="photo"
+                            checked={this.state.photo}
                         >
-                            <Form.Radio.Option value="proprietorship">Proprietorship</Form.Radio.Option>
-                            <Form.Radio.Option value="partnership">Partnership</Form.Radio.Option>
-                            <Form.Radio.Option value="pvtltd">Pvt Ltd</Form.Radio.Option>
-                            <Form.Radio.Option value="others">Others</Form.Radio.Option>
-                        </Form.Radio>
-                        <Form.TextInput
-                            label="PAN Number*"
-                            type="text"
-                            name="panNumber"
-                            value={this.state.panNumber}
-                            error={panNumberErr.status ? panNumberErr.value : ''}
-                            onChange={(e) => this.handleTextChange(e)}
-                            //onKeyDown={(e) => this.handleTextChange(e)}
-                        />
-                        <Form.TextInput
-                            label="CIN Number*"
-                            type="text"
-                            name="cinNumber"
-                            value={this.state.cinNumber}
-                            error={cinNumberErr.status ? cinNumberErr.value : ''}
-                            onChange={(e) => this.handleTextChange(e)}
-                        />
-                        <Form.TextInput
-                            label="No of Outlets*"
-                            type="number"
-                            name="outletsCount"
-                            value={this.state.outletsCount}
-                            error={outletsCountErr.status ? outletsCountErr.value : ''}
-                            onChange={(e) => this.handleChange(e)}
-                        />
-                        <Form.Select
-                            label="KYC Verification Status*"
-                            value={this.state.selectedKycIdx}
-                            name="selectedKycIdx"
-                            options={[
-                                { text: 'Verified', value: '1' },
-                                { text: 'Not Verified', value: '2' },
-                            ]}
-                            onChange={(e) => this.handleChange(e)}
-                        />
-                        <Form.Select
-                            label="Organization Status*"
-                            value={this.state.selectedOrganizationStatusIdx}
-                            name="selectedOrganizationStatusIdx"
-                            options={[
-                                { text: 'Active', value: '1' },
-                                { text: 'Inactive', value: '2' },
-                            ]}
-                            onChange={(e) => this.handleChange(e)}
-                        />
-                    </Form.FieldSet>
-                    <Form.FieldSet label="Organization Contact Details">
-                        <Form.TextArea 
-                            label="Organization Address*" 
-                            name="organizationAddress"
-                            error={organizationAddressErr.status ? organizationAddressErr.value : ''}
-                            value={this.state.organizationAddress}
-                            onChange={(e) => this.handleTextChange(e)} 
-                        />
-                        <Form.TextInput
-                            label="City*"
-                            type="text"
-                            name="city"
-                            value={this.state.city}
-                            error={cityErr.status ? cityErr.value : ''}
-                            onChange={(e) => this.handleTextChange(e)}
-                        />
-                        <Form.TextInput
-                            label="State*"
-                            type="text"
-                            name="state"
-                            error={stateErr.status ? stateErr.value : ''}
-                            value={this.state.state}
-                            onChange={(e) => this.handleTextChange(e)}
-                        />
-                        <Form.TextInput
-                            label="Pincode*"
-                            type="text"
-                            name="pincode"
-                            //value={this.state.pincode}
-                            defaultValue={this.props.data ? pincode : ''}
-                            error={pincodeErr.status ? pincodeErr.value : ''}
-                            onKeyDown={(e) => this.handleNumberChange(e)}
-                            onKeyUp={(e) => this.handleNumberChange(e)}
-                            //onChange={(e) => this.handleNumberChange(e)}
-                        />
-                        <Form.TextInput
-                            label="Landline No*"
-                            type="text"
-                            name="landlineNo"
-                            error={landlineNoErr.status ? landlineNoErr.value : ''}
-                            value={this.state.landlineNo}
-                            onChange={(e) => this.handleTextChange(e)}
-                        />
-                        <Form.TextInput
-                            label="Authorized Person Name*"
-                            type="text"
-                            name="authorizedPerson"
-                            error={authorizedPersonErr.status ? authorizedPersonErr.value : ''}
-                            value={this.state.authorizedPerson}
-                            onChange={(e) => this.handleTextChange(e)}
-                        />
-                        <Form.TextInput
-                            label="Mobile No*"
-                            type="text"
-                            //maxLength={10}
-                            name="mobileNo"
-                            error={mobileNoErr.status ? mobileNoErr.value : ''}
-                            //value={this.state.mobileNo}
-                            //onChange={(e) => this.handleNumberChange(e)}
-                            defaultValue={this.props.data ? mobileNo : ''}
-                            onKeyDown={(e) => {this.handleNumberChange(e)}}
-                            onKeyUp={(e) => this.handleNumberChange(e)}
-                        />
-                        <Form.TextInput
-                            label="Email*"
-                            type="text"
-                            name="emailId"
-                            error={emailIdErr.status ? emailIdErr.value : ''}
-                            value={this.state.emailId}
-                            onChange={(e) => this.handleEmailChange(e)}
-                        />
-                    </Form.FieldSet>
-                    <Form.FieldSet label="Documents Submitted as Proof">
-                        <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: '20px'}}>    
-                            <Checkbox
-                                name="photo"
-                                onChange={e => this.handleSelectChange(e)}
-                                value="photo"
-                                checked={this.state.photo}
-                            >
-                                Photo of Authorized Signatory
-                            </Checkbox>
-                            <Checkbox
-                                name="pancard"
-                                onChange={e => this.handleSelectChange(e)}
-                                value="pancard"
-                                checked={this.state.pancard}
-                            >
-                                PAN of Authorized Signatory
-                            </Checkbox>
-                            <Checkbox
-                                name="address"
-                                onChange={e => this.handleSelectChange(e)}
-                                value="address"
-                                checked={this.state.address}
-                            >
-                                Address proof of Authorized Signatory
-                            </Checkbox>
+                            Photo of Authorized Signatory
+                        </Checkbox>
+                        <Checkbox
+                            name="pancard"
+                            onChange={e => this.handleSelectChange(e)}
+                            value="pancard"
+                            checked={this.state.pancard}
+                        >
+                            PAN of Authorized Signatory
+                        </Checkbox>
+                        <Checkbox
+                            name="address"
+                            onChange={e => this.handleSelectChange(e)}
+                            value="address"
+                            checked={this.state.address}
+                        >
+                            Address proof of Authorized Signatory
+                        </Checkbox>
+                    </div>
+                    <div style={{marginBottom: '20px'}}>
+                        <div style={{marginBottom: '8px'}}>
+                            <label>For (Partnership firm/LLP)</label>
                         </div>
-                        <div style={{marginBottom: '20px'}}>
-                            <div style={{marginBottom: '8px'}}>
-                                <label>For (Partnership firm/LLP)</label>
+                        <div style={{display: 'flex'}}>
+                            <div style={{marginRight: '20px'}}>
+                                <Checkbox
+                                    name="partnershipPancard"
+                                    onChange={e => this.handleSelectChange(e)}
+                                    value="partnershipPancard"
+                                    checked={this.state.partnershipPancard}
+                                >
+                                    PAN
+                                </Checkbox>
                             </div>
-                            <div style={{display: 'flex'}}>
-                                <div style={{marginRight: '20px'}}>
-                                    <Checkbox
-                                        name="partnershipPancard"
-                                        onChange={e => this.handleSelectChange(e)}
-                                        value="partnershipPancard"
-                                        checked={this.state.partnershipPancard}
-                                    >
-                                        PAN
-                                    </Checkbox>
-                                </div>
-                                <div style={{marginRight: '20px'}}>
-                                    <Checkbox
-                                        name="partnershipDeed"
-                                        onChange={e => this.handleSelectChange(e)}
-                                        value="partnershipDeed"
-                                        checked={this.state.partnershipDeed}
-                                    >
-                                        Partnership Deed
-                                    </Checkbox>
-                                </div>
-                                <div style={{marginRight: '20px'}}>
-                                    <Checkbox
-                                        name="partnershipLOA"
-                                        onChange={e => this.handleSelectChange(e)}
-                                        value="partnershipLOA"
-                                        checked={this.state.partnershipLOA}
-                                    >
-                                        LOA
-                                    </Checkbox>
-                                </div>
+                            <div style={{marginRight: '20px'}}>
+                                <Checkbox
+                                    name="partnershipDeed"
+                                    onChange={e => this.handleSelectChange(e)}
+                                    value="partnershipDeed"
+                                    checked={this.state.partnershipDeed}
+                                >
+                                    Partnership Deed
+                                </Checkbox>
+                            </div>
+                            <div style={{marginRight: '20px'}}>
+                                <Checkbox
+                                    name="partnershipLOA"
+                                    onChange={e => this.handleSelectChange(e)}
+                                    value="partnershipLOA"
+                                    checked={this.state.partnershipLOA}
+                                >
+                                    LOA
+                                </Checkbox>
                             </div>
                         </div>
-                        <div style={{marginBottom: '20px'}}>
-                            <div style={{marginBottom: '8px'}}>
-                                <label>For (Pvt Ltd)</label>
+                    </div>
+                    <div style={{marginBottom: '20px'}}>
+                        <div style={{marginBottom: '8px'}}>
+                            <label>For (Pvt Ltd)</label>
+                        </div>
+                        <div style={{display: 'flex'}}>
+                            <div style={{marginRight: '20px'}}>
+                                <Checkbox
+                                    name="pvtPancard"
+                                    onChange={e => this.handleSelectChange(e)}
+                                    value="pvtPancard"
+                                    checked={this.state.pvtPancard}
+                                >
+                                    PAN
+                                </Checkbox>
                             </div>
-                            <div style={{display: 'flex'}}>
-                                <div style={{marginRight: '20px'}}>
-                                    <Checkbox
-                                        name="pvtPancard"
-                                        onChange={e => this.handleSelectChange(e)}
-                                        value="pvtPancard"
-                                        checked={this.state.pvtPancard}
-                                    >
-                                        PAN
-                                    </Checkbox>
-                                </div>
-                                <div style={{marginRight: '20px'}}>
-                                    <Checkbox
-                                        name="pvtCOI"
-                                        onChange={e => this.handleSelectChange(e)}
-                                        value="pvtCOI"
-                                        checked={this.state.pvtCOI}
-                                    >
-                                        COI
-                                    </Checkbox>
-                                </div>
-                                <div style={{marginRight: '20px'}}>
-                                    <Checkbox
-                                        name="pvtLOA"
-                                        onChange={e => this.handleSelectChange(e)}
-                                        value="pvtLOA"
-                                        checked={this.state.pvtLOA}
-                                    >
-                                        Board Resolution / LOA
-                                    </Checkbox>
-                                </div>
+                            <div style={{marginRight: '20px'}}>
+                                <Checkbox
+                                    name="pvtCOI"
+                                    onChange={e => this.handleSelectChange(e)}
+                                    value="pvtCOI"
+                                    checked={this.state.pvtCOI}
+                                >
+                                    COI
+                                </Checkbox>
+                            </div>
+                            <div style={{marginRight: '20px'}}>
+                                <Checkbox
+                                    name="pvtLOA"
+                                    onChange={e => this.handleSelectChange(e)}
+                                    value="pvtLOA"
+                                    checked={this.state.pvtLOA}
+                                >
+                                    Board Resolution / LOA
+                                </Checkbox>
                             </div>
                         </div>
-                    </Form.FieldSet>
-                    {/* <ButtonGroup align="right">
-                        <Button onClick={(e) => this.handleSave(e)}> Save </Button>
-                        <Button> Download </Button>
-                    </ButtonGroup> */}
-                </Form>
-            // </Card>
+                    </div>
+                </Form.FieldSet>
+            </Form>
+            
         )
     }
 }
