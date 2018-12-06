@@ -266,6 +266,7 @@ class RetailerForm extends React.Component {
             emailIdErr,
             gpsCoordinatesErr
         } = this.state
+        const {mobileNo, pincode} = this.props.data
         return(
             <Form layout="label-on-top">
                 <Form.FieldSet label="Organization Details">
@@ -489,11 +490,13 @@ class RetailerForm extends React.Component {
                         label="Mobile No*"
                         //type="text"
                         //maxLength={10}
+                        defaultValue={this.props.data ? mobileNo : ''}
                         name="mobileNo"
                         error={mobileNoErr.status ? mobileNoErr.value : ''}
                         //value={this.state.mobileNo}
                         //onChange={(e) => this.handleNumberChange(e)}
                         onKeyDown={(e) => {this.handleNumberChange(e)}}
+                        onKeyUp={(e) => {this.handleNumberChange(e)}}
                     />
                     <Form.TextInput
                         label="Email*"
@@ -515,9 +518,11 @@ class RetailerForm extends React.Component {
                         label="Pincode*"
                         type="text"
                         name="pincode"
+                        defaultValue={this.props.data ? pincode : ''}
                         //value={this.state.pincode}
                         error={pincodeErr.status ? pincodeErr.value : ''}
-                        onKeyDown={() => this.handleNumberChange(e)}
+                        onKeyDown={(e) => this.handleNumberChange(e)}
+                        onKeyUp={(e) => this.handleNumberChange(e)}
                         //onChange={(e) => this.handleNumberChange(e)}
                     />
                 </Form.FieldSet>

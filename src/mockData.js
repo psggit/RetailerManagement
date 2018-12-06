@@ -275,7 +275,7 @@ export const retailerData = [
         branch: 'Adayar',
         accountType: 'savings',
         IFSC: 'SBIN0038',
-        cancelledCheck: false,
+        cancelledCheck: true,
         exciseLicense: false,
         outletPhoto: false,
     },

@@ -48,7 +48,7 @@ class ManageRetailer extends React.Component {
         this.fetchDefaultData = this.fetchDefaultData.bind(this)
         this.fetchRetailerList = this.fetchRetailerList.bind(this)
         this.setResponseData = this.setResponseData.bind(this)
-        this.handleEditRetailer = this.handleEditRetailer.bind(this)
+        this.editOutletDetail = this.editOutletDetail.bind(this)
         this.onToggleChange = this.onToggleChange.bind(this)
     }
 
@@ -154,7 +154,7 @@ class ManageRetailer extends React.Component {
         }
     }
 
-    handleEditRetailer(item, action) {
+    editOutletDetail(item, action) {
         //console.log("item", item, this.props.history)
         this.props.history.push(`/home/manage-retailer/edit-retailer/${item.id}`, item)
     }
@@ -283,7 +283,7 @@ class ManageRetailer extends React.Component {
                         >
                             <Table.Column field="actions">
                                 {item => (
-                                    <Button icon="pencil" onClick={() => this.handleEditOrg(item, 'edit')} />
+                                    <Button icon="pencil" onClick={() => this.editOutletDetail(item, 'edit')} />
                                 )}
                             </Table.Column>
                             <Table.Column field="id" title="ID"/>

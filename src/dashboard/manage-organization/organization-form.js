@@ -106,7 +106,7 @@ class OrganizationForm extends React.Component {
         //this.handleSave = this.handleSave.bind(this)
         //this.handleKycFieldChange = this.handleKycFieldChange.bind(this)
         //this.handleOrganizationstatusChange = this.handleOrganizationstatusChange.bind(this)
-        this.handleNumberChange = this.handleNumberChange.bind(this)
+        //this.handleNumberChange = this.handleNumberChange.bind(this)
         this.handleTextChange = this.handleTextChange.bind(this)
         this.handleNumberChange = this.handleNumberChange.bind(this)
         this.handleEmailChange = this.handleEmailChange.bind(this) 
@@ -151,9 +151,9 @@ class OrganizationForm extends React.Component {
         this.length = 0
     
         switch(e.target.name) {
-            case 'panNumber':
-                length = 11
-            break;
+            // case 'panNumber':
+            //     length = 11
+            // break;
 
             // case 'cinNumber':
             //     length = 10
@@ -265,6 +265,7 @@ class OrganizationForm extends React.Component {
             mobileNoErr,
             emailIdErr
         } = this.state
+        const {mobileNo, pincode} = this.props.data
         return (
             // <Card width="800px">
                 <Form layout="label-on-top">
@@ -293,7 +294,7 @@ class OrganizationForm extends React.Component {
                             onChange={e => this.handleChange(e)}
                             align="horizontal"
                         >
-                            <Form.Radio.Option value="proprietorship">proprietorship</Form.Radio.Option>
+                            <Form.Radio.Option value="proprietorship">Proprietorship</Form.Radio.Option>
                             <Form.Radio.Option value="partnership">Partnership</Form.Radio.Option>
                             <Form.Radio.Option value="pvtltd">Pvt Ltd</Form.Radio.Option>
                             <Form.Radio.Option value="others">Others</Form.Radio.Option>
@@ -302,10 +303,10 @@ class OrganizationForm extends React.Component {
                             label="PAN Number*"
                             type="text"
                             name="panNumber"
-                            //value={this.state.panNumber}
+                            value={this.state.panNumber}
                             error={panNumberErr.status ? panNumberErr.value : ''}
-                            //onChange={(e) => this.handleTextChange(e)}
-                            onKeyDown={(e) => this.handleTextChange(e)}
+                            onChange={(e) => this.handleTextChange(e)}
+                            //onKeyDown={(e) => this.handleTextChange(e)}
                         />
                         <Form.TextInput
                             label="CIN Number*"
@@ -331,7 +332,7 @@ class OrganizationForm extends React.Component {
                                 { text: 'Verified', value: '1' },
                                 { text: 'Not Verified', value: '2' },
                             ]}
-                            onChange={(e) => this.handleDropdownChange(e)}
+                            onChange={(e) => this.handleChange(e)}
                         />
                         <Form.Select
                             label="Organization Status*"
@@ -341,7 +342,7 @@ class OrganizationForm extends React.Component {
                                 { text: 'Active', value: '1' },
                                 { text: 'Inactive', value: '2' },
                             ]}
-                            onChange={(e) => this.handleDropdownChange(e)}
+                            onChange={(e) => this.handleChange(e)}
                         />
                     </Form.FieldSet>
                     <Form.FieldSet label="Organization Contact Details">
@@ -373,8 +374,10 @@ class OrganizationForm extends React.Component {
                             type="text"
                             name="pincode"
                             //value={this.state.pincode}
+                            defaultValue={this.props.data ? pincode : ''}
                             error={pincodeErr.status ? pincodeErr.value : ''}
-                            onKeyDown={() => this.handleNumberChange(e)}
+                            onKeyDown={(e) => this.handleNumberChange(e)}
+                            onKeyUp={(e) => this.handleNumberChange(e)}
                             //onChange={(e) => this.handleNumberChange(e)}
                         />
                         <Form.TextInput
@@ -395,13 +398,15 @@ class OrganizationForm extends React.Component {
                         />
                         <Form.TextInput
                             label="Mobile No*"
-                            //type="text"
+                            type="text"
                             //maxLength={10}
                             name="mobileNo"
                             error={mobileNoErr.status ? mobileNoErr.value : ''}
                             //value={this.state.mobileNo}
                             //onChange={(e) => this.handleNumberChange(e)}
+                            defaultValue={this.props.data ? mobileNo : ''}
                             onKeyDown={(e) => {this.handleNumberChange(e)}}
+                            onKeyUp={(e) => this.handleNumberChange(e)}
                         />
                         <Form.TextInput
                             label="Email*"
