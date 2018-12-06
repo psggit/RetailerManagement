@@ -8,6 +8,7 @@ import ManageOrganization from './manage-organization/index'
 import CreateOrganization from './manage-organization/create-organization'
 import EditOrganization from './manage-organization/edit-organization'
 import ManageRetailer from './manage-retailer/index'
+import CreateRetailer from './manage-retailer/create-retailer';
 
 const history = createHistory()
 
@@ -101,6 +102,17 @@ class Dashboard extends React.Component {
                 // render={
                 //   props => (
                 //     <ManageRetailer {...props} />
+                //   )
+                // }
+              />
+
+              <Route
+                exact
+                path="/home/manage-retailer/create-retailer"
+                component={CreateRetailer}
+                // render={
+                //   props => (
+                //     <CreateOrganization {...props} />
                 //   )
                 // }
               /> 
