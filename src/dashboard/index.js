@@ -39,7 +39,7 @@ class Dashboard extends React.Component {
           //maxWidth: '1440px',
           margin: '0 auto',
           height: '100vh',
-          overflow: 'auto'
+          //overflow: 'auto'
         }}
       >
         <Navbar
@@ -85,7 +85,7 @@ class Dashboard extends React.Component {
 
               <Route
                 exact
-                path="/home/manage-organization/edit-organization"
+                path="/home/manage-organization/edit-organization/:organizationId"
                 //component={EditOrganization}
                 render={
                   props => (

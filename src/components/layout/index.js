@@ -7,7 +7,9 @@ const Layout = ({title, children}) => {
                 marginLeft: '240px',
                 marginTop: '60px',
                 padding: '60px',
-                width: 'calc(100% - 240px)'
+                width: 'calc(100% - 240px)',
+                height: 'calc(100vh - 60px',
+                overflow: 'auto'
             }}
         >
             <p

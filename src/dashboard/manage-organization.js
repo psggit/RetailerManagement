@@ -46,7 +46,7 @@ class ManageOrganization extends React.Component {
         this.getFilteredOrganisationList = this.getFilteredOrganisationList.bind(this)
         this.fetchDefaultData = this.fetchDefaultData.bind(this)
         this.fetchOrganisationList = this.fetchOrganisationList.bind(this)
-        this.setData = this.setData.bind(this)
+        this.setResponseData = this.setResponseData.bind(this)
         this.handleEditOrg = this.handleEditOrg.bind(this)
     }
 
@@ -55,7 +55,7 @@ class ManageOrganization extends React.Component {
             offset: 0,
             limit: this.pagesLimit,
             filter: null
-        }, this.setData)
+        }, this.setResponseData)
     }
 
     componentDidMount() {
@@ -79,7 +79,7 @@ class ManageOrganization extends React.Component {
             offset: queryObj.offset ? parseInt(queryObj.offset) : 0,
             limit: this.pagesLimit,
             filter: this.filter
-        }, this.setData)
+        }, this.setResponseData)
     }
 
     fetchOrganisationList(payloadObj, successCallback) {
@@ -128,20 +128,20 @@ class ManageOrganization extends React.Component {
             limit: this.pagesLimit,
             offset: 0,
             filter: this.filter
-        }, this.setData)
+        }, this.setResponseData)
     }
 
-    setData(response) {
+    setResponseData(response) {
         console.log("response", response)
     }
 
     handlePageChange(pageObj) {
-        console.log("handle page change", "active page", pageObj.activePage, "offset", activePage.offset)
+        //console.log("handle page change", "active page", pageObj.activePage, "offset", activePage.offset)
         this.setState({activePage: pageObj.activePage, pageOffset: pageObj.offset})
     }
 
     handleChange(e) {
-        console.log("event", e.target.value, e.target.name)
+        //console.log("event", e.target.value, e.target.name)
         this.setState({[e.target.name]: e.target.value})  
         if(e.target.name === "searchField" && e.target.value === "ID") {
             this.setState({
@@ -153,8 +153,8 @@ class ManageOrganization extends React.Component {
     }
 
     handleEditOrg(item, action) {
-        console.log("item", item, this.props.history)
-        this.props.history.push('/home/manage-organization/edit-organization', item)
+        //console.log("item", item, this.props.history)
+        this.props.history.push(`/home/manage-organization/edit-organization/${item.id}`, item)
     }
 
     resetFilter() {
@@ -166,7 +166,7 @@ class ManageOrganization extends React.Component {
     }
 
     render() {
-        const { activePage, pageOffset, itemCount} = this.state
+        //const { activePage, pageOffset, itemCount} = this.state
         return (
             <Layout title="Manage Organization">
                 <NavLink to={`/home/manage-organization/create-organization`}>
@@ -183,7 +183,7 @@ class ManageOrganization extends React.Component {
                             marginRight: '20px'
                         }}
                     >
-                        <p style={{ margin: '10px 0' }}>Organisation Field</p>
+                        <p style={{ margin: '10px 0' }}>Organization Field</p>
                         <Select
                             placeholder="Select an field..."
                             value={this.state.searchField}
