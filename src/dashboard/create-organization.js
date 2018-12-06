@@ -5,35 +5,26 @@ import { Form, Checkbox, Button, ButtonGroup } from '@auth0/cosmos'
 import { validateOrganizationName } from 'Utils/validators'
 import { emailRegex, } from 'Utils/regex'
 import { checkCtrlA, validateNumType } from 'Utils/logic-utils'
-//export const emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-//export const numberRegex = /^[0-9]$/
-//import { Form } from 'Styles/form-theme'
 
 class CreateOrganization extends React.Component {
     constructor() {
         super()
-        this.inputNameMap = {
-            organizationName: 'OrganizationName',
-            organizationType: 'OrganizationType',
-            incorporationDate: 'IncorporationDate',
-            cinNumber: 'CinNumber',
-            panNumber: 'PanNumber',
-            outletsCount: 'OutletsCount',
-            // KYCVerified: '',
-            // GSTNumber: '',
-            organizationStatus: 'OrganizationStatus',
-            organizationAddress: 'OrganizationAddress',
-            city: 'City',
-            state: 'State',
-            pincode: 'Pincode',
-            landlineNo: 'LandlineNo',
-            authorizedPerson: 'AuthorizedPerson',
-            mobileNo: 'MobileNo',
-            emailId: 'EmailId',
-        }
-
-        // this.functionNameMap = {
-        //     organizationName: validateOrganizationName
+        // this.inputNameMap = {
+        //     organizationName: 'OrganizationName',
+        //     organizationType: 'OrganizationType',
+        //     incorporationDate: 'IncorporationDate',
+        //     cinNumber: 'CinNumber',
+        //     panNumber: 'PanNumber',
+        //     outletsCount: 'OutletsCount',
+        //     organizationStatus: 'OrganizationStatus',
+        //     organizationAddress: 'OrganizationAddress',
+        //     city: 'City',
+        //     state: 'State',
+        //     pincode: 'Pincode',
+        //     landlineNo: 'LandlineNo',
+        //     authorizedPerson: 'AuthorizedPerson',
+        //     mobileNo: 'MobileNo',
+        //     emailId: 'EmailId',
         // }
 
         this.state = {
@@ -43,10 +34,8 @@ class CreateOrganization extends React.Component {
             cinNumber: '',
             panNumber: '',
             outletsCount: 0,
-            //KYCVerified: '',
             selectedKycIdx: 1,
             GSTNumber: '',
-            //organizationStatus: '',
             selectedOrganizationStatusIdx: 1,
             organizationAddress: '',
             city: '',
@@ -56,6 +45,19 @@ class CreateOrganization extends React.Component {
             authorizedPerson: '',
             mobileNo: '',
             emailId: '',
+            
+            photo: false,
+            pancard: false,
+            address: false,
+            
+            partnershipPancard: false,
+            partnershipDeed: false,
+            partnershipLOA: false,
+        
+            pvtPancard: false,
+            pvtCOI: false,
+            pvtLOA: false,
+            
             organizationNameErr: {
                 value: '',
                 status: false
@@ -80,18 +82,10 @@ class CreateOrganization extends React.Component {
                 value: '',
                 status: false
             },
-            // KYCVerifiedErr: {
-            //     value: '',
-            //     status: false
-            // },
             GSTNumberErr: {
                 value: '',
                 status: false
             },
-            // organizationStatusErr: {
-            //     value: '',
-            //     status: false
-            // },
             organizationAddressErr: {
                 value: '',
                 status: false
@@ -132,36 +126,15 @@ class CreateOrganization extends React.Component {
         this.handleNumberChange = this.handleNumberChange.bind(this)
         this.handleTextChange = this.handleTextChange.bind(this)
         this.handleNumberChange = this.handleNumberChange.bind(this)
-        this.handleEmailChange = this.handleEmailChange.bind(this)   
+        this.handleEmailChange = this.handleEmailChange.bind(this) 
+        this.handleSelectChange = this.handleSelectChange.bind(this)
     }
 
     handleChange(e) {
         console.log("handle change", e.target.value, e.target.name, e.target.type)
-        //this.setState({[e.target.name]: e.target.value})
-        //const errName = `${e.target.name}Err`
-        
-        //const fnExp = eval(`this.validate${this.inputNameMap[e.target.name]}`)
-        //const fnExp = eval(`${this.functionNameMap[e.target.name]}`)
-        //console.log("function", fnExp)
-        // if((e.target.type === "text" || e.target.type === "textarea" || e.target.type === "date") && e.target.name !== "emailId") {
-        //     this.setState({
-        //         [e.target.name]: e.target.value,
-        //         [errName]: this.validateTextField(e.target.value, e.target.name)
-        //     })
-        // } else if(e.target.type === "text" && e.target.name === "emailId") {
-        //     this.setState({
-        //         [e.target.name]: e.target.value,
-        //         [errName]: this.validateEmail(e.target.value)
-        //     })
-        // } else {
         this.setState({
             [e.target.name]: e.target.value
         })
-        //}
-        // this.setState({
-        //     [e.target.name]: e.target.value,
-        //     [errName]: fnExp(e.target.value)
-        // })
     }
 
     handleTextChange(e) {
@@ -224,7 +197,11 @@ class CreateOrganization extends React.Component {
     handleOrganizationstatusChange(e) {
         this.setState({selectedOrganizationStatusIdx: e.target.value})
     }
-    
+
+    handleSelectChange(e) {
+        this.setState({[e.target.name]: e.target.checked})
+    }
+
     validateTextField(value, fieldName) {
         if (!value.length) {
           return {
@@ -294,6 +271,17 @@ class CreateOrganization extends React.Component {
             authorizedPerson,
             mobileNo,
             emailId,
+            photo,
+            pancard,
+            address,
+            
+            partnershipPancard,
+            partnershipDeed,
+            partnershipLOA,
+        
+            pvtPancard,
+            pvtCOI,
+            pvtLOA
         } = this.state
         // console.log("Form fields", organizationName,
         // organizationType ,
@@ -311,7 +299,18 @@ class CreateOrganization extends React.Component {
         // landlineNo,
         // authorizedPerson,
         // mobileNo,
-        // emailId)
+        // emailId,
+        // photo,
+        // pancard,
+        // address,
+        
+        // partnershipPancard,
+        // partnershipDeed,
+        // partnershipLOA,
+    
+        // pvtPancard,
+        // pvtCOI,
+        // pvtLOA)
     }
 
     render() {
@@ -367,50 +366,6 @@ class CreateOrganization extends React.Component {
                                 <Form.Radio.Option value="pvtltd">Pvt Ltd</Form.Radio.Option>
                                 <Form.Radio.Option value="others">Others</Form.Radio.Option>
                             </Form.Radio>
-                            {/* <div style={{marginBottom: '16px'}}>
-                                <div style={{marginBottom: '8px'}}>
-                                    <label>Organization Type*: </label>
-                                </div>
-                                <div style={{display: 'flex', width: '100%', justifyContent: 'space-between'}}>
-                                    <Checkbox
-                                        name="proprietorship"
-                                        onChange={evt => this.handleChange(evt)}
-                                        value="Proprietorship"
-                                        checked={true}
-                                        //checked={this.state.selected.indexOf('one') >= 0}
-                                        align="vertical"
-                                    >
-                                        Proprietorship
-                                    </Checkbox>
-                                    <Checkbox
-                                        name="partnership"
-                                        onChange={evt => this.handleChange(evt)}
-                                        value="Partnership"
-                                        //checked={this.state.selected.indexOf('one') >= 0}
-                                        align="vertical"
-                                    >
-                                        Partnership
-                                    </Checkbox>
-                                    <Checkbox
-                                        name="pvtltd"
-                                        onChange={evt => this.handleChange(evt)}
-                                        value="Pvt Ltd"
-                                        //checked={this.state.selected.indexOf('one') >= 0}
-                                        align="vertical"
-                                    >
-                                        Pvt Ltd
-                                    </Checkbox>
-                                    <Checkbox
-                                        name="others"
-                                        onChange={evt => this.handleChange(evt)}
-                                        value="Others"
-                                        //checked={this.state.selected.indexOf('one') >= 0}
-                                        align="vertical"
-                                    >
-                                        Other(s)
-                                    </Checkbox>
-                                </div>
-                            </div> */}
                             <Form.TextInput
                                 label="PAN Number*"
                                 type="text"
@@ -445,13 +400,6 @@ class CreateOrganization extends React.Component {
                                 ]}
                                 onChange={(e) => this.handleKycFieldChange(e)}
                             />
-                            {/* <Form.TextInput
-                                label="KYC Verified*"
-                                type="text"
-                                name="KYCVerified"
-                                value={this.state.KYCVerified}
-                                onChange={(e) => this.handleChange(e)}
-                            /> */}
                             <Form.Select
                                 label="Organization Status*"
                                 value={this.state.selectedOrganizationStatusIdx}
@@ -466,7 +414,6 @@ class CreateOrganization extends React.Component {
                         <Form.FieldSet label="Organization Contact Details">
                             <Form.TextArea 
                                 label="Organization Address*" 
-                                //placeholder="Add a lot of text here"
                                 name="organizationAddress"
                                 error={organizationAddressErr.status ? organizationAddressErr.value : ''}
                                 value={this.state.organizationAddress}
@@ -528,6 +475,108 @@ class CreateOrganization extends React.Component {
                                 value={this.state.emailId}
                                 onChange={(e) => this.handleEmailChange(e)}
                             />
+                        </Form.FieldSet>
+                        <Form.FieldSet label="Documents Submitted as Proof">
+                            <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: '20px'}}>    
+                                <Checkbox
+                                    name="photo"
+                                    onChange={e => this.handleSelectChange(e)}
+                                    value="photo"
+                                    checked={this.state.photo}
+                                >
+                                    Photo of Authorized Signatory
+                                </Checkbox>
+                                <Checkbox
+                                    name="pancard"
+                                    onChange={e => this.handleSelectChange(e)}
+                                    value="pancard"
+                                    checked={this.state.pancard}
+                                >
+                                    PAN of Authorized Signatory
+                                </Checkbox>
+                                <Checkbox
+                                    name="address"
+                                    onChange={e => this.handleSelectChange(e)}
+                                    value="address"
+                                    checked={this.state.address}
+                                >
+                                    Address proof of Authorized Signatory
+                                </Checkbox>
+                            </div>
+                            <div style={{marginBottom: '20px'}}>
+                                <div style={{marginBottom: '8px'}}>
+                                    <label>For (Partnership firm/LLP)</label>
+                                </div>
+                                <div style={{display: 'flex'}}>
+                                    <div style={{marginRight: '20px'}}>
+                                        <Checkbox
+                                            name="partnershipPancard"
+                                            onChange={e => this.handleSelectChange(e)}
+                                            value="partnershipPancard"
+                                            checked={this.state.partnershipPancard}
+                                        >
+                                            PAN
+                                        </Checkbox>
+                                    </div>
+                                    <div style={{marginRight: '20px'}}>
+                                        <Checkbox
+                                            name="partnershipDeed"
+                                            onChange={e => this.handleSelectChange(e)}
+                                            value="partnershipDeed"
+                                            checked={this.state.partnershipDeed}
+                                        >
+                                            Partnership Deed
+                                        </Checkbox>
+                                    </div>
+                                    <div style={{marginRight: '20px'}}>
+                                        <Checkbox
+                                            name="partnershipLOA"
+                                            onChange={e => this.handleSelectChange(e)}
+                                            value="partnershipLOA"
+                                            checked={this.state.partnershipLOA}
+                                        >
+                                            LOA
+                                        </Checkbox>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style={{marginBottom: '20px'}}>
+                                <div style={{marginBottom: '8px'}}>
+                                    <label>For (Pvt Ltd)</label>
+                                </div>
+                                <div style={{display: 'flex'}}>
+                                    <div style={{marginRight: '20px'}}>
+                                        <Checkbox
+                                            name="pvtPancard"
+                                            onChange={e => this.handleSelectChange(e)}
+                                            value="pvtPancard"
+                                            checked={this.state.pvtPancard}
+                                        >
+                                            PAN
+                                        </Checkbox>
+                                    </div>
+                                    <div style={{marginRight: '20px'}}>
+                                        <Checkbox
+                                            name="pvtCOI"
+                                            onChange={e => this.handleSelectChange(e)}
+                                            value="pvtCOI"
+                                            checked={this.state.pvtCOI}
+                                        >
+                                            COI
+                                        </Checkbox>
+                                    </div>
+                                    <div style={{marginRight: '20px'}}>
+                                        <Checkbox
+                                            name="pvtLOA"
+                                            onChange={e => this.handleSelectChange(e)}
+                                            value="pvtLOA"
+                                            checked={this.state.pvtLOA}
+                                        >
+                                            Board Resolution / LOA
+                                        </Checkbox>
+                                    </div>
+                                </div>
+                            </div>
                         </Form.FieldSet>
                         <ButtonGroup align="right">
                             <Button onClick={(e) => this.handleSave(e)}> Save </Button>
