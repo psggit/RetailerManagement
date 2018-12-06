@@ -4,10 +4,10 @@ import Navbar from 'Components/navbar'
 import createHistory from 'history/createBrowserHistory'
 import { Route, Switch } from 'react-router-dom'
 import { Router } from 'react-router'
-import ManageOrganization from './manage-organization'
-import CreateOrganization from './create-organization'
-import EditOrganization from './edit-organization'
-import ManageRetailer from './manage-retailer'
+import ManageOrganization from './manage-organization/index'
+import CreateOrganization from './manage-organization/create-organization'
+import EditOrganization from './manage-organization/edit-organization'
+import ManageRetailer from './manage-retailer/index'
 
 const history = createHistory()
 

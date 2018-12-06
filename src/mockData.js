@@ -234,3 +234,47 @@ export const organizationData = [
         pvtLOA: false,
     }
 ]
+
+export const retailerData = [
+    {
+        id: '1001',
+        retailerName: 'Contessa Wines',
+        retailerAddress: 'No 127/1, 1st Main Road, Sheshadripuram',
+        retailerStatus: 'active',
+        state: 'Tamilnadu',
+        city: 'Chennai',
+        //retailerStatus: 'active'
+    },
+    {
+        id: '1002',
+        retailerName: 'Metro Spirit',
+        retailerAddress: 'No 60/3, 3rd Phase, Nagappa Layout, Vidyaranyapura Post',
+        retailerStatus: 'inactive',
+        state: 'Tamilnadu',
+        city: 'Chennai'
+    },
+    {
+        id: '1003',
+        retailerName: 'Santhosh Wines',
+        retailerAddress: 'No 1788/C, 9th Cross, 5th Main, Hampi Nagar, R P C Layout',
+        retailerStatus: 'active',
+        state: 'Tamilnadu',
+        city: 'Chennai'
+    },
+    {
+        id: '1004',
+        retailerName: 'Venkateshwara Wines',
+        retailerAddress: 'No 2, 1st Stage, 5th Phase, West Of Chord Road, Rajajinagar',
+        retailerStatus: 'active',
+        state: 'Tamilnadu',
+        city: 'Chennai'
+    },
+    {
+        id: '1005',
+        retailerName: 'Takkes Wines Center',
+        retailerAddress: 'No 10, 8th Cross Malleswaram',
+        retailerStatus: 'active',
+        state: 'Tamilnadu',
+        city: 'Chennai'
+    }
+]

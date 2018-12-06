@@ -25,6 +25,7 @@ class PaginationBar extends React.Component {
   }
 
   render() {
+    //console.log("pag props", this.props)
     return (
       <Pagination 
           page={this.props.activePage} 
