@@ -2,7 +2,7 @@ import React from 'react'
 import { Form, Checkbox, Button, ButtonGroup } from '@auth0/cosmos'
 import { validateOrganizationName } from 'Utils/validators'
 import { emailRegex, } from 'Utils/regex'
-import { checkCtrlA, validateNumType } from 'Utils/logic-utils'
+import { checkCtrlA, validateNumType, checkCtrlV } from 'Utils/logic-utils'
 
 class RetailerForm extends React.Component {
     constructor(props) {
@@ -172,7 +172,7 @@ class RetailerForm extends React.Component {
             default:
             break;
         }
-        if(validateNumType(e.keyCode) || checkCtrlA(e)) {
+        if(validateNumType(e.keyCode) || checkCtrlA(e) || checkCtrlV(e)) {
             this.setState({ 
                 [e.target.name]: e.target.value,
                 [errName]: this.validateNumberField({value: e.target.value, length: this.length, fieldName: e.target.name})
@@ -294,6 +294,7 @@ class RetailerForm extends React.Component {
                         onChange={(e) => this.handleChange(e)}
                     />
                     <Form.TextInput
+                        placeholder="101"
                         label="KSBCL Code*"
                         type="text"
                         name="ksbclCode"
@@ -302,6 +303,7 @@ class RetailerForm extends React.Component {
                         onChange={(e) => this.handleTextChange(e)}
                     />
                     <Form.TextInput
+                        placeholder="Goa Wines Patto"
                         label="Outlet Name*"
                         type="text"
                         name="outletName"
@@ -518,6 +520,7 @@ class RetailerForm extends React.Component {
                         onChange={(e) => this.handleEmailChange(e)}
                     />
                     <Form.TextInput
+                        placeholder="15.4935224,73.8340721"
                         label="GPS Coordinates*"
                         type="text"
                         name="gpsCoordinates"

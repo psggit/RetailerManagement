@@ -2,7 +2,7 @@ import React from 'react'
 import { Form, Checkbox, Button, ButtonGroup } from '@auth0/cosmos'
 import { validateOrganizationName } from 'Utils/validators'
 import { emailRegex, } from 'Utils/regex'
-import { checkCtrlA, validateNumType } from 'Utils/logic-utils'
+import { checkCtrlA, validateNumType, checkCtrlV } from 'Utils/logic-utils'
 
 class OrganizationForm extends React.Component {
 
@@ -106,12 +106,14 @@ class OrganizationForm extends React.Component {
 
         this.handleChange = this.handleChange.bind(this)
         this.handleTextChange = this.handleTextChange.bind(this)
+        //this.handleTextLengthValidation = this.handleTextLengthValidation.bind(this)
         this.handleNumberChange = this.handleNumberChange.bind(this)
         this.handleEmailChange = this.handleEmailChange.bind(this) 
         this.handleSelectChange = this.handleSelectChange.bind(this)
         this.getData = this.getData.bind(this)
         this.validateTextField = this.validateTextField.bind(this)
-        this.validateNumberField = this.validateNumberField.bind(this)
+        //this.validateNumberField = this.validateNumberField.bind(this)
+        this.checkLength = this.checkLength.bind(this)
         this.validateEmail = this.validateEmail.bind(this)
     }
 
@@ -134,6 +136,28 @@ class OrganizationForm extends React.Component {
             [errName]: this.validateTextField(e.target.value, e.target.name)
         })
     }
+
+    // handleTextLengthValidation(e) {
+    //     //console.log("text validation", e.target.name, e.target.value)
+    //     const errName = `${e.target.name}Err`
+    //     this.length = 0
+    //     switch(e.target.name) {
+    //         case 'panNumber':
+    //             this.length = 10;
+    //         break;
+
+    //         default:
+    //         break;
+    //     }
+    //     this.setState({
+    //         [e.target.name]: e.target.value,
+    //         [errName]: this.checkLength({
+    //                         value: e.target.value, 
+    //                         fieldName: e.target.name,
+    //                         length: this.length
+    //                    })
+    //     })
+    // }
 
     handleEmailChange(e) {
         const errName = `${e.target.name}Err`
@@ -169,10 +193,10 @@ class OrganizationForm extends React.Component {
             default:
             break;
         }
-        if(validateNumType(e.keyCode) || checkCtrlA(e)) {
+        if(validateNumType(e.keyCode) || checkCtrlA(e) || checkCtrlV(e)) {
             this.setState({ 
                 [e.target.name]: e.target.value,
-                [errName]: this.validateNumberField({value: e.target.value, length: this.length, fieldName: e.target.name})
+                [errName]: this.checkLength({value: e.target.value, length: this.length, fieldName: e.target.name})
             })
         } else {
             e.preventDefault()
@@ -227,15 +251,18 @@ class OrganizationForm extends React.Component {
         }
     }
 
-    validateNumberField({value, length, fieldName}) {
+    checkLength({value, length, fieldName}) {
+        //console.log("value", value.length, length)
         if (!value.length) {
           //this.setState({errorFound: true})
+          //console.log("if")
           return {
             status: true,
             value: `${fieldName} is required`
           }
-        } else if (isNaN(value) || value.length !== length) {
+        } else if (isNaN(value) || (value.length) !== (length)) {
           //this.setState({errorFound: true})
+          //console.log("else", isNaN(value), parseInt(value.length) !== parseInt(length))
           return {
             status: true,
             value: `${fieldName} is invalid`
@@ -272,6 +299,7 @@ class OrganizationForm extends React.Component {
             <Form layout="label-on-top">
                 <Form.FieldSet label="Organization Details">
                     <Form.TextInput
+                        placeholder="Crystal Wines"
                         label="Organization Name*"
                         type="text"
                         name="organizationName"
@@ -301,15 +329,18 @@ class OrganizationForm extends React.Component {
                         <Form.Radio.Option value="others">Others</Form.Radio.Option>
                     </Form.Radio>
                     <Form.TextInput
+                        placeholder="AFEPC1427J"
                         label="PAN Number*"
                         type="text"
                         name="panNumber"
-                        value={this.state.panNumber}
+                        defaultValue={this.props.data ? this.props.data.panNumber : ''}
                         error={panNumberErr.status ? panNumberErr.value : ''}
-                        onChange={(e) => this.handleTextChange(e)}
-                        //onKeyDown={(e) => this.handleTextChange(e)}
+                        //onChange={(e) => this.handleTextValidation(e)}
+                        onKeyDown={(e) => this.handleTextChange(e)}
+                        onKeyUp={(e) => this.handleTextChange(e)}
                     />
                     <Form.TextInput
+                        placeholder="29560309716"
                         label="CIN Number*"
                         type="text"
                         name="cinNumber"
@@ -391,6 +422,7 @@ class OrganizationForm extends React.Component {
                         onChange={(e) => this.handleChange(e)}
                     />
                     <Form.TextInput
+                        placeholder="389887"
                         label="Pincode*"
                         type="text"
                         name="pincode"
