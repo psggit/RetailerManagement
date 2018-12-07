@@ -114,7 +114,7 @@ class Dashboard extends React.Component {
                 //component={CreateRetailer}
                 render={
                   props => (
-                    <CreateOrganization {...props} />
+                    <CreateRetailer {...props} />
                   )
                 }
               />
