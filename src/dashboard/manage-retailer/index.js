@@ -45,7 +45,7 @@ class ManageRetailer extends React.Component {
         this.handlePageChange = this.handlePageChange.bind(this)
         this.resetFilter = this.resetFilter.bind(this)
         this.handleChange = this.handleChange.bind(this)
-        this.handleOrganizationChange = this.handleOrganizationChange.bind(this)
+        //this.handleOrganizationChange = this.handleOrganizationChange.bind(this)
         this.getFilteredRetailersList = this.getFilteredRetailersList.bind(this)
         this.fetchDefaultData = this.fetchDefaultData.bind(this)
         this.fetchRetailerList = this.fetchRetailerList.bind(this)
