@@ -263,14 +263,14 @@ class ManageRetailer extends React.Component {
                             loading
                             items={[]}
                         >   
-                            <Table.Column field="id" title="ID" width="7%" />
-                            <Table.Column field="outletName" title="Organisation Name" width="15%"/>
-                            <Table.Column field="outletAddress" title="Organisation Type" width="15%"/>
-                            <Table.Column field="outletsCount" title="Outlets Count" width="13%"/>
-                            <Table.Column field="selectedKycIdx" title="KYC Status" width="10%"/>
-                            <Table.Column field="selectedOrganizationStatusIdx" title="Organisation Status" width="15%"/>
-                            <Table.Column field="panNumber" title="PAN Number" width="10%"/>
-                            <Table.Column field="cinNumber" title="CIN Number" width="15%"/>
+                            <Table.Column field="id" title="ID" />
+                            <Table.Column field="outletName" title="Outlet Name" />
+                            <Table.Column field="outletAddress" title="Outlet Address" />
+                            {/* <Table.Column field="outletsCount" title="Outlets Count" width="13%"/>
+                            <Table.Column field="selectedKycIdx" title="KYC Status" width="10%"/> */}
+                            <Table.Column field="state" title="State" />
+                            <Table.Column field="city" title="City" />
+                            {/* <Table.Column field="cinNumber" title="CIN Number" width="15%"/> */}
                         </Table>
                     </div>
                 }
@@ -287,7 +287,7 @@ class ManageRetailer extends React.Component {
                                 )}
                             </Table.Column>
                             <Table.Column field="id" title="ID"/>
-                            <Table.Column field="outletName" title="Outtlet Name"/>
+                            <Table.Column field="outletName" title="Outlet Name"/>
                             <Table.Column field="outletAddress" title="Outlet Address"/>
                             {/* <Table.Column field="retailerStatus" title="Retailer Status"/> */}
                             <Table.Column field="state" title="State"/>

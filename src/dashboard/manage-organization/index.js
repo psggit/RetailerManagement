@@ -48,6 +48,7 @@ class ManageOrganization extends React.Component {
         this.fetchOrganisationList = this.fetchOrganisationList.bind(this)
         this.setResponseData = this.setResponseData.bind(this)
         this.handleEditOrg = this.handleEditOrg.bind(this)
+        this.handleRowClick = this.handleRowClick.bind(this)
     }
 
     fetchDefaultData() {
@@ -165,6 +166,11 @@ class ManageOrganization extends React.Component {
         })
     }
 
+    handleRowClick(e,item) {
+        console.log("row item", item)
+        this.props.history.push(`/home/manage-organization/organization-details/${item.id}`, item)
+    }
+
     render() {
         //const { activePage, pageOffset, itemCount} = this.state
         return (
@@ -274,6 +280,7 @@ class ManageOrganization extends React.Component {
                         <Table
                             emptyMessage={this.state.loading ? <Spinner /> : 'No records found'}
                             items={organizationData}
+                            onRowClick={(e,item) => this.handleRowClick(e,item)}
                         >
                             <Table.Column field="actions">
                                 {item => (

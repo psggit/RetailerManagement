@@ -6,6 +6,18 @@ const CardComponent =  styled.div`
     width: ${props => props.width ? props.width : '500px'};
     box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
     padding: 20px;
+
+    b {
+        font-weight: bold;
+    }
+
+    h3 {
+        font-size: 16px;
+        font-weight: 600;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        border-bottom: 1px solid rgb(223, 223, 223);
+    }
 `;
 
 const Card = ({width, children}) => {

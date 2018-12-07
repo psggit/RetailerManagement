@@ -519,7 +519,6 @@ class OrganizationForm extends React.Component {
                     </div>
                 </Form.FieldSet>
             </Form>
-            
         )
     }
 }

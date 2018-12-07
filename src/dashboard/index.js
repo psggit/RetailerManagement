@@ -7,6 +7,7 @@ import { Router } from 'react-router'
 import ManageOrganization from './manage-organization/index'
 import CreateOrganization from './manage-organization/create-organization'
 import EditOrganization from './manage-organization/edit-organization'
+import OrganizationDetails from './manage-organization/organization-details'
 import ManageRetailer from './manage-retailer/index'
 import CreateRetailer from './manage-retailer/create-retailer';
 import EditRetailer from './manage-retailer/edit-retailer';
@@ -81,6 +82,17 @@ class Dashboard extends React.Component {
                 render={
                   props => (
                     <EditOrganization {...props} />
+                  )
+                }
+              />
+            
+              <Route
+                exact
+                path="/home/manage-organization/organization-details/:organizationId"
+                //component={EditOrganization}
+                render={
+                  props => (
+                    <OrganizationDetails {...props} />
                   )
                 }
               />
