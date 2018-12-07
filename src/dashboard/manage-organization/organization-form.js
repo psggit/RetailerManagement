@@ -15,14 +15,14 @@ class OrganizationForm extends React.Component {
             cinNumber: props.data ? props.data.cinNumber : '',
             panNumber: props.data ? props.data.panNumber : '',
             outletsCount: props.data ? props.data.outletsCount : 0,
-            selectedKycIdx: props.data ? props.data.selectedKycIdx : 1,
+            selectedKycIdx: props.data ? (props.data.selectedKycIdx === "true" ? 1 : 2) : 1,
             GSTNumber: props.data ? props.data.GSTNumber : '',
-            selectedOrganizationStatusIdx: props.data ? props.data.selectedOrganizationStatusIdx : 1,
+            selectedOrganizationStatusIdx: props.data ? (props.data.selectedOrganizationStatusIdx === "true" ? 1 : 2) : 1,
             organizationAddress: props.data ? props.data.organizationAddress : '',
-            city: props.data ? props.data.city : '',
-            selectedCityIdx: props.data ? props.data.city_id : 1,
-            state: props.data ? props.data.state : '',
-            selectedStateIdx: props.data ? props.data.state_id : 1,
+            //city: props.data ? props.data.city : '',
+            selectedCityIdx: props.data ? props.data.selectedCityIdx : 1,
+            //state: props.data ? props.data.state : '',
+            selectedStateIdx: props.data ? props.data.selectedStateIdx : 1,
             pincode: props.data ? props.data.pincode : '',
             landlineNo: props.data ? props.data.landlineNo : '',
             authorizedPerson: props.data ? props.data.authorizedPerson : '',
@@ -74,14 +74,14 @@ class OrganizationForm extends React.Component {
                 value: '',
                 status: false
             },
-            cityErr: {
-                value: '',
-                status: false
-            },
-            stateErr: {
-                value: '',
-                status: false
-            },
+            // cityErr: {
+            //     value: '',
+            //     status: false
+            // },
+            // stateErr: {
+            //     value: '',
+            //     status: false
+            // },
             pincodeErr: {
                 value: '',
                 status: false
@@ -259,8 +259,8 @@ class OrganizationForm extends React.Component {
             GSTNumberErr,
             organizationStatusErr,
             organizationAddressErr,
-            cityErr,
-            stateErr,
+            // cityErr,
+            // stateErr,
             pincodeErr,
             landlineNoErr,
             authorizedPersonErr,
@@ -354,7 +354,7 @@ class OrganizationForm extends React.Component {
                         value={this.state.organizationAddress}
                         onChange={(e) => this.handleTextChange(e)} 
                     />
-                    <Form.TextInput
+                    {/* <Form.TextInput
                         label="City*"
                         type="text"
                         name="city"
@@ -369,6 +369,26 @@ class OrganizationForm extends React.Component {
                         error={stateErr.status ? stateErr.value : ''}
                         value={this.state.state}
                         onChange={(e) => this.handleTextChange(e)}
+                    /> */}
+                    <Form.Select
+                        label="State*"
+                        value={this.state.selectedStateIdx}
+                        name="selectedStateIdx"
+                        options={[
+                            { text: 'Tamilnadu', value: '1' },
+                            { text: 'Karnataka', value: '2' },
+                        ]}
+                        onChange={(e) => this.handleChange(e)}
+                    />
+                    <Form.Select
+                        label="City*"
+                        value={this.state.selectedCityIdx}
+                        name="selectedCityIdx"
+                        options={[
+                            { text: 'Chennai', value: '1' },
+                            { text: 'Coimbatore', value: '2' },
+                        ]}
+                        onChange={(e) => this.handleChange(e)}
                     />
                     <Form.TextInput
                         label="Pincode*"
