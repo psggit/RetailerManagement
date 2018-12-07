@@ -17,7 +17,7 @@ class Dashboard extends React.Component {
   constructor() {
     super()
     this.state = {
-      currentRoute: location.pathname.split('/')[2] || 'live-ottp',
+      currentRoute: location.pathname.split('/')[2] || 'manage-organization',
     }
   }
 
@@ -47,8 +47,8 @@ class Dashboard extends React.Component {
         <Navbar
           history={history} 
           menuItems={[
-            { label: 'Manage Retailer', value: 'manage-retailer' },
-            { label: 'Manage Organization', value: 'manage-organization' }
+            { label: 'Manage Organization', value: 'manage-organization' },
+            { label: 'Manage Retailer', value: 'manage-retailer' }
           ]}
           currentRoute={this.state.currentRoute}
         />
@@ -56,24 +56,13 @@ class Dashboard extends React.Component {
           <SideMenu
             history={history}
             menuItems={[
-              { label: 'Manage Retailer', value: 'manage-retailer' },
-              { label: 'Manage Organization', value: 'manage-organization' }
+              { label: 'Manage Organization', value: 'manage-organization' },
+              { label: 'Manage Retailer', value: 'manage-retailer' }
             ]}
             currentRoute={this.state.currentRoute}
           />
           <Router history={history}>
             <Switch>
-              <Route
-                exact
-                path="/home/manage-organization"
-                //component={ManageOrganization}
-                render={
-                  props => (
-                    <ManageOrganization {...props} />
-                  )
-                }
-              />
-
               <Route
                 exact
                 path="/home/manage-organization/create-organization"
@@ -128,16 +117,16 @@ class Dashboard extends React.Component {
                   )
                 }
               /> 
-
-              {/* <Route
-                exact
-                path="/home/history-ottp"
+              <Route
+                //exact
+                path="/home"
+                //component={ManageOrganization}
                 render={
                   props => (
-                    <HistoryOttp {...props} />
+                    <ManageOrganization {...props} />
                   )
                 }
-              />  */}
+              />
             </Switch>
           </Router>
         </div>
