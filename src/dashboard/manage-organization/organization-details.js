@@ -9,38 +9,7 @@ class OrganizationDetails extends React.Component {
 
     render() {
         const data = this.props.history.location.state
-        // id: "1001",
-        
-        // organizationName: 'Infinity Hospitality',
-        // organizationType: 'partnership',
-        // incorporationDate: '12/05/2019',
-        // cinNumber: '29521276149',
-        // panNumber: 'AAFFI2896H',
-        // outletsCount: 0,
-        // selectedKycIdx: 'verified',
-        // GSTNumber: '8123798127389123',
-        // selectedOrganizationStatusIdx: 'active',
-        // organizationAddress: 'Adayar',
-        // city: 'Chennai',
-        // state: 'Tamilnadu',
-        // pincode: '600086',
-        // landlineNo: '044 4356782',
-        // authorizedPerson: 'Madhan',
-        // mobileNo: '1234567890',
-        // emailId: 'abc@gmailcom',
-        
-        // photo: true,
-        // pancard: false,
-        // address: false,
-        
-        // partnershipPancard: true,
-        // partnershipDeed: false,
-        // partnershipLOA: false,
-    
-        // pvtPancard: true,
-        // pvtCOI: false,
-        // pvtLOA: false,
-
+       
         return(
             <Layout title="Organization Details">
                 <Card width="500px">

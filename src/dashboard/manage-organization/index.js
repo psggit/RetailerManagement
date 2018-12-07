@@ -153,8 +153,9 @@ class ManageOrganization extends React.Component {
         }
     }
 
-    handleEditOrg(item, action) {
+    handleEditOrg(e,item, action) {
         //console.log("item", item, this.props.history)
+        e.stopPropagation()
         this.props.history.push(`/home/manage-organization/edit-organization/${item.id}`, item)
     }
 
@@ -284,7 +285,7 @@ class ManageOrganization extends React.Component {
                         >
                             <Table.Column field="actions">
                                 {item => (
-                                    <Button icon="pencil" onClick={() => this.handleEditOrg(item, 'edit')} />
+                                    <Button icon="pencil" onClick={(e) => this.handleEditOrg(e, item, 'edit')} />
                                 )}
                             </Table.Column>
                             <Table.Column field="id" title="ID" width="7%" />
