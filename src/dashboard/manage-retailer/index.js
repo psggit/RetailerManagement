@@ -26,6 +26,7 @@ class ManageRetailer extends React.Component {
             loading: false,
             retailerListCount: 0,
             data: [],
+            organizationList: [],
             operators:  [
                 {text: 'ID', value: 'ID'},
                 {text: 'LIKE', value: 'LIKE'},
@@ -44,15 +45,19 @@ class ManageRetailer extends React.Component {
         this.handlePageChange = this.handlePageChange.bind(this)
         this.resetFilter = this.resetFilter.bind(this)
         this.handleChange = this.handleChange.bind(this)
+        this.handleOrganizationChange = this.handleOrganizationChange.bind(this)
         this.getFilteredRetailersList = this.getFilteredRetailersList.bind(this)
         this.fetchDefaultData = this.fetchDefaultData.bind(this)
         this.fetchRetailerList = this.fetchRetailerList.bind(this)
         this.setResponseData = this.setResponseData.bind(this)
         this.editOutletDetail = this.editOutletDetail.bind(this)
         this.onToggleChange = this.onToggleChange.bind(this)
+        this.fetchOrganizationList = this.fetchOrganizationList.bind(this)
+        this.formatOrganizationList = this.formatOrganizationList.bind(this)
     }
 
     fetchDefaultData() {
+        this.fetchOrganizationList(this.formatOrganizationList)
         this.fetchRetailerList({
             offset: 0,
             limit: this.pagesLimit,
@@ -106,6 +111,27 @@ class ManageRetailer extends React.Component {
         //   })
     }
 
+    fetchOrganizationList(organizationListSuccessCallback) {
+        this.setState({organizationList: []})
+        // POST({
+        //   api: '/excisePortal/ottpHistory',
+        //   apiBase: 'agamotto',
+        //   handleError: true,
+        //   data: {}
+        // })
+        //   .then((json) => {
+        //     this.setState({
+        //       data: json.data,
+        //       count: json.count,
+        //       loading: false
+        //     })
+               //organizationListSuccessCallback(json)
+        //   })
+        //   .catch(err => {
+        //     err.response.json().then(json => { Notify("danger", json.message) })
+        //   })
+    }
+
     getFilteredRetailersList() {
         const { searchField, searchOperator, searchText } = this.state
 
@@ -133,6 +159,10 @@ class ManageRetailer extends React.Component {
         }, this.setResponseData)
     }
 
+    formatOrganizationList(data) {
+        console.log("Fetched org list with state details", data)
+    }
+
     setResponseData(response) {
         console.log("response", response)
     }
@@ -153,6 +183,10 @@ class ManageRetailer extends React.Component {
             })
         }
     }
+
+    // handleOrganizationChange(e) {
+
+    // }
 
     editOutletDetail(item, action) {
         //console.log("item", item, this.props.history)

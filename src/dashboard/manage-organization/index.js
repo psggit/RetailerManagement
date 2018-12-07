@@ -52,6 +52,7 @@ class ManageOrganization extends React.Component {
         this.formatStateAndCityList = this.formatStateAndCityList.bind(this)
         this.handleEditOrg = this.handleEditOrg.bind(this)
         this.handleRowClick = this.handleRowClick.bind(this)
+        this.fetchStateAndCityList = this.fetchStateAndCityList.bind(this)
     }
 
     fetchDefaultData() {
@@ -87,7 +88,7 @@ class ManageOrganization extends React.Component {
         }, this.setResponseData)
     }
 
-    fetchStateAndCityList(sucessStateListCallback) {
+    fetchStateAndCityList(stateListSuccessCallback) {
         this.setState({ list: [] })
         // POST({
         //     api: '/deliveryStatus/liveOrders',

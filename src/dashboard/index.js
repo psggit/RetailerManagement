@@ -100,28 +100,28 @@ class Dashboard extends React.Component {
               <Route
                 exact
                 path="/home/manage-retailer"
-                component={ManageRetailer}
-                // render={
-                //   props => (
-                //     <ManageRetailer {...props} />
-                //   )
-                // }
+                //component={ManageRetailer}
+                render={
+                  props => (
+                    <ManageRetailer {...props} />
+                  )
+                }
               />
 
               <Route
                 exact
                 path="/home/manage-retailer/create-retailer"
-                component={CreateRetailer}
-                // render={
-                //   props => (
-                //     <CreateOrganization {...props} />
-                //   )
-                // }
+                //component={CreateRetailer}
+                render={
+                  props => (
+                    <CreateOrganization {...props} />
+                  )
+                }
               />
 
               <Route
                 exact
-                path="/home/manage-retailer/edit-retailer/:outletId"
+                path="/home/manage-retailer/edit-retailer/:retailerId"
                 //component={EditOrganization}
                 render={
                   props => (

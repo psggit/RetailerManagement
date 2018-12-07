@@ -17,6 +17,7 @@ class EditOrganization extends React.Component {
         const data = this.organizationDetailsForm.getData()
         if(!data.errorFound) {
             const payload = {
+                id: data.id,
                 type_of_organisation: data.organizationType,
                 organisation_name: data.organizationName,
                 data_of_incorporation: data.incorporationDate,
