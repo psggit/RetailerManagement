@@ -427,7 +427,7 @@ class RetailerForm extends React.Component {
                             <label>Documents Attached as Proof</label>
                         </div>
                         <div style={{display: 'flex'}}>
-                            <div style={{marginRight: '20px'}}>
+                            <div style={{marginRight: '24px'}}>
                                 <Checkbox
                                     name="cancelledCheck"
                                     onChange={e => this.handleSelectChange(e)}
@@ -437,7 +437,7 @@ class RetailerForm extends React.Component {
                                     Cancelled Cheque
                                 </Checkbox>
                             </div>
-                            <div style={{marginRight: '20px'}}>
+                            <div style={{marginRight: '24px'}}>
                                 <Checkbox
                                     name="exciseLicense"
                                     onChange={e => this.handleSelectChange(e)}
@@ -447,7 +447,7 @@ class RetailerForm extends React.Component {
                                     Excise License
                                 </Checkbox>
                             </div>
-                            <div style={{marginRight: '20px'}}>
+                            <div style={{marginRight: '24px'}}>
                                 <Checkbox
                                     name="outletPhoto"
                                     onChange={e => this.handleSelectChange(e)}

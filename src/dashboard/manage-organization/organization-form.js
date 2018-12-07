@@ -448,7 +448,7 @@ class OrganizationForm extends React.Component {
                             <label>For (Partnership firm/LLP)</label>
                         </div>
                         <div style={{display: 'flex'}}>
-                            <div style={{marginRight: '20px'}}>
+                            <div style={{marginRight: '24px'}}>
                                 <Checkbox
                                     name="partnershipPancard"
                                     onChange={e => this.handleSelectChange(e)}
@@ -458,7 +458,7 @@ class OrganizationForm extends React.Component {
                                     PAN
                                 </Checkbox>
                             </div>
-                            <div style={{marginRight: '20px'}}>
+                            <div style={{marginRight: '24px'}}>
                                 <Checkbox
                                     name="partnershipDeed"
                                     onChange={e => this.handleSelectChange(e)}
@@ -468,7 +468,7 @@ class OrganizationForm extends React.Component {
                                     Partnership Deed
                                 </Checkbox>
                             </div>
-                            <div style={{marginRight: '20px'}}>
+                            <div style={{marginRight: '24px'}}>
                                 <Checkbox
                                     name="partnershipLOA"
                                     onChange={e => this.handleSelectChange(e)}
