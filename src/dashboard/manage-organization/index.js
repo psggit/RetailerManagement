@@ -9,6 +9,7 @@ import Pagination from 'Components/pagination'
 import Notify from 'Components/notify'
 import { getQueryObj, getQueryUri } from 'Utils/url-utils'
 import { NavLink } from 'react-router-dom'
+import { POST } from 'Utils/fetch'
 
 class ManageOrganization extends React.Component {
 
@@ -25,6 +26,7 @@ class ManageOrganization extends React.Component {
             loading: false,
             organisationCount: 0,
             data: [],
+            list: [],
             operators:  [
                 {text: 'ID', value: 'ID'},
                 {text: 'LIKE', value: 'LIKE'},
@@ -47,11 +49,13 @@ class ManageOrganization extends React.Component {
         this.fetchDefaultData = this.fetchDefaultData.bind(this)
         this.fetchOrganisationList = this.fetchOrganisationList.bind(this)
         this.setResponseData = this.setResponseData.bind(this)
+        this.formatStateAndCityList = this.formatStateAndCityList.bind(this)
         this.handleEditOrg = this.handleEditOrg.bind(this)
         this.handleRowClick = this.handleRowClick.bind(this)
     }
 
     fetchDefaultData() {
+        this.fetchStateAndCityList(this.formatStateAndCityList)
         this.fetchOrganisationList({
             offset: 0,
             limit: this.pagesLimit,
@@ -83,26 +87,55 @@ class ManageOrganization extends React.Component {
         }, this.setResponseData)
     }
 
+    fetchStateAndCityList(sucessStateListCallback) {
+        this.setState({ list: [] })
+        // POST({
+        //     api: '/deliveryStatus/liveOrders',
+        //     apiBase: 'gremlinUrl',
+        //     data: {
+        //         limit: 10,
+        //         offset: 0
+        //     },
+        //     handleError: true
+        // })
+        // .then((json) => {
+        //     //this.setState({
+        //     //       data: json.data,
+        //     //       count: json.count,
+        //     //       loading: false
+        //     //     })
+        //     Notify("success", "Successfully created organization")
+        //     sucessStateListCallback(json)
+        // })
+        // .catch(err => {
+        //     err.response.json().then(json => { Notify("danger", json.message) })
+        // })
+    }
+
     fetchOrganisationList(payloadObj, successCallback) {
         console.log("payload obj", payloadObj)
         this.setState({ data: [], organisationCount: 0 })
-        // POST({
-        //   api: '/excisePortal/ottpHistory',
-        //   apiBase: 'agamotto',
-        //   handleError: true,
-        //   data: payloadObj
-        // })
-        //   .then((json) => {
-        //     this.setState({
-        //       data: json.data,
-        //       count: json.count,
-        //       loading: false
-        //     })
-               //successCallback(json)
-        //   })
-        //   .catch(err => {
-        //     err.response.json().then(json => { Notify("danger", json.message) })
-        //   })
+        POST({
+            api: '/deliveryStatus/liveOrders',
+            apiBase: 'gremlinUrl',
+            data: {
+                limit: 10,
+                offset: 0
+            },
+            handleError: true
+        })
+        .then((json) => {
+            //this.setState({
+            //       data: json.data,
+            //       count: json.count,
+            //       loading: false
+            //     })
+            //Notify("success", "Successfully created organization")
+            successCallback(json)
+        })
+        .catch(err => {
+            err.response.json().then(json => { Notify("danger", json.message) })
+        })
     }
 
     getFilteredOrganisationList() {
@@ -134,6 +167,10 @@ class ManageOrganization extends React.Component {
 
     setResponseData(response) {
         console.log("response", response)
+    }
+
+    formatStateAndCityList(data) {
+        console.log("state and city list", data)
     }
 
     handlePageChange(pageObj) {

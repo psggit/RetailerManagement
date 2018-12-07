@@ -67,12 +67,12 @@ class Dashboard extends React.Component {
               <Route
                 exact
                 path="/home/manage-organization/create-organization"
-                component={CreateOrganization}
-                // render={
-                //   props => (
-                //     <CreateOrganization {...props} />
-                //   )
-                // }
+                //component={CreateOrganization}
+                render={
+                  props => (
+                    <CreateOrganization {...props} />
+                  )
+                }
               />
 
               <Route
