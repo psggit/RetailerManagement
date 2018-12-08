@@ -19,7 +19,8 @@ class OrganizationForm extends React.Component {
             landlineNo: 'Landline number',
             authorizedPerson: 'Name of authorized person',
             mobileNo: 'Mobile number',
-            pincode: 'Pincode'
+            pincode: 'Pincode',
+            email: 'Email'
         }
         this.state = {
             organizationName: props.data ? props.data.organizationName : '',
@@ -90,7 +91,7 @@ class OrganizationForm extends React.Component {
     handleEmailChange(e) {
         this.setState({
             [e.target.name]: e.target.value,
-            activeField: validateEmail(e.target.name, e.target.value),
+            activeField: validateEmail(this.inputNameMap[e.target.name], e.target.value),
             activeFieldName: e.target.name
         })
     }

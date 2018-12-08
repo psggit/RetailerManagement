@@ -15,7 +15,7 @@ class CreateRetailer extends React.Component {
         console.log("data", this.retailerDetailsForm.getData())
         const retailerDataForm = this.retailerDetailsForm.getData()
 
-        if(!retailerDataForm.errorFound) {
+        if(!retailerDataForm.activeField.errStatus) {
             const payload = {
                 organisation_id: retailerDataForm.selectedOrganizationIdx,
                 branch_status: retailerDataForm.selectedOutletStatusIdx,

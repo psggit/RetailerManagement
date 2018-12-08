@@ -15,7 +15,7 @@ class EditRetailer extends React.Component {
         console.log("edited data", this.retailerDetailsForm.getData())
         const retailerDataForm = this.retailerDetailsForm.getData()
 
-        if(!retailerDataForm.errorFound) {
+        if(!retailerDataForm.activeField.errStatus) {
             const payload = {
                 id: retailerDataForm.id,
                 organisation_id: retailerDataForm.selectedOrganizationIdx,
