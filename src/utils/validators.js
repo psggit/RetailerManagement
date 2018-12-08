@@ -1,52 +1,62 @@
 import { emailRegex } from 'Utils/regex'
 
-export function validateTextField(fieldName, value) {
-  if (!value.length) {
+export function validateTextField(fieldName, fieldValue) {
+  if (!fieldValue.length) {
     return {
-      errStatus: true,
-      errValue: `${fieldName} is required`
+      status: true,
+      value: `${fieldName} is required`
     }
   }
   return {
-    errStatus: false,
-    errValue: ''
+    status: false,
+    value: ''
   }
 }
 
-export function validateEmail(fieldName, value) {
-  if (!value.length) {
+export function validateEmail(fieldName, fieldValue) {
+  if (!fieldValue.length) {
     return {
-      errStatus: true,
-      errValue: `${fieldName} is required`
+      status: true,
+      value: `${fieldName} is required`
     }
-  } else if (!emailRegex.test(value)) {
+  } else if (!emailRegex.test(fieldValue)) {
     return {
-      errStatus: true,
-      errValue: `${fieldName} is invalid`
+      status: true,
+      value: `${fieldName} is invalid`
     }
   }
   
   return {
-    errStatus: false,
-    errValue: ''
+    status: false,
+    value: ''
   }
 }
 
-export function validateNumberField({fieldName, value, length}) {
-  if (!value.length) {
+export function validateNumberField({fieldName, fieldValue, length, checkLength}) {
+  console.log("field value", fieldValue, isNaN(fieldValue))
+
+  if (checkLength && !fieldValue.length) {
     return {
-      errStatus: true,
-      errValue: `${fieldName} is required`
+      status: true,
+      value: `${fieldName} is required`
     }
-  } else if (isNaN(value) || (value.length) !== (length)) {
+  } else if (checkLength && (isNaN(fieldValue) || (fieldValue.length) !== (length))) {
     return {
-      errStatus: true,
-      errValue: `${fieldName} is invalid`
+      status: true,
+      value: `${fieldName} is invalid`
+    }
+  } else if(!(fieldValue)){
+    return {
+      status: true,
+      value: `${fieldName} is required`
     }
   }
+  console.log("field value", fieldValue)
 
   return {
-    errStatus: false,
-    errValue: ''
+    status: false,
+    value: ''
   }
 }
+
+

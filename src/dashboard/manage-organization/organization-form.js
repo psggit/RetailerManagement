@@ -54,10 +54,50 @@ class OrganizationForm extends React.Component {
             pvtPancard: props.data ? props.data.pvtPancard : false,
             pvtCOI: props.data ? props.data.pvtCOI : false,
             pvtLOA: props.data ? props.data.pvtLOA : false,
-            activeFieldName: '',
-            activeField: {
-                errValue: '',
-                errStatus: false
+            
+            organizationNameErr: {
+                value: '',
+                status: false
+            },
+            incorporationDateErr: {
+                value: '',
+                status: false
+            },
+            cinNumberErr: {
+                value: '',
+                status: false
+            },
+            panNumberErr: {
+                value: '',
+                status: false
+            },
+            GSTNumberErr: {
+                value: '',
+                status: false
+            },
+            organizationAddressErr: {
+                value: '',
+                status: false
+            },
+            pincodeErr: {
+                value: '',
+                status: false
+            },
+            landlineNoErr: {
+                value: '',
+                status: false
+            },
+            authorizedPersonErr: {
+                value: '',
+                status: false
+            },
+            mobileNoErr: {
+                value: '',
+                status: false
+            },
+            emailIdErr: {
+                value: '',
+                status: false
             }
         }
 
@@ -81,24 +121,27 @@ class OrganizationForm extends React.Component {
     }
  
     handleTextChange(e) {
+        const errName = `${e.target.name}Err`
         this.setState({
             [e.target.name]: e.target.value,
-            activeField: validateTextField(this.inputNameMap[e.target.name], e.target.value),
-            activeFieldName: e.target.name
+            [errName]: validateTextField(this.inputNameMap[e.target.name], e.target.value),
+            //activeFieldName: e.target.name
         })
     }
 
     handleEmailChange(e) {
+        const errName = `${e.target.name}Err`
         this.setState({
             [e.target.name]: e.target.value,
-            activeField: validateEmail(this.inputNameMap[e.target.name], e.target.value),
-            activeFieldName: e.target.name
+            [errName]: validateEmail(this.inputNameMap[e.target.name], e.target.value),
+            //activeFiel[Name: e.target.name
         })
     }
 
     handleNumberChange(e) {
-        //const errName = `${e.target.name}Err`
+        const errName = `${e.target.name}Err`
         this.length = 0
+        this.checkLength = true
     
         switch(e.target.name) {
     
@@ -116,8 +159,12 @@ class OrganizationForm extends React.Component {
         if(validateNumType(e.keyCode) || checkCtrlA(e) || checkCtrlV(e)) {
             this.setState({ 
                 [e.target.name]: e.target.value,
-                activeField: validateNumberField({fieldName: this.inputNameMap[e.target.name], value: e.target.value, length: this.length}),
-                activeFieldName: e.target.name
+                [errName]: validateNumberField({fieldName: this.inputNameMap[e.target.name], 
+                                                fieldValue: e.target.value, 
+                                                length: this.length,
+                                                checkLength: this.checkLength
+                                               }),
+                //activeFieldName: e.target.name
             })
         } else {
             e.preventDefault()
@@ -129,7 +176,18 @@ class OrganizationForm extends React.Component {
     }
 
     render() {
-        const {activeFieldName, activeField} = this.state
+        const { organizationNameErr, 
+            incorporationDateErr, 
+            cinNumberErr, 
+            panNumberErr, 
+            GSTNumberErr,
+            organizationAddressErr,
+            pincodeErr,
+            landlineNoErr,
+            authorizedPersonErr,
+            mobileNoErr,
+            emailIdErr
+        } = this.state
         return (
             <Form layout="label-on-top">
                 <Form.FieldSet label="Organization Details">
@@ -139,7 +197,7 @@ class OrganizationForm extends React.Component {
                         type="text"
                         name="organizationName"
                         value={this.state.organizationName}
-                        error={activeFieldName === "organizationName" && activeField.errStatus ? activeField.errValue : ''}
+                        error={organizationNameErr.status ? organizationNameErr.value : ''}
                         onChange={(e) => this.handleTextChange(e)}
                     />
                     <Form.TextInput
@@ -147,7 +205,7 @@ class OrganizationForm extends React.Component {
                         type="date"
                         name="incorporationDate"
                         value={this.state.incorporationDate}
-                        error={activeFieldName === "incorporationDate" && activeField.errStatus ? activeField.errValue : ''}
+                        error={incorporationDateErr.status ? incorporationDateErr.value : ''}
                         onChange={(e) => this.handleTextChange(e)}
                     />
                     <Form.Radio
@@ -169,7 +227,7 @@ class OrganizationForm extends React.Component {
                         type="text"
                         name="panNumber"
                         defaultValue={this.props.data ? this.props.data.panNumber : ''}
-                        error={activeFieldName === "panNumber" && activeField.errStatus ? activeField.errValue : ''}
+                        error={panNumberErr.status ? panNumberErr.value : ''}
                         onKeyDown={(e) => this.handleTextChange(e)}
                         onKeyUp={(e) => this.handleTextChange(e)}
                     />
@@ -179,7 +237,7 @@ class OrganizationForm extends React.Component {
                         type="text"
                         name="cinNumber"
                         value={this.state.cinNumber}
-                        error={activeFieldName === "cinNumber" && activeField.errStatus ? activeField.errValue : ''}
+                        error={cinNumberErr.status ? cinNumberErr.value : ''}
                         onChange={(e) => this.handleTextChange(e)}
                     />
                     <Form.TextInput
@@ -194,7 +252,7 @@ class OrganizationForm extends React.Component {
                         type="text"
                         name="GSTNumber"
                         value={this.state.GSTNumber}
-                        error={activeFieldName === "GSTNumber" && activeField.errStatus ? activeField.errValue : ''}
+                        error={GSTNumberErr.status ? GSTNumberErr.value : ''}
                         onChange={(e) => this.handleTextChange(e)}
                     />
                     <Form.Select
@@ -222,7 +280,7 @@ class OrganizationForm extends React.Component {
                     <Form.TextArea 
                         label="Organization Address*" 
                         name="organizationAddress"
-                        error={activeFieldName === "organizationAddress" && activeField.errStatus ? activeField.errValue : ''}
+                        error={organizationAddressErr.status ? organizationAddressErr.value : ''}
                         value={this.state.organizationAddress}
                         onChange={(e) => this.handleTextChange(e)} 
                     />
@@ -252,7 +310,7 @@ class OrganizationForm extends React.Component {
                         type="text"
                         name="pincode"
                         defaultValue={this.props.data ? this.props.data.pincode : ''}
-                        error={activeFieldName === "pincode" && activeField.errStatus ? activeField.errValue : ''}
+                        error={pincodeErr.status ? pincodeErr.value : ''}
                         onKeyDown={(e) => this.handleNumberChange(e)}
                         onKeyUp={(e) => this.handleNumberChange(e)}
                     />
@@ -260,7 +318,7 @@ class OrganizationForm extends React.Component {
                         label="Landline No*"
                         type="text"
                         name="landlineNo"
-                        error={activeFieldName === "landlineNo" && activeField.errStatus ? activeField.errValue : ''}
+                        error={landlineNoErr.status ? landlineNoErr.value : ''}
                         value={this.state.landlineNo}
                         onChange={(e) => this.handleTextChange(e)}
                     />
@@ -268,7 +326,7 @@ class OrganizationForm extends React.Component {
                         label="Authorized Person Name*"
                         type="text"
                         name="authorizedPerson"
-                        error={activeFieldName === "authorizedPerson" && activeField.errStatus ? activeField.errValue : ''}
+                        error={authorizedPersonErr.status ? authorizedPersonErr.value : ''}
                         value={this.state.authorizedPerson}
                         onChange={(e) => this.handleTextChange(e)}
                     />
@@ -276,7 +334,7 @@ class OrganizationForm extends React.Component {
                         label="Mobile No*"
                         type="text"
                         name="mobileNo"
-                        error={activeFieldName === "mobileNo" && activeField.errStatus ? activeField.errValue : ''}
+                        error={mobileNoErr.status ? mobileNoErr.value : ''}
                         defaultValue={this.props.data ? this.props.data.mobileNo : ''}
                         onKeyDown={(e) => {this.handleNumberChange(e)}}
                         onKeyUp={(e) => this.handleNumberChange(e)}
@@ -285,7 +343,7 @@ class OrganizationForm extends React.Component {
                         label="Email*"
                         type="text"
                         name="email"
-                        error={activeFieldName === "email" && activeField.errStatus ? activeField.errValue : ''}
+                        error={emailIdErr.status ? emailIdErr.value : ''}
                         value={this.state.email}
                         onChange={(e) => this.handleEmailChange(e)}
                     />
