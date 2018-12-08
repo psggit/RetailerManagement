@@ -1,13 +1,26 @@
 import React from 'react'
 import { Form, Checkbox, Button, ButtonGroup } from '@auth0/cosmos'
-import { validateOrganizationName } from 'Utils/validators'
-import { emailRegex, } from 'Utils/regex'
+import { validateTextField, validateEmail, validateNumberField } from 'Utils/validators'
+//import { emailRegex, } from 'Utils/regex'
 import { checkCtrlA, validateNumType, checkCtrlV } from 'Utils/logic-utils'
 
 class OrganizationForm extends React.Component {
 
     constructor(props) {
         super(props)
+        this.inputNameMap = {
+            organizationName: 'Organization name',
+            organizationType: 'Organization type',
+            incorporationDate: 'Date of incorporation',
+            cinNumber: 'Cin number',
+            panNumber: 'Pin number',
+            GSTNumber: 'GST number',
+            organizationAddress: 'Organization address',
+            landlineNo: 'Landline number',
+            authorizedPerson: 'Name of authorized person',
+            mobileNo: 'Mobile number',
+            pincode: 'Pincode'
+        }
         this.state = {
             organizationName: props.data ? props.data.organizationName : '',
             organizationType: props.data ? props.data.organizationType : 'proprietorship',
@@ -27,7 +40,7 @@ class OrganizationForm extends React.Component {
             landlineNo: props.data ? props.data.landlineNo : '',
             authorizedPerson: props.data ? props.data.authorizedPerson : '',
             mobileNo: props.data ? props.data.mobileNo : '',
-            emailId: props.data ? props.data.emailId : '',
+            email: props.data ? props.data.email : '',
             
             photo: props.data ? props.data.photo : false,
             pancard: props.data ? props.data.pancard : false,
@@ -40,81 +53,19 @@ class OrganizationForm extends React.Component {
             pvtPancard: props.data ? props.data.pvtPancard : false,
             pvtCOI: props.data ? props.data.pvtCOI : false,
             pvtLOA: props.data ? props.data.pvtLOA : false,
-            errorFound: true,
-            
-            organizationNameErr: {
-                value: '',
-                status: false
-            },
-            organizationTypeErr: {
-                value: '',
-                status: false
-            },
-            incorporationDateErr: {
-                value: '',
-                status: false
-            },
-            cinNumberErr: {
-                value: '',
-                status: false
-            },
-            panNumberErr: {
-                value: '',
-                status: false
-            },
-            outletsCountErr: {
-                value: '',
-                status: false
-            },
-            GSTNumberErr: {
-                value: '',
-                status: false
-            },
-            organizationAddressErr: {
-                value: '',
-                status: false
-            },
-            // cityErr: {
-            //     value: '',
-            //     status: false
-            // },
-            // stateErr: {
-            //     value: '',
-            //     status: false
-            // },
-            pincodeErr: {
-                value: '',
-                status: false
-            },
-            landlineNoErr: {
-                value: '',
-                status: false
-            },
-            authorizedPersonErr: {
-                value: '',
-                status: false
-            },
-            mobileNoErr: {
-                value: '',
-                status: false
-            },
-            emailIdErr: {
-                value: '',
-                status: false
+            activeFieldName: '',
+            activeField: {
+                errValue: '',
+                errStatus: false
             }
         }
 
         this.handleChange = this.handleChange.bind(this)
         this.handleTextChange = this.handleTextChange.bind(this)
-        //this.handleTextLengthValidation = this.handleTextLengthValidation.bind(this)
         this.handleNumberChange = this.handleNumberChange.bind(this)
         this.handleEmailChange = this.handleEmailChange.bind(this) 
         this.handleSelectChange = this.handleSelectChange.bind(this)
         this.getData = this.getData.bind(this)
-        this.validateTextField = this.validateTextField.bind(this)
-        //this.validateNumberField = this.validateNumberField.bind(this)
-        this.checkLength = this.checkLength.bind(this)
-        this.validateEmail = this.validateEmail.bind(this)
     }
 
     handleChange(e) {
@@ -124,64 +75,32 @@ class OrganizationForm extends React.Component {
         })
     }
 
-    getData() {
-        return this.state
+    handleSelectChange(e) {
+        this.setState({[e.target.name]: e.target.checked})
     }
-    
+ 
     handleTextChange(e) {
-        const errName = `${e.target.name}Err`
-        
         this.setState({
             [e.target.name]: e.target.value,
-            [errName]: this.validateTextField(e.target.value, e.target.name)
+            activeField: validateTextField(this.inputNameMap[e.target.name], e.target.value),
+            activeFieldName: e.target.name
         })
     }
 
-    // handleTextLengthValidation(e) {
-    //     //console.log("text validation", e.target.name, e.target.value)
-    //     const errName = `${e.target.name}Err`
-    //     this.length = 0
-    //     switch(e.target.name) {
-    //         case 'panNumber':
-    //             this.length = 10;
-    //         break;
-
-    //         default:
-    //         break;
-    //     }
-    //     this.setState({
-    //         [e.target.name]: e.target.value,
-    //         [errName]: this.checkLength({
-    //                         value: e.target.value, 
-    //                         fieldName: e.target.name,
-    //                         length: this.length
-    //                    })
-    //     })
-    // }
-
     handleEmailChange(e) {
-        const errName = `${e.target.name}Err`
-        
         this.setState({
             [e.target.name]: e.target.value,
-            [errName]: this.validateEmail(e.target.value)
+            activeField: validateEmail(e.target.name, e.target.value),
+            activeFieldName: e.target.name
         })
     }
 
     handleNumberChange(e) {
-        //console.log("mob change",validateNumType(e.keyCode) , checkCtrlA(e))
-        const errName = `${e.target.name}Err`
+        //const errName = `${e.target.name}Err`
         this.length = 0
     
         switch(e.target.name) {
-            // case 'panNumber':
-            //     length = 11
-            // break;
-
-            // case 'cinNumber':
-            //     length = 10
-            // break;
-
+    
             case 'pincode':
                 this.length = 6
             break;
@@ -196,105 +115,20 @@ class OrganizationForm extends React.Component {
         if(validateNumType(e.keyCode) || checkCtrlA(e) || checkCtrlV(e)) {
             this.setState({ 
                 [e.target.name]: e.target.value,
-                [errName]: this.checkLength({value: e.target.value, length: this.length, fieldName: e.target.name})
+                activeField: validateNumberField({fieldName: this.inputNameMap[e.target.name], value: e.target.value, length: this.length}),
+                activeFieldName: e.target.name
             })
         } else {
             e.preventDefault()
         }   
     }
 
-    // handleKycFieldChange(e) {
-    //     this.setState({selectedKycIdx: e.target.value})
-    // }
-
-    // handleOrganizationstatusChange(e) {
-    //     this.setState({selectedOrganizationStatusIdx: e.target.value})
-    // }
-
-    handleSelectChange(e) {
-        this.setState({[e.target.name]: e.target.checked})
+    getData() {
+        return this.state
     }
 
-    validateTextField(value, fieldName) {
-        if (!value.length) {
-          //this.setState({errorFound: true})
-          return {
-            status: true,
-            value: `${fieldName} is required`
-          }
-        }
-        this.setState({errorFound: false})
-        return {
-          status: false,
-          value: ''
-        }
-    }
-
-    validateEmail(email) {
-        if (!email.length) {
-          //this.setState({errorFound: true})
-          return {
-            status: true,
-            value: 'Email is required'
-          }
-        } else if (!emailRegex.test(email)) {
-          //this.setState({errorFound: true})
-          return {
-            status: true,
-            value: 'Email is invalid'
-          }
-        }
-        this.setState({errorFound: false})
-        return {
-          status: false,
-          value: ''
-        }
-    }
-
-    checkLength({value, length, fieldName}) {
-        //console.log("value", value.length, length)
-        if (!value.length) {
-          //this.setState({errorFound: true})
-          //console.log("if")
-          return {
-            status: true,
-            value: `${fieldName} is required`
-          }
-        } else if (isNaN(value) || (value.length) !== (length)) {
-          //this.setState({errorFound: true})
-          //console.log("else", isNaN(value), parseInt(value.length) !== parseInt(length))
-          return {
-            status: true,
-            value: `${fieldName} is invalid`
-          }
-        }
-        this.setState({errorFound: false})
-        return {
-          status: false,
-          value: ''
-        }
-    }
-    
     render() {
-        const { organizationNameErr, 
-            organizationTypeErr, 
-            incorporationDateErr, 
-            cinNumberErr, 
-            panNumberErr, 
-            outletsCountErr,
-            KYCVerifiedErr,
-            GSTNumberErr,
-            organizationStatusErr,
-            organizationAddressErr,
-            // cityErr,
-            // stateErr,
-            pincodeErr,
-            landlineNoErr,
-            authorizedPersonErr,
-            mobileNoErr,
-            emailIdErr
-        } = this.state
-        //const {mobileNo, pincode} = this.props.data
+        const {activeFieldName, activeField} = this.state
         return (
             <Form layout="label-on-top">
                 <Form.FieldSet label="Organization Details">
@@ -304,7 +138,7 @@ class OrganizationForm extends React.Component {
                         type="text"
                         name="organizationName"
                         value={this.state.organizationName}
-                        error={organizationNameErr.status ? organizationNameErr.value : ''}
+                        error={activeFieldName === "organizationName" && activeField.errStatus ? activeField.errValue : ''}
                         onChange={(e) => this.handleTextChange(e)}
                     />
                     <Form.TextInput
@@ -312,7 +146,7 @@ class OrganizationForm extends React.Component {
                         type="date"
                         name="incorporationDate"
                         value={this.state.incorporationDate}
-                        error={incorporationDateErr.status ? incorporationDateErr.value : ''}
+                        error={activeFieldName === "incorporationDate" && activeField.errStatus ? activeField.errValue : ''}
                         onChange={(e) => this.handleTextChange(e)}
                     />
                     <Form.Radio
@@ -334,8 +168,7 @@ class OrganizationForm extends React.Component {
                         type="text"
                         name="panNumber"
                         defaultValue={this.props.data ? this.props.data.panNumber : ''}
-                        error={panNumberErr.status ? panNumberErr.value : ''}
-                        //onChange={(e) => this.handleTextValidation(e)}
+                        error={activeFieldName === "panNumber" && activeField.errStatus ? activeField.errValue : ''}
                         onKeyDown={(e) => this.handleTextChange(e)}
                         onKeyUp={(e) => this.handleTextChange(e)}
                     />
@@ -345,7 +178,7 @@ class OrganizationForm extends React.Component {
                         type="text"
                         name="cinNumber"
                         value={this.state.cinNumber}
-                        error={cinNumberErr.status ? cinNumberErr.value : ''}
+                        error={activeFieldName === "cinNumber" && activeField.errStatus ? activeField.errValue : ''}
                         onChange={(e) => this.handleTextChange(e)}
                     />
                     <Form.TextInput
@@ -353,8 +186,15 @@ class OrganizationForm extends React.Component {
                         type="number"
                         name="outletsCount"
                         value={this.state.outletsCount}
-                        error={outletsCountErr.status ? outletsCountErr.value : ''}
                         onChange={(e) => this.handleChange(e)}
+                    />
+                    <Form.TextInput
+                        label="GST Number*"
+                        type="text"
+                        name="GSTNumber"
+                        value={this.state.GSTNumber}
+                        error={activeFieldName === "GSTNumber" && activeField.errStatus ? activeField.errValue : ''}
+                        onChange={(e) => this.handleTextChange(e)}
                     />
                     <Form.Select
                         label="KYC Verification Status*"
@@ -381,26 +221,10 @@ class OrganizationForm extends React.Component {
                     <Form.TextArea 
                         label="Organization Address*" 
                         name="organizationAddress"
-                        error={organizationAddressErr.status ? organizationAddressErr.value : ''}
+                        error={activeFieldName === "organizationAddress" && activeField.errStatus ? activeField.errValue : ''}
                         value={this.state.organizationAddress}
                         onChange={(e) => this.handleTextChange(e)} 
                     />
-                    {/* <Form.TextInput
-                        label="City*"
-                        type="text"
-                        name="city"
-                        value={this.state.city}
-                        error={cityErr.status ? cityErr.value : ''}
-                        onChange={(e) => this.handleTextChange(e)}
-                    />
-                    <Form.TextInput
-                        label="State*"
-                        type="text"
-                        name="state"
-                        error={stateErr.status ? stateErr.value : ''}
-                        value={this.state.state}
-                        onChange={(e) => this.handleTextChange(e)}
-                    /> */}
                     <Form.Select
                         label="State*"
                         value={this.state.selectedStateIdx}
@@ -426,18 +250,16 @@ class OrganizationForm extends React.Component {
                         label="Pincode*"
                         type="text"
                         name="pincode"
-                        //value={this.state.pincode}
                         defaultValue={this.props.data ? this.props.data.pincode : ''}
-                        error={pincodeErr.status ? pincodeErr.value : ''}
+                        error={activeFieldName === "pincode" && activeField.errStatus ? activeField.errValue : ''}
                         onKeyDown={(e) => this.handleNumberChange(e)}
                         onKeyUp={(e) => this.handleNumberChange(e)}
-                        //onChange={(e) => this.handleNumberChange(e)}
                     />
                     <Form.TextInput
                         label="Landline No*"
                         type="text"
                         name="landlineNo"
-                        error={landlineNoErr.status ? landlineNoErr.value : ''}
+                        error={activeFieldName === "landlineNo" && activeField.errStatus ? activeField.errValue : ''}
                         value={this.state.landlineNo}
                         onChange={(e) => this.handleTextChange(e)}
                     />
@@ -445,18 +267,15 @@ class OrganizationForm extends React.Component {
                         label="Authorized Person Name*"
                         type="text"
                         name="authorizedPerson"
-                        error={authorizedPersonErr.status ? authorizedPersonErr.value : ''}
+                        error={activeFieldName === "authorizedPerson" && activeField.errStatus ? activeField.errValue : ''}
                         value={this.state.authorizedPerson}
                         onChange={(e) => this.handleTextChange(e)}
                     />
                     <Form.TextInput
                         label="Mobile No*"
                         type="text"
-                        //maxLength={10}
                         name="mobileNo"
-                        error={mobileNoErr.status ? mobileNoErr.value : ''}
-                        //value={this.state.mobileNo}
-                        //onChange={(e) => this.handleNumberChange(e)}
+                        error={activeFieldName === "mobileNo" && activeField.errStatus ? activeField.errValue : ''}
                         defaultValue={this.props.data ? this.props.data.mobileNo : ''}
                         onKeyDown={(e) => {this.handleNumberChange(e)}}
                         onKeyUp={(e) => this.handleNumberChange(e)}
@@ -464,9 +283,9 @@ class OrganizationForm extends React.Component {
                     <Form.TextInput
                         label="Email*"
                         type="text"
-                        name="emailId"
-                        error={emailIdErr.status ? emailIdErr.value : ''}
-                        value={this.state.emailId}
+                        name="email"
+                        error={activeFieldName === "email" && activeField.errStatus ? activeField.errValue : ''}
+                        value={this.state.email}
                         onChange={(e) => this.handleEmailChange(e)}
                     />
                 </Form.FieldSet>

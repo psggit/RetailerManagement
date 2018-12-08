@@ -15,7 +15,7 @@ class EditOrganization extends React.Component {
     handleSave() {
         console.log("edited data", this.organizationDetailsForm.getData())
         const data = this.organizationDetailsForm.getData()
-        if(!data.errorFound) {
+        if(!data.fieldErrorStatus.status) {
             const payload = {
                 id: data.id,
                 type_of_organisation: data.organizationType,

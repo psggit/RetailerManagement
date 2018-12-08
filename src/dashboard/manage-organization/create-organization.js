@@ -15,7 +15,7 @@ class CreateOrganization extends React.Component {
     handleSave() {
         console.log("data", this.organizationDetailsForm.getData())
         const data = this.organizationDetailsForm.getData()
-        if(!data.errorFound) {
+        if(!data.fieldErrorStatus.status) {
             const payload = {
                 type_of_organisation: data.organizationType,
                 organisation_name: data.organizationName,
