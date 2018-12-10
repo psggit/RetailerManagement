@@ -203,7 +203,7 @@ class RetailerForm extends React.Component {
                 this.checkLength = false
             break;
         }
-        console.log("check len", this.checkLength, e.target.value)
+        
         if(validateNumType(e.keyCode) || checkCtrlA(e) || checkCtrlV(e)) {
             this.setState({ 
                 [e.target.name]: e.target.value,

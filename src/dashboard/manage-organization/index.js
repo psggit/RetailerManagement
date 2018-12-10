@@ -6,10 +6,11 @@ import { Select, TextInput } from '@auth0/cosmos'
 import { Button } from '@auth0/cosmos'
 import {organizationData} from './../../mockData'
 import Pagination from 'Components/pagination'
-import Notify from 'Components/notify'
+//import Notify from 'Components/notify'
 import { getQueryObj, getQueryUri } from 'Utils/url-utils'
 import { NavLink } from 'react-router-dom'
-import { POST } from 'Utils/fetch'
+//import { POST } from 'Utils/fetch'
+import * as Api from './../../api'
 
 class ManageOrganization extends React.Component {
 
@@ -56,7 +57,12 @@ class ManageOrganization extends React.Component {
     }
 
     fetchDefaultData() {
-        this.fetchStateAndCityList(this.formatStateAndCityList)
+        this.setState({ data: [], organisationCount: 0, list: [] })
+        this.fetchStateAndCityList({
+            offset: 0,
+            limit: 0
+        },this.formatStateAndCityList)
+
         this.fetchOrganisationList({
             offset: 0,
             limit: this.pagesLimit,
@@ -80,7 +86,7 @@ class ManageOrganization extends React.Component {
             this.setState({ [item[0]]: item[1] })
             this.filter[item[0]] = item[1]
         })
-
+        this.setState({ data: [], organisationCount: 0 })
         this.fetchOrganisationList({
             offset: queryObj.offset ? parseInt(queryObj.offset) : 0,
             limit: this.pagesLimit,
@@ -88,8 +94,9 @@ class ManageOrganization extends React.Component {
         }, this.setResponseData)
     }
 
-    fetchStateAndCityList(stateListSuccessCallback) {
-        this.setState({ list: [] })
+    fetchStateAndCityList(payload, stateListSuccessCallback) {
+        Api.fetchStateAndCityList(payload, stateListSuccessCallback)
+        //this.setState({ list: [] })
         // POST({
         //     api: '/deliveryStatus/liveOrders',
         //     apiBase: 'gremlinUrl',
@@ -115,28 +122,29 @@ class ManageOrganization extends React.Component {
 
     fetchOrganisationList(payloadObj, successCallback) {
         console.log("payload obj", payloadObj)
-        this.setState({ data: [], organisationCount: 0 })
-        POST({
-            api: '/deliveryStatus/liveOrders',
-            apiBase: 'gremlinUrl',
-            data: {
-                limit: 10,
-                offset: 0
-            },
-            handleError: true
-        })
-        .then((json) => {
-            //this.setState({
-            //       data: json.data,
-            //       count: json.count,
-            //       loading: false
-            //     })
-            //Notify("success", "Successfully created organization")
-            successCallback(json)
-        })
-        .catch(err => {
-            err.response.json().then(json => { Notify("danger", json.message) })
-        })
+        Api.fetchOrganizationList(payloadObj, successCallback)
+        //this.setState({ data: [], organisationCount: 0 })
+        // POST({
+        //     api: '/deliveryStatus/liveOrders',
+        //     apiBase: 'gremlinUrl',
+        //     data: {
+        //         limit: 10,
+        //         offset: 0
+        //     },
+        //     handleError: true
+        // })
+        // .then((json) => {
+        //     //this.setState({
+        //     //       data: json.data,
+        //     //       count: json.count,
+        //     //       loading: false
+        //     //     })
+        //     //Notify("success", "Successfully created organization")
+        //     successCallback(json)
+        // })
+        // .catch(err => {
+        //     err.response.json().then(json => { Notify("danger", json.message) })
+        // })
     }
 
     getFilteredOrganisationList() {
@@ -158,7 +166,7 @@ class ManageOrganization extends React.Component {
         }
     
         history.pushState(queryObj, "organisation listing", `/home/manage-organization?${getQueryUri(queryObj)}`)
-    
+        this.setState({ data: [], organisationCount: 0 })
         this.fetchOrganisationList({
             limit: this.pagesLimit,
             offset: 0,

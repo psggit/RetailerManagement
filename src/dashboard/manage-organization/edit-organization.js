@@ -3,13 +3,20 @@ import Layout from 'Components/layout'
 import OrganizationForm from './organization-form';
 import Card from 'Components/card'
 import { Form, Checkbox, Button, ButtonGroup } from '@auth0/cosmos'
-import { POST } from 'Utils/fetch'
+//import { POST } from 'Utils/fetch'
+import * as Api from './../../api'
 
 class EditOrganization extends React.Component {
     constructor() {
         super()
+        this.state = {
+            updatingOrg: false
+        }
         this.handleSave = this.handleSave.bind(this)
         this.updateOrganization = this.updateOrganization.bind(this)
+        this.successCallback = this.successCallback.bind(this)
+        this.failureCallback = this.failureCallback.bind(this)
+        this.updateState = this.updateState.bind(this)
     }
 
     handleSave() {
@@ -43,15 +50,25 @@ class EditOrganization extends React.Component {
                 mobile_number: data.mobileNo,
                 email: data.emailId
             }
-            this.updateOrganization(payload, successCallback)
+            this.setState({updatingOrg: true})
+            this.updateOrganization(payload, this.successCallback, this.failureCallback)
         }
     }
 
     successCallback() {
+        this.updateState()
         history.pushState(null, 'organization list', '/home/manage-organization')
     }
 
-    updateOrganization(payload, successCallback) {
+    failureCallback() {
+        this.updateState()
+    }
+
+    updateState() {
+        this.setState({updatingOrg: false})
+    }
+
+    updateOrganization(payload, successCallback, failureCallback) {
         // POST({
         //     api: '/deliveryStatus/liveOrders',
         //     apiBase: 'gremlinUrl',
@@ -82,7 +99,12 @@ class EditOrganization extends React.Component {
                         data={this.props.history.location.state} 
                     />
                     <ButtonGroup align="right">
-                        <Button onClick={() => this.handleSave()}> Save </Button>
+                        <Button 
+                            onClick={() => this.handleSave()} 
+                            disabled={this.state.updatingOrg}
+                        > 
+                            Save 
+                        </Button>
                     </ButtonGroup>
                 </Card>
             </Layout>

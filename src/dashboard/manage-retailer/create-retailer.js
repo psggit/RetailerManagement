@@ -3,12 +3,19 @@ import Layout from 'Components/layout'
 import Card from 'Components/card'
 import RetailerForm from './retailer-form'
 import { Form, Checkbox, Button, ButtonGroup } from '@auth0/cosmos'
+import * as Api from './../../api'
 
 class CreateRetailer extends React.Component {
     constructor() {
         super()
+        this.state = {
+            creatingRetailer: false
+        }
         this.handleSave = this.handleSave.bind(this)
         this.createRetailer = this.createRetailer.bind(this)
+        this.successCallback = this.successCallback.bind(this)
+        this.failureCallback = this.failureCallback.bind(this)
+        this.updateState = this.updateState.bind(this)
     }
 
     handleSave() {
@@ -46,16 +53,26 @@ class CreateRetailer extends React.Component {
                 is_excise_license: retailerDataForm.exciseLicense,
                 is_photo_of_outlet: retailerDataForm.outletPhoto
             }
-            this.createRetailer(payload, successCallback)
+            this.setState({creatingRetailer: true})
+            this.createRetailer(payload, this.successCallback, this.failureCallback)
         }
         //e.preventDefault()
     }
 
     successCallback() {
+        this.updateState()
         history.pushState(null, 'retailer list', '/home/manage-retailer')
     }
 
-    createRetailer(payload, successCallback) {
+    failureCallback() {
+        this.updateState()
+    }
+
+    updateState() {
+        this.setState({creatingRetailer: false})
+    }
+
+    createRetailer(payload, successCallback,failureCallback) {
         console.log("create retailer", payload)
         // POST({
         //     api: '/deliveryStatus/liveOrders',
@@ -88,7 +105,12 @@ class CreateRetailer extends React.Component {
                         ref={(node) => { this.retailerDetailsForm = node }}
                     />
                     <ButtonGroup align="right">
-                        <Button onClick={() => this.handleSave()}> Save </Button>
+                        <Button 
+                            onClick={() => this.handleSave()}
+                            disabled={this.state.creatingRetailer}
+                        > 
+                            Save 
+                        </Button>
                         <Button> Download </Button>
                     </ButtonGroup>
                 </Card> 

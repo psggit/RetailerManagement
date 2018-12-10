@@ -10,6 +10,7 @@ import Notify from 'Components/notify'
 import { getQueryObj, getQueryUri } from 'Utils/url-utils'
 import { NavLink } from 'react-router-dom'
 import Switch2 from 'Components/switch'
+import * as Api from './../../api'
 
 class ManageRetailer extends React.Component {
 
@@ -57,6 +58,7 @@ class ManageRetailer extends React.Component {
     }
 
     fetchDefaultData() {
+        this.setState({organizationList: [],  data: [], retailerListCount: 100})
         this.fetchOrganizationList(this.formatOrganizationList)
         this.fetchRetailerList({
             offset: 0,
@@ -81,7 +83,7 @@ class ManageRetailer extends React.Component {
             this.setState({ [item[0]]: item[1] })
             this.filter[item[0]] = item[1]
         })
-
+        this.setState({data: [], retailerListCount: 100})
         this.fetchRetailerList({
             offset: queryObj.offset ? parseInt(queryObj.offset) : 0,
             limit: this.pagesLimit,
@@ -91,7 +93,7 @@ class ManageRetailer extends React.Component {
 
     fetchRetailerList(payloadObj, successCallback) {
         console.log("payload obj", payloadObj)
-        this.setState({ data: [], retailerListCount: 100 })
+        //this.setState({ data: [], retailerListCount: 100 })
         // POST({
         //   api: '/excisePortal/ottpHistory',
         //   apiBase: 'agamotto',
@@ -112,7 +114,8 @@ class ManageRetailer extends React.Component {
     }
 
     fetchOrganizationList(organizationListSuccessCallback) {
-        this.setState({organizationList: []})
+        // this.setState({organizationList: []})
+        Api.fetchOrganizationAndStateList(organizationListSuccessCallback)
         // POST({
         //   api: '/excisePortal/ottpHistory',
         //   apiBase: 'agamotto',
@@ -151,7 +154,7 @@ class ManageRetailer extends React.Component {
         }
     
         history.pushState(queryObj, "organisation listing", `/home/manage-retailer?${getQueryUri(queryObj)}`)
-    
+        this.setState({data: [], retailerListCount: 100})
         this.fetchRetailerList({
             limit: this.pagesLimit,
             offset: 0,
