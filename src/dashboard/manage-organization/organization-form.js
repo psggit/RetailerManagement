@@ -8,6 +8,7 @@ class OrganizationForm extends React.Component {
 
     constructor(props) {
         super(props)
+        console.log("props", this.props)
         this.inputNameMap = {
             organizationName: 'Organization name',
             organizationType: 'Organization type',

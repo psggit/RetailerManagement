@@ -4,25 +4,81 @@ import RetailerForm from './retailer-form'
 import Card from 'Components/card'
 import { Form, Checkbox, Button, ButtonGroup } from '@auth0/cosmos'
 import * as Api from './../../api'
+import 'Sass/animations.scss'
 
 class EditRetailer extends React.Component {
     constructor() {
         super()
         this.state = {
-            updatingRetailer: false
+            updatingRetailer: false,
+            isFormValid: true
         }
         this.handleSave = this.handleSave.bind(this)
         this.updateRetailer = this.updateRetailer.bind(this)
         this.successCallback = this.successCallback.bind(this)
         this.failureCallback = this.failureCallback.bind(this)
         this.updateState = this.updateState.bind(this)
+        this.formIsValid = this.formIsValid.bind(this)
+    }
+
+    formIsValid() {
+        const retailerDataForm = this.retailerDetailsForm.getData()
+        const { ksbclCodeErr,
+                outletNameErr,
+                exciseLicenceNoErr,
+                discountPercentErr,
+                serviceChargePercentErr,
+                deliveryDiscountPercentErr,
+                FSSAINumberErr,
+                bankNameErr,
+                accountHolderNameErr,
+                accountNumberErr,
+                branchErr,
+                IFSCErr,
+                outletAddressErr,
+                pincodeErr,
+                landlineNoErr,
+                mobileNoErr,
+                emailIdErr,
+                gpsCoordinatesErr
+            } = retailerDataForm 
+        
+        const formData = {
+            ksbclCodeErr,
+            outletNameErr,
+            exciseLicenceNoErr,
+            discountPercentErr,
+            serviceChargePercentErr,
+            deliveryDiscountPercentErr,
+            FSSAINumberErr,
+            bankNameErr,
+            accountHolderNameErr,
+            accountNumberErr,
+            branchErr,
+            IFSCErr,
+            outletAddressErr,
+            pincodeErr,
+            landlineNoErr,
+            mobileNoErr,
+            emailIdErr,
+            gpsCoordinatesErr
+        }
+       //console.log("form data", formData)
+       for(const key in formData) {
+           //console.log("form data", formData[key].value.toString().length)  
+           if(!formData[key].status && formData[key].value.toString().length === 0){
+               return false
+           } 
+       }
+
+       return true
     }
 
     handleSave() {
         console.log("edited data", this.retailerDetailsForm.getData())
         const retailerDataForm = this.retailerDetailsForm.getData()
-
-        if(!retailerDataForm.activeField.errStatus) {
+        this.setState({isFormValid: this.formIsValid()})
+        if(this.formIsValid()) {
             const payload = {
                 id: retailerDataForm.id,
                 organisation_id: retailerDataForm.selectedOrganizationIdx,
@@ -42,7 +98,7 @@ class EditRetailer extends React.Component {
                 store_address: retailerDataForm.outletAddress,
                 landline_number: retailerDataForm.landlineNo,
                 mobile_number: retailerDataForm.mobileNo,
-                email: retailerDataForm.emailId,
+                email: retailerDataForm.email,
                 gps_cordinates: retailerDataForm.gpsCoordinates,
                 bank_name: retailerDataForm.bankName,
                 acc_holder_name: retailerDataForm.accountHolderName,
@@ -97,7 +153,7 @@ class EditRetailer extends React.Component {
         //console.log("edit org", this.props.history.location.state)
         return (
             <Layout title="Edit Retailer">
-                <Card width="800px">
+                <Card width="800px" className={!this.state.isFormValid ? 'animated shake' : ''}>
                     <RetailerForm
                         ref={(node) => { this.retailerDetailsForm = node }}
                         data={this.props.history.location.state} 
@@ -105,6 +161,7 @@ class EditRetailer extends React.Component {
                     <ButtonGroup align="right">
                         <Button 
                             onClick={() => this.handleSave()}
+                            loading={this.state.updatingRetailer}
                             disabled={this.state.updatingRetailer}
                         > 
                             Save 

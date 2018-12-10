@@ -5,23 +5,68 @@ import OrganizationForm from './organization-form'
 import { Form, Checkbox, Button, ButtonGroup } from '@auth0/cosmos'
 //import { POST } from 'Utils/fetch'
 import * as Api from './../../api'
+import 'Sass/animations.scss'
 
 class CreateOrganization extends React.Component {
     constructor() {
         super()
         this.state = {
-            creatingOrg: false
+            creatingOrg: false,
+            isFormValid: true
         }
         this.handleSave = this.handleSave.bind(this)
         this.successCallback = this.successCallback.bind(this)
         this.failureCallback = this.failureCallback.bind(this)
         this.updateState = this.updateState.bind(this)
+        this.formIsValid =  this.formIsValid.bind(this)
+    }
+
+    formIsValid() {
+        const organizationDetailsForm = this.organizationDetailsForm.getData()
+        //console.log("log", organizationDetailsForm)
+        const { organizationNameErr, 
+                incorporationDateErr, 
+                cinNumberErr, 
+                panNumberErr, 
+                GSTNumberErr,
+                organizationAddressErr,
+                pincodeErr,
+                landlineNoErr,
+                authorizedPersonErr,
+                mobileNoErr,
+                emailIdErr
+            } = organizationDetailsForm 
+        
+        const formData = {
+            organizationNameErr, 
+            incorporationDateErr, 
+            cinNumberErr, 
+            panNumberErr, 
+            GSTNumberErr,
+            organizationAddressErr,
+            pincodeErr,
+            landlineNoErr,
+            authorizedPersonErr,
+            mobileNoErr,
+            emailIdErr
+        }
+       //console.log("form data", formData)
+       for(const key in formData) {
+           //console.log("form data", formData[key].value.toString().length)  
+           if(!formData[key].status && formData[key].value.toString().length === 0){
+               return false
+           } 
+       }
+
+       return true
     }
 
     handleSave() {
-        console.log("data", this.organizationDetailsForm.getData())
+        //console.log("data", this.organizationDetailsForm.getData())
         const data = this.organizationDetailsForm.getData()
-        if(!data.activeField.errStatus) {
+        this.setState({isFormValid: this.formIsValid()})
+        //console.log("save", this.state.formError)
+        if(this.formIsValid()) {
             const payload = {
                 type_of_organisation: data.organizationType,
                 organisation_name: data.organizationName,
@@ -93,15 +138,18 @@ class CreateOrganization extends React.Component {
     }
 
     render() {
+        //console.log("form state", this.state.isFormValid)
         return (
             <Layout title="Create Organization">
-                <Card width="800px">
+                <Card width="800px" className={!this.state.isFormValid ? 'animated shake' : ''}>
                     <OrganizationForm
                         ref={(node) => { this.organizationDetailsForm = node }}
+                        OnSaveClick = {this.handleSave}
                     />
                     <ButtonGroup align="right">
                         <Button 
                             onClick={() => this.handleSave()} 
+                            loading={this.state.creatingOrg}
                             disabled={this.state.creatingOrg}
                         > 
                             Save 

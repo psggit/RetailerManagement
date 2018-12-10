@@ -26,7 +26,7 @@ export const organizationData = [
         landlineNo: '044 4356782',
         authorizedPerson: 'Madhan',
         mobileNo: '1234567890',
-        emailId: 'abc@gmailcom',
+        email: 'abc@gmailcom',
         
         photo: true,
         pancard: false,
@@ -67,7 +67,7 @@ export const organizationData = [
         landlineNo: '044 4356782',
         authorizedPerson: 'Madhan',
         mobileNo: '1234567890',
-        emailId: 'abc@gmailcom',
+        email: 'abc@gmailcom',
         
         photo: true,
         pancard: false,
@@ -108,7 +108,7 @@ export const organizationData = [
         landlineNo: '044 4356782',
         authorizedPerson: 'Madhan',
         mobileNo: '1234567890',
-        emailId: 'abc@gmailcom',
+        email: 'abc@gmailcom',
         
         photo: true,
         pancard: false,
@@ -149,7 +149,7 @@ export const organizationData = [
         landlineNo: '044 4356782',
         authorizedPerson: 'Madhan',
         mobileNo: '1234567890',
-        emailId: 'abc@gmailcom',
+        email: 'abc@gmailcom',
         
         photo: true,
         pancard: false,
@@ -190,7 +190,7 @@ export const organizationData = [
         landlineNo: '044 4356782',
         authorizedPerson: 'Madhan',
         mobileNo: '1234567890',
-        emailId: 'abc@gmailcom',
+        email: 'abc@gmailcom',
         
         photo: true,
         pancard: false,
@@ -231,7 +231,7 @@ export const organizationData = [
         landlineNo: '044 4356782',
         authorizedPerson: 'Madhan',
         mobileNo: '1234567890',
-        emailId: 'abc@gmailcom',
+        email: 'abc@gmailcom',
         
         photo: true,
         pancard: false,
@@ -279,7 +279,7 @@ export const retailerData = [
         landlineNo: '3456789',
         gpsCoordinates: '12,13',
         mobileNo: '1234567890',
-        emailId: 'abc@gmail.com',
+        email: 'abc@gmail.com',
         
         bankName: 'SBI',
         accountHolderName: 'xxx',
@@ -320,7 +320,7 @@ export const retailerData = [
         landlineNo: '3456789',
         gpsCoordinates: '12,13',
         mobileNo: '1234567890',
-        emailId: 'abc@gmail.com',
+        email: 'abc@gmail.com',
         
         bankName: 'SBI',
         accountHolderName: 'xxx',
@@ -360,7 +360,7 @@ export const retailerData = [
         landlineNo: '3456789',
         gpsCoordinates: '12,13',
         mobileNo: '1234567890',
-        emailId: 'abc@gmail.com',
+        email: 'abc@gmail.com',
         
         bankName: 'SBI',
         accountHolderName: 'xxx',
@@ -400,7 +400,7 @@ export const retailerData = [
         landlineNo: '3456789',
         gpsCoordinates: '12,13',
         mobileNo: '1234567890',
-        emailId: 'abc@gmail.com',
+        email: 'abc@gmail.com',
         
         bankName: 'SBI',
         accountHolderName: 'xxx',
@@ -440,7 +440,7 @@ export const retailerData = [
         landlineNo: '3456789',
         gpsCoordinates: '12,13',
         mobileNo: '1234567890',
-        emailId: 'abc@gmail.com',
+        email: 'abc@gmail.com',
         
         bankName: 'SBI',
         accountHolderName: 'xxx',
