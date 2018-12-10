@@ -20,11 +20,11 @@ const CardComponent =  styled.div`
     }
 `;
 
-const Card = ({width, className, children}) => {
+const Card = (props) => {
     //console.log("card", ...props)
     return (
-        <CardComponent width={width} className={className}>
-            {children}
+        <CardComponent width={props.width} className={props.className}>
+            {props.children}
         </CardComponent>
     )
 }
