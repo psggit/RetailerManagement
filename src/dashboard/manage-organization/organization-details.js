@@ -44,17 +44,17 @@ class OrganizationDetails extends React.Component {
                         
                         {
                             <React.Fragment>
-                                <p><b>PAN</b>: { data.partnershipPancard ? 'Attached' : 'Not Attached' } </p>
+                                <p><b>PAN of Partnership Firm</b>: { data.partnershipPancard ? 'Attached' : 'Not Attached' } </p>
                                 <p><b>PartnershipDeed</b>: { data.partnershipDeed ? 'Attached' : 'Not Attached' } </p>
-                                <p><b>LOA</b>: { data.partnershipLOA ? 'Attached' : 'Not Attached' } </p>
+                                <p><b>LOA of Partnership Firm</b>: { data.partnershipLOA ? 'Attached' : 'Not Attached' } </p>
                             </React.Fragment>
                         }
 
                         {
                             <React.Fragment>
-                                <p><b>PAN</b>: { data.pvtPancard ? 'Attached' : 'Not Attached' } </p>
-                                <p><b>COI</b>: { data.pvtCOI ? 'Attached' : 'Not Attached' } </p>
-                                <p><b>LOA</b>: { data.pvtLOA ? 'Attached' : 'Not Attached' } </p>
+                                <p><b>PAN of Private Firm</b>: { data.pvtPancard ? 'Attached' : 'Not Attached' } </p>
+                                <p><b>COI of Private Firm</b>: { data.pvtCOI ? 'Attached' : 'Not Attached' } </p>
+                                <p><b>LOA of Private Firm</b>: { data.pvtLOA ? 'Attached' : 'Not Attached' } </p>
                             </React.Fragment>
                         }
                         

@@ -8,6 +8,7 @@ import ManageOrganization from './manage-organization/index'
 import CreateOrganization from './manage-organization/create-organization'
 import EditOrganization from './manage-organization/edit-organization'
 import OrganizationDetails from './manage-organization/organization-details'
+import RetailerDetails from './manage-retailer/retailer-details'
 import ManageRetailer from './manage-retailer/index'
 import CreateRetailer from './manage-retailer/create-retailer';
 import EditRetailer from './manage-retailer/edit-retailer';
@@ -132,6 +133,18 @@ class Dashboard extends React.Component {
                   )
                 }
               /> 
+
+
+              <Route
+                exact
+                path="/home/manage-retailer/retailer-details/:retailerId"
+                component={RetailerDetails}
+                // render={
+                //   props => (
+                //     <RetailerDetails {...props} />
+                //   )
+                // }
+              />
 
               <Route
                 exact

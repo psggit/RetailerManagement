@@ -55,6 +55,7 @@ class ManageRetailer extends React.Component {
         this.onToggleChange = this.onToggleChange.bind(this)
         this.fetchOrganizationList = this.fetchOrganizationList.bind(this)
         this.formatOrganizationList = this.formatOrganizationList.bind(this)
+        this.handleRowClick = this.handleRowClick.bind(this)
     }
 
     fetchDefaultData() {
@@ -208,6 +209,11 @@ class ManageRetailer extends React.Component {
         console.log("On toggle change", value, item)
     }
 
+    handleRowClick(e,item) {
+        console.log("row item", item)
+        this.props.history.push(`/home/manage-retailer/retailer-details/${item.id}`, item)
+    }
+
     render() {
         //const { activePage, pageOffset, itemCount} = this.state
         return (
@@ -317,6 +323,7 @@ class ManageRetailer extends React.Component {
                         <Table
                             emptyMessage={this.state.loading ? <Spinner /> : 'No records found'}
                             items={retailerData}
+                            onRowClick={(e,item) => this.handleRowClick(e,item)}
                         >
                             <Table.Column field="actions">
                                 {item => (
