@@ -11,6 +11,7 @@ import OrganizationDetails from './manage-organization/organization-details'
 import ManageRetailer from './manage-retailer/index'
 import CreateRetailer from './manage-retailer/create-retailer';
 import EditRetailer from './manage-retailer/edit-retailer';
+import GenerateReport from './generate-report'
 
 const history = createHistory()
 
@@ -49,7 +50,8 @@ class Dashboard extends React.Component {
           history={history} 
           menuItems={[
             { label: 'Manage Organization', value: 'manage-organization' },
-            { label: 'Manage Retailer', value: 'manage-retailer' }
+            { label: 'Manage Retailer', value: 'manage-retailer' },
+            { label: 'Generate Report', value: 'generate-report' }
           ]}
           currentRoute={this.state.currentRoute}
         />
@@ -58,7 +60,8 @@ class Dashboard extends React.Component {
             history={history}
             menuItems={[
               { label: 'Manage Organization', value: 'manage-organization' },
-              { label: 'Manage Retailer', value: 'manage-retailer' }
+              { label: 'Manage Retailer', value: 'manage-retailer' },
+              { label: 'Generate Report', value: 'generate-report' }
             ]}
             currentRoute={this.state.currentRoute}
           />
@@ -129,6 +132,18 @@ class Dashboard extends React.Component {
                   )
                 }
               /> 
+
+              <Route
+                exact
+                path="/home/generate-report"
+                component={GenerateReport}
+                // render={
+                //   props => (
+                //     <GenerateReport {...props} />
+                //   )
+                // }
+              /> 
+
               <Route
                 //exact
                 path="/home"

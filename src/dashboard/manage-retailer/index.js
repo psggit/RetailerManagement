@@ -59,7 +59,7 @@ class ManageRetailer extends React.Component {
 
     fetchDefaultData() {
         this.setState({organizationList: [],  data: [], retailerListCount: 100})
-        this.fetchOrganizationList(this.formatOrganizationList)
+        this.fetchOrganizationList({}, this.formatOrganizationList)
         this.fetchRetailerList({
             offset: 0,
             limit: this.pagesLimit,
@@ -113,9 +113,9 @@ class ManageRetailer extends React.Component {
         //   })
     }
 
-    fetchOrganizationList(organizationListSuccessCallback) {
+    fetchOrganizationList(payloadObj, organizationListSuccessCallback) {
         // this.setState({organizationList: []})
-        Api.fetchOrganizationAndStateList(organizationListSuccessCallback)
+        Api.fetchOrganizationAndStateList(payloadObj, organizationListSuccessCallback)
         // POST({
         //   api: '/excisePortal/ottpHistory',
         //   apiBase: 'agamotto',

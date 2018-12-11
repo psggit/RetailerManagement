@@ -169,7 +169,7 @@ class CreateRetailer extends React.Component {
                         > 
                             Save 
                         </Button>
-                        <Button> Download </Button>
+                        {/* <Button> Download </Button> */}
                     </ButtonGroup>
                 </Card> 
             </Layout>
