@@ -16,7 +16,7 @@ class GenerateReport extends React.Component {
         this.fetchOrganizationList = this.fetchOrganizationList.bind(this)
         this.formatOrganizationList = this.formatOrganizationList.bind(this)
         this.handleChange = this.handleChange.bind(this)
-        this.handleClick = this.handleClick.bind(this)
+        //this.handleClick = this.handleClick.bind(this)
     }
 
     componentDidMount() {
@@ -39,9 +39,10 @@ class GenerateReport extends React.Component {
         console.log("Fetched org list with state details", data)
     }
 
-    handleClick() {
-        console.log("handle download click")
-    }
+    // handleClick() {
+    //     console.log("handle download click")
+    //     <a href="./../test.html" download />
+    // }
 
     render() {
         return (
@@ -70,9 +71,12 @@ class GenerateReport extends React.Component {
                             //onChange={(e) => this.handleChange(e)}
                         />
                     </Form>
-                    <ButtonGroup align="right">
+                    {/* <ButtonGroup align="right"> */}
+                    <a href="/retailer-onboarding-form" target="_blank">
                         <Button onClick={() => this.handleClick()}> Download </Button>
-                    </ButtonGroup>
+                    </a>
+                       
+                    {/* </ButtonGroup> */}
                 </Card>
             </Layout>
         ) 

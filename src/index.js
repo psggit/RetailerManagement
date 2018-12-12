@@ -10,6 +10,7 @@ import { createSession } from './login/utils'
 
 import Login from './login'
 import Dashboard from './dashboard'
+import RetailerForm from './report'
 
 class App extends React.Component {
     componentWillMount() {
@@ -31,8 +32,9 @@ class App extends React.Component {
                 }
                 response.json().then((data) => {
                     createSession(data)
-                    if (!location.pathname.includes('home')) {
-                    location.href = '/home'
+                    console.log("location pathname", location.pathname.includes('home'), "report", location.pathname.includes('report'))
+                    if(!location.pathname.includes('home') && !location.pathname.includes('report')) {
+                        location.href = '/home'
                     }
                 })
             })
@@ -48,8 +50,10 @@ class App extends React.Component {
             <Router>
                 <div>
                     <Route path='/login' component={Login} />
-                    {/* <Route exact path='/' component={Dashboard} /> */}
+                  
                     <Route path='/home' component={Dashboard} />
+
+                    <Route exact path='/retailer-onboarding-form' component={RetailerForm} />
                 </div>
             </Router>
         )
