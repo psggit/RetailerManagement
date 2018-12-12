@@ -1,5 +1,5 @@
 import React from 'react'
-import { Form, Checkbox, Button, ButtonGroup } from '@auth0/cosmos'
+import { Form, TextInput, Checkbox, Button, ButtonGroup } from '@auth0/cosmos'
 import { validateTextField, validateEmail, validateNumberField } from 'Utils/validators'
 //import { emailRegex, } from 'Utils/regex'
 import { checkCtrlA, validateNumType, checkCtrlV } from 'Utils/logic-utils'
@@ -21,7 +21,9 @@ class OrganizationForm extends React.Component {
             authorizedPerson: 'Name of authorized person',
             mobileNo: 'Mobile number',
             pincode: 'Pincode',
-            email: 'Email'
+            email: 'Email',
+            partnershipDoc: 'For partnership firm, Documents attached',
+            privateDoc: 'For Pvt Ltd, Documents attached'
         }
         this.state = {
             organizationName: props.data ? props.data.organizationName : '',
@@ -55,7 +57,20 @@ class OrganizationForm extends React.Component {
             pvtPancard: props.data ? props.data.pvtPancard : false,
             pvtCOI: props.data ? props.data.pvtCOI : false,
             pvtLOA: props.data ? props.data.pvtLOA : false,
-            
+
+            otherParnershipProof: false,
+            otherPvtLtdProof: false,
+            partnershipDoc: '',
+            privateDoc: '',
+
+            partnershipDocErr: {
+                value: '',
+                status: false
+            },
+            privateDocErr: {
+                value: '',
+                status: false
+            },
             organizationNameErr: {
                 value: '',
                 status: false
@@ -187,7 +202,9 @@ class OrganizationForm extends React.Component {
             landlineNoErr,
             authorizedPersonErr,
             mobileNoErr,
-            emailIdErr
+            emailIdErr,
+            partnershipDocErr,
+            privateDocErr
         } = this.state
         return (
             <Form layout="label-on-top">
@@ -380,7 +397,7 @@ class OrganizationForm extends React.Component {
                         <div style={{marginBottom: '8px'}}>
                             <label>For (Partnership firm/LLP)</label>
                         </div>
-                        <div style={{display: 'flex'}}>
+                        <div style={{display: 'flex', alignItems: 'center'}}>
                             <div style={{marginRight: '24px'}}>
                                 <Checkbox
                                     name="partnershipPancard"
@@ -411,13 +428,38 @@ class OrganizationForm extends React.Component {
                                     LOA
                                 </Checkbox>
                             </div>
+                            <div style={{marginRight: '24px'}}>
+                                <Checkbox
+                                    name="otherParnershipProof"
+                                    onChange={e => this.handleSelectChange(e)}
+                                    value="otherParnershipProof"
+                                    checked={this.state.otherParnershipProof}
+                                >
+                                    Others
+                                </Checkbox>
+                            </div>
+                            {
+                                this.state.otherParnershipProof &&
+                                <div>
+                                    <Form.TextInput
+                                    label=""
+                                    type="text"
+                                    name="partnershipDoc"
+                                    placeholder="Document attached as proof"
+                                    error={partnershipDocErr.status ? partnershipDocErr.value : ''}
+                                    value={this.state.partnershipDoc}
+                                    //size="small"
+                                    onChange={(e) => this.handleTextChange(e)}
+                                    />
+                                </div>
+                            }
                         </div>
                     </div>
                     <div style={{marginBottom: '20px'}}>
                         <div style={{marginBottom: '8px'}}>
                             <label>For (Pvt Ltd)</label>
                         </div>
-                        <div style={{display: 'flex'}}>
+                        <div style={{display: 'flex', alignItems: 'center'}}>
                             <div style={{marginRight: '20px'}}>
                                 <Checkbox
                                     name="pvtPancard"
@@ -448,6 +490,31 @@ class OrganizationForm extends React.Component {
                                     Board Resolution / LOA
                                 </Checkbox>
                             </div>
+                            <div style={{marginRight: '20px'}}>
+                                <Checkbox
+                                    name="otherPvtLtdProof"
+                                    onChange={e => this.handleSelectChange(e)}
+                                    value="otherPvtLtdProof"
+                                    checked={this.state.otherPvtLtdProof}
+                                >
+                                    Others
+                                </Checkbox>
+                            </div>
+                            {
+                                this.state.otherPvtLtdProof &&
+                                <div>
+                                    <Form.TextInput
+                                    label=""
+                                    placeholder="Document attached as proof"
+                                    type="text"
+                                    name="privateDoc"
+                                    error={privateDocErr.status ? privateDocErr.value : ''}
+                                    value={this.state.privateDoc}
+                                    //size="small"
+                                    onChange={(e) => this.handleTextChange(e)}
+                                    />
+                                </div>
+                            }
                         </div>
                     </div>
                 </Form.FieldSet>

@@ -34,7 +34,11 @@ class CreateOrganization extends React.Component {
                 landlineNoErr,
                 authorizedPersonErr,
                 mobileNoErr,
-                emailIdErr
+                emailIdErr,
+                otherParnershipProof,
+                partnershipDocErr,
+                otherPvtLtdProof,
+                privateDocErr
             } = organizationDetailsForm 
         
         const formData = {
@@ -48,7 +52,7 @@ class CreateOrganization extends React.Component {
             landlineNoErr,
             authorizedPersonErr,
             mobileNoErr,
-            emailIdErr
+            emailIdErr,
         }
        //console.log("form data", formData)
        for(const key in formData) {
@@ -56,6 +60,14 @@ class CreateOrganization extends React.Component {
            if(!formData[key].status && formData[key].value.toString().length === 0){
                return false
            } 
+       }
+
+       if(otherParnershipProof && partnershipDocErr.value.toString().length === 0) {
+            return false
+       }
+
+       if(otherPvtLtdProof && privateDocErr.value.toString().length === 0) {
+            return false
        }
 
        return true
