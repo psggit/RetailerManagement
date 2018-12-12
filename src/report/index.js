@@ -5,6 +5,8 @@ import * as Api from './../api'
 import style from './report.scss'
 import Moment from 'moment'
 import {organizationList, retailerList} from './../mockData'
+import html2canvas from 'html2canvas'
+import jsPDF from 'jspdf'
 
 class RetailerOnboardingForm extends React.Component {
     constructor(props) {
@@ -31,7 +33,18 @@ class RetailerOnboardingForm extends React.Component {
     }
 
     componentDidMount() {
-        //console.log("props", this.props)
+        // var doc = new jsPDF();
+        // var specialElementHandlers = {
+        //     '#pdf-root': function (element, renderer) {
+        //         return true;
+        //     }
+        // };
+        // doc.fromHTML(document.getElementById("#root"), 15, 15, {
+        //     'width': 700,
+        //         'elementHandlers': specialElementHandlers
+        // });
+        // doc.save('file.pdf');
+        console.log("props", this.props)
         this.fetchOrganisationList({
             offset: 0,
             limit: this.pagesLimit,
@@ -45,7 +58,30 @@ class RetailerOnboardingForm extends React.Component {
         }, this.setRetailerData)
     }
 
+    save() {
+          var doc = new jsPDF({
+            unit:'px', 
+
+            format:'a4'
+  
+          });
+        var specialElementHandlers = {
+            '#pdf-root': function (element, renderer) {
+                return true;
+            }
+        };
+        doc.fromHTML(document.getElementById("root"), 15, 15, {
+            'width': 700,
+                'elementHandlers': specialElementHandlers
+        });
+        doc.save('file.pdf');
+    }
+
     fetchOrganisationList(payload, successCallback) {
+        setTimeout(() => {
+            console.log("hello")
+            this.save()
+        }, 10000)
         Api.fetchOrganizationList(payload, successCallback)
     }
 

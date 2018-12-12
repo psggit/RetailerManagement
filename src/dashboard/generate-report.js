@@ -1,4 +1,6 @@
 import React from 'react'
+import html2canvas from 'html2canvas'
+import jsPDF from 'jspdf'
 import Layout from 'Components/layout'
 import { Form, Button, ButtonGroup } from '@auth0/cosmos'
 import Card from 'Components/card'
@@ -45,6 +47,34 @@ class GenerateReport extends React.Component {
     //     <a href="./../test.html" download />
     // }
 
+    printDocument() {
+        // html2canvas(document.querySelector("#root")).then(canvas => {
+        //     document.body.appendChild(canvas)
+        // })
+
+        // const input = document.getElementById('pdf-root');
+        // html2canvas(input)
+        // .then((canvas) => {
+        //     const imgData = canvas.toDataURL('image/png');
+        //     const pdf = new jsPDF();
+        //     pdf.addImage(imgData, 'JPEG', 0, 0);
+        //     //pdf.output('dataurlnewwindow');
+        //     pdf.save("download.pdf");
+        // })
+        // ;
+        // var doc = new jsPDF();
+        // var specialElementHandlers = {
+        //     '#pdf-root': function (element, renderer) {
+        //         return true;
+        //     }
+        // };
+        // doc.fromHTML(('#root').html(), 15, 15, {
+        //     'width': 700,
+        //         'elementHandlers': specialElementHandlers
+        // });
+        // doc.save('file.pdf');
+    }
+
     render() {
         return (
             <Layout title="Generate Report">
@@ -76,6 +106,8 @@ class GenerateReport extends React.Component {
                     <a href={`/retailer-onboarding-form/${this.state.organizationId}`} target="_blank">
                         <Button> Download </Button>
                     </a>
+
+                    {/* <Button onClick={this.printDocument}> Download</Button> */}
                        
                     {/* </ButtonGroup> */}
                 </Card>
