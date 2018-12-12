@@ -32,8 +32,7 @@ class App extends React.Component {
                 }
                 response.json().then((data) => {
                     createSession(data)
-                    console.log("location pathname", location.pathname.includes('home'), "report", location.pathname.includes('report'))
-                    if(!location.pathname.includes('home') && !location.pathname.includes('report')) {
+                    if(!location.pathname.includes('home') && !location.pathname.includes('retailer')) {
                         location.href = '/home'
                     }
                 })
@@ -53,7 +52,7 @@ class App extends React.Component {
                   
                     <Route path='/home' component={Dashboard} />
 
-                    <Route exact path='/retailer-onboarding-form' component={RetailerForm} />
+                    <Route path='/retailer-onboarding-form/:orgId' component={RetailerForm} />
                 </div>
             </Router>
         )

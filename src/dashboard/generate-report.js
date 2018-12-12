@@ -10,7 +10,8 @@ class GenerateReport extends React.Component {
         this.state = {
             selectedOrganizationIdx: 1,
             selectedStateIdx: 1,
-            organizationList: []
+            organizationList: [],
+            organizationId: 1001
         }
 
         this.fetchOrganizationList = this.fetchOrganizationList.bind(this)
@@ -72,8 +73,8 @@ class GenerateReport extends React.Component {
                         />
                     </Form>
                     {/* <ButtonGroup align="right"> */}
-                    <a href="/retailer-onboarding-form" target="_blank">
-                        <Button onClick={() => this.handleClick()}> Download </Button>
+                    <a href={`/retailer-onboarding-form/${this.state.organizationId}`} target="_blank">
+                        <Button> Download </Button>
                     </a>
                        
                     {/* </ButtonGroup> */}

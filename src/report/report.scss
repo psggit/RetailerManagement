@@ -1,0 +1,35 @@
+.container {
+    width: 960px;
+    margin: 0 auto;
+    height: 100vh;
+    //padding: 20px;
+    text-align: left;
+    //border: 1px solid red;
+
+    .wrapper {
+        //margin: 100px 200px;
+        border: 1px solid grey;
+        //height: calc(100vh - 200px);
+        padding: 60px;
+
+        .title{
+            padding-bottom: 20px;
+            text-align: center;
+        }
+
+        .sub-title {
+            border-bottom: 1px solid grey;
+            margin-bottom: 20px;
+        }
+
+        .content {
+            padding-bottom: 20px;
+        }
+    }
+}
+
+@media screen and (min-width: 480px) {
+    .container {
+        /* background-color: lightgreen; */
+    }
+}
