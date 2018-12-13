@@ -160,7 +160,7 @@ class EditOrganization extends React.Component {
     }
 
     render() {
-        //console.log("edit org", this.props.history.location.state)
+        console.log("edit org", this.props.history.location.state)
         const {stateList, cityList} = this.state
         return (
             <Layout title="Edit Organization">

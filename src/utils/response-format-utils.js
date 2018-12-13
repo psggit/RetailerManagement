@@ -1,14 +1,11 @@
-//import {stateAndCityList} from './../mockData'
-
 export function formatStateAndCityList(data) {
     const list = data
-    let cityList = [], stateList = []
-    //const {list, stateList, cityList} = this.state
+    let cityList = [], stateList = [], stateMap = {}
     let index = 0;
     for(const i in list) {
         let state = {}
         state.text = list[i].state_name
-        state.value = i
+        state.value = list[i].state_id
         stateList[i] = state
 
         for(const j in list[i].cities) {  
@@ -17,8 +14,40 @@ export function formatStateAndCityList(data) {
             city.value = (list[i].cities[j].city_id)
             cityList[index] = city
             index = index + 1
-        } 
+        }
     }
-    console.log("state list", stateList, "city list", cityList)
-    return {stateList, cityList}
+
+    //Maps state to city
+    for(const i in list) { 
+        let cityList = []
+        for(const j in list[i].cities) {
+            let cityDetail = {}
+            cityDetail.text = (list[i].cities[j].city_name)
+            cityDetail.value = (list[i].cities[j].city_id)
+            cityList[j] = cityDetail
+        }
+        stateMap[list[i].state_id] =  cityList
+    }
+    return {stateList, cityList, stateMap}
+}
+
+export function formatStateAndOrganizationList(data) {
+    let organizationList = [], stateList = [], organizationMap = {}
+    for(const i in data) {
+        let state={}, organization={}
+        // state.text = data[i].state_name
+        // state.value = data[i].state_id
+        organization.text = data[(i)].organisation_name,
+        organization.value = i 
+        organizationList[i] = organization
+        // stateList[i] = state
+
+        //maps organization to state
+        organizationMap[(i)] = {
+            state_name: data[i].state_name,
+            state_id: data[i].state_id
+        }
+    }
+
+    return {organizationList, organizationMap}
 }

@@ -604,6 +604,7 @@ export const retailerList = {
 export const stateAndCityList = {
     "states": [
         {
+            "state_id": "5",
             "state_name": "Goa",
             "state_short_name": "GA",
             "cities": [
@@ -614,6 +615,7 @@ export const stateAndCityList = {
             ]
         },
         {
+            "state_id": "2",
             "state_name": "Maharashtra",
             "state_short_name": "MH",
             "cities": [
@@ -624,6 +626,7 @@ export const stateAndCityList = {
             ]
         },
         {
+            "state_id": "4",
             "state_name": "Tamil Nadu",
             "state_short_name": "TN",
             "cities": [
@@ -658,6 +661,7 @@ export const stateAndCityList = {
             ]
         },
         {
+            "state_id": "1",
             "state_name": "Karnataka",
             "state_short_name": "KA",
             "cities": [
@@ -672,6 +676,7 @@ export const stateAndCityList = {
             ]
         },
         {
+            "state_id": "3",
             "state_name": "Haryana ",
             "state_short_name": "HR",
             "cities": [
@@ -680,6 +685,21 @@ export const stateAndCityList = {
                     "city_name": "Gurgaon"
                 }
             ]
+        }
+    ]
+}
+
+export const organizationAndStateList = {
+    "details": [
+        {
+            "organisation_name": "org1",
+            "state_id": "5",
+            "state_name": "Goa"
+        },
+        {
+            "organisation_name": "org2",
+            "state_id": "1",
+            "state_name": "Karnataka"
         }
     ]
 }

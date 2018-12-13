@@ -53,14 +53,14 @@ class ManageRetailer extends React.Component {
         this.setResponseData = this.setResponseData.bind(this)
         this.editOutletDetail = this.editOutletDetail.bind(this)
         this.onToggleChange = this.onToggleChange.bind(this)
-        this.fetchOrganizationList = this.fetchOrganizationList.bind(this)
-        this.formatOrganizationList = this.formatOrganizationList.bind(this)
+        // this.fetchOrganizationList = this.fetchOrganizationList.bind(this)
+        //this.formatOrganizationList = this.formatOrganizationList.bind(this)
         this.handleRowClick = this.handleRowClick.bind(this)
     }
 
     fetchDefaultData() {
         this.setState({organizationList: [],  data: [], retailerListCount: 100})
-        this.fetchOrganizationList({}, this.formatOrganizationList)
+        //this.fetchOrganizationList({}, this.formatOrganizationList)
         this.fetchRetailerList({
             offset: 0,
             limit: this.pagesLimit,
@@ -192,8 +192,9 @@ class ManageRetailer extends React.Component {
 
     // }
 
-    editOutletDetail(item, action) {
+    editOutletDetail(e, item, action) {
         //console.log("item", item, this.props.history)
+        e.stopPropagation()
         this.props.history.push(`/home/manage-retailer/edit-retailer/${item.id}`, item)
     }
 
@@ -327,7 +328,7 @@ class ManageRetailer extends React.Component {
                         >
                             <Table.Column field="actions">
                                 {item => (
-                                    <Button icon="pencil" onClick={() => this.editOutletDetail(item, 'edit')} />
+                                    <Button icon="pencil" onClick={(e) => this.editOutletDetail(e, item, 'edit')} />
                                 )}
                             </Table.Column>
                             <Table.Column field="id" title="ID"/>

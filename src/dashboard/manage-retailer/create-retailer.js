@@ -6,13 +6,21 @@ import { Form, Checkbox, Button, ButtonGroup } from '@auth0/cosmos'
 import * as Api from './../../api'
 //import { isRegExp } from 'util';
 import 'Sass/animations.scss'
+import {formatStateAndCityList, formatStateAndOrganizationList} from 'Utils/response-format-utils'
+import {organizationAndStateList, stateAndCityList} from './../../mockData'
 
 class CreateRetailer extends React.Component {
     constructor() {
         super()
         this.state = {
             creatingRetailer: false,
-            isFormValid: true
+            isFormValid: true,
+            //data: organizationAndStateList.details,
+            organizationList: [],
+            stateList: [],
+            stateMap: {},
+            organizationMap: {},
+            cityList: []
         }
         this.handleSave = this.handleSave.bind(this)
         this.createRetailer = this.createRetailer.bind(this)
@@ -20,6 +28,43 @@ class CreateRetailer extends React.Component {
         this.failureCallback = this.failureCallback.bind(this)
         this.updateState = this.updateState.bind(this)
         this.formIsValid = this.formIsValid.bind(this)
+        this.fetchOrganizationList = this.fetchOrganizationList.bind(this)
+        this.formatOrganizationList = this.formatOrganizationList.bind(this)
+    }
+
+    componentDidMount() {
+        //this.fetchOrganizationList({}, this.formatOrganizationList)
+        //const {data} = this.state
+        //let organizationList = [], stateList = [], organizationMap = {}
+        // for(const i in data) {
+        //     let state={}, organization={}
+        //     state.text = data[i].state_name
+        //     state.value = data[i].state_id
+        //     organization.text = data[(i)].organisation_name,
+        //     organization.value = i 
+        //     organizationList[i] = organization
+        //     stateList[i] = state
+        //     organizationMap[(i)] = {
+        //         state_name: data[i].state_name,
+        //         state_id: data[i].state_id
+        //     }
+        // }
+        const {organizationList, organizationMap} = formatStateAndOrganizationList(organizationAndStateList.details)
+        const {stateMap, stateList, cityList} = formatStateAndCityList(stateAndCityList.states)
+        // console.log("response", stateList, "city", cityList)
+        // this.setState({stateList, cityList}) 
+
+        console.log("list", organizationList, stateList, organizationMap, stateMap)
+        this.setState({organizationList, stateList, organizationMap, stateMap, cityList})
+    }
+
+    fetchOrganizationList(payloadObj, organizationListSuccessCallback) {
+        // this.setState({organizationList: []})
+        Api.fetchOrganizationAndStateList(payloadObj, organizationListSuccessCallback)
+    }
+
+    formatOrganizationList(data) {
+        console.log("Fetched org list with state details", data)
     }
 
     formIsValid() {
@@ -160,6 +205,12 @@ class CreateRetailer extends React.Component {
                 <Card width="800px" className={!this.state.isFormValid ? 'animated shake' : ''}>
                     <RetailerForm
                         ref={(node) => { this.retailerDetailsForm = node }}
+                        OnSaveClick = {this.handleSave}
+                        organizationList = {this.state.organizationList}
+                        stateList = {this.state.stateList}
+                        organizationMap = {this.state.organizationMap}
+                        stateMap = {this.state.stateMap}
+                        cityList = {this.state.cityList}
                     />
                     <ButtonGroup align="right">
                         <Button 

@@ -28,7 +28,11 @@ class RetailerForm extends React.Component {
             email: 'Email'
         }
         this.state = {
-            organizationName: props.data ? props.data.organizationName : '',
+            organizationList: this.props.organizationList,
+            organizationMap: this.props.organizationMap,
+            stateList: this.props.stateList,
+            stateMap: this.props.stateMap,
+            cityList: this.props.cityList,
             selectedOrganizationIdx: props.data ? props.data.selectedOrganizationIdx : 0,
             ksbclCode: props.data ? props.data.ksbclCode : '',
             outletName: props.data ? props.data.outletName : '',
@@ -42,9 +46,9 @@ class RetailerForm extends React.Component {
             FSSAINumber: props.data ? props.data.FSSAINumber : '',
         
             //city: props.data ? props.data.city : '',
-            selectedCityIdx: props.data ? props.data.selectedCityIdx : 1,
+            selectedCityIdx: props.data ? props.data.selectedCityIdx :0,
             //state: props.data ? props.data.state : '',
-            selectedStateIdx: props.data ? props.data.selectedStateIdx : 1,
+            selectedStateIdx: props.data ? props.data.selectedStateIdx : 0,
             pincode: props.data ? props.data.pincode : '',
             outletAddress: props.data ? props.data.outletAddress : '',
             landlineNo: props.data ? props.data.landlineNo : '',
@@ -153,11 +157,46 @@ class RetailerForm extends React.Component {
         // this.validateEmail = this.validateEmail.bind(this)
     }
 
+    componentWillReceiveProps(newProps) {
+        if(this.props.organizationList !== newProps.organizationList) {
+            this.setState({organizationList: newProps.organizationList})
+        }
+
+        if(this.props.stateList !== newProps.stateList) {
+            this.setState({stateList: newProps.stateList})
+            if(location.pathname.includes("create")) {
+                this.setState({selectedStateIdx: newProps.stateList[0].state_id})
+            }
+        }
+
+        if(newProps.cityList && this.props.cityList !== newProps.cityList) {
+            this.setState({cityList: newProps.cityList})
+            if(location.pathname.includes("create")) {
+                this.setState({selectedCityIdx: newProps.cityList[0].value})
+            }
+        }
+
+        if(this.props.organizationMap !== newProps.organizationMap) {
+            this.setState({organizationMap: newProps.organizationMap})
+        }
+
+        if(this.props.stateMap !== newProps.stateMap) {
+            this.setState({stateMap: newProps.stateMap})
+        }
+    }
+
     handleChange(e) {
-        //console.log("handle change", e.target.value, e.target.name, e.target.type)
-        this.setState({
-            [e.target.name]: e.target.value
-        })
+        if(e.target.name.includes("Organization")) {
+            this.setState({
+                selectedStateIdx: parseInt(this.state.organizationMap[e.target.value].state_id),
+                cityList: this.state.stateMap[parseInt(this.state.organizationMap[e.target.value].state_id)],
+                [e.target.name]: e.target.value
+            })
+        } else {
+            this.setState({
+                [e.target.name]: e.target.value
+            })
+        }
     }
 
     handleSelectChange(e) {
@@ -175,7 +214,6 @@ class RetailerForm extends React.Component {
     }
 
     handleNumberChange(e) {
-        console.log("mob change", e.target.value)
         const errName = `${e.target.name}Err`
         this.length = 0
         this.checkLength = true
@@ -321,11 +359,7 @@ class RetailerForm extends React.Component {
                         label="Organization*"
                         value={this.state.selectedOrganizationIdx}
                         name="selectedOrganizationIdx"
-                        options={[
-                            { text: 'Insight Hospitality Pvt Ltd', value: '1' },
-                            { text: 'Pink Panther Hospitality Pvt Ltd', value: '2' },
-                            { text: 'dsadsdfsdfdsf', value: '3' },
-                        ]}
+                        options={this.state.organizationList}
                         onChange={(e) => this.handleChange(e)}
                     />
                     <Form.TextInput
@@ -528,23 +562,22 @@ class RetailerForm extends React.Component {
                         onChange={(e) => this.handleTextChange(e)}
                     />
                     <Form.Select
+                        disabled={true}
                         label="State*"
                         value={this.state.selectedStateIdx}
                         name="selectedStateIdx"
-                        options={[
-                            { text: 'Tamilnadu', value: '1' },
-                            { text: 'Karnataka', value: '2' },
-                        ]}
-                        onChange={(e) => this.handleChange(e)}
+                        // options={[
+                        //     { text: 'Tamilnadu', value: '1' },
+                        //     { text: 'Karnataka', value: '2' },
+                        // ]}
+                        options={this.state.stateList}
+                        //onChange={(e) => this.handleChange(e)}
                     />
                     <Form.Select
                         label="City*"
                         value={this.state.selectedCityIdx}
                         name="selectedCityIdx"
-                        options={[
-                            { text: 'Chennai', value: '1' },
-                            { text: 'Coimbatore', value: '2' },
-                        ]}
+                        options={this.state.cityList}
                         onChange={(e) => this.handleChange(e)}
                     />
                     <Form.TextInput
