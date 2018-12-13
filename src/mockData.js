@@ -600,3 +600,86 @@ export const retailerList = {
     ],
     "count": "4"
 }
+
+export const stateAndCityList = {
+    "states": [
+        {
+            "state_name": "Goa",
+            "state_short_name": "GA",
+            "cities": [
+                {
+                    "city_id": "11",
+                    "city_name": "Panaji"
+                }
+            ]
+        },
+        {
+            "state_name": "Maharashtra",
+            "state_short_name": "MH",
+            "cities": [
+                {
+                    "city_id": "2",
+                    "city_name": "Mumbai"
+                }
+            ]
+        },
+        {
+            "state_name": "Tamil Nadu",
+            "state_short_name": "TN",
+            "cities": [
+                {
+                    "city_id": "7",
+                    "city_name": "Tiruppur"
+                },
+                {
+                    "city_id": "9",
+                    "city_name": "Erode"
+                },
+                {
+                    "city_id": "10",
+                    "city_name": "Rest Chennai"
+                },
+                {
+                    "city_id": "8",
+                    "city_name": "Nilgiris"
+                },
+                {
+                    "city_id": "6",
+                    "city_name": "Coimbatore"
+                },
+                {
+                    "city_id": "12",
+                    "city_name": "North chennai"
+                },
+                {
+                    "city_id": "5",
+                    "city_name": "Chennai"
+                }
+            ]
+        },
+        {
+            "state_name": "Karnataka",
+            "state_short_name": "KA",
+            "cities": [
+                {
+                    "city_id": "1",
+                    "city_name": "Bengaluru"
+                },
+                {
+                    "city_id": "3",
+                    "city_name": "Mysore"
+                }
+            ]
+        },
+        {
+            "state_name": "Haryana ",
+            "state_short_name": "HR",
+            "cities": [
+                {
+                    "city_id": "4",
+                    "city_name": "Gurgaon"
+                }
+            ]
+        }
+    ]
+}

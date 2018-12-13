@@ -6,19 +6,76 @@ import { Form, Checkbox, Button, ButtonGroup } from '@auth0/cosmos'
 //import { POST } from 'Utils/fetch'
 import * as Api from './../../api'
 import 'Sass/animations.scss'
+import {stateAndCityList} from './../../mockData'
+// import * as Api from './../../api'
 
 class CreateOrganization extends React.Component {
     constructor() {
         super()
         this.state = {
             creatingOrg: false,
-            isFormValid: true
+            isFormValid: true,
+            stateList: [],
+            cityList: [],
+            list: stateAndCityList.states,
         }
         this.handleSave = this.handleSave.bind(this)
         this.successCallback = this.successCallback.bind(this)
         this.failureCallback = this.failureCallback.bind(this)
         this.updateState = this.updateState.bind(this)
         this.formIsValid =  this.formIsValid.bind(this)
+        this.fetchStateAndCityList = this.fetchStateAndCityList.bind(this)
+        this.formatStateAndCityList = this.formatStateAndCityList.bind(this)
+    }
+
+    componentDidMount() {
+
+        // this.fetchStateAndCityList({
+        //     offset: 0,
+        //     limit: 0
+        // },this.formatStateAndCityList)
+        const {list, stateList, cityList} = this.state
+        let index = 0;
+        for(const i in list) {
+            let state = {}
+            state.text = list[i].state_name
+            state.value = i
+            stateList[i] = state
+
+            for(const j in list[i].cities) {  
+                let city = {}
+                city.text = (list[i].cities[j].city_name)
+                city.value = (list[i].cities[j].city_id)
+                cityList[index] = city
+                index = index + 1
+            } 
+        }
+        this.setState({stateList, cityList})
+    }
+
+    fetchStateAndCityList(payload, stateListSuccessCallback) {
+        Api.fetchStateAndCityList(payload, stateListSuccessCallback)
+    }
+
+    formatStateAndCityList(data) {
+        console.log("state and city list", data)
+        // const {list, stateList, cityList} = this.state
+        // let index = 0;
+        // for(const i in list) {
+        //     let state = {}
+        //     state.text = list[i].state_name
+        //     state.value = i
+        //     stateList[i] = state
+
+        //     for(const j in list[i].cities) {  
+        //         let city = {}
+        //         city.text = (list[i].cities[j].city_name)
+        //         city.value = (list[i].cities[j].city_id)
+        //         cityList[index] = city
+        //         index = index + 1
+        //     } 
+        // }
+        // this.setState({stateList, cityList})
     }
 
     formIsValid() {
@@ -157,6 +214,8 @@ class CreateOrganization extends React.Component {
                     <OrganizationForm
                         ref={(node) => { this.organizationDetailsForm = node }}
                         OnSaveClick = {this.handleSave}
+                        stateList = {this.state.stateList}
+                        cityList = {this.state.cityList}
                     />
                     <ButtonGroup align="right">
                         <Button 

@@ -59,22 +59,21 @@ class RetailerOnboardingForm extends React.Component {
     }
 
     save() {
-          var doc = new jsPDF({
-            unit:'px', 
+        // var doc = new jsPDF({
+        //     unit:'px', 
 
-            format:'a4'
-  
-          });
-        var specialElementHandlers = {
-            '#pdf-root': function (element, renderer) {
-                return true;
-            }
-        };
-        doc.fromHTML(document.getElementById("root"), 15, 15, {
-            'width': 700,
-                'elementHandlers': specialElementHandlers
-        });
-        doc.save('file.pdf');
+        //     format:'a4'
+        // });
+        // var specialElementHandlers = {
+        //     '#pdf-root': function (element, renderer) {
+        //         return true;
+        //     }
+        // };
+        // doc.fromHTML(document.getElementById("root"), 15, 15, {
+        //     'width': 700,
+        //         'elementHandlers': specialElementHandlers
+        // });
+        // doc.save('file.pdf');
     }
 
     fetchOrganisationList(payload, successCallback) {

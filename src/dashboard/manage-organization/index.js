@@ -11,6 +11,7 @@ import { getQueryObj, getQueryUri } from 'Utils/url-utils'
 import { NavLink } from 'react-router-dom'
 //import { POST } from 'Utils/fetch'
 import * as Api from './../../api'
+// import {stateAndCityList} from './../../mockData'
 
 class ManageOrganization extends React.Component {
 
@@ -28,6 +29,9 @@ class ManageOrganization extends React.Component {
             organisationCount: 0,
             data: [],
             list: [],
+            // stateList: [],
+            // cityList: [],
+            // list: stateAndCityList.states,
             operators:  [
                 {text: 'ID', value: 'ID'},
                 {text: 'LIKE', value: 'LIKE'},
@@ -50,18 +54,44 @@ class ManageOrganization extends React.Component {
         this.fetchDefaultData = this.fetchDefaultData.bind(this)
         this.fetchOrganisationList = this.fetchOrganisationList.bind(this)
         this.setResponseData = this.setResponseData.bind(this)
-        this.formatStateAndCityList = this.formatStateAndCityList.bind(this)
+        //this.formatStateAndCityList = this.formatStateAndCityList.bind(this)
         this.handleEditOrg = this.handleEditOrg.bind(this)
         this.handleRowClick = this.handleRowClick.bind(this)
-        this.fetchStateAndCityList = this.fetchStateAndCityList.bind(this)
+        //this.fetchStateAndCityList = this.fetchStateAndCityList.bind(this)
     }
 
     fetchDefaultData() {
+        // console.log("default data", this.state.list)
+        // const {list, stateList, cityList} = this.state
+        // //let state = {}, city = {} 
+        // for(const i in list) {
+        //     console.log("item", list[i].state_name)
+        //     let state = {}, city = {}
+        //     state.text = list[i].state_name
+        //     state.value = list[i].state_short_name
+        //     stateList[i] = state
+
+        //     for(const j in list[i].cities) {  
+        //         city.text = (list[i].cities[j].city_name)
+        //         city.value = (list[i].cities[j].city_id)
+        //         cityList[j] = city
+        //     } 
+        // }
+
+        // // for(const i in list) {
+        // //     for(const j in list[i].cities) {
+        // //         console.log(list[i].cities[j].city_name)
+        // //     }
+        // // }
+        // console.log("state list", stateList)
+        // console.log("city list", cityList)
+
+
         this.setState({ data: [], organisationCount: 0, list: [] })
-        this.fetchStateAndCityList({
-            offset: 0,
-            limit: 0
-        },this.formatStateAndCityList)
+        // this.fetchStateAndCityList({
+        //     offset: 0,
+        //     limit: 0
+        // },this.formatStateAndCityList)
 
         this.fetchOrganisationList({
             offset: 0,
@@ -94,8 +124,8 @@ class ManageOrganization extends React.Component {
         }, this.setResponseData)
     }
 
-    fetchStateAndCityList(payload, stateListSuccessCallback) {
-        Api.fetchStateAndCityList(payload, stateListSuccessCallback)
+    // fetchStateAndCityList(payload, stateListSuccessCallback) {
+    //     Api.fetchStateAndCityList(payload, stateListSuccessCallback)
         //this.setState({ list: [] })
         // POST({
         //     api: '/deliveryStatus/liveOrders',
@@ -118,7 +148,7 @@ class ManageOrganization extends React.Component {
         // .catch(err => {
         //     err.response.json().then(json => { Notify("danger", json.message) })
         // })
-    }
+    //}
 
     fetchOrganisationList(payloadObj, successCallback) {
         console.log("payload obj", payloadObj)
@@ -178,9 +208,9 @@ class ManageOrganization extends React.Component {
         console.log("response", response)
     }
 
-    formatStateAndCityList(data) {
-        console.log("state and city list", data)
-    }
+    // formatStateAndCityList(data) {
+    //     console.log("state and city list", data)
+    // }
 
     handlePageChange(pageObj) {
         //console.log("handle page change", "active page", pageObj.activePage, "offset", activePage.offset)
@@ -220,6 +250,7 @@ class ManageOrganization extends React.Component {
 
     render() {
         //const { activePage, pageOffset, itemCount} = this.state
+        const {stateList, cityList} = this.state
         return (
             <Layout title="Manage Organization">
                 <NavLink to={`/home/manage-organization/create-organization`}>

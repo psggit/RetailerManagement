@@ -25,6 +25,12 @@ class OrganizationForm extends React.Component {
             partnershipDoc: 'For partnership firm, Documents attached',
             privateDoc: 'For Pvt Ltd, Documents attached'
         }
+
+        this.cityList = [
+            {text: 'Coimbatore', value: '1'},
+            {text: 'Chennai', value: 2}
+        ]
+        
         this.state = {
             organizationName: props.data ? props.data.organizationName : '',
             organizationType: props.data ? props.data.organizationType : 'proprietorship',
@@ -62,6 +68,9 @@ class OrganizationForm extends React.Component {
             otherPvtLtdProof: false,
             partnershipDoc: '',
             privateDoc: '',
+
+            stateList: this.props.stateList ? this.props.stateList : '',
+            cityList: this.props.cityList ? this.props.cityList : this.cityList,
 
             partnershipDocErr: {
                 value: '',
@@ -204,7 +213,9 @@ class OrganizationForm extends React.Component {
             mobileNoErr,
             emailIdErr,
             partnershipDocErr,
-            privateDocErr
+            privateDocErr,
+            cityList,
+            stateList
         } = this.state
         return (
             <Form layout="label-on-top">
@@ -306,20 +317,14 @@ class OrganizationForm extends React.Component {
                         label="State*"
                         value={this.state.selectedStateIdx}
                         name="selectedStateIdx"
-                        options={[
-                            { text: 'Tamilnadu', value: '1' },
-                            { text: 'Karnataka', value: '2' },
-                        ]}
+                        options={stateList}
                         onChange={(e) => this.handleChange(e)}
                     />
                     <Form.Select
                         label="City*"
                         value={this.state.selectedCityIdx}
                         name="selectedCityIdx"
-                        options={[
-                            { text: 'Chennai', value: '1' },
-                            { text: 'Coimbatore', value: '2' },
-                        ]}
+                        options={cityList}
                         onChange={(e) => this.handleChange(e)}
                     />
                     <Form.TextInput
