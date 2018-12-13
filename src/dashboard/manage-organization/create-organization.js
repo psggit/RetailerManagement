@@ -6,6 +6,7 @@ import { Form, Checkbox, Button, ButtonGroup } from '@auth0/cosmos'
 //import { POST } from 'Utils/fetch'
 import * as Api from './../../api'
 import 'Sass/animations.scss'
+import {formatStateAndCityList} from 'Utils/response-format-utils'
 import {stateAndCityList} from './../../mockData'
 // import * as Api from './../../api'
 
@@ -17,7 +18,7 @@ class CreateOrganization extends React.Component {
             isFormValid: true,
             stateList: [],
             cityList: [],
-            list: stateAndCityList.states,
+            //list: stateAndCityList.states,
         }
         this.handleSave = this.handleSave.bind(this)
         this.successCallback = this.successCallback.bind(this)
@@ -25,7 +26,7 @@ class CreateOrganization extends React.Component {
         this.updateState = this.updateState.bind(this)
         this.formIsValid =  this.formIsValid.bind(this)
         this.fetchStateAndCityList = this.fetchStateAndCityList.bind(this)
-        this.formatStateAndCityList = this.formatStateAndCityList.bind(this)
+        this.formatResponse = this.formatResponse.bind(this)
     }
 
     componentDidMount() {
@@ -33,32 +34,37 @@ class CreateOrganization extends React.Component {
         // this.fetchStateAndCityList({
         //     offset: 0,
         //     limit: 0
-        // },this.formatStateAndCityList)
-        const {list, stateList, cityList} = this.state
-        let index = 0;
-        for(const i in list) {
-            let state = {}
-            state.text = list[i].state_name
-            state.value = i
-            stateList[i] = state
+        // },this.formatResponse)
+        // const {list, stateList, cityList} = this.state
+        // let index = 0;
+        // for(const i in list) {
+        //     let state = {}
+        //     state.text = list[i].state_name
+        //     state.value = i
+        //     stateList[i] = state
 
-            for(const j in list[i].cities) {  
-                let city = {}
-                city.text = (list[i].cities[j].city_name)
-                city.value = (list[i].cities[j].city_id)
-                cityList[index] = city
-                index = index + 1
-            } 
-        }
-        this.setState({stateList, cityList})
+        //     for(const j in list[i].cities) {  
+        //         let city = {}
+        //         city.text = (list[i].cities[j].city_name)
+        //         city.value = (list[i].cities[j].city_id)
+        //         cityList[index] = city
+        //         index = index + 1
+        //     } 
+        // }
+        const {stateList, cityList} = formatStateAndCityList(stateAndCityList.states)
+        console.log("response", stateList, "city", cityList)
+        this.setState({stateList, cityList})   
     }
 
     fetchStateAndCityList(payload, stateListSuccessCallback) {
         Api.fetchStateAndCityList(payload, stateListSuccessCallback)
     }
 
-    formatStateAndCityList(data) {
+    formatResponse(data) {
         console.log("state and city list", data)
+        // const {stateList, cityList} = formatStateAndCityList(stateAndCityList.states)
+        // console.log("response", stateList, "city", cityList)
+        // this.setState({stateList, cityList}) 
         // const {list, stateList, cityList} = this.state
         // let index = 0;
         // for(const i in list) {
@@ -207,7 +213,7 @@ class CreateOrganization extends React.Component {
     }
 
     render() {
-        //console.log("form state", this.state.isFormValid)
+        console.log("render")
         return (
             <Layout title="Create Organization">
                 <Card width="800px" className={!this.state.isFormValid ? 'animated shake' : ''}>

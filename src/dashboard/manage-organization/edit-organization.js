@@ -6,13 +6,17 @@ import { Form, Checkbox, Button, ButtonGroup } from '@auth0/cosmos'
 //import { POST } from 'Utils/fetch'
 import * as Api from './../../api'
 import 'Sass/animations.scss'
+import {formatStateAndCityList} from 'Utils/response-format-utils'
+import {stateAndCityList} from './../../mockData'
 
 class EditOrganization extends React.Component {
     constructor() {
         super()
         this.state = {
             updatingOrg: false,
-            isFormValid: true
+            isFormValid: true,
+            stateList: [],
+            cityList: [],
         }
         this.handleSave = this.handleSave.bind(this)
         this.updateOrganization = this.updateOrganization.bind(this)
@@ -20,6 +24,29 @@ class EditOrganization extends React.Component {
         this.failureCallback = this.failureCallback.bind(this)
         this.updateState = this.updateState.bind(this)
         this.formIsValid = this.formIsValid.bind(this)
+        this.fetchStateAndCityList = this.fetchStateAndCityList.bind(this)
+        this.formatResponse = this.formatResponse.bind(this)
+    }
+
+    componentDidMount() {
+        // this.fetchStateAndCityList({
+        //     offset: 0,
+        //     limit: 0
+        // },this.formatResponse)
+        const {stateList, cityList} = formatStateAndCityList(stateAndCityList.states)
+        console.log("response", stateList, "city", cityList)
+        this.setState({stateList, cityList})   
+    }
+    
+    fetchStateAndCityList(payload, stateListSuccessCallback) {
+        Api.fetchStateAndCityList(payload, stateListSuccessCallback)
+    }
+
+    formatResponse(data) {
+        console.log("state and city list", data)
+        // const {stateList, cityList} = formatStateAndCityList(stateAndCityList.states)
+        // console.log("response", stateList, "city", cityList)
+        // this.setState({stateList, cityList}) 
     }
 
     formIsValid() {
@@ -60,7 +87,7 @@ class EditOrganization extends React.Component {
 
        return true
     }
-
+    
     handleSave() {
         console.log("edited data", this.organizationDetailsForm.getData())
         const data = this.organizationDetailsForm.getData()
@@ -134,12 +161,15 @@ class EditOrganization extends React.Component {
 
     render() {
         //console.log("edit org", this.props.history.location.state)
+        const {stateList, cityList} = this.state
         return (
             <Layout title="Edit Organization">
                 <Card width="800px"  className={!this.state.isFormValid ? 'animated shake' : ''}>
                     <OrganizationForm
                         ref={(node) => { this.organizationDetailsForm = node }}
-                        data={this.props.history.location.state} 
+                        data={this.props.history.location.state}
+                        stateList = {stateList}
+                        cityList = {cityList} 
                     />
                     <ButtonGroup align="right">
                         <Button 

@@ -70,7 +70,7 @@ class OrganizationForm extends React.Component {
             privateDoc: '',
 
             stateList: this.props.stateList ? this.props.stateList : '',
-            cityList: this.props.cityList ? this.props.cityList : this.cityList,
+            cityList: this.props.cityList ? this.props.cityList : '',
 
             partnershipDocErr: {
                 value: '',
@@ -132,6 +132,16 @@ class OrganizationForm extends React.Component {
         this.handleEmailChange = this.handleEmailChange.bind(this) 
         this.handleSelectChange = this.handleSelectChange.bind(this)
         this.getData = this.getData.bind(this)
+    }
+
+    componentWillReceiveProps(newProps) {
+        if(this.props.stateList !== newProps.stateList) {
+            this.setState({stateList: newProps.stateList})
+        }
+
+        if(this.props.cityList !== newProps.cityList) {
+            this.setState({cityList: newProps.cityList})
+        }
     }
 
     handleChange(e) {
@@ -217,6 +227,7 @@ class OrganizationForm extends React.Component {
             cityList,
             stateList
         } = this.state
+        console.log("new values", cityList)
         return (
             <Form layout="label-on-top">
                 <Form.FieldSet label="Organization Details">
