@@ -465,7 +465,7 @@ class OrganizationForm extends React.Component {
                         </div>
                     </div>
                     {
-                        this.state.isOtherProof &&
+                        // this.state.isOtherProof &&
                         <div>
                             <Form.TextInput
                             label=""
@@ -479,130 +479,136 @@ class OrganizationForm extends React.Component {
                             />
                         </div>
                     } 
-                    <div style={{marginBottom: '20px'}}>
-                        <div style={{marginBottom: '8px'}}>
-                            <label>For (Partnership firm/LLP)</label>
-                        </div>
-                        <div style={{display: 'flex', alignItems: 'center'}}>
-                            <div style={{marginRight: '24px'}}>
-                                <Checkbox
-                                    name="partnershipPancard"
-                                    onChange={e => this.handleSelectChange(e)}
-                                    value="partnershipPancard"
-                                    checked={this.state.partnershipPancard}
-                                >
-                                    PAN
-                                </Checkbox>
+                    {
+                        this.state.organizationType === "partnership" &&
+                        <div style={{marginBottom: '20px'}}>
+                            <div style={{marginBottom: '8px'}}>
+                                <label>For (Partnership firm/LLP)</label>
                             </div>
-                            <div style={{marginRight: '24px'}}>
-                                <Checkbox
-                                    name="partnershipDeed"
-                                    onChange={e => this.handleSelectChange(e)}
-                                    value="partnershipDeed"
-                                    checked={this.state.partnershipDeed}
-                                >
-                                    Partnership Deed
-                                </Checkbox>
-                            </div>
-                            <div style={{marginRight: '24px'}}>
-                                <Checkbox
-                                    name="partnershipLOA"
-                                    onChange={e => this.handleSelectChange(e)}
-                                    value="partnershipLOA"
-                                    checked={this.state.partnershipLOA}
-                                >
-                                    LOA
-                                </Checkbox>
-                            </div>
-                            {/* <div style={{marginRight: '24px'}}>
-                                <Checkbox
-                                    name="otherParnershipProof"
-                                    onChange={e => this.handleSelectChange(e)}
-                                    value="otherParnershipProof"
-                                    checked={this.state.otherParnershipProof}
-                                >
-                                    Others
-                                </Checkbox>
-                            </div> */}
-                            {/* {
-                                this.state.otherParnershipProof &&
-                                <div>
-                                    <Form.TextInput
-                                    label=""
-                                    type="text"
-                                    name="partnershipDoc"
-                                    placeholder="Document attached as proof"
-                                    error={partnershipDocErr.status ? partnershipDocErr.value : ''}
-                                    value={this.state.partnershipDoc}
-                                    //size="small"
-                                    onChange={(e) => this.handleTextChange(e)}
-                                    />
+                            <div style={{display: 'flex', alignItems: 'center'}}>
+                                <div style={{marginRight: '24px'}}>
+                                    <Checkbox
+                                        name="partnershipPancard"
+                                        onChange={e => this.handleSelectChange(e)}
+                                        value="partnershipPancard"
+                                        checked={this.state.partnershipPancard}
+                                    >
+                                        PAN
+                                    </Checkbox>
                                 </div>
-                            } */}
-                        </div>
-                    </div>
-                    <div style={{marginBottom: '20px'}}>
-                        <div style={{marginBottom: '8px'}}>
-                            <label>For (Pvt Ltd)</label>
-                        </div>
-                        <div style={{display: 'flex', alignItems: 'center'}}>
-                            <div style={{marginRight: '20px'}}>
-                                <Checkbox
-                                    name="pvtPancard"
-                                    onChange={e => this.handleSelectChange(e)}
-                                    value="pvtPancard"
-                                    checked={this.state.pvtPancard}
-                                >
-                                    PAN
-                                </Checkbox>
-                            </div>
-                            <div style={{marginRight: '20px'}}>
-                                <Checkbox
-                                    name="pvtCOI"
-                                    onChange={e => this.handleSelectChange(e)}
-                                    value="pvtCOI"
-                                    checked={this.state.pvtCOI}
-                                >
-                                    COI
-                                </Checkbox>
-                            </div>
-                            <div style={{marginRight: '20px'}}>
-                                <Checkbox
-                                    name="pvtLOA"
-                                    onChange={e => this.handleSelectChange(e)}
-                                    value="pvtLOA"
-                                    checked={this.state.pvtLOA}
-                                >
-                                    Board Resolution / LOA
-                                </Checkbox>
-                            </div>
-                            {/* <div style={{marginRight: '20px'}}>
-                                <Checkbox
-                                    name="otherPvtLtdProof"
-                                    onChange={e => this.handleSelectChange(e)}
-                                    value="otherPvtLtdProof"
-                                    checked={this.state.otherPvtLtdProof}
-                                >
-                                    Others
-                                </Checkbox>
-                            </div>
-                            {
-                                this.state.otherPvtLtdProof &&
-                                <div>
-                                    <Form.TextInput
-                                    label=""
-                                    placeholder="Document attached as proof"
-                                    type="text"
-                                    name="privateDoc"
-                                    error={privateDocErr.status ? privateDocErr.value : ''}
-                                    value={this.state.privateDoc}
-                                    //size="small"
-                                    onChange={(e) => this.handleTextChange(e)}
-                                    />
+                                <div style={{marginRight: '24px'}}>
+                                    <Checkbox
+                                        name="partnershipDeed"
+                                        onChange={e => this.handleSelectChange(e)}
+                                        value="partnershipDeed"
+                                        checked={this.state.partnershipDeed}
+                                    >
+                                        Partnership Deed
+                                    </Checkbox>
                                 </div>
-                            } */}
+                                <div style={{marginRight: '24px'}}>
+                                    <Checkbox
+                                        name="partnershipLOA"
+                                        onChange={e => this.handleSelectChange(e)}
+                                        value="partnershipLOA"
+                                        checked={this.state.partnershipLOA}
+                                    >
+                                        LOA
+                                    </Checkbox>
+                                </div>
+                                {/* <div style={{marginRight: '24px'}}>
+                                    <Checkbox
+                                        name="otherParnershipProof"
+                                        onChange={e => this.handleSelectChange(e)}
+                                        value="otherParnershipProof"
+                                        checked={this.state.otherParnershipProof}
+                                    >
+                                        Others
+                                    </Checkbox>
+                                </div> */}
+                                {/* {
+                                    this.state.otherParnershipProof &&
+                                    <div>
+                                        <Form.TextInput
+                                        label=""
+                                        type="text"
+                                        name="partnershipDoc"
+                                        placeholder="Document attached as proof"
+                                        error={partnershipDocErr.status ? partnershipDocErr.value : ''}
+                                        value={this.state.partnershipDoc}
+                                        //size="small"
+                                        onChange={(e) => this.handleTextChange(e)}
+                                        />
+                                    </div>
+                                } */}
+                            </div>
                         </div>
-                    </div>
+                    }
+                    {
+                        this.state.organizationType === "pvtltd" &&
+                        <div style={{marginBottom: '20px'}}>
+                            <div style={{marginBottom: '8px'}}>
+                                <label>For (Pvt Ltd)</label>
+                            </div>
+                            <div style={{display: 'flex', alignItems: 'center'}}>
+                                <div style={{marginRight: '20px'}}>
+                                    <Checkbox
+                                        name="pvtPancard"
+                                        onChange={e => this.handleSelectChange(e)}
+                                        value="pvtPancard"
+                                        checked={this.state.pvtPancard}
+                                    >
+                                        PAN
+                                    </Checkbox>
+                                </div>
+                                <div style={{marginRight: '20px'}}>
+                                    <Checkbox
+                                        name="pvtCOI"
+                                        onChange={e => this.handleSelectChange(e)}
+                                        value="pvtCOI"
+                                        checked={this.state.pvtCOI}
+                                    >
+                                        COI
+                                    </Checkbox>
+                                </div>
+                                <div style={{marginRight: '20px'}}>
+                                    <Checkbox
+                                        name="pvtLOA"
+                                        onChange={e => this.handleSelectChange(e)}
+                                        value="pvtLOA"
+                                        checked={this.state.pvtLOA}
+                                    >
+                                        Board Resolution / LOA
+                                    </Checkbox>
+                                </div>
+                                {/* <div style={{marginRight: '20px'}}>
+                                    <Checkbox
+                                        name="otherPvtLtdProof"
+                                        onChange={e => this.handleSelectChange(e)}
+                                        value="otherPvtLtdProof"
+                                        checked={this.state.otherPvtLtdProof}
+                                    >
+                                        Others
+                                    </Checkbox>
+                                </div>
+                                {
+                                    this.state.otherPvtLtdProof &&
+                                    <div>
+                                        <Form.TextInput
+                                        label=""
+                                        placeholder="Document attached as proof"
+                                        type="text"
+                                        name="privateDoc"
+                                        error={privateDocErr.status ? privateDocErr.value : ''}
+                                        value={this.state.privateDoc}
+                                        //size="small"
+                                        onChange={(e) => this.handleTextChange(e)}
+                                        />
+                                    </div>
+                                } */}
+                            </div>
+                        </div>
+                    }
                 </Form.FieldSet>
             </Form>
         )
