@@ -5,6 +5,8 @@ import Layout from 'Components/layout'
 import { Form, Button, ButtonGroup } from '@auth0/cosmos'
 import Card from 'Components/card'
 import * as Api from './../api'
+import {formatStateAndCityList, formatStateAndOrganizationList} from 'Utils/response-format-utils'
+import {organizationAndStateList, stateAndCityList} from './../mockData'
 
 class GenerateReport extends React.Component {
     constructor() {
@@ -12,8 +14,12 @@ class GenerateReport extends React.Component {
         this.state = {
             selectedOrganizationIdx: 1,
             selectedStateIdx: 1,
+            //organizationList: [],
+            organizationId: 1001,
             organizationList: [],
-            organizationId: 1001
+            stateList: [],
+            //stateMap: {},
+            organizationMap: {},
         }
 
         this.fetchOrganizationList = this.fetchOrganizationList.bind(this)
@@ -23,13 +29,28 @@ class GenerateReport extends React.Component {
     }
 
     componentDidMount() {
-        this.setState({organizationList: []})
-        this.fetchOrganizationList({}, this.formatOrganizationList)
+        // this.setState({organizationList: []})
+        // this.fetchOrganizationList({}, this.formatOrganizationList)
+
+        const {organizationList, organizationMap} = formatStateAndOrganizationList(organizationAndStateList.details)
+        const {stateList} = formatStateAndCityList(stateAndCityList.states)
+        // console.log("response", stateList, "city", cityList)
+        // this.setState({stateList, cityList}) 
+
+        //console.log("list", organizationList, stateList, organizationMap, stateMap)
+        this.setState({organizationList, stateList, organizationMap})
     }
 
     handleChange(e) {
         //console.log("handle change", e.target.value, e.target.name, e.target.type)
+        // this.setState({
+        //     [e.target.name]: e.target.value
+        // })
+        //console.log("state", parseInt(this.state.organizationMap[e.target.value].state_id))
         this.setState({
+           
+            selectedStateIdx: parseInt(this.state.organizationMap[e.target.value].state_id),
+            //cityList: this.state.stateMap[parseInt(this.state.organizationMap[e.target.value].state_id)],
             [e.target.name]: e.target.value
         })
     }
@@ -76,6 +97,7 @@ class GenerateReport extends React.Component {
     }
 
     render() {
+        const {organizationList, stateList} = this.state
         return (
             <Layout title="Generate Report">
                 <Card>
@@ -84,10 +106,7 @@ class GenerateReport extends React.Component {
                             label="Organization Name*"
                             value={this.state.selectedOrganizationIdx}
                             name="selectedOrganizationIdx"
-                            options={[
-                                { text: 'Infinity Hospitality', value: '1' },
-                                { text: 'M/S.Contessa Wines', value: '2' },
-                            ]}
+                            options={organizationList}
                             onChange={(e) => this.handleChange(e)}
                         />
                         <Form.Select
@@ -95,10 +114,7 @@ class GenerateReport extends React.Component {
                             disabled={true}
                             value={this.state.selectedStateIdx}
                             name="selectedStateIdx"
-                            options={[
-                                { text: 'Tamilnadu', value: '1' },
-                                { text: 'Karnataka', value: '2' },
-                            ]}
+                            options={stateList}
                             //onChange={(e) => this.handleChange(e)}
                         />
                     </Form>
