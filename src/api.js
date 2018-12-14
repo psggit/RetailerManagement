@@ -3,8 +3,8 @@ import Notify from 'Components/notify'
 
 export function fetchOrganizationList (payloadObj, successCallback) {
         return POST({
-            api: '/deliveryStatus/liveOrders',
-            apiBase: 'gremlinUrl',
+            api: '/Api/listOrganisations',
+            apiBase: 'retailerMgmt',
             data: payloadObj,
             handleError: true
         })

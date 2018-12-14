@@ -151,7 +151,7 @@ class CreateOrganization extends React.Component {
             const payload = {
                 type_of_organisation: data.organizationType === "others" ? data.otherOrgType : data.organizationType,
                 organisation_name: data.organizationName,
-                date_of_incorporation: data.incorporationDate,
+                date_of_incorporation: new Date(data.incorporationDate).toISOString(),
                 pan_number: data.panNumber,
                 cin_no: data.cinNumber,
                 status: data.selectedOrganizationStatusIdx === 1 ? "true" : "false",
