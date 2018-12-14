@@ -165,7 +165,8 @@ class RetailerForm extends React.Component {
         if(this.props.stateList !== newProps.stateList) {
             this.setState({stateList: newProps.stateList})
             if(location.pathname.includes("create")) {
-                this.setState({selectedStateIdx: newProps.stateList[0].state_id})
+                //console.log("create", newProps.stateList, newProps.stateList[0].value)
+                this.setState({selectedStateIdx: newProps.stateList[0].value})
             }
         }
 
@@ -351,6 +352,7 @@ class RetailerForm extends React.Component {
         } = this.state
         //const {mobileNo, pincode} = this.props.data
         //const {activeFieldName, activeField} = this.state
+        //console.log("state lisy", this.state.stateList)
         return(
             <Form layout="label-on-top">
                 <Form.FieldSet label="Organization Details">

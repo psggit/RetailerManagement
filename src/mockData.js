@@ -458,7 +458,7 @@ export const organizationList = {
     
     "org_response": [
         {
-                "type_of_organisation": "proprietorship",
+                "type_of_organisation": "pvtltd",
                 "organisation_name": "org1",
                 "date_of_incorporation": "2017-09-25T00:00:00Z",
                 "pan_number": "AFMPK4245A",
@@ -472,10 +472,13 @@ export const organizationList = {
                 "name_of_auth_person": "Tom",
                 "pan_of_auth_signatory": true,
                 "address_proof_auth_signatory": true,
+                "photo_of_auth_signatory": true,
                 "is_pan": true,
                 "partnership_deed": true,
                 "loa": true,
                 "coi": true,
+                // "others": "Aadhar",
+                "document_description": "Bank Documents",
                 "org_address": "NO.43, Porur",
                 "pincode": "600087",
                 "state_id": "4",
@@ -694,12 +697,14 @@ export const organizationAndStateList = {
         {
             "organisation_name": "org1",
             "state_id": "5",
-            "state_name": "Goa"
+            "state_name": "Goa",
+            "org_id": "1"
         },
         {
             "organisation_name": "org2",
             "state_id": "1",
-            "state_name": "Karnataka"
+            "state_name": "Karnataka",
+            "org_id": "2"
         }
     ]
 }

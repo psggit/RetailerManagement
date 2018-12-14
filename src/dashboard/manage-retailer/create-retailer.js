@@ -54,7 +54,7 @@ class CreateRetailer extends React.Component {
         // console.log("response", stateList, "city", cityList)
         // this.setState({stateList, cityList}) 
 
-        console.log("list", organizationList, stateList, organizationMap, stateMap)
+        //console.log("list", organizationList, stateList, organizationMap, stateMap)
         this.setState({organizationList, stateList, organizationMap, stateMap, cityList})
     }
 
