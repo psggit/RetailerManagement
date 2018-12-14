@@ -143,7 +143,7 @@ class CreateOrganization extends React.Component {
         //console.log("save", this.state.formError)
         if(this.formIsValid()) {
             const payload = {
-                type_of_organisation: data.organizationType,
+                type_of_organisation: data.organizationType === "others" ? data.otherOrgType : data.organizationType,
                 organisation_name: data.organizationName,
                 data_of_incorporation: data.incorporationDate,
                 pan_number: data.panNumber,

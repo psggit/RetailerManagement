@@ -22,8 +22,10 @@ class OrganizationForm extends React.Component {
             mobileNo: 'Mobile number',
             pincode: 'Pincode',
             email: 'Email',
-            partnershipDoc: 'For partnership firm, Documents attached',
-            privateDoc: 'For Pvt Ltd, Documents attached'
+            // partnershipDoc: 'For partnership firm, Documents attached',
+            // privateDoc: 'For Pvt Ltd, Documents attached',
+            otherOrgType: 'Organization type',
+            otherProof: 'Documents attached'
         }
 
         this.cityList = [
@@ -63,20 +65,31 @@ class OrganizationForm extends React.Component {
             pvtPancard: props.data ? props.data.pvtPancard : false,
             pvtCOI: props.data ? props.data.pvtCOI : false,
             pvtLOA: props.data ? props.data.pvtLOA : false,
+            otherOrgType: props.data ? props.data.others : '',
+            otherProof: props.data ? props.data.otherProof : '',
+            isOtherProof: props.data ? props.data.isOtherProof : false,
 
-            otherParnershipProof: false,
-            otherPvtLtdProof: false,
-            partnershipDoc: '',
-            privateDoc: '',
+            // otherParnershipProof: false,
+            // otherPvtLtdProof: false,
+            // partnershipDoc: '',
+            // privateDoc: '',
 
             stateList: this.props.stateList ? this.props.stateList : '',
             cityList: this.props.cityList ? this.props.cityList : '',
 
-            partnershipDocErr: {
+            // partnershipDocErr: {
+            //     value: '',
+            //     status: false
+            // },
+            // privateDocErr: {
+            //     value: '',
+            //     status: false
+            // },
+            otherOrgTypeErr: {
                 value: '',
                 status: false
             },
-            privateDocErr: {
+            otherProofErr: {
                 value: '',
                 status: false
             },
@@ -146,9 +159,15 @@ class OrganizationForm extends React.Component {
 
     handleChange(e) {
         //console.log("handle change", e.target.value, e.target.name, e.target.type)
-        this.setState({
-            [e.target.name]: e.target.value
-        })
+        if(e.target.value === "others") {
+            this.setState({
+                [e.target.name]: e.target.value
+            })
+        } else {
+            this.setState({
+                [e.target.name]: e.target.value
+            })
+        }
     }
 
     handleSelectChange(e) {
@@ -157,6 +176,7 @@ class OrganizationForm extends React.Component {
  
     handleTextChange(e) {
         const errName = `${e.target.name}Err`
+        console.log("target nmae", e.target.name)
         this.setState({
             [e.target.name]: e.target.value,
             [errName]: validateTextField(this.inputNameMap[e.target.name], e.target.value),
@@ -222,12 +242,14 @@ class OrganizationForm extends React.Component {
             authorizedPersonErr,
             mobileNoErr,
             emailIdErr,
-            partnershipDocErr,
-            privateDocErr,
+            // partnershipDocErr,
+            // privateDocErr,
+            otherOrgTypeErr,
+            otherProofErr,
             cityList,
             stateList
         } = this.state
-        console.log("new values", cityList)
+        //console.log("new values", cityList)
         return (
             <Form layout="label-on-top">
                 <Form.FieldSet label="Organization Details">
@@ -261,6 +283,21 @@ class OrganizationForm extends React.Component {
                         <Form.Radio.Option value="pvtltd">Pvt Ltd</Form.Radio.Option>
                         <Form.Radio.Option value="others">Others</Form.Radio.Option>
                     </Form.Radio>
+                    {
+                        this.state.organizationType === "others" &&
+                        <div>
+                            <Form.TextInput
+                            label=""
+                            placeholder="Organization Type"
+                            type="text"
+                            name="otherOrgType"
+                            error={otherOrgTypeErr.status ? otherOrgTypeErr.value : ''}
+                            value={this.state.otherOrgType}
+                            //size="small"
+                            onChange={(e) => this.handleTextChange(e)}
+                            />
+                        </div>
+                    } 
                     <Form.TextInput
                         placeholder="AFEPC1427J"
                         label="PAN Number*"
@@ -383,32 +420,65 @@ class OrganizationForm extends React.Component {
                     />
                 </Form.FieldSet>
                 <Form.FieldSet label="Documents Submitted as Proof">
-                    <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: '20px'}}>    
-                        <Checkbox
-                            name="photo"
-                            onChange={e => this.handleSelectChange(e)}
-                            value="photo"
-                            checked={this.state.photo}
-                        >
-                            Photo of Authorized Signatory
-                        </Checkbox>
-                        <Checkbox
-                            name="pancard"
-                            onChange={e => this.handleSelectChange(e)}
-                            value="pancard"
-                            checked={this.state.pancard}
-                        >
-                            PAN of Authorized Signatory
-                        </Checkbox>
-                        <Checkbox
-                            name="address"
-                            onChange={e => this.handleSelectChange(e)}
-                            value="address"
-                            checked={this.state.address}
-                        >
-                            Address proof of Authorized Signatory
-                        </Checkbox>
+                    <div style={{display: 'flex', marginBottom: '20px'}}>    
+                        <div style={{marginRight: '24px'}}>
+                            <Checkbox
+                                name="photo"
+                                onChange={e => this.handleSelectChange(e)}
+                                value="photo"
+                                checked={this.state.photo}
+                            >
+                                Photo of Authorized Signatory
+                            </Checkbox>
+                        </div>
+                        <div>
+                            <Checkbox
+                                name="pancard"
+                                onChange={e => this.handleSelectChange(e)}
+                                value="pancard"
+                                checked={this.state.pancard}
+                            >
+                                PAN of Authorized Signatory
+                            </Checkbox>
+                        </div>
                     </div>
+                    <div style={{display: 'flex', marginBottom: '20px'}}> 
+                        <div style={{marginRight: '24px'}}>
+                            <Checkbox
+                                name="address"
+                                onChange={e => this.handleSelectChange(e)}
+                                value="address"
+                                checked={this.state.address}
+                            >
+                                Address proof of Authorized Signatory
+                            </Checkbox> 
+                        </div>
+                        <div>
+                            <Checkbox
+                                name="isOtherProof"
+                                onChange={e => this.handleSelectChange(e)}
+                                value="isOtherProof"
+                                checked={this.state.isOtherProof}
+                            >
+                                Others
+                            </Checkbox>
+                        </div>
+                    </div>
+                    {
+                        this.state.isOtherProof &&
+                        <div>
+                            <Form.TextInput
+                            label=""
+                            placeholder="Documents as Proof"
+                            type="text"
+                            name="otherProof"
+                            error={otherProofErr.status ? otherProofErr.value : ''}
+                            value={this.state.otherProof}
+                            //size="small"
+                            onChange={(e) => this.handleTextChange(e)}
+                            />
+                        </div>
+                    } 
                     <div style={{marginBottom: '20px'}}>
                         <div style={{marginBottom: '8px'}}>
                             <label>For (Partnership firm/LLP)</label>
@@ -444,7 +514,7 @@ class OrganizationForm extends React.Component {
                                     LOA
                                 </Checkbox>
                             </div>
-                            <div style={{marginRight: '24px'}}>
+                            {/* <div style={{marginRight: '24px'}}>
                                 <Checkbox
                                     name="otherParnershipProof"
                                     onChange={e => this.handleSelectChange(e)}
@@ -453,8 +523,8 @@ class OrganizationForm extends React.Component {
                                 >
                                     Others
                                 </Checkbox>
-                            </div>
-                            {
+                            </div> */}
+                            {/* {
                                 this.state.otherParnershipProof &&
                                 <div>
                                     <Form.TextInput
@@ -468,7 +538,7 @@ class OrganizationForm extends React.Component {
                                     onChange={(e) => this.handleTextChange(e)}
                                     />
                                 </div>
-                            }
+                            } */}
                         </div>
                     </div>
                     <div style={{marginBottom: '20px'}}>
@@ -506,7 +576,7 @@ class OrganizationForm extends React.Component {
                                     Board Resolution / LOA
                                 </Checkbox>
                             </div>
-                            <div style={{marginRight: '20px'}}>
+                            {/* <div style={{marginRight: '20px'}}>
                                 <Checkbox
                                     name="otherPvtLtdProof"
                                     onChange={e => this.handleSelectChange(e)}
@@ -530,7 +600,7 @@ class OrganizationForm extends React.Component {
                                     onChange={(e) => this.handleTextChange(e)}
                                     />
                                 </div>
-                            }
+                            } */}
                         </div>
                     </div>
                 </Form.FieldSet>
