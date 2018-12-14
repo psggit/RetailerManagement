@@ -28,10 +28,10 @@ class OrganizationForm extends React.Component {
             otherProof: 'Documents attached'
         }
 
-        this.cityList = [
-            {text: 'Coimbatore', value: '1'},
-            {text: 'Chennai', value: 2}
-        ]
+        // this.cityList = [
+        //     {text: 'Coimbatore', value: '1'},
+        //     {text: 'Chennai', value: 2}
+        // ]
         
         this.state = {
             organizationName: props.data ? props.data.organizationName : '',
@@ -76,6 +76,7 @@ class OrganizationForm extends React.Component {
 
             stateList: this.props.stateList ? this.props.stateList : '',
             cityList: this.props.cityList ? this.props.cityList : '',
+            stateMap: this.props.stateMap ? this.props.stateMap : '',
 
             // partnershipDocErr: {
             //     value: '',
@@ -155,12 +156,30 @@ class OrganizationForm extends React.Component {
         if(this.props.cityList !== newProps.cityList) {
             this.setState({cityList: newProps.cityList})
         }
+
+        if(this.props.stateMap !== newProps.stateMap) {
+            this.setState({stateMap: newProps.stateMap})
+        }
     }
+
+    // componentDidMount() {
+    //     const {stateList, cityList} = formatStateAndCityList(stateAndCityList.states)
+    //     console.log("response", stateList, "city", cityList)
+    //     this.setState({stateList, cityList})   
+    // }
 
     handleChange(e) {
         //console.log("handle change", e.target.value, e.target.name, e.target.type)
-        if(e.target.value === "others") {
+        // if(e.target.value === "others") {
+        //     this.setState({
+        //         [e.target.name]: e.target.value
+        //     })
+        // } else {
+      
+        //console.log("city list", this.state.stateMap, this.state.stateMap[e.target.value])
+        if(e.target.name.toString().includes("StateIdx")) {
             this.setState({
+                cityList: this.state.stateMap[e.target.value],
                 [e.target.name]: e.target.value
             })
         } else {
@@ -176,7 +195,6 @@ class OrganizationForm extends React.Component {
  
     handleTextChange(e) {
         const errName = `${e.target.name}Err`
-        console.log("target nmae", e.target.name)
         this.setState({
             [e.target.name]: e.target.value,
             [errName]: validateTextField(this.inputNameMap[e.target.name], e.target.value),
@@ -246,6 +264,10 @@ class OrganizationForm extends React.Component {
             // privateDocErr,
             otherOrgTypeErr,
             otherProofErr,
+            isOtherProof,
+            otherProof,
+            otherOrgType,
+            organizationType,
             cityList,
             stateList
         } = this.state
@@ -291,7 +313,7 @@ class OrganizationForm extends React.Component {
                             placeholder="Organization Type"
                             type="text"
                             name="otherOrgType"
-                            error={otherOrgTypeErr.status ? otherOrgTypeErr.value : ''}
+                            error={((organizationType === "others" && otherOrgType.length === 0) || otherOrgTypeErr.status) ? "Organization type is required" : ''}
                             value={this.state.otherOrgType}
                             //size="small"
                             onChange={(e) => this.handleTextChange(e)}
@@ -472,7 +494,7 @@ class OrganizationForm extends React.Component {
                             placeholder="Documents as Proof"
                             type="text"
                             name="otherProof"
-                            error={otherProofErr.status ? otherProofErr.value : ''}
+                            error={((isOtherProof && otherProof.length === 0)|| otherProofErr.status) ? "Documents attached is required" : ''}
                             value={this.state.otherProof}
                             //size="small"
                             onChange={(e) => this.handleTextChange(e)}

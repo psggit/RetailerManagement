@@ -45,10 +45,11 @@ export function fetchStateAndCityList(payloadObj, successCallback) {
  
 }
 
-export function createOrganization(payloadObj, successCallback) {
+export function createOrganization(payloadObj, successCallback, failureCallback) {
+    console.log("api create org")
     return POST({
-        api: '/deliveryStatus/liveOrders',
-        apiBase: 'gremlinUrl',
+        api: '/Api/createOrganisation',
+        apiBase: 'retailerMgmt',
         data: payloadObj,
         handleError: true
     })
@@ -59,7 +60,7 @@ export function createOrganization(payloadObj, successCallback) {
         //       loading: false
         //     })
         Notify("success", "Successfully created organization")
-        successCallback(json)
+        successCallback()
     })
     .catch(err => {
         err.response.json().then(json => { Notify("danger", json.message) })
