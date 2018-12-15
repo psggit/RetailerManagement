@@ -300,13 +300,14 @@ class ManageRetailer extends React.Component {
         })
     }
 
-    onToggleChange(value, item) {
-        console.log("On toggle change", value, item)
+    onToggleChange(e,value, item) {
+        e.stopPropagation()
+        console.log("On toggle change",e, value, item)
     }
 
     handleRowClick(e,item) {
         console.log("row item", item)
-        this.props.history.push(`/home/manage-retailer/retailer-details/${item.id}`, item)
+        //this.props.history.push(`/home/manage-retailer/retailer-details/${item.id}`, item)
     }
 
     render() {
@@ -417,7 +418,7 @@ class ManageRetailer extends React.Component {
                             <Table.Column field="organisation_name" title="Organization Name"/>
                             <Table.Column field="actions" title="Outlet Status">
                                 {item => (
-                                    <Switch2 on={item.branch_status === 'true' ? 'Active' : 'Inactive'} accessibleLabels={[]} onToggle={() => this.onToggleChange(e)} value={item} />
+                                    <Switch2 on={item.branch_status === 'true' ? 'Active' : 'Inactive'} accessibleLabels={[]} onToggle={(e) => this.onToggleChange(e)} value={item} />
                                 )}
                             </Table.Column>
                         </Table>
