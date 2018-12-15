@@ -115,8 +115,8 @@ export function fetchOrganizationAndStateList (payloadObj, successCallback) {
 
 export function fetchRetailerList (payloadObj, successCallback) {
     return POST({
-        api: '/deliveryStatus/liveOrders',
-        apiBase: 'gremlinUrl',
+        api: '/Api/listRetailers',
+        apiBase: 'retailerMgmt',
         data: payloadObj,
         handleError: true
     })
@@ -137,8 +137,8 @@ export function fetchRetailerList (payloadObj, successCallback) {
 
 export function createRetailer(payloadObj, successCallback) {
     return POST({
-        api: '/deliveryStatus/liveOrders',
-        apiBase: 'gremlinUrl',
+        api: '/Api/createRetailer',
+        apiBase: 'retailerMgmt',
         data: payloadObj,
         handleError: true
     })
@@ -159,8 +159,8 @@ export function createRetailer(payloadObj, successCallback) {
 
 export function updateRetailer(payloadObj, successCallback) {
     return POST({
-        api: '/deliveryStatus/liveOrders',
-        apiBase: 'gremlinUrl',
+        api: '/Api/updateRetailer',
+        apiBase: 'retailerMgmt',
         data: payloadObj,
         handleError: true
     })
@@ -176,5 +176,14 @@ export function updateRetailer(payloadObj, successCallback) {
     .catch(err => {
         err.response.json().then(json => { Notify("danger", json.message) })
         failureCallback()
+    })
+}
+
+export function deactivateRetailer(payloadObj) {
+    return POST({
+        api: '/Api/ChangeRetailerStatus',
+        apiBase: 'retailerMgmt',
+        data: payloadObj,
+        handleError: true
     })
 }

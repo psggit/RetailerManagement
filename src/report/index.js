@@ -16,34 +16,34 @@ class RetailerOnboardingForm extends React.Component {
 
         this.state = {
             loading: true,
-            organizationData: organizationList.org_response[0],
-            retailerData: retailerList.ret_response
+            organizationData: [],
+            retailerData: []
+            // organizationData: organizationList.org_response[0],
+            // retailerData: retailerList.ret_response
         }
 
-        this.filterOrg = {
-            searchField: 'ID',
-            searchOperator: 'EQUAL',
-            searchText: props.match.params.orgId
-        }
+        // this.filterOrg = {
+        //     searchField: 'ID',
+        //     searchOperator: 'EQUAL',
+        //     searchText: props.match.params.orgId
+        // }
 
-        this.filterRetailer = {
-            searchField: 'ID',
-            searchOperator: 'EQUAL',
-            searchText: props.match.params.orgId
-        }
+        // this.filterRetailer = {
+        //     searchField: 'ID',
+        //     searchOperator: 'EQUAL',
+        //     searchText: props.match.params.orgId
+        // }
     }
 
     componentDidMount() {
         this.fetchOrganisationList({
             offset: 0,
             limit: this.pagesLimit,
-            filter: this.filterOrg
         }, this.setOrganizationData)
 
         this.fetchRetailerList({
             limit: this.pagesLimit,
             offset: 0,
-            filter: this.filterRetailer
         }, this.setRetailerData)
     }
 
@@ -77,17 +77,19 @@ class RetailerOnboardingForm extends React.Component {
         Api.fetchRetailerList(payload, successCallback)
     }
 
-    setOrganizationData() {
-        console.log("success organization callback")
+    setOrganizationData(data) {
+        console.log("success organization callback", data)
+        this.setState({organizationData: data.org_response})
     }
 
-    setRetailerData() {
-        console.log("success retailer callback")
+    setRetailerData(data) {
+        console.log("success retailer callback", data)
+        this.setState({retailerData: data.ret_response})
     }
 
     render() {
         const {organizationData, retailerData} = this.state
-        console.log("organization details", organizationData)
+        console.log("organization details", organizationData, "retailer", retailerData)
         return(
             <React.Fragment>
                 <div className="container">
@@ -299,12 +301,12 @@ class RetailerOnboardingForm extends React.Component {
                                 <p><b>Mobile No:</b> {organizationData.mobile_number}</p>
                                 <p><b>Email ID:</b> {organizationData.email}</p>
                             </div> */}
-                            {
+                            {/* {
                                 ( organizationData.document_description.length > 0 || organizationData.photo_of_auth_signatory || organizationData.pan_of_auth_signatory || organizationData.address_proof_auth_signatory) &&
                                 <div className="sub-title">
                                     <h3>DOCUMENTS ATTACHED</h3>
                                 </div>
-                            }
+                            } */}
                             {
                                  organizationData.photo_of_auth_signatory &&
                                  <div className="content">
@@ -338,7 +340,7 @@ class RetailerOnboardingForm extends React.Component {
                                     </div>
                                 </div>
                             }
-                            {
+                            {/* {
                                 organizationData.document_description && 
                                 <div className="content">
                                     <div>
@@ -349,7 +351,7 @@ class RetailerOnboardingForm extends React.Component {
                                     </div>
                                 </div>
 
-                            }
+                            } */}
                             {/* <div className="content" style={{display: 'flex'}}>
                                 <div style={{marginRight: '24px'}}>
                                     <input type="checkbox" 

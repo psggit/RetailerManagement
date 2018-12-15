@@ -24,21 +24,28 @@ class GenerateReport extends React.Component {
 
         this.fetchOrganizationList = this.fetchOrganizationList.bind(this)
         this.formatOrganizationList = this.formatOrganizationList.bind(this)
+        this.fetchStateAndCityList = this.fetchStateAndCityList.bind(this)
+        this.formatResponse = this.formatResponse.bind(this)
         this.handleChange = this.handleChange.bind(this)
         //this.handleClick = this.handleClick.bind(this)
     }
 
     componentDidMount() {
+        this.fetchStateAndCityList({}, this.formatResponse)
+        this.fetchOrganizationList({}, this.formatOrganizationList)
+       
         // this.setState({organizationList: []})
         // this.fetchOrganizationList({}, this.formatOrganizationList)
 
-        const {organizationList, organizationMap} = formatStateAndOrganizationList(organizationAndStateList.details)
-        const {stateList} = formatStateAndCityList(stateAndCityList.states)
+        // const {organizationList, organizationMap} = formatStateAndOrganizationList(organizationAndStateList.details)
+        // const {stateList} = formatStateAndCityList(stateAndCityList.states)
+
         // console.log("response", stateList, "city", cityList)
         // this.setState({stateList, cityList}) 
 
         //console.log("list", organizationList, stateList, organizationMap, stateMap)
-        this.setState({organizationList, stateList, organizationMap})
+
+        // this.setState({organizationList, stateList, organizationMap})
     }
 
     handleChange(e) {
@@ -61,6 +68,18 @@ class GenerateReport extends React.Component {
 
     formatOrganizationList(data) {
         console.log("Fetched org list with state details", data)
+        const {organizationList, organizationMap} = formatStateAndOrganizationList(data.details)
+        this.setState({organizationList, organizationMap, selectedOrganizationIdx: organizationList[0].value})
+    }
+
+    fetchStateAndCityList(payload, stateListSuccessCallback) {
+        Api.fetchStateAndCityList(payload, stateListSuccessCallback)
+    }
+
+    formatResponse(data) {
+        console.log("Format state and city", data)
+        const {stateList} = formatStateAndCityList(data.states)
+        this.setState({stateList, selectedStateIdx: stateList[0].value})   
     }
 
     // handleClick() {

@@ -28,11 +28,15 @@ class CreateRetailer extends React.Component {
         this.failureCallback = this.failureCallback.bind(this)
         this.updateState = this.updateState.bind(this)
         this.formIsValid = this.formIsValid.bind(this)
-        this.fetchOrganizationList = this.fetchOrganizationList.bind(this)
+        this.fetchOrganizationAndStateList = this.fetchOrganizationAndStateList.bind(this)
         this.formatOrganizationList = this.formatOrganizationList.bind(this)
+        this.fetchStateAndCityList = this.fetchStateAndCityList.bind(this)
+        this.formatResponse = this.formatResponse.bind(this)
     }
 
     componentDidMount() {
+        this.fetchStateAndCityList({}, this.formatResponse)
+        this.fetchOrganizationAndStateList({}, this.formatOrganizationList)
         //this.fetchOrganizationList({}, this.formatOrganizationList)
         //const {data} = this.state
         //let organizationList = [], stateList = [], organizationMap = {}
@@ -49,22 +53,36 @@ class CreateRetailer extends React.Component {
         //         state_id: data[i].state_id
         //     }
         // }
-        const {organizationList, organizationMap} = formatStateAndOrganizationList(organizationAndStateList.details)
-        const {stateMap, stateList, cityList} = formatStateAndCityList(stateAndCityList.states)
+        // const {organizationList, organizationMap} = formatStateAndOrganizationList(organizationAndStateList.details)
+        // const {stateMap, stateList, cityList} = formatStateAndCityList(stateAndCityList.states)
+
         // console.log("response", stateList, "city", cityList)
         // this.setState({stateList, cityList}) 
 
         //console.log("list", organizationList, stateList, organizationMap, stateMap)
-        this.setState({organizationList, stateList, organizationMap, stateMap, cityList})
+        // this.setState({organizationList, stateList, organizationMap, stateMap, cityList})
     }
 
-    fetchOrganizationList(payloadObj, organizationListSuccessCallback) {
+    fetchOrganizationAndStateList(payloadObj, organizationListSuccessCallback) {
         // this.setState({organizationList: []})
         Api.fetchOrganizationAndStateList(payloadObj, organizationListSuccessCallback)
+        
     }
 
     formatOrganizationList(data) {
         console.log("Fetched org list with state details", data)
+        const {organizationList, organizationMap} = formatStateAndOrganizationList(data.details)
+        this.setState({organizationList, organizationMap})
+    }
+
+    fetchStateAndCityList(payload, stateListSuccessCallback) {
+        Api.fetchStateAndCityList(payload, stateListSuccessCallback)
+    }
+
+    formatResponse(data) {
+        console.log("Format state and city", data)
+        const {stateList, cityList, stateMap} = formatStateAndCityList(data.states)
+        this.setState({stateList, cityList, stateMap})   
     }
 
     formIsValid() {
@@ -112,7 +130,7 @@ class CreateRetailer extends React.Component {
        //console.log("form data", formData)
        for(const key in formData) {
            //console.log("form data", formData[key].value.toString().length)  
-           if(!formData[key].status && formData[key].value.toString().length === 0){
+           if(formData[key].status && formData[key].value.toString().length === 0){
                return false
            } 
        }
@@ -163,7 +181,7 @@ class CreateRetailer extends React.Component {
 
     successCallback() {
         this.updateState()
-        history.pushState(null, 'retailer list', '/home/manage-retailer')
+        location.href = '/home/manage-retailer'
     }
 
     failureCallback() {
@@ -176,6 +194,7 @@ class CreateRetailer extends React.Component {
 
     createRetailer(payload, successCallback,failureCallback) {
         console.log("create retailer", payload)
+        Api.createRetailer(payload, successCallback, failureCallback)
         // POST({
         //     api: '/deliveryStatus/liveOrders',
         //     apiBase: 'gremlinUrl',
