@@ -139,6 +139,7 @@ export function fetchRetailerList (payloadObj, successCallback) {
 }
 
 export function createRetailer(payloadObj, successCallback, failureCallback) {
+    console.log("id", payloadObj)
     return POST({
         api: '/Api/createRetailer',
         apiBase: 'retailerMgmt',
@@ -156,11 +157,12 @@ export function createRetailer(payloadObj, successCallback, failureCallback) {
     })
     .catch(err => {
         err.response.json().then(json => { Notify("danger", json.message) })
+        console.log("err in update retailer", err)
         failureCallback()
     })
 }
 
-export function updateRetailer(payloadObj, successCallback) {
+export function updateRetailer(payloadObj, successCallback, failureCallback) {
     return POST({
         api: '/Api/updateRetailer',
         apiBase: 'retailerMgmt',

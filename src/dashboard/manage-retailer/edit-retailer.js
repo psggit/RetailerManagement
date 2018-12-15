@@ -26,23 +26,39 @@ class EditRetailer extends React.Component {
         this.failureCallback = this.failureCallback.bind(this)
         this.updateState = this.updateState.bind(this)
         this.formIsValid = this.formIsValid.bind(this)
-        this.fetchOrganizationList = this.fetchOrganizationList.bind(this)
+        this.fetchOrganizationAndStateList = this.fetchOrganizationAndStateList.bind(this)
         this.formatOrganizationList = this.formatOrganizationList.bind(this)
+        this.fetchStateAndCityList = this.fetchStateAndCityList.bind(this)
+        this.formatResponse = this.formatResponse.bind(this)
     }
 
     componentDidMount() {
-        const {organizationList, organizationMap} = formatStateAndOrganizationList(organizationAndStateList.details)
-        const {stateMap, cityList, stateList} = formatStateAndCityList(stateAndCityList.states)
-        this.setState({organizationList, stateList, organizationMap, stateMap, cityList})
+        // const {organizationList, organizationMap} = formatStateAndOrganizationList(organizationAndStateList.details)
+        // const {stateMap, cityList, stateList} = formatStateAndCityList(stateAndCityList.states)
+        // this.setState({organizationList, stateList, organizationMap, stateMap, cityList})
+        this.fetchStateAndCityList({}, this.formatResponse)
+        this.fetchOrganizationAndStateList({}, this.formatOrganizationList)
     }
 
-    fetchOrganizationList(payloadObj, organizationListSuccessCallback) {
+    fetchOrganizationAndStateList(payloadObj, organizationListSuccessCallback) {
         // this.setState({organizationList: []})
         Api.fetchOrganizationAndStateList(payloadObj, organizationListSuccessCallback)
     }
 
     formatOrganizationList(data) {
-        console.log("Fetched org list with state details", data)
+        //console.log("Fetched org list with state details", data)
+        const {organizationList, organizationMap} = formatStateAndOrganizationList(data.details)
+        this.setState({organizationList, organizationMap})
+    }
+
+    fetchStateAndCityList(payload, stateListSuccessCallback) {
+        Api.fetchStateAndCityList(payload, stateListSuccessCallback)
+    }
+
+    formatResponse(data) {
+        //console.log("Format state and city", data)
+        const {stateList, cityList, stateMap} = formatStateAndCityList(data.states)
+        this.setState({stateList, cityList, stateMap})   
     }
 
     formIsValid() {
@@ -90,7 +106,7 @@ class EditRetailer extends React.Component {
        //console.log("form data", formData)
        for(const key in formData) {
            //console.log("form data", formData[key].value.toString().length)  
-           if(!formData[key].status && formData[key].value.toString().length === 0){
+           if(formData[key].status && formData[key].value.toString().length === 0){
                return false
            } 
        }
@@ -103,7 +119,7 @@ class EditRetailer extends React.Component {
         this.setState({isFormValid: this.formIsValid()})
         if(this.formIsValid()) {
             const payload = {
-                id: retailerDataForm.id,
+                id: parseInt(this.props.location.state.id),
                 organisation_id: retailerDataForm.selectedOrganizationIdx,
                 branch_status: retailerDataForm.selectedOutletStatusIdx,
                 ksbcl_code: retailerDataForm.ksbclCode,
@@ -128,7 +144,7 @@ class EditRetailer extends React.Component {
                 account_number: retailerDataForm.accountNumber,
                 bank_branch: retailerDataForm.branch,
                 acc_type: retailerDataForm.accountType,
-                IFSC: retailerDetailsForm.ifsc_code,
+                IFSC: retailerDataForm.ifsc_code,
                 is_cancelled_cheque: retailerDataForm.cancelledCheck,
                 is_excise_license: retailerDataForm.exciseLicense,
                 is_photo_of_outlet: retailerDataForm.outletPhoto
@@ -139,6 +155,8 @@ class EditRetailer extends React.Component {
     }
 
     updateRetailer(payload, successCallback, failureCallback) {
+
+        Api.updateRetailer(payload, successCallback, failureCallback)
         // POST({
         //     api: '/deliveryStatus/liveOrders',
         //     apiBase: 'gremlinUrl',
@@ -161,7 +179,8 @@ class EditRetailer extends React.Component {
 
     successCallback() {
         this.updateState()
-        history.pushState(null, 'retailer list', '/home/manage-retailer')
+        location.href = '/home/manage-retailer'
+        //history.pushState(null, 'retailer list', '/home/manage-retailer')
     }
 
     failureCallback() {
@@ -173,6 +192,7 @@ class EditRetailer extends React.Component {
     }
 
     render() {
+        console.log("edit ret", this.props.history.location.state)
         return (
             <Layout title="Edit Retailer">
                 <Card width="800px" className={!this.state.isFormValid ? 'animated shake' : ''}>
