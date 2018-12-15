@@ -6,7 +6,6 @@ import { Form, Checkbox, Button, ButtonGroup } from '@auth0/cosmos'
 import * as Api from './../../api'
 import 'Sass/animations.scss'
 import {formatStateAndCityList, formatStateAndOrganizationList} from 'Utils/response-format-utils'
-import {organizationAndStateList, stateAndCityList} from './../../mockData'
 
 class EditRetailer extends React.Component {
     constructor() {
@@ -33,20 +32,15 @@ class EditRetailer extends React.Component {
     }
 
     componentDidMount() {
-        // const {organizationList, organizationMap} = formatStateAndOrganizationList(organizationAndStateList.details)
-        // const {stateMap, cityList, stateList} = formatStateAndCityList(stateAndCityList.states)
-        // this.setState({organizationList, stateList, organizationMap, stateMap, cityList})
         this.fetchStateAndCityList({}, this.formatResponse)
         this.fetchOrganizationAndStateList({}, this.formatOrganizationList)
     }
 
     fetchOrganizationAndStateList(payloadObj, organizationListSuccessCallback) {
-        // this.setState({organizationList: []})
         Api.fetchOrganizationAndStateList(payloadObj, organizationListSuccessCallback)
     }
 
     formatOrganizationList(data) {
-        //console.log("Fetched org list with state details", data)
         const {organizationList, organizationMap} = formatStateAndOrganizationList(data.details)
         this.setState({organizationList, organizationMap})
     }
@@ -56,7 +50,6 @@ class EditRetailer extends React.Component {
     }
 
     formatResponse(data) {
-        //console.log("Format state and city", data)
         const {stateList, cityList, stateMap} = formatStateAndCityList(data.states)
         this.setState({stateList, cityList, stateMap})   
     }
@@ -103,19 +96,19 @@ class EditRetailer extends React.Component {
             emailIdErr,
             gpsCoordinatesErr
         }
-       //console.log("form data", formData)
-       for(const key in formData) {
-           //console.log("form data", formData[key].value.toString().length)  
-           if(formData[key].status && formData[key].value.toString().length === 0){
-               return false
-           } 
-       }
+        
+        for(const key in formData) {
+            if(formData[key].status && formData[key].value.toString().length === 0){
+                return false
+            } 
+        }
 
-       return true
+        return true
     }
 
     handleSave() {
         const retailerDataForm = this.retailerDetailsForm.getData()
+        console.log("data", retailerDataForm)
         this.setState({isFormValid: this.formIsValid()})
         if(this.formIsValid()) {
             const payload = {
@@ -128,8 +121,8 @@ class EditRetailer extends React.Component {
                 discount_percent: retailerDataForm.discountPercent,
                 delivery_discount_percent: retailerDataForm.deliveryDiscountPercent,
                 service_charge_percent: retailerDataForm.serviceChargePercent,
-                kyc_status: retailerDataForm.selectedKycIdx === 1 ? "true" : "false",
-                branch_status: retailerDataForm.selectedOutletStatusIdx === 1 ? "true" : "false",
+                kyc_status: retailerDataForm.selectedKycIdx === "1" ? "true" : "false",
+                branch_status: retailerDataForm.selectedOutletStatusIdx === "1" ? "true" : "false",
                 fssai_no: retailerDataForm.FSSAINumber,
                 city_id: retailerDataForm.selectedCityIdx,
                 state_id: retailerDataForm.selectedStateIdx,
@@ -155,32 +148,12 @@ class EditRetailer extends React.Component {
     }
 
     updateRetailer(payload, successCallback, failureCallback) {
-
         Api.updateRetailer(payload, successCallback, failureCallback)
-        // POST({
-        //     api: '/deliveryStatus/liveOrders',
-        //     apiBase: 'gremlinUrl',
-        //     data: payload,
-        //     handleError: true
-        // })
-        // .then((json) => {
-        //     //this.setState({
-        //     //       data: json.data,
-        //     //       count: json.count,
-        //     //       loading: false
-        //     //     })
-        //     Notify("success", "Successfully updated organization")
-        //     successCallback(json)
-        // })
-        // .catch(err => {
-        //     err.response.json().then(json => { Notify("danger", json.message) })
-        // })
     }
 
     successCallback() {
         this.updateState()
-        location.href = '/home/manage-retailer'
-        //history.pushState(null, 'retailer list', '/home/manage-retailer')
+        //location.href = '/home/manage-retailer'
     }
 
     failureCallback() {
@@ -192,7 +165,6 @@ class EditRetailer extends React.Component {
     }
 
     render() {
-        console.log("edit ret", this.props.history.location.state)
         return (
             <Layout title="Edit Retailer">
                 <Card width="800px" className={!this.state.isFormValid ? 'animated shake' : ''}>

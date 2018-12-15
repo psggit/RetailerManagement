@@ -1,7 +1,6 @@
 import React from 'react'
 import { Form, Checkbox, Button, ButtonGroup } from '@auth0/cosmos'
 import { validateTextField, validateEmail, validateNumberField } from 'Utils/validators'
-//import { emailRegex, } from 'Utils/regex'
 import { checkCtrlA, validateNumType, checkCtrlV } from 'Utils/logic-utils'
 
 class RetailerForm extends React.Component {
@@ -44,10 +43,7 @@ class RetailerForm extends React.Component {
             selectedKycIdx: props.data ? (props.data.kyc_status === "true" ? 1 : 2) : 1,
             selectedOutletStatusIdx: props.data ? (props.data.branch_status === "true" ? 1 : 2) : 1,
             FSSAINumber: props.data ? props.data.fssai_no : '',
-        
-            //city: props.data ? props.data.city : '',
             selectedCityIdx: props.data ? props.data.city_id : 0,
-            //state: props.data ? props.data.state : '',
             selectedStateIdx: props.data ? props.data.state_id : 0,
             pincode: props.data ? props.data.pincode : '',
             outletAddress: props.data ? props.data.store_address : '',
@@ -65,8 +61,7 @@ class RetailerForm extends React.Component {
             cancelledCheck: props.data ? props.data.is_cancelled_cheque : false,
             exciseLicense: props.data ? props.data.is_excise_license : false,
             outletPhoto: props.data ? props.data.is_photo_of_outlet : false,
-            //errorFound: true,
-            
+
             ksbclCodeErr: {
                 value: '',
                 status: false
@@ -139,11 +134,6 @@ class RetailerForm extends React.Component {
                 value: '',
                 status: false
             }
-            // activeFieldName: '',
-            // activeField: {
-            //     errValue: '',
-            //     errStatus: false
-            // }
         }
 
         this.handleChange = this.handleChange.bind(this)
@@ -152,9 +142,6 @@ class RetailerForm extends React.Component {
         this.handleEmailChange = this.handleEmailChange.bind(this)
         this.handleNumberChange = this.handleNumberChange.bind(this) 
         this.getData = this.getData.bind(this)
-        // this.validateTextField = this.validateTextField.bind(this)
-        // this.validateNumberField = this.validateNumberField.bind(this)
-        // this.validateEmail = this.validateEmail.bind(this)
     }
 
     componentWillReceiveProps(newProps) {
@@ -165,7 +152,6 @@ class RetailerForm extends React.Component {
         if(this.props.stateList !== newProps.stateList) {
             this.setState({stateList: newProps.stateList})
             if(location.pathname.includes("create")) {
-                //console.log("create", newProps.stateList, newProps.stateList[0].value)
                 this.setState({selectedStateIdx: newProps.stateList[0].value})
             }
         }
@@ -194,6 +180,7 @@ class RetailerForm extends React.Component {
                 [e.target.name]: e.target.value
             })
         } else {
+            console.log("name", e.target.name, "val", e.target.value)
             this.setState({
                 [e.target.name]: e.target.value
             })
@@ -210,7 +197,6 @@ class RetailerForm extends React.Component {
         this.setState({
             [e.target.name]: e.target.value,
             [errName]: validateTextField(this.inputNameMap[e.target.name], e.target.value),
-            //activeFieldName: e.target.name
         })
     }
 
@@ -220,14 +206,6 @@ class RetailerForm extends React.Component {
         this.checkLength = true
     
         switch(e.target.name) {
-            // case 'panNumber':
-            //     length = 11
-            // break;
-
-            // case 'cinNumber':
-            //     length = 10
-            // break;
-
             case 'pincode':
                 this.length = 6
                 this.checkLength = true
@@ -250,8 +228,7 @@ class RetailerForm extends React.Component {
                                                 fieldValue: e.target.value, 
                                                 length: this.length, 
                                                 checkLength: this.checkLength
-                                                }),
-                //activeFieldName: e.target.name
+                                                })
             })
         } else {
             e.preventDefault()
@@ -264,70 +241,12 @@ class RetailerForm extends React.Component {
         this.setState({
             [e.target.name]: e.target.value,
             [errName]: validateEmail(this.inputNameMap[e.target.name], e.target.value),
-            //activeFieldName: e.target.name
         })
     }
 
     getData() {
         return this.state
     }
-
-    // validateTextField(value, fieldName) {
-    //     if (!value.length) {
-    //       //this.setState({errorFound: true})
-    //       return {
-    //         status: true,
-    //         value: `${fieldName} is required`
-    //       }
-    //     }
-    //     this.setState({errorFound: false})
-    //     return {
-    //       status: false,
-    //       value: ''
-    //     }
-    // }
-
-    // validateNumberField({value, length, fieldName}) {
-    //     if (!value.length) {
-    //       //this.setState({errorFound: true})
-    //       return {
-    //         status: true,
-    //         value: `${fieldName} is required`
-    //       }
-    //     } else if (isNaN(value) || value.length !== length) {
-    //       //this.setState({errorFound: true})
-    //       return {
-    //         status: true,
-    //         value: `${fieldName} is invalid`
-    //       }
-    //     }
-    //     this.setState({errorFound: false})
-    //     return {
-    //       status: false,
-    //       value: ''
-    //     }
-    // }
-
-    // validateEmail(email) {
-    //     if (!email.length) {
-    //       //this.setState({errorFound: true})
-    //       return {
-    //         status: true,
-    //         value: 'Email is required'
-    //       }
-    //     } else if (!emailRegex.test(email)) {
-    //       //this.setState({errorFound: true})
-    //       return {
-    //         status: true,
-    //         value: 'Email is invalid'
-    //       }
-    //     }
-    //     this.setState({errorFound: false})
-    //     return {
-    //       status: false,
-    //       value: ''
-    //     }
-    // }
 
     render() {
         const {
@@ -350,9 +269,7 @@ class RetailerForm extends React.Component {
             emailIdErr,
             gpsCoordinatesErr
         } = this.state
-        //const {mobileNo, pincode} = this.props.data
-        //const {activeFieldName, activeField} = this.state
-        //console.log("state lisy", this.state.stateList)
+       
         return(
             <Form layout="label-on-top">
                 <Form.FieldSet label="Organization Details">
@@ -365,23 +282,21 @@ class RetailerForm extends React.Component {
                         onChange={(e) => this.handleChange(e)}
                     />
                     <Form.TextInput
-                        placeholder="101"
+                        //placeholder="101"
                         label="KSBCL Code*"
                         type="text"
                         name="ksbclCode"
                         value={this.state.ksbclCode}
                         error={ksbclCodeErr.status ? ksbclCodeErr.value : ''}
-                        //error={activeFieldName === "ksbclCode" && activeField.errStatus ? activeField.errValue : ''}
                         onChange={(e) => this.handleTextChange(e)}
                     />
                     <Form.TextInput
-                        placeholder="Goa Wines Patto"
+                        //placeholder="Goa Wines Patto"
                         label="Outlet Name*"
                         type="text"
                         name="outletName"
                         value={this.state.outletName}
                         error={outletNameErr.status ? outletNameErr.value : ''}
-                        //error={activeFieldName === "outletName" && activeField.errStatus ? activeField.errValue : ''}
                         onChange={(e) => this.handleTextChange(e)}
                     />
                     <Form.TextInput
@@ -390,7 +305,6 @@ class RetailerForm extends React.Component {
                         name="exciseLicenceNo"
                         value={this.state.exciseLicenceNo}
                         error={exciseLicenceNoErr.status ? exciseLicenceNoErr.value : ''}
-                        //error={activeFieldName === "exciseLicenceNo" && activeField.errStatus ? activeField.errValue : ''}
                         onChange={(e) => this.handleTextChange(e)}
                     />
                     <Form.TextInput
@@ -400,7 +314,6 @@ class RetailerForm extends React.Component {
                         //value={this.state.discountPercent}
                         defaultValue={this.props.data ? this.props.data.discountPercent : ''}
                         error={discountPercentErr.status ? discountPercentErr.value : ''}
-                        //error={activeFieldName === "discountPercent" && activeField.errStatus ? activeField.errValue : ''}
                         onKeyDown={(e) => {this.handleNumberChange(e)}}
                         onKeyUp={(e) => {this.handleNumberChange(e)}}
                     />
@@ -408,11 +321,8 @@ class RetailerForm extends React.Component {
                         label="Service Charge Percent*"
                         type="text"
                         name="serviceChargePercent"
-                        //value={this.state.serviceChargePercent}
                         defaultValue={this.props.data ? this.props.data.serviceChargePercent : ''}
                         error={serviceChargePercentErr.status ? serviceChargePercentErr.value : ''}
-                        //error={activeFieldName === "serviceChargePercent" && activeField.errStatus ? activeField.errValue : ''}
-                        //onChange={(e) => this.handleTextChange(e)}
                         onKeyDown={(e) => {this.handleNumberChange(e)}}
                         onKeyUp={(e) => {this.handleNumberChange(e)}}
                     />
@@ -434,7 +344,6 @@ class RetailerForm extends React.Component {
                         name="FSSAINumber"
                         value={this.state.FSSAINumber}
                         error={FSSAINumberErr.status ? FSSAINumberErr.value : ''}
-                        //error={activeFieldName === "FSSAINumber" && activeField.errStatus ? activeField.errValue : ''}
                         onChange={(e) => this.handleTextChange(e)}
                     />
                     <Form.Select
@@ -464,7 +373,6 @@ class RetailerForm extends React.Component {
                         type="text"
                         name="bankName"
                         value={this.state.bankName}
-                        //error={activeFieldName === "bankName" && activeField.errStatus ? activeField.errValue : ''}
                         error={bankNameErr.status ? bankNameErr.value : ''}
                         onChange={(e) => this.handleTextChange(e)}
                     />
@@ -473,7 +381,6 @@ class RetailerForm extends React.Component {
                         type="text"
                         name="accountHolderName"
                         value={this.state.accountHolderName}
-                        //error={activeFieldName === "accountHolderName" && activeField.errStatus ? activeField.errValue : ''}
                         error={accountHolderNameErr.status ? accountHolderNameErr.value : ''}
                         onChange={(e) => this.handleTextChange(e)}
                     />
@@ -483,7 +390,6 @@ class RetailerForm extends React.Component {
                         name="accountNumber"
                         value={this.state.accountNumber}
                         error={accountNumberErr.status ? accountNumberErr.value : ''}
-                        //error={activeFieldName === "accountNumber" && activeField.errStatus ? activeField.errValue : ''}
                         onChange={(e) => this.handleTextChange(e)}
                     />
                     <Form.TextInput
@@ -492,7 +398,6 @@ class RetailerForm extends React.Component {
                         name="branch"
                         value={this.state.branch}
                         error={branchErr.status ? branchErr.value : ''}
-                        //error={activeFieldName === "branch" && activeField.errStatus ? activeField.errValue : ''}
                         onChange={(e) => this.handleTextChange(e)}
                     />
                     <Form.Radio
@@ -512,7 +417,6 @@ class RetailerForm extends React.Component {
                         name="IFSC"
                         value={this.state.IFSC}
                         error={IFSCErr.status ? IFSCErr.value : ''}
-                        //error={activeFieldName === "IFSC" && activeField.errStatus ? activeField.errValue : ''}
                         onChange={(e) => this.handleTextChange(e)}
                     />
                     <div style={{marginBottom: '20px'}}>
@@ -560,7 +464,6 @@ class RetailerForm extends React.Component {
                         name="outletAddress"
                         value={this.state.outletAddress}
                         error={outletAddressErr.status ? outletAddressErr.value : ''}
-                        //error={activeFieldName === "outletAddress" && activeField.errStatus ? activeField.errValue : ''}
                         onChange={(e) => this.handleTextChange(e)}
                     />
                     <Form.Select
@@ -568,12 +471,7 @@ class RetailerForm extends React.Component {
                         label="State*"
                         value={this.state.selectedStateIdx}
                         name="selectedStateIdx"
-                        // options={[
-                        //     { text: 'Tamilnadu', value: '1' },
-                        //     { text: 'Karnataka', value: '2' },
-                        // ]}
                         options={this.state.stateList}
-                        //onChange={(e) => this.handleChange(e)}
                     />
                     <Form.Select
                         label="City*"
@@ -587,20 +485,15 @@ class RetailerForm extends React.Component {
                         type="text"
                         name="landlineNo"
                         error={landlineNoErr.status ? landlineNoErr.value : ''}
-                        //error={activeFieldName === "landlineNo" && activeField.errStatus ? activeField.errValue : ''}
                         value={this.state.landlineNo}
                         onChange={(e) => this.handleTextChange(e)}
                     />
                     <Form.TextInput
                         label="Mobile No*"
-                        //type="text"
-                        //maxLength={10}
                         defaultValue={this.props.data ? this.props.data.mobileNo : ''}
                         name="mobileNo"
+                        autoComplete="fefef"
                         error={mobileNoErr.status ? mobileNoErr.value : ''}
-                        //error={activeFieldName === "mobileNo" && activeField.errStatus ? activeField.errValue : ''}
-                        //value={this.state.mobileNo}
-                        //onChange={(e) => this.handleNumberChange(e)}
                         onKeyDown={(e) => {this.handleNumberChange(e)}}
                         onKeyUp={(e) => {this.handleNumberChange(e)}}
                     />
@@ -608,8 +501,8 @@ class RetailerForm extends React.Component {
                         label="Email*"
                         type="text"
                         name="email"
+                        autoComplete="fefef"
                         error={emailIdErr.status ? emailIdErr.value : ''}
-                        //error={activeFieldName === "email" && activeField.errStatus ? activeField.errValue : ''}
                         value={this.state.email}
                         onChange={(e) => this.handleEmailChange(e)}
                     />
@@ -619,7 +512,6 @@ class RetailerForm extends React.Component {
                         type="text"
                         name="gpsCoordinates"
                         error={gpsCoordinatesErr.status ? gpsCoordinatesErr.value : ''}
-                        //error={activeFieldName === "gpsCoordinates" && activeField.errStatus ? activeField.errValue : ''}
                         value={this.state.gpsCoordinates}
                         onChange={(e) => this.handleTextChange(e)}
                     />

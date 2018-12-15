@@ -4,9 +4,7 @@ import { Table } from '@auth0/cosmos'
 import { Icon, Spinner, List } from '@auth0/cosmos'
 import { Select, TextInput } from '@auth0/cosmos'
 import { Button } from '@auth0/cosmos'
-import {retailerData} from './../../mockData'
 import Pagination from 'Components/pagination'
-import Notify from 'Components/notify'
 import { getQueryObj, getQueryUri } from 'Utils/url-utils'
 import { NavLink } from 'react-router-dom'
 import Switch2 from 'Components/switch'
@@ -27,7 +25,6 @@ class ManageRetailer extends React.Component {
             loading: true,
             retailerListCount: 0,
             retailerData: [],
-            //organizationList: [],
             operators:  [
                 {text: 'EQUAL', value: 'EQUAL'},
                 {text: 'LIKE', value: 'LIKE'},
@@ -46,15 +43,12 @@ class ManageRetailer extends React.Component {
         this.handlePageChange = this.handlePageChange.bind(this)
         this.resetFilter = this.resetFilter.bind(this)
         this.handleChange = this.handleChange.bind(this)
-        //this.handleOrganizationChange = this.handleOrganizationChange.bind(this)
         this.getFilteredRetailersList = this.getFilteredRetailersList.bind(this)
         this.fetchDefaultData = this.fetchDefaultData.bind(this)
         this.fetchRetailerList = this.fetchRetailerList.bind(this)
         this.setResponseData = this.setResponseData.bind(this)
         this.editOutletDetail = this.editOutletDetail.bind(this)
         this.onToggleChange = this.onToggleChange.bind(this)
-        // this.fetchOrganizationList = this.fetchOrganizationList.bind(this)
-        // this.formatOrganizationList = this.formatOrganizationList.bind(this)
         this.handleRowClick = this.handleRowClick.bind(this)
         this.callback = this.callback.bind(this)
     }
@@ -65,7 +59,6 @@ class ManageRetailer extends React.Component {
         this.fetchRetailerList({
             offset: 0,
             limit: this.pagesLimit,
-            //filter: null
         }, this.setResponseData)
     }
 
@@ -97,56 +90,14 @@ class ManageRetailer extends React.Component {
             this.fetchRetailerList({
                 offset: queryObj.offset ? parseInt(queryObj.offset) : 0,
                 limit: this.pagesLimit,
-                // filter: this.filter
             }, this.setResponseData)
         }
        
     }
 
     fetchRetailerList(payloadObj, successCallback) {
-        console.log("payload obj", payloadObj)
         Api.fetchRetailerList(payloadObj, successCallback)
-        //this.setState({ data: [], retailerListCount: 100 })
-        // POST({
-        //   api: '/excisePortal/ottpHistory',
-        //   apiBase: 'agamotto',
-        //   handleError: true,
-        //   data: payloadObj
-        // })
-        //   .then((json) => {
-        //     this.setState({
-        //       data: json.data,
-        //       count: json.count,
-        //       loading: false
-        //     })
-               //successCallback(json)
-        //   })
-        //   .catch(err => {
-        //     err.response.json().then(json => { Notify("danger", json.message) })
-        //   })
     }
-
-    //fetchOrganizationList(payloadObj, organizationListSuccessCallback) {
-        // this.setState({organizationList: []})
-        //Api.fetchOrganizationAndStateList(payloadObj, organizationListSuccessCallback)
-        // POST({
-        //   api: '/excisePortal/ottpHistory',
-        //   apiBase: 'agamotto',
-        //   handleError: true,
-        //   data: {}
-        // })
-        //   .then((json) => {
-        //     this.setState({
-        //       data: json.data,
-        //       count: json.count,
-        //       loading: false
-        //     })
-               //organizationListSuccessCallback(json)
-        //   })
-        //   .catch(err => {
-        //     err.response.json().then(json => { Notify("danger", json.message) })
-        //   })
-    //}
 
     getFilteredRetailersList() {
         const { column, operator, value, offset, activePage } = this.state
@@ -156,8 +107,7 @@ class ManageRetailer extends React.Component {
            operator,
            value
         }
-        //console.log("Filtered params", "field", searchField, "operatr", searchOperator, "text", searchText)
-        
+       
         const queryObj = {
             column,
             operator,
@@ -185,25 +135,13 @@ class ManageRetailer extends React.Component {
         }, this.setResponseData)
     }
 
-    // formatOrganizationList(data) {
-    //     console.log("Fetched org list with state details", data)
-    // }
-
     setResponseData(response) {
-        console.log("response", response)
-        if(response.ret_response) {
+        if(response && response.ret_response) {
             this.setState({retailerData: response.ret_response, retailerListCount: response.count, loading: false})
         } else {
             this.setState({retailerData: [], retailerListCount: 0, loading: false})
-        }
-        
+        } 
     }
-
-    // handlePageChange(pageObj) {
-    //     //console.log("handle page change", "active page", pageObj.activePage, "offset", pageObj.offset)
-    //     this.setState({activePage: pageObj.activePage, pageOffset: pageObj.offset})
-    // }
-
 
     handlePageChange(pageObj) {
         const queryUri = location.search.slice(1)
@@ -214,7 +152,7 @@ class ManageRetailer extends React.Component {
         let offset = pageObj.offset
         this.setState({ activePage: pageNumber, offset })
 
-        if(queryObj.column && queryObj.column.length > 0) {
+        if(queryObj && queryObj.column && queryObj.column.length > 0) {
             queryParamsObj = {
                 column: queryObj.column,
                 operator: queryObj.operator,
@@ -253,18 +191,7 @@ class ManageRetailer extends React.Component {
     }
 
     handleChange(e) {
-        //console.log("event", e.target.value, e.target.name)
-        this.setState({[e.target.name]: (e.target.value).toString()})  
-        // if(e.target.name === "column" && e.target.value === "ID") {
-        //     this.setState({
-        //         operators: [
-        //             {text: 'ID', value: 'ID'},
-        //         ]
-        //     })
-        // }
-        console.log("hadle change", e.target.value)
         if(e.target.name === "column" && (e.target.value === "ID" || e.target.value === "OrganisationID")) {
-            console.log("if)")
             this.setState({
                 operators: [
                     {text: 'EQUAL', value: 'EQUAL'},
@@ -272,7 +199,6 @@ class ManageRetailer extends React.Component {
                 operator: 'EQUAL'
             })
         } else if(e.target.name === "column"){
-            console.log("if2")
             this.setState({
                 operators: [
                     {text: 'EQUAL', value: 'EQUAL'},
@@ -281,14 +207,10 @@ class ManageRetailer extends React.Component {
                 ]
             })
         }
+        this.setState({[e.target.name]: (e.target.value).toString()})  
     }
 
-    // handleOrganizationChange(e) {
-
-    // }
-
     editOutletDetail(e, item, action) {
-        //console.log("item", item, this.props.history)
         e.stopPropagation()
         this.props.history.push(`/home/manage-retailer/edit-retailer/${item.id}`, item)
     }
@@ -299,11 +221,13 @@ class ManageRetailer extends React.Component {
             operator: 'EQUAL',
             value: ''
         })
+        this.fetchDefaultData()
+        this.props.history.push(`/home/manage-retailer`)
     }
 
     onToggleChange(value, item) {
         //e.stopPropagation()
-        console.log("On toggle change", value, item)
+        //console.log("On toggle change", value, item)
         Api.deactivateRetailer({
             id: item.id,
             branch_status: item.branch_status === "true" ? "false" : "true"
@@ -318,8 +242,6 @@ class ManageRetailer extends React.Component {
     }
 
     handleRowClick(e,item) {
-        console.log("row item", item)
-        console.log("event", e,e.target.nodeName)
         if(e.target.nodeName === "SPAN") {
             return 
         }
@@ -344,13 +266,12 @@ class ManageRetailer extends React.Component {
                             marginRight: '20px'
                         }}
                     >
-                        <p style={{ margin: '10px 0' }}>Retailer Field</p>
+                        <p style={{ margin: '10px 0' }}>Field</p>
                         <Select
                             placeholder="Select an field..."
                             value={this.state.column}
                             name="column"
                             options={[
-                                // { text: 'All', value: 'all' },
                                 { text: 'ID', value: 'ID' },
                                 { text: 'RETAILER NAME', value: 'RetailerName' },
                                 { text: 'CITY', value: 'CITYID'},

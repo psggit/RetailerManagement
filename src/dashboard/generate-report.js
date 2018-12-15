@@ -33,7 +33,7 @@ class GenerateReport extends React.Component {
     }
 
     handleChange(e) {
-        console.log("chenage")
+        //console.log("chenage")
         this.setState({
             selectedStateIdx: parseInt(this.state.organizationMap[e.target.value].state_id),
             //cityList: this.state.stateMap[parseInt(this.state.organizationMap[e.target.value].state_id)],

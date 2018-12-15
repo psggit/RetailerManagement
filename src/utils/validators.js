@@ -52,7 +52,7 @@ export function validateNumberField({fieldName, fieldValue, length, checkLength}
       value: `${fieldName} is required`
     }
   }
-  console.log("field value", fieldValue)
+  //console.log("field value", fieldValue)
 
   return {
     status: false,

@@ -4,7 +4,6 @@ import Card from 'Components/card'
 import RetailerForm from './retailer-form'
 import { Form, Checkbox, Button, ButtonGroup } from '@auth0/cosmos'
 import * as Api from './../../api'
-//import { isRegExp } from 'util';
 import 'Sass/animations.scss'
 import {formatStateAndCityList, formatStateAndOrganizationList} from 'Utils/response-format-utils'
 import {organizationAndStateList, stateAndCityList} from './../../mockData'
@@ -15,7 +14,6 @@ class CreateRetailer extends React.Component {
         this.state = {
             creatingRetailer: false,
             isFormValid: true,
-            //data: organizationAndStateList.details,
             organizationList: [],
             stateList: [],
             stateMap: {},
@@ -37,40 +35,13 @@ class CreateRetailer extends React.Component {
     componentDidMount() {
         this.fetchStateAndCityList({}, this.formatResponse)
         this.fetchOrganizationAndStateList({}, this.formatOrganizationList)
-        //this.fetchOrganizationList({}, this.formatOrganizationList)
-        //const {data} = this.state
-        //let organizationList = [], stateList = [], organizationMap = {}
-        // for(const i in data) {
-        //     let state={}, organization={}
-        //     state.text = data[i].state_name
-        //     state.value = data[i].state_id
-        //     organization.text = data[(i)].organisation_name,
-        //     organization.value = i 
-        //     organizationList[i] = organization
-        //     stateList[i] = state
-        //     organizationMap[(i)] = {
-        //         state_name: data[i].state_name,
-        //         state_id: data[i].state_id
-        //     }
-        // }
-        // const {organizationList, organizationMap} = formatStateAndOrganizationList(organizationAndStateList.details)
-        // const {stateMap, stateList, cityList} = formatStateAndCityList(stateAndCityList.states)
-
-        // console.log("response", stateList, "city", cityList)
-        // this.setState({stateList, cityList}) 
-
-        //console.log("list", organizationList, stateList, organizationMap, stateMap)
-        // this.setState({organizationList, stateList, organizationMap, stateMap, cityList})
     }
 
     fetchOrganizationAndStateList(payloadObj, organizationListSuccessCallback) {
-        // this.setState({organizationList: []})
         Api.fetchOrganizationAndStateList(payloadObj, organizationListSuccessCallback)
-        
     }
 
     formatOrganizationList(data) {
-        console.log("Fetched org list with state details", data)
         const {organizationList, organizationMap} = formatStateAndOrganizationList(data.details)
         this.setState({organizationList, organizationMap})
     }
@@ -80,7 +51,6 @@ class CreateRetailer extends React.Component {
     }
 
     formatResponse(data) {
-        console.log("Format state and city", data)
         const {stateList, cityList, stateMap} = formatStateAndCityList(data.states)
         this.setState({stateList, cityList, stateMap})   
     }
@@ -138,9 +108,7 @@ class CreateRetailer extends React.Component {
     }
 
     handleSave() {
-        //console.log("data", this.retailerDetailsForm.getData())
         const retailerDataForm = this.retailerDetailsForm.getData()
-        //console.log("retailer", retailerDataForm)
         this.setState({isFormValid: this.formIsValid()})
         if(this.formIsValid()) {
             const payload = {
@@ -152,8 +120,8 @@ class CreateRetailer extends React.Component {
                 discount_percent: retailerDataForm.discountPercent,
                 delivery_discount_percent: retailerDataForm.deliveryDiscountPercent,
                 service_charge_percent: retailerDataForm.serviceChargePercent,
-                kyc_status: retailerDataForm.selectedKycIdx === 1 ? "true" : "false",
-                branch_status: retailerDataForm.selectedOutletStatusIdx === 1 ? "true" : "false",
+                kyc_status: retailerDataForm.selectedKycIdx === "1" ? "true" : "false",
+                branch_status: retailerDataForm.selectedOutletStatusIdx === "1" ? "true" : "false",
                 fssai_no: retailerDataForm.FSSAINumber,
                 city_id: retailerDataForm.selectedCityIdx,
                 state_id: retailerDataForm.selectedStateIdx,
@@ -193,29 +161,7 @@ class CreateRetailer extends React.Component {
     }
 
     createRetailer(payload, successCallback,failureCallback) {
-        console.log("create retailer", payload)
         Api.createRetailer(payload, successCallback, failureCallback)
-        // POST({
-        //     api: '/deliveryStatus/liveOrders',
-        //     apiBase: 'gremlinUrl',
-        //     data: {
-        //         limit: 10,
-        //         offset: 0
-        //     },
-        //     handleError: true
-        // })
-        // .then((json) => {
-        //     //this.setState({
-        //     //       data: json.data,
-        //     //       count: json.count,
-        //     //       loading: false
-        //     //     })
-        //     Notify("success", "Successfully created retailer")
-        //     successCallback(json)
-        // })
-        // .catch(err => {
-        //     err.response.json().then(json => { Notify("danger", json.message) })
-        // })
     }
 
     render() {
@@ -239,7 +185,6 @@ class CreateRetailer extends React.Component {
                         > 
                             Save 
                         </Button>
-                        {/* <Button> Download </Button> */}
                     </ButtonGroup>
                 </Card> 
             </Layout>

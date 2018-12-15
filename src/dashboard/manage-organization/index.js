@@ -249,7 +249,7 @@ class ManageOrganization extends React.Component {
                             marginRight: '20px'
                         }}
                     >
-                        <p style={{ margin: '10px 0' }}>Organization Field</p>
+                        <p style={{ margin: '10px 0' }}>Field</p>
                         <Select
                             placeholder="Select an field..."
                             value={this.state.column}
