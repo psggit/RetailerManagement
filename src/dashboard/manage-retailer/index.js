@@ -56,6 +56,7 @@ class ManageRetailer extends React.Component {
         // this.fetchOrganizationList = this.fetchOrganizationList.bind(this)
         // this.formatOrganizationList = this.formatOrganizationList.bind(this)
         this.handleRowClick = this.handleRowClick.bind(this)
+        this.callback = this.callback.bind(this)
     }
 
     fetchDefaultData() {
@@ -248,7 +249,7 @@ class ManageRetailer extends React.Component {
             }, this.setResponseData)      
         }
 
-        history.pushState(queryParamsObj, "retailer listing", `/home/manage-organization?${getQueryUri(queryParamsObj)}`)
+        history.pushState(queryParamsObj, "retailer listing", `/home/manage-retailer?${getQueryUri(queryParamsObj)}`)
     }
 
     handleChange(e) {
@@ -300,9 +301,20 @@ class ManageRetailer extends React.Component {
         })
     }
 
-    onToggleChange(e,value, item) {
-        e.stopPropagation()
-        console.log("On toggle change",e, value, item)
+    onToggleChange(value, item) {
+        //e.stopPropagation()
+        console.log("On toggle change", value, item)
+        // Api.deactivateRetailer({
+        //     id: item.id,
+        //     branch_status: item.branch_status
+        // }, this.callback)
+    }
+
+    callback() {
+        this.handlePageChange({
+            activePage: this.state.activePage,
+            offset: this.state.offset
+        })
     }
 
     handleRowClick(e,item) {
@@ -418,7 +430,7 @@ class ManageRetailer extends React.Component {
                             <Table.Column field="organisation_name" title="Organization Name"/>
                             <Table.Column field="actions" title="Outlet Status">
                                 {item => (
-                                    <Switch2 on={item.branch_status === 'true' ? 'Active' : 'Inactive'} accessibleLabels={[]} onToggle={(e) => this.onToggleChange(e)} value={item} />
+                                    <Switch2 on={item.branch_status === 'true' ? 'Active' : 'Inactive'} accessibleLabels={[]} onToggle={this.onToggleChange} value={item} />
                                 )}
                             </Table.Column>
                         </Table>

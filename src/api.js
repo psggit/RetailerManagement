@@ -184,11 +184,18 @@ export function updateRetailer(payloadObj, successCallback, failureCallback) {
     })
 }
 
-export function deactivateRetailer(payloadObj) {
+export function deactivateRetailer(payloadObj, callback) {
     return POST({
         api: '/Api/ChangeRetailerStatus',
         apiBase: 'retailerMgmt',
         data: payloadObj,
         handleError: true
+    })
+    .then((json) => {
+       callback()
+    })
+    .catch(err => {
+        err.response.json().then(json => { Notify("danger", json.message) })
+        //failureCallback()
     })
 }
