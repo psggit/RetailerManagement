@@ -130,9 +130,17 @@ class ManageOrganization extends React.Component {
             offset: 0,
             activePage: 1,
         }
-    
+        this.setState({ 
+            organizationData: [], 
+            organisationCount: 0,  
+            pageOffset: 0, 
+            activePage: 1,
+            Column,
+            Operator,
+            Value,
+        })
         history.pushState(queryObj, "organisation listing", `/home/manage-organization?${getQueryUri(queryObj)}`)
-        this.setState({ organizationData: [], organisationCount: 0 })
+     
         this.fetchOrganisationList({
             limit: this.pagesLimit,
             offset: 0,
@@ -141,34 +149,43 @@ class ManageOrganization extends React.Component {
     }
 
     setResponseData(response) {
-        response.org_response.map((item) => {
-            return(
-                item.kyc_status = item.kyc_status === "true" ? 'Active' : 'Inactive',
-                item.status = item.status === "true" ? 'Active' : 'Inactive'
-            )
-        })
-        this.setState({organizationData: response.org_response, organizationCount: response.count, loading: false})
+        if(response.org_response && response.org_response.length > 0) {
+            response.org_response.map((item) => {
+                return(
+                    item.kyc_status = item.kyc_status === "true" ? 'Active' : 'Inactive',
+                    item.status = item.status === "true" ? 'Active' : 'Inactive'
+                )
+            })
+
+            this.setState({organizationData: response.org_response, organizationCount: response.count, loading: false})
+        }
     }
 
     handlePageChange(pageObj) {
         const queryUri = location.search.slice(1)
         const queryObj = getQueryObj(queryUri)
+        let queryParamsObj = {}
     
         let pageNumber = pageObj.activePage
         let offset = pageObj.offset
         this.setState({ activePage: pageNumber, pageOffset: offset })
+
+        if(queryObj.Column && queryObj.Column.length > 0) {
+            queryParamsObj = {
+                Column: queryObj.Column,
+                Operator: queryObj.Operator,
+                Value: queryObj.Value,
+                offset: pageObj.offset,
+                activePage: pageObj.activePage,
+            }
+        } else {
+            queryParamsObj = {
+                offset: pageObj.offset,
+                activePage: pageObj.activePage,
+            }
+        }
     
         if(location.search.length) {
-          const queryParamsObj = {
-            Column: queryObj.Column,
-            Operator: queryObj.Operator,
-            Value: queryObj.Value,
-            offset: pageObj.offset,
-            activePage: pageObj.activePage,
-          }
-      
-          history.pushState(queryParamsObj, "organisation listing", `/home/manage-organization?${getQueryUri(queryParamsObj)}`)
-          
           let filterObj = {
               Column: queryObj.Column,
               Operator: queryObj.Operator,
@@ -179,17 +196,21 @@ class ManageOrganization extends React.Component {
             limit: this.pagesLimit,
             Filter: filterObj
           }, this.setResponseData)
+
         } else{
+
             this.fetchOrganisationList({
                 offset: pageObj.offset,
                 limit: this.pagesLimit
             }, this.setResponseData)      
         }
+
+        history.pushState(queryParamsObj, "organisation listing", `/home/manage-organization?${getQueryUri(queryParamsObj)}`)
       }
 
     handleChange(e) {
         this.setState({[e.target.name]: e.target.value})  
-        if(e.target.name === "searchField" && e.target.value === "ID") {
+        if(e.target.name === "Column" && e.target.value === "ID") {
             this.setState({
                 operators: [
                     {text: 'EQUAL', value: 'EQUAL'},
@@ -205,9 +226,9 @@ class ManageOrganization extends React.Component {
 
     resetFilter() {
         this.setState({
-            searchField: '',
-            searchOperator: '',
-            searchText: ''
+            Column: '',
+            Operator: '',
+            Value: ''
         })
     }
 

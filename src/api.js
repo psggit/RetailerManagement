@@ -18,7 +18,7 @@ export function fetchOrganizationList (payloadObj, successCallback) {
             successCallback(json)
         })
         .catch(err => {
-            err.response.json().then(json => { Notify("danger", json.message) })
+            err.response.json().then(json => { Notify("danger", json.error) })
         })
      
 }
