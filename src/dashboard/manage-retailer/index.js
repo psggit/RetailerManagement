@@ -29,7 +29,7 @@ class ManageRetailer extends React.Component {
             retailerData: [],
             //organizationList: [],
             operators:  [
-                {text: 'ID', value: 'EQUAL'},
+                {text: 'EQUAL', value: 'EQUAL'},
                 {text: 'LIKE', value: 'LIKE'},
                 {text: 'IGNORE CASE', value: 'CASEIGNORE'},
             ],
