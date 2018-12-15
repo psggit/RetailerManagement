@@ -17,12 +17,12 @@ class ManageOrganization extends React.Component {
         super()
         this.defaultFilters = {
            Column: '',
-           Operator: '',
+           Operator: 'EQUAL',
            Value: ''
         }
         this.state = {
             activePage: 1,
-            pageOffset: 0,
+            offset: 0,
             loading: true,
             organizationCount: 0,
             organizationData: [],
@@ -115,7 +115,7 @@ class ManageOrganization extends React.Component {
     }
 
     getFilteredOrganisationList() {
-        const { Column, Operator, Value } = this.state
+        const { Column, Operator, Value, activePage, offset } = this.state
 
         this.filter = {
             Column,
@@ -127,14 +127,14 @@ class ManageOrganization extends React.Component {
             Column,
             Operator,
             Value,
-            offset: 0,
-            activePage: 1,
+            offset,
+            activePage,
         }
         this.setState({ 
             organizationData: [], 
             organisationCount: 0,  
-            pageOffset: 0, 
-            activePage: 1,
+            offset, 
+            activePage,
             Column,
             Operator,
             Value,
@@ -168,7 +168,7 @@ class ManageOrganization extends React.Component {
     
         let pageNumber = pageObj.activePage
         let offset = pageObj.offset
-        this.setState({ activePage: pageNumber, pageOffset: offset })
+        this.setState({ activePage: pageNumber, offset })
 
         if(queryObj.Column && queryObj.Column.length > 0) {
             queryParamsObj = {
@@ -209,14 +209,24 @@ class ManageOrganization extends React.Component {
       }
 
     handleChange(e) {
-        this.setState({[e.target.name]: e.target.value})  
+       
         if(e.target.name === "Column" && e.target.value === "ID") {
             this.setState({
                 operators: [
                     {text: 'EQUAL', value: 'EQUAL'},
                 ]
             })
+        } else if(e.target.name === "Column"){
+            this.setState({
+                operators: [
+                    {text: 'EQUAL', value: 'EQUAL'},
+                    {text: 'LIKE', value: 'LIKE'},
+                    {text: 'IGNORE CASE', value: 'IGNORE CASE'},
+                ]
+            })
         }
+
+        this.setState({[e.target.name]: e.target.value})  
     }
 
     handleEditOrg(e,item, action) {
@@ -227,7 +237,7 @@ class ManageOrganization extends React.Component {
     resetFilter() {
         this.setState({
             Column: '',
-            Operator: '',
+            Operator: 'EQUAL',
             Value: ''
         })
     }

@@ -93,8 +93,8 @@ export function updateOrganization(payloadObj, successCallback, failureCallback)
 
 export function fetchOrganizationAndStateList (payloadObj, successCallback) {
     return POST({
-        api: '/deliveryStatus/liveOrders',
-        apiBase: 'gremlinUrl',
+        api: '/Api/OrgDetails',
+        apiBase: 'retailerMgmt',
         data: payloadObj,
         handleError: true
     })
