@@ -1,14 +1,12 @@
 import React from 'react'
 import { Form, TextInput, Checkbox, Button, ButtonGroup } from '@auth0/cosmos'
 import { validateTextField, validateEmail, validateNumberField } from 'Utils/validators'
-//import { emailRegex, } from 'Utils/regex'
 import { checkCtrlA, validateNumType, checkCtrlV } from 'Utils/logic-utils'
 
 class OrganizationForm extends React.Component {
 
     constructor(props) {
         super(props)
-        console.log("props", this.props)
         this.inputNameMap = {
             organizationName: 'Organization name',
             organizationType: 'Organization type',
@@ -28,11 +26,6 @@ class OrganizationForm extends React.Component {
             otherProof: 'Documents attached'
         }
 
-        // this.cityList = [
-        //     {text: 'Coimbatore', value: '1'},
-        //     {text: 'Chennai', value: 2}
-        // ]
-        
         this.state = {
             organizationName: props.data ? props.data.organisation_name : '',
             organizationType: props.data ? props.data.type_of_organisation : 'proprietorship',
@@ -44,9 +37,7 @@ class OrganizationForm extends React.Component {
             GSTNumber: props.data ? props.data.gst_no : '',
             selectedOrganizationStatusIdx: props.data ? (props.data.status === "Active" ? 1 : 2) : 1,
             organizationAddress: props.data ? props.data.org_address : '',
-            //city: props.data ? props.data.city : '',
             selectedCityIdx: props.data ? parseInt(props.data.city_id) : 1,
-            //state: props.data ? props.data.state : '',
             selectedStateIdx: props.data ? parseInt(props.data.state_id) : 1,
             pincode: props.data ? props.data.pincode : '',
             landlineNo: props.data ? props.data.landline_number : '',
@@ -162,21 +153,7 @@ class OrganizationForm extends React.Component {
         }
     }
 
-    // componentDidMount() {
-    //     const {stateList, cityList} = formatStateAndCityList(stateAndCityList.states)
-    //     console.log("response", stateList, "city", cityList)
-    //     this.setState({stateList, cityList})   
-    // }
-
     handleChange(e) {
-        //console.log("handle change", e.target.value, e.target.name, e.target.type)
-        // if(e.target.value === "others") {
-        //     this.setState({
-        //         [e.target.name]: e.target.value
-        //     })
-        // } else {
-      
-        console.log("city list", this.state.stateMap, this.state.stateMap[e.target.value])
         if(e.target.name.toString().includes("StateIdx")) {
             this.setState({
                 cityList: this.state.stateMap[e.target.value],
@@ -198,7 +175,6 @@ class OrganizationForm extends React.Component {
         this.setState({
             [e.target.name]: e.target.value,
             [errName]: validateTextField(this.inputNameMap[e.target.name], e.target.value),
-            //activeFieldName: e.target.name
         })
     }
 
@@ -207,7 +183,6 @@ class OrganizationForm extends React.Component {
         this.setState({
             [e.target.name]: e.target.value,
             [errName]: validateEmail(this.inputNameMap[e.target.name], e.target.value),
-            //activeFiel[Name: e.target.name
         })
     }
 
@@ -237,8 +212,7 @@ class OrganizationForm extends React.Component {
                                                 fieldValue: e.target.value, 
                                                 length: this.length,
                                                 checkLength: this.checkLength
-                                               }),
-                //activeFieldName: e.target.name
+                                               })
             })
         } else {
             e.preventDefault()
@@ -272,12 +246,11 @@ class OrganizationForm extends React.Component {
             cityList,
             stateList
         } = this.state
-        // console.log("new values", cityList)
         return (
             <Form layout="label-on-top">
                 <Form.FieldSet label="Organization Details">
                     <Form.TextInput
-                        placeholder="Crystal Wines"
+                        //placeholder="Crystal Wines"
                         label="Organization Name*"
                         type="text"
                         name="organizationName"
@@ -290,7 +263,7 @@ class OrganizationForm extends React.Component {
                         type="date"
                         name="incorporationDate"
                         //defaultValue={this.state.incorporationDate}
-                        value={new Date(this.state.incorporationDate)}
+                        value={this.state.incorporationDate}
                         error={incorporationDateErr.status ? incorporationDateErr.value : ''}
                         onChange={(e) => this.handleTextChange(e)}
                     />
@@ -317,13 +290,12 @@ class OrganizationForm extends React.Component {
                             name="otherOrgType"
                             error={((organizationType === "others" && otherOrgType.length === 0) || otherOrgTypeErr.status) ? "Organization type is required" : ''}
                             value={this.state.otherOrgType}
-                            //size="small"
                             onChange={(e) => this.handleTextChange(e)}
                             />
                         </div>
                     } 
                     <Form.TextInput
-                        placeholder="AFEPC1427J"
+                        //placeholder="AFEPC1427J"
                         label="PAN Number*"
                         type="text"
                         name="panNumber"
@@ -333,7 +305,7 @@ class OrganizationForm extends React.Component {
                         onKeyUp={(e) => this.handleTextChange(e)}
                     />
                     <Form.TextInput
-                        placeholder="29560309716"
+                        //placeholder="29560309716"
                         label="CIN Number*"
                         type="text"
                         name="cinNumber"
@@ -401,7 +373,7 @@ class OrganizationForm extends React.Component {
                         onChange={(e) => this.handleChange(e)}
                     />
                     <Form.TextInput
-                        placeholder="389887"
+                        //placeholder="389887"
                         label="Pincode*"
                         type="text"
                         name="pincode"
@@ -543,31 +515,6 @@ class OrganizationForm extends React.Component {
                                         LOA
                                     </Checkbox>
                                 </div>
-                                {/* <div style={{marginRight: '24px'}}>
-                                    <Checkbox
-                                        name="otherParnershipProof"
-                                        onChange={e => this.handleSelectChange(e)}
-                                        value="otherParnershipProof"
-                                        checked={this.state.otherParnershipProof}
-                                    >
-                                        Others
-                                    </Checkbox>
-                                </div> */}
-                                {/* {
-                                    this.state.otherParnershipProof &&
-                                    <div>
-                                        <Form.TextInput
-                                        label=""
-                                        type="text"
-                                        name="partnershipDoc"
-                                        placeholder="Document attached as proof"
-                                        error={partnershipDocErr.status ? partnershipDocErr.value : ''}
-                                        value={this.state.partnershipDoc}
-                                        //size="small"
-                                        onChange={(e) => this.handleTextChange(e)}
-                                        />
-                                    </div>
-                                } */}
                             </div>
                         </div>
                     }
@@ -608,31 +555,6 @@ class OrganizationForm extends React.Component {
                                         Board Resolution / LOA
                                     </Checkbox>
                                 </div>
-                                {/* <div style={{marginRight: '20px'}}>
-                                    <Checkbox
-                                        name="otherPvtLtdProof"
-                                        onChange={e => this.handleSelectChange(e)}
-                                        value="otherPvtLtdProof"
-                                        checked={this.state.otherPvtLtdProof}
-                                    >
-                                        Others
-                                    </Checkbox>
-                                </div>
-                                {
-                                    this.state.otherPvtLtdProof &&
-                                    <div>
-                                        <Form.TextInput
-                                        label=""
-                                        placeholder="Document attached as proof"
-                                        type="text"
-                                        name="privateDoc"
-                                        error={privateDocErr.status ? privateDocErr.value : ''}
-                                        value={this.state.privateDoc}
-                                        //size="small"
-                                        onChange={(e) => this.handleTextChange(e)}
-                                        />
-                                    </div>
-                                } */}
                             </div>
                         </div>
                     }

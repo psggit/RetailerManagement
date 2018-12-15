@@ -3,11 +3,9 @@ import Layout from 'Components/layout'
 import OrganizationForm from './organization-form';
 import Card from 'Components/card'
 import { Form, Checkbox, Button, ButtonGroup } from '@auth0/cosmos'
-//import { POST } from 'Utils/fetch'
 import * as Api from './../../api'
 import 'Sass/animations.scss'
 import {formatStateAndCityList} from 'Utils/response-format-utils'
-import {stateAndCityList} from './../../mockData'
 
 class EditOrganization extends React.Component {
     constructor() {
@@ -30,9 +28,6 @@ class EditOrganization extends React.Component {
 
     componentDidMount() {
         this.fetchStateAndCityList({},this.formatResponse)
-        // const {stateList, cityList} = formatStateAndCityList(stateAndCityList.states)
-        // console.log("response", stateList, "city", cityList)
-        // this.setState({stateList, cityList})   
     }
     
     fetchStateAndCityList(payload, stateListSuccessCallback) {
@@ -40,9 +35,7 @@ class EditOrganization extends React.Component {
     }
 
     formatResponse(data) {
-        //console.log("edit org state and city list", data)
         const {stateList, cityList} = formatStateAndCityList(data.states)
-        //console.log("response", stateList, "city", cityList)
         this.setState({stateList, cityList}) 
     }
 
@@ -106,7 +99,6 @@ class EditOrganization extends React.Component {
     }
     
     handleSave() {
-        //console.log("edited data", this.organizationDetailsForm.getData())
         const data = this.organizationDetailsForm.getData()
         this.setState({isFormValid: this.formIsValid()})
         if(this.formIsValid()) {
@@ -114,7 +106,7 @@ class EditOrganization extends React.Component {
                 id: parseInt(this.props.location.state.id),
                 type_of_organisation: data.organizationType === "others" ? data.otherOrgType : data.organizationType,
                 organisation_name: data.organizationName,
-                date_of_incorporation: data.incorporationDate,
+                date_of_incorporation: data.incorporationDate ? new Date(data.incorporationDate).toISOString() : '',
                 pan_number: data.panNumber,
                 cin_no: data.cinNumber,
                 status: data.selectedOrganizationStatusIdx === 1 ? "true" : "false",
@@ -157,28 +149,9 @@ class EditOrganization extends React.Component {
 
     updateOrganization(payload, successCallback, failureCallback) {
         Api.updateOrganization(payload, successCallback, failureCallback)
-        // POST({
-        //     api: '/deliveryStatus/liveOrders',
-        //     apiBase: 'gremlinUrl',
-        //     data: payload,
-        //     handleError: true
-        // })
-        // .then((json) => {
-        //     //this.setState({
-        //     //       data: json.data,
-        //     //       count: json.count,
-        //     //       loading: false
-        //     //     })
-        //     Notify("success", "Successfully updated organization")
-        //     successCallback(json)
-        // })
-        // .catch(err => {
-        //     err.response.json().then(json => { Notify("danger", json.message) })
-        // })
     }
 
     render() {
-        //console.log("edit org", this.props.history.location.state)
         const {stateList, cityList} = this.state
         return (
             <Layout title="Edit Organization">

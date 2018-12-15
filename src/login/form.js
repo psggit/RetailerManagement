@@ -78,7 +78,7 @@ class Form extends React.Component {
       <div className="form">
         <div className="login-header">
           <div className="logo"> <span style={{ width:'40px', height: '40px'}}> {getIcon('logo')} </span> </div>
-          <span> RETAILER MANAGEM </span>
+          <span> RETAILER MANAGEMENT </span>
         </div>
         {/* <div className="form-wrapper" style={{width: '100%'}}> */}
           <div className="form-group">

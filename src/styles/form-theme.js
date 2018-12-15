@@ -12,7 +12,7 @@ export const Form = styled.form`
         // display: flex;
         // flex-direction: column;
         color: #777;
-        font-family: "Raleway", sans-serif;
+        //font-family: "Raleway", sans-serif;
         font-size: 15px;
         margin: 10px 0;
         height: 40px;

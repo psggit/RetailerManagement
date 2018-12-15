@@ -11,7 +11,8 @@ class SideMenu extends React.Component {
 
   handleChangeRoute(e, currentRoute) {
     e.preventDefault()
-    this.props.history.push(`/home/${currentRoute}`)
+    //this.props.history.push(`/home/${currentRoute}`)
+    location.href = `/home/${currentRoute}`
   }
 
   render() {

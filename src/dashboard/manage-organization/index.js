@@ -4,12 +4,10 @@ import { Table } from '@auth0/cosmos'
 import { Icon, Spinner, List } from '@auth0/cosmos'
 import { Select, TextInput } from '@auth0/cosmos'
 import { Button } from '@auth0/cosmos'
-//import {organizationData} from './../../mockData'
 import Pagination from 'Components/pagination'
 import { getQueryObj, getQueryUri } from 'Utils/url-utils'
 import { NavLink } from 'react-router-dom'
 import * as Api from './../../api'
-// import {stateAndCityList} from './../../mockData'
 
 class ManageOrganization extends React.Component {
 
@@ -53,32 +51,6 @@ class ManageOrganization extends React.Component {
     }
 
     fetchDefaultData() {
-        // console.log("default data", this.state.list)
-        // const {list, stateList, cityList} = this.state
-        // //let state = {}, city = {} 
-        // for(const i in list) {
-        //     console.log("item", list[i].state_name)
-        //     let state = {}, city = {}
-        //     state.text = list[i].state_name
-        //     state.value = list[i].state_short_name
-        //     stateList[i] = state
-
-        //     for(const j in list[i].cities) {  
-        //         city.text = (list[i].cities[j].city_name)
-        //         city.value = (list[i].cities[j].city_id)
-        //         cityList[j] = city
-        //     } 
-        // }
-
-        // // for(const i in list) {
-        // //     for(const j in list[i].cities) {
-        // //         console.log(list[i].cities[j].city_name)
-        // //     }
-        // // }
-        // console.log("state list", stateList)
-        // console.log("city list", cityList)
-
-
         this.setState({ organizationData: [], organisationCount: 0})
         this.fetchOrganisationList({
             offset: 0,
@@ -103,12 +75,6 @@ class ManageOrganization extends React.Component {
             this.filter[item[0]] = item[1]
         })
         this.setState({ organizationData: [], organisationCount: 0 })
-
-        // this.filter = {
-        //     column,
-        //     operator,
-        //     value
-        // }
        
         if(queryObj.column && queryObj.column.length > 0) {
             this.fetchOrganisationList({
@@ -120,8 +86,7 @@ class ManageOrganization extends React.Component {
         } else {
             this.fetchOrganisationList({
                 offset: queryObj.offset ? parseInt(queryObj.offset) : 0,
-                limit: this.pagesLimit,
-                //filter: this.filter
+                limit: this.pagesLimit
             }, this.setResponseData)
     
         }
@@ -166,15 +131,17 @@ class ManageOrganization extends React.Component {
     }
 
     setResponseData(response) {
-        if(response.org_response && response.org_response.length > 0) {
+        if(response && response.org_response && response.org_response.length > 0) {
             response.org_response.map((item) => {
                 return(
-                    item.kyc_status = item.kyc_status === "true" ? 'Active' : 'Inactive',
+                    item.kyc_status = item.kyc_status === "true" ? 'Verified' : 'Not Verified',
                     item.status = item.status === "true" ? 'Active' : 'Inactive'
                 )
             })
 
             this.setState({organizationData: response.org_response, organizationCount: response.count, loading: false})
+        } else {
+            this.setState({organizationData: [], organizationCount: 0, loading: false})
         }
     }
 
@@ -182,8 +149,6 @@ class ManageOrganization extends React.Component {
         const queryUri = location.search.slice(1)
         const queryObj = getQueryObj(queryUri)
         let queryParamsObj = {}
-
-        console.log("query obj", queryObj)
     
         let pageNumber = pageObj.activePage
         let offset = pageObj.offset
@@ -259,6 +224,8 @@ class ManageOrganization extends React.Component {
             operator: 'EQUAL',
             value: ''
         })
+        this.fetchDefaultData()
+        this.props.history.push(`/home/manage-organization`)
     }
 
     handleRowClick(e,item) {
@@ -288,7 +255,6 @@ class ManageOrganization extends React.Component {
                             value={this.state.column}
                             name="column"
                             options={[
-                                // { text: 'All', value: 'all' },
                                 { text: 'ID', value: 'ID' },
                                 { text: 'ORGANISATION NAME', value: 'OrganisationName' },
                                 { text: 'STATE', value: 'StateID'}

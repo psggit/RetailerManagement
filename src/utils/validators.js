@@ -1,7 +1,7 @@
 import { emailRegex } from 'Utils/regex'
 
 export function validateTextField(fieldName, fieldValue) {
-  console.log("date",fieldName, fieldValue, fieldValue.length)
+  //console.log("date",fieldName, fieldValue, fieldValue.length)
   if (!fieldValue.length) {
     return {
       status: true,
