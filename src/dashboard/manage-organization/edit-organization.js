@@ -29,13 +29,10 @@ class EditOrganization extends React.Component {
     }
 
     componentDidMount() {
-        // this.fetchStateAndCityList({
-        //     offset: 0,
-        //     limit: 0
-        // },this.formatResponse)
-        const {stateList, cityList} = formatStateAndCityList(stateAndCityList.states)
-        console.log("response", stateList, "city", cityList)
-        this.setState({stateList, cityList})   
+        this.fetchStateAndCityList({},this.formatResponse)
+        // const {stateList, cityList} = formatStateAndCityList(stateAndCityList.states)
+        // console.log("response", stateList, "city", cityList)
+        // this.setState({stateList, cityList})   
     }
     
     fetchStateAndCityList(payload, stateListSuccessCallback) {
@@ -43,14 +40,15 @@ class EditOrganization extends React.Component {
     }
 
     formatResponse(data) {
-        console.log("state and city list", data)
-        // const {stateList, cityList} = formatStateAndCityList(stateAndCityList.states)
-        // console.log("response", stateList, "city", cityList)
-        // this.setState({stateList, cityList}) 
+        //console.log("edit org state and city list", data)
+        const {stateList, cityList} = formatStateAndCityList(data.states)
+        //console.log("response", stateList, "city", cityList)
+        this.setState({stateList, cityList}) 
     }
 
     formIsValid() {
         const organizationDetailsForm = this.organizationDetailsForm.getData()
+    
         const { organizationNameErr, 
                 incorporationDateErr, 
                 cinNumberErr, 
@@ -61,7 +59,17 @@ class EditOrganization extends React.Component {
                 landlineNoErr,
                 authorizedPersonErr,
                 mobileNoErr,
-                emailIdErr
+                emailIdErr,
+                otherOrgTypeErr,
+                otherOrgType,
+                otherProofErr,
+                otherProof,
+                organizationType,
+                isOtherProof
+                // otherParnershipProof,
+                // partnershipDocErr,
+                // otherPvtLtdProof,
+                // privateDocErr
             } = organizationDetailsForm 
         
         const formData = {
@@ -75,27 +83,36 @@ class EditOrganization extends React.Component {
             landlineNoErr,
             authorizedPersonErr,
             mobileNoErr,
-            emailIdErr
+            emailIdErr,
+            otherOrgTypeErr,
+            otherProofErr
         }
-       //console.log("form data", formData)
-       for(const key in formData) {
-           //console.log("form data", formData[key].value.toString().length)  
-           if(!formData[key].status && formData[key].value.toString().length === 0){
-               return false
-           } 
-       }
+
+        for(const key in formData) {
+            if(formData[key].status && formData[key].value.toString().length === 0){
+                return false
+            } 
+        }
+
+        if(organizationType === "others" && otherOrgType.toString().length === 0) {
+                return false
+        }
+
+        if(isOtherProof && otherProof.toString().length === 0) {
+                return false
+        }
 
        return true
     }
     
     handleSave() {
-        console.log("edited data", this.organizationDetailsForm.getData())
+        //console.log("edited data", this.organizationDetailsForm.getData())
         const data = this.organizationDetailsForm.getData()
         this.setState({isFormValid: this.formIsValid()})
         if(this.formIsValid()) {
             const payload = {
-                id: data.id,
-                type_of_organisation: data.organizationType,
+                id: parseInt(this.props.location.state.id),
+                type_of_organisation: data.organizationType === "others" ? data.otherOrgType : data.organizationType,
                 organisation_name: data.organizationName,
                 data_of_incorporation: data.incorporationDate,
                 pan_number: data.panNumber,
@@ -113,9 +130,9 @@ class EditOrganization extends React.Component {
                 loa: data.partnershipLOA || data.pvtLOA ? true : false,
                 coi: data.pvtCOI,
                 org_address: data.organizationAddress,
-                city_id: data.selectedCityIdx,
+                city_id: (data.selectedCityIdx).toString(),
                 pincode: data.pincode,
-                state_id: data.selectedStateIdx,
+                state_id: (data.selectedStateIdx).toString(),
                 landline_number: data.landlineNo,
                 mobile_number: data.mobileNo,
                 email: data.email
@@ -127,7 +144,7 @@ class EditOrganization extends React.Component {
 
     successCallback() {
         this.updateState()
-        history.pushState(null, 'organization list', '/home/manage-organization')
+        location.href = '/home/manage-organization'
     }
 
     failureCallback() {
@@ -139,6 +156,7 @@ class EditOrganization extends React.Component {
     }
 
     updateOrganization(payload, successCallback, failureCallback) {
+        Api.updateOrganization(payload, successCallback, failureCallback)
         // POST({
         //     api: '/deliveryStatus/liveOrders',
         //     apiBase: 'gremlinUrl',
@@ -160,7 +178,7 @@ class EditOrganization extends React.Component {
     }
 
     render() {
-        console.log("edit org", this.props.history.location.state)
+        //console.log("edit org", this.props.history.location.state)
         const {stateList, cityList} = this.state
         return (
             <Layout title="Edit Organization">

@@ -25,19 +25,20 @@ export function fetchOrganizationList (payloadObj, successCallback) {
 
 export function fetchStateAndCityList(payloadObj, successCallback) {
     return POST({
-        api: '/deliveryStatus/liveOrders',
-        apiBase: 'gremlinUrl',
+        api: '/Api/listStates',
+        apiBase: 'retailerMgmt',
         data: payloadObj,
         handleError: true
     })
-    .then((json) => {
+    .then((response) => {
         //this.setState({
         //       data: json.data,
         //       count: json.count,
         //       loading: false
         //     })
         //Notify("success", "Successfully created organization")
-        successCallback(json)
+        //console.log("json states", response)
+        successCallback(response)
     })
     .catch(err => {
         err.response.json().then(json => { Notify("danger", json.message) })
@@ -68,10 +69,10 @@ export function createOrganization(payloadObj, successCallback, failureCallback)
     })
 }
 
-export function updateOrganization(payloadObj, successCallback) {
+export function updateOrganization(payloadObj, successCallback, failureCallback) {
     return POST({
-        api: '/deliveryStatus/liveOrders',
-        apiBase: 'gremlinUrl',
+        api: '/Api/updateOrganisation',
+        apiBase: 'retailerMgmt',
         data: payloadObj,
         handleError: true
     })

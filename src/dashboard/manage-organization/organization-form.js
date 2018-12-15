@@ -34,37 +34,37 @@ class OrganizationForm extends React.Component {
         // ]
         
         this.state = {
-            organizationName: props.data ? props.data.organizationName : '',
-            organizationType: props.data ? props.data.organizationType : 'proprietorship',
-            incorporationDate: props.data ? props.data.incorporationDate : '',
-            cinNumber: props.data ? props.data.cinNumber : '',
-            panNumber: props.data ? props.data.panNumber : '',
-            outletsCount: props.data ? props.data.outletsCount : 0,
-            selectedKycIdx: props.data ? (props.data.selectedKycIdx === "true" ? 1 : 2) : 1,
-            GSTNumber: props.data ? props.data.GSTNumber : '',
-            selectedOrganizationStatusIdx: props.data ? (props.data.selectedOrganizationStatusIdx === "true" ? 1 : 2) : 1,
-            organizationAddress: props.data ? props.data.organizationAddress : '',
+            organizationName: props.data ? props.data.organisation_name : '',
+            organizationType: props.data ? props.data.type_of_organisation : 'proprietorship',
+            incorporationDate: props.data ? props.data.date_of_incorporation : '12/05/1995',
+            cinNumber: props.data ? props.data.cin_no : '',
+            panNumber: props.data ? props.data.pan_number : '',
+            outletsCount: props.data ? props.data.no_of_outlets : 0,
+            selectedKycIdx: props.data ? (props.data.kyc_status === "true" ? 1 : 2) : 1,
+            GSTNumber: props.data ? props.data.gst_no : '',
+            selectedOrganizationStatusIdx: props.data ? (props.data.status === "Active" ? 1 : 2) : 1,
+            organizationAddress: props.data ? props.data.org_address : '',
             //city: props.data ? props.data.city : '',
-            selectedCityIdx: props.data ? props.data.selectedCityIdx : 1,
+            selectedCityIdx: props.data ? parseInt(props.data.city_id) : 1,
             //state: props.data ? props.data.state : '',
-            selectedStateIdx: props.data ? props.data.selectedStateIdx : 1,
+            selectedStateIdx: props.data ? parseInt(props.data.state_id) : 1,
             pincode: props.data ? props.data.pincode : '',
-            landlineNo: props.data ? props.data.landlineNo : '',
-            authorizedPerson: props.data ? props.data.authorizedPerson : '',
-            mobileNo: props.data ? props.data.mobileNo : '',
+            landlineNo: props.data ? props.data.landline_number : '',
+            authorizedPerson: props.data ? props.data.name_of_auth_person : '',
+            mobileNo: props.data ? props.data.mobile_number : '',
             email: props.data ? props.data.email : '',
             
-            photo: props.data ? props.data.photo : false,
-            pancard: props.data ? props.data.pancard : false,
-            address: props.data ? props.data.address : false,
+            photo: props.data ? props.data.photo_of_auth_signatory : false,
+            pancard: props.data ? props.data.pan_of_auth_signatory : false,
+            address: props.data ? props.data.address_proof_auth_signatory : false,
             
-            partnershipPancard: props.data ? props.data.partnershipPancard : false,
-            partnershipDeed: props.data ? props.data.partnershipDeed : false,
-            partnershipLOA: props.data ? props.data.partnershipLOA : false,
+            partnershipPancard: props.data ? props.data.is_pan : false,
+            partnershipDeed: props.data ? props.data.partnershi_deed : false,
+            partnershipLOA: props.data ? props.data.loa : false,
         
-            pvtPancard: props.data ? props.data.pvtPancard : false,
-            pvtCOI: props.data ? props.data.pvtCOI : false,
-            pvtLOA: props.data ? props.data.pvtLOA : false,
+            pvtPancard: props.data ? props.data.is_pan : false,
+            pvtCOI: props.data ? props.data.coi : false,
+            pvtLOA: props.data ? props.data.loa : false,
             otherOrgType: props.data ? props.data.others : '',
             otherProof: props.data ? props.data.otherProof : '',
             isOtherProof: props.data ? props.data.isOtherProof : false,
@@ -176,7 +176,7 @@ class OrganizationForm extends React.Component {
         //     })
         // } else {
       
-        //console.log("city list", this.state.stateMap, this.state.stateMap[e.target.value])
+        console.log("city list", this.state.stateMap, this.state.stateMap[e.target.value])
         if(e.target.name.toString().includes("StateIdx")) {
             this.setState({
                 cityList: this.state.stateMap[e.target.value],
@@ -229,6 +229,7 @@ class OrganizationForm extends React.Component {
             default:
             break;
         }
+
         if(validateNumType(e.keyCode) || checkCtrlA(e) || checkCtrlV(e)) {
             this.setState({ 
                 [e.target.name]: e.target.value,
@@ -271,7 +272,7 @@ class OrganizationForm extends React.Component {
             cityList,
             stateList
         } = this.state
-        //console.log("new values", cityList)
+        // console.log("new values", cityList)
         return (
             <Form layout="label-on-top">
                 <Form.FieldSet label="Organization Details">
@@ -288,6 +289,7 @@ class OrganizationForm extends React.Component {
                         label="Date of Incorporation*"
                         type="date"
                         name="incorporationDate"
+                        //defaultValue={this.state.incorporationDate}
                         value={this.state.incorporationDate}
                         error={incorporationDateErr.status ? incorporationDateErr.value : ''}
                         onChange={(e) => this.handleTextChange(e)}
@@ -325,7 +327,7 @@ class OrganizationForm extends React.Component {
                         label="PAN Number*"
                         type="text"
                         name="panNumber"
-                        defaultValue={this.props.data ? this.props.data.panNumber : ''}
+                        defaultValue={this.props.data ? this.props.data.pan_number : ''}
                         error={panNumberErr.status ? panNumberErr.value : ''}
                         onKeyDown={(e) => this.handleTextChange(e)}
                         onKeyUp={(e) => this.handleTextChange(e)}
@@ -428,7 +430,7 @@ class OrganizationForm extends React.Component {
                         type="text"
                         name="mobileNo"
                         error={mobileNoErr.status ? mobileNoErr.value : ''}
-                        defaultValue={this.props.data ? this.props.data.mobileNo : ''}
+                        defaultValue={this.props.data ? this.props.data.mobile_number : ''}
                         onKeyDown={(e) => {this.handleNumberChange(e)}}
                         onKeyUp={(e) => this.handleNumberChange(e)}
                     />
@@ -494,7 +496,7 @@ class OrganizationForm extends React.Component {
                             placeholder="Documents as Proof"
                             type="text"
                             name="otherProof"
-                            error={((isOtherProof && otherProof.length === 0)|| otherProofErr.status) ? "Documents attached is required" : ''}
+                            error={((isOtherProof && otherProof && otherProof.length === 0)|| otherProofErr.status) ? "Documents attached is required" : ''}
                             value={this.state.otherProof}
                             //size="small"
                             onChange={(e) => this.handleTextChange(e)}

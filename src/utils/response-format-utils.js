@@ -24,6 +24,7 @@ export function formatStateAndCityList(data) {
         let cityList = []
         for(const j in list[i].cities) {
             let cityDetail = {}
+            //console.log("cities", list[i].cities[j].city_name)
             cityDetail.text = (list[i].cities[j].city_name)
             cityDetail.value = (list[i].cities[j].city_id)
             cityList[j] = cityDetail

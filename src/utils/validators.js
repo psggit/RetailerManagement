@@ -1,6 +1,7 @@
 import { emailRegex } from 'Utils/regex'
 
 export function validateTextField(fieldName, fieldValue) {
+  console.log("date",fieldName, fieldValue, fieldValue.length)
   if (!fieldValue.length) {
     return {
       status: true,
@@ -33,7 +34,7 @@ export function validateEmail(fieldName, fieldValue) {
 }
 
 export function validateNumberField({fieldName, fieldValue, length, checkLength}) {
-  console.log("field value", fieldValue, isNaN(fieldValue))
+  //console.log("field value", fieldValue, isNaN(fieldValue))
 
   if (checkLength && !fieldValue.length) {
     return {

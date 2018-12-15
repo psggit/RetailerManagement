@@ -18,7 +18,7 @@ class CreateOrganization extends React.Component {
             isFormValid: true,
             stateList: [],
             cityList: [],
-            //list: stateAndCityList.states,
+            stateMap: {}
         }
         this.handleSave = this.handleSave.bind(this)
         this.successCallback = this.successCallback.bind(this)
@@ -31,28 +31,8 @@ class CreateOrganization extends React.Component {
 
     componentDidMount() {
 
-        // this.fetchStateAndCityList({
-        //     offset: 0,
-        //     limit: 0
-        // },this.formatResponse)
-        // const {list, stateList, cityList} = this.state
-        // let index = 0;
-        // for(const i in list) {
-        //     let state = {}
-        //     state.text = list[i].state_name
-        //     state.value = i
-        //     stateList[i] = state
+        this.fetchStateAndCityList({},this.formatResponse)
 
-        //     for(const j in list[i].cities) {  
-        //         let city = {}
-        //         city.text = (list[i].cities[j].city_name)
-        //         city.value = (list[i].cities[j].city_id)
-        //         cityList[index] = city
-        //         index = index + 1
-        //     } 
-        // }
-        const {stateList, cityList, stateMap} = formatStateAndCityList(stateAndCityList.states)
-        this.setState({stateList, cityList, stateMap})   
     }
 
     fetchStateAndCityList(payload, stateListSuccessCallback) {
@@ -60,32 +40,13 @@ class CreateOrganization extends React.Component {
     }
 
     formatResponse(data) {
-        // const {stateList, cityList} = formatStateAndCityList(stateAndCityList.states)
-        // console.log("response", stateList, "city", cityList)
-        // this.setState({stateList, cityList}) 
-        // const {list, stateList, cityList} = this.state
-        // let index = 0;
-        // for(const i in list) {
-        //     let state = {}
-        //     state.text = list[i].state_name
-        //     state.value = i
-        //     stateList[i] = state
-
-        //     for(const j in list[i].cities) {  
-        //         let city = {}
-        //         city.text = (list[i].cities[j].city_name)
-        //         city.value = (list[i].cities[j].city_id)
-        //         cityList[index] = city
-        //         index = index + 1
-        //     } 
-        // }
-        // this.setState({stateList, cityList})
+        const {stateList, cityList, stateMap} = formatStateAndCityList(data.states)
+        this.setState({stateList, cityList, stateMap})   
     }
 
     formIsValid() {
         const organizationDetailsForm = this.organizationDetailsForm.getData()
-     
-        //console.log("log", organizationDetailsForm)
+    
         const { organizationNameErr, 
                 incorporationDateErr, 
                 cinNumberErr, 
@@ -125,21 +86,19 @@ class CreateOrganization extends React.Component {
             otherProofErr
         }
 
-       //console.log("form data", formData)
-       for(const key in formData) {
-           //console.log("form data", formData[key].value.toString().length)  
-           if(formData[key].status && formData[key].value.toString().length === 0){
-               return false
-           } 
-       }
+        for(const key in formData) {
+            if(formData[key].status && formData[key].value.toString().length === 0){
+                return false
+            } 
+        }
 
-       if(organizationType === "others" && otherOrgType.toString().length === 0) {
-            return false
-       }
+        if(organizationType === "others" && otherOrgType.toString().length === 0) {
+                return false
+        }
 
-       if(isOtherProof && otherProof.toString().length === 0) {
-            return false
-       }
+        if(isOtherProof && otherProof.toString().length === 0) {
+                return false
+        }
 
        return true
     }
@@ -175,15 +134,14 @@ class CreateOrganization extends React.Component {
                 email: data.email,
                 otherProof: data.otherProof
             }
-            this.setState({creatingOrg: true})
+            this.setState({creatingOrg: true, activeSave: false})
             this.createOrganization(payload, this.successCallback, this.failureCallback)
         }
     }
 
     successCallback() {
-        console.log("success callback")
+        //console.log("success callback")
         this.updateState()
-        //history.pushState(null, 'organization list', '/home/manage-organization')
         location.href = '/home/manage-organization'
     }
 
