@@ -36,7 +36,7 @@ function getAPIObj() {
       socketUrl: scheme + '://livered' + baseHost,
       api2: scheme + '://api2' + baseHost,
       catalogsystem: scheme + '://catalogsystem' + baseHost,
-      retailerMgmt: scheme + '://retailer-arun' + baseHost
+      retailerMgmt: scheme + '://retailer' + baseHost
     }
   }
 }
