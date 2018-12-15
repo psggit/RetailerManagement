@@ -6,7 +6,7 @@ import { Form, Button, ButtonGroup } from '@auth0/cosmos'
 import Card from 'Components/card'
 import * as Api from './../api'
 import {formatStateAndCityList, formatStateAndOrganizationList} from 'Utils/response-format-utils'
-import {organizationAndStateList, stateAndCityList} from './../mockData'
+// import {organizationAndStateList, stateAndCityList} from './../mockData'
 
 class GenerateReport extends React.Component {
     constructor() {
@@ -14,11 +14,9 @@ class GenerateReport extends React.Component {
         this.state = {
             selectedOrganizationIdx: 1,
             selectedStateIdx: 1,
-            //organizationList: [],
-            organizationId: 1001,
+            //organizationId: 1001,
             organizationList: [],
             stateList: [],
-            //stateMap: {},
             organizationMap: {},
         }
 
@@ -27,35 +25,16 @@ class GenerateReport extends React.Component {
         this.fetchStateAndCityList = this.fetchStateAndCityList.bind(this)
         this.formatResponse = this.formatResponse.bind(this)
         this.handleChange = this.handleChange.bind(this)
-        //this.handleClick = this.handleClick.bind(this)
     }
 
     componentDidMount() {
         this.fetchStateAndCityList({}, this.formatResponse)
         this.fetchOrganizationList({}, this.formatOrganizationList)
-       
-        // this.setState({organizationList: []})
-        // this.fetchOrganizationList({}, this.formatOrganizationList)
-
-        // const {organizationList, organizationMap} = formatStateAndOrganizationList(organizationAndStateList.details)
-        // const {stateList} = formatStateAndCityList(stateAndCityList.states)
-
-        // console.log("response", stateList, "city", cityList)
-        // this.setState({stateList, cityList}) 
-
-        //console.log("list", organizationList, stateList, organizationMap, stateMap)
-
-        // this.setState({organizationList, stateList, organizationMap})
     }
 
     handleChange(e) {
-        //console.log("handle change", e.target.value, e.target.name, e.target.type)
-        // this.setState({
-        //     [e.target.name]: e.target.value
-        // })
-        //console.log("state", parseInt(this.state.organizationMap[e.target.value].state_id))
+        console.log("chenage")
         this.setState({
-           
             selectedStateIdx: parseInt(this.state.organizationMap[e.target.value].state_id),
             //cityList: this.state.stateMap[parseInt(this.state.organizationMap[e.target.value].state_id)],
             [e.target.name]: e.target.value
@@ -67,7 +46,6 @@ class GenerateReport extends React.Component {
     }
 
     formatOrganizationList(data) {
-        console.log("Fetched org list with state details", data)
         const {organizationList, organizationMap} = formatStateAndOrganizationList(data.details)
         this.setState({organizationList, organizationMap, selectedOrganizationIdx: organizationList[0].value})
     }
@@ -77,15 +55,9 @@ class GenerateReport extends React.Component {
     }
 
     formatResponse(data) {
-        console.log("Format state and city", data)
         const {stateList} = formatStateAndCityList(data.states)
         this.setState({stateList, selectedStateIdx: stateList[0].value})   
     }
-
-    // handleClick() {
-    //     console.log("handle download click")
-    //     <a href="./../test.html" download />
-    // }
 
     printDocument() {
         // html2canvas(document.querySelector("#root")).then(canvas => {
@@ -128,23 +100,17 @@ class GenerateReport extends React.Component {
                             options={organizationList}
                             onChange={(e) => this.handleChange(e)}
                         />
-                        <Form.Select
+                        {/* <Form.Select
                             label="State"
                             disabled={true}
                             value={this.state.selectedStateIdx}
                             name="selectedStateIdx"
                             options={stateList}
-                            //onChange={(e) => this.handleChange(e)}
-                        />
+                        /> */}
                     </Form>
-                    {/* <ButtonGroup align="right"> */}
-                    <a href={`/retailer-onboarding-form/${this.state.organizationId}`} target="_blank">
+                    <a href={`/retailer-onboarding-form/${this.state.selectedOrganizationIdx}`} target="_blank">
                         <Button> Download </Button>
                     </a>
-
-                    {/* <Button onClick={this.printDocument}> Download</Button> */}
-                       
-                    {/* </ButtonGroup> */}
                 </Card>
             </Layout>
         ) 

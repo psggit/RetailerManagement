@@ -41,6 +41,7 @@ export function fetchStateAndCityList(payloadObj, successCallback) {
         successCallback(response)
     })
     .catch(err => {
+        console.log("error", err)
         err.response.json().then(json => { Notify("danger", json.message) })
     })
  

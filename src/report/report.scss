@@ -71,7 +71,6 @@
 
     body {
         //margin: 100px auto;
-
         .organization-info {
             page-break-after: always;
             //margin: 0cm;
@@ -79,7 +78,10 @@
             margin-bottom: 10cm;
             padding-top: 0px;
         }
-        
-        .outlet-info	{ margin-top: 5cm; margin-bottom: 5cm; page-break-after: always;} 
+        .outlet-info { 
+            margin-top: 5cm; 
+            margin-bottom: 5cm; 
+            page-break-after: always;
+        } 
     }
 }
