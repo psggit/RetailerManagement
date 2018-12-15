@@ -15,7 +15,7 @@ function getAPIObj() {
       socketUrl: 'https://livered' + baseHost,
       api2: 'https://api2.' + appName + '.hasura-app.io',
       catalogsystem: 'https://catalogsystem.' + appName + '.hasura-app.io',
-      retailerMgmt: 'https://retailer-arun.' + appName + '.hasura-app.io'
+      retailerMgmt: 'https://retailer.' + appName + '.hasura-app.io'
     }
   } else {
     let scheme = window.location.href.split(':')[0]

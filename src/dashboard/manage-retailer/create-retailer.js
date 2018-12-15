@@ -129,7 +129,6 @@ class CreateRetailer extends React.Component {
         }
        //console.log("form data", formData)
        for(const key in formData) {
-           //console.log("form data", formData[key].value.toString().length)  
            if(formData[key].status && formData[key].value.toString().length === 0){
                return false
            } 
@@ -141,6 +140,7 @@ class CreateRetailer extends React.Component {
     handleSave() {
         //console.log("data", this.retailerDetailsForm.getData())
         const retailerDataForm = this.retailerDetailsForm.getData()
+        //console.log("retailer", retailerDataForm)
         this.setState({isFormValid: this.formIsValid()})
         if(this.formIsValid()) {
             const payload = {
@@ -168,7 +168,7 @@ class CreateRetailer extends React.Component {
                 account_number: retailerDataForm.accountNumber,
                 bank_branch: retailerDataForm.branch,
                 acc_type: retailerDataForm.accountType,
-                IFSC: retailerDetailsForm.IFSC,
+                IFSC: retailerDataForm.IFSC,
                 is_cancelled_cheque: retailerDataForm.cancelledCheck,
                 is_excise_license: retailerDataForm.exciseLicense,
                 is_photo_of_outlet: retailerDataForm.outletPhoto

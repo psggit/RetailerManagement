@@ -93,7 +93,7 @@ export function updateOrganization(payloadObj, successCallback, failureCallback)
 
 export function fetchOrganizationAndStateList (payloadObj, successCallback) {
     return POST({
-        api: '/Api/OrgDetails',
+        api: '/Api/orgDetails',
         apiBase: 'retailerMgmt',
         data: payloadObj,
         handleError: true
@@ -130,12 +130,15 @@ export function fetchRetailerList (payloadObj, successCallback) {
         successCallback(json)
     })
     .catch(err => {
+        console.log("err", err)
         err.response.json().then(json => { Notify("danger", json.message) })
     })
+
+    // if (response.status !== 200) {
  
 }
 
-export function createRetailer(payloadObj, successCallback) {
+export function createRetailer(payloadObj, successCallback, failureCallback) {
     return POST({
         api: '/Api/createRetailer',
         apiBase: 'retailerMgmt',

@@ -17,29 +17,29 @@ class ManageRetailer extends React.Component {
     constructor() {
         super()
         this.defaultFilters = {
-           searchField: '',
-           searchOperator: '',
-           searchText: ''
+           column: '',
+           operator: 'EQUAL',
+           value: ''
         }
         this.state = {
             activePage: 1,
-            pageOffset: 0,
-            loading: false,
+            offset: 0,
+            loading: true,
             retailerListCount: 0,
-            data: [],
-            organizationList: [],
+            retailerData: [],
+            //organizationList: [],
             operators:  [
-                {text: 'ID', value: 'ID'},
+                {text: 'ID', value: 'EQUAL'},
                 {text: 'LIKE', value: 'LIKE'},
-                {text: 'IGNORE CASE', value: 'IGNORE CASE'},
+                {text: 'IGNORE CASE', value: 'CASEIGNORE'},
             ],
             ...this.defaultFilters
         }
 
         this.filter = {
-            searchField: '',
-            searchOperator: '',
-            searchText: ''
+            column: '',
+            operator: '',
+            value: ''
         }
     
         this.pagesLimit = 5
@@ -54,17 +54,17 @@ class ManageRetailer extends React.Component {
         this.editOutletDetail = this.editOutletDetail.bind(this)
         this.onToggleChange = this.onToggleChange.bind(this)
         // this.fetchOrganizationList = this.fetchOrganizationList.bind(this)
-        //this.formatOrganizationList = this.formatOrganizationList.bind(this)
+        // this.formatOrganizationList = this.formatOrganizationList.bind(this)
         this.handleRowClick = this.handleRowClick.bind(this)
     }
 
     fetchDefaultData() {
-        this.setState({organizationList: [],  data: [], retailerListCount: 100})
+        this.setState({retailerData: [], retailerListCount: 0})
         //this.fetchOrganizationList({}, this.formatOrganizationList)
         this.fetchRetailerList({
             offset: 0,
             limit: this.pagesLimit,
-            filter: null
+            //filter: null
         }, this.setResponseData)
     }
 
@@ -84,16 +84,27 @@ class ManageRetailer extends React.Component {
             this.setState({ [item[0]]: item[1] })
             this.filter[item[0]] = item[1]
         })
-        this.setState({data: [], retailerListCount: 100})
-        this.fetchRetailerList({
-            offset: queryObj.offset ? parseInt(queryObj.offset) : 0,
-            limit: this.pagesLimit,
-            filter: this.filter
-        }, this.setResponseData)
+        this.setState({retailerData: [], retailerListCount: 0})
+
+        if(queryObj.column && queryObj.column.length > 0) {
+            this.fetchRetailerList({
+                offset: queryObj.offset ? parseInt(queryObj.offset) : 0,
+                limit: this.pagesLimit,
+                filter: this.filter
+            }, this.setResponseData)
+        } else {
+            this.fetchRetailerList({
+                offset: queryObj.offset ? parseInt(queryObj.offset) : 0,
+                limit: this.pagesLimit,
+                // filter: this.filter
+            }, this.setResponseData)
+        }
+       
     }
 
     fetchRetailerList(payloadObj, successCallback) {
         console.log("payload obj", payloadObj)
+        Api.fetchRetailerList(payloadObj, successCallback)
         //this.setState({ data: [], retailerListCount: 100 })
         // POST({
         //   api: '/excisePortal/ottpHistory',
@@ -114,9 +125,9 @@ class ManageRetailer extends React.Component {
         //   })
     }
 
-    fetchOrganizationList(payloadObj, organizationListSuccessCallback) {
+    //fetchOrganizationList(payloadObj, organizationListSuccessCallback) {
         // this.setState({organizationList: []})
-        Api.fetchOrganizationAndStateList(payloadObj, organizationListSuccessCallback)
+        //Api.fetchOrganizationAndStateList(payloadObj, organizationListSuccessCallback)
         // POST({
         //   api: '/excisePortal/ottpHistory',
         //   apiBase: 'agamotto',
@@ -134,28 +145,38 @@ class ManageRetailer extends React.Component {
         //   .catch(err => {
         //     err.response.json().then(json => { Notify("danger", json.message) })
         //   })
-    }
+    //}
 
     getFilteredRetailersList() {
-        const { searchField, searchOperator, searchText } = this.state
+        const { column, operator, value, offset, activePage } = this.state
 
         this.filter = {
-            searchField: searchField,
-            searchOperator: searchOperator,
-            searchText: searchText
+           column,
+           operator,
+           value
         }
         //console.log("Filtered params", "field", searchField, "operatr", searchOperator, "text", searchText)
         
         const queryObj = {
-            searchField: searchField,
-            searchOperator: searchOperator,
-            searchText: searchText,
-            offset: 0,
-            activePage: 1,
+            column,
+            operator,
+            value,
+            offset,
+            activePage,
         }
+
+        this.setState({ 
+            retailerData: [], 
+            retailerListCount: 0,  
+            offset, 
+            activePage,
+            column,
+            operator,
+            value
+        })
     
-        history.pushState(queryObj, "organisation listing", `/home/manage-retailer?${getQueryUri(queryObj)}`)
-        this.setState({data: [], retailerListCount: 100})
+        history.pushState(queryObj, "retailer listing", `/home/manage-retailer?${getQueryUri(queryObj)}`)
+      
         this.fetchRetailerList({
             limit: this.pagesLimit,
             offset: 0,
@@ -163,26 +184,99 @@ class ManageRetailer extends React.Component {
         }, this.setResponseData)
     }
 
-    formatOrganizationList(data) {
-        console.log("Fetched org list with state details", data)
-    }
+    // formatOrganizationList(data) {
+    //     console.log("Fetched org list with state details", data)
+    // }
 
     setResponseData(response) {
         console.log("response", response)
+        if(response.ret_response) {
+            this.setState({retailerData: response.ret_response, retailerListCount: response.count, loading: false})
+        } else {
+            this.setState({retailerData: [], retailerListCount: 0, loading: false})
+        }
+        
     }
 
+    // handlePageChange(pageObj) {
+    //     //console.log("handle page change", "active page", pageObj.activePage, "offset", pageObj.offset)
+    //     this.setState({activePage: pageObj.activePage, pageOffset: pageObj.offset})
+    // }
+
+
     handlePageChange(pageObj) {
-        //console.log("handle page change", "active page", pageObj.activePage, "offset", pageObj.offset)
-        this.setState({activePage: pageObj.activePage, pageOffset: pageObj.offset})
+        const queryUri = location.search.slice(1)
+        const queryObj = getQueryObj(queryUri)
+        let queryParamsObj = {}
+    
+        let pageNumber = pageObj.activePage
+        let offset = pageObj.offset
+        this.setState({ activePage: pageNumber, offset })
+
+        if(queryObj.column && queryObj.column.length > 0) {
+            queryParamsObj = {
+                column: queryObj.column,
+                operator: queryObj.operator,
+                value: queryObj.value,
+                offset: pageObj.offset,
+                activePage: pageObj.activePage,
+            }
+        } else {
+            queryParamsObj = {
+                offset: pageObj.offset,
+                activePage: pageObj.activePage,
+            }
+        }
+    
+        if(location.search.length && queryObj.column && queryObj.column.length > 0) {
+          let filterObj = {
+              column: queryObj.column,
+              operator: queryObj.operator,
+              value: queryObj.value
+          }
+          this.fetchRetailerList({
+            offset: pageObj.offset,
+            limit: this.pagesLimit,
+            filter: filterObj
+          }, this.setResponseData)
+
+        } else{
+
+            this.fetchRetailerList({
+                offset: pageObj.offset,
+                limit: this.pagesLimit
+            }, this.setResponseData)      
+        }
+
+        history.pushState(queryParamsObj, "retailer listing", `/home/manage-organization?${getQueryUri(queryParamsObj)}`)
     }
 
     handleChange(e) {
         //console.log("event", e.target.value, e.target.name)
-        this.setState({[e.target.name]: e.target.value})  
-        if(e.target.name === "searchField" && e.target.value === "ID") {
+        this.setState({[e.target.name]: (e.target.value).toString()})  
+        // if(e.target.name === "column" && e.target.value === "ID") {
+        //     this.setState({
+        //         operators: [
+        //             {text: 'ID', value: 'ID'},
+        //         ]
+        //     })
+        // }
+        console.log("hadle change", e.target.value)
+        if(e.target.name === "column" && (e.target.value === "ID" || e.target.value === "OrganisationID")) {
+            console.log("if)")
             this.setState({
                 operators: [
-                    {text: 'ID', value: 'ID'},
+                    {text: 'EQUAL', value: 'EQUAL'},
+                ],
+                operator: 'EQUAL'
+            })
+        } else if(e.target.name === "column"){
+            console.log("if2")
+            this.setState({
+                operators: [
+                    {text: 'EQUAL', value: 'EQUAL'},
+                    {text: 'LIKE', value: 'LIKE'},
+                    {text: 'IGNORE CASE', value: 'CASEIGNORE'},
                 ]
             })
         }
@@ -200,9 +294,9 @@ class ManageRetailer extends React.Component {
 
     resetFilter() {
         this.setState({
-            searchField: '',
-            searchOperator: '',
-            searchText: ''
+            column: '',
+            operator: 'EQUAL',
+            value: ''
         })
     }
 
@@ -216,7 +310,7 @@ class ManageRetailer extends React.Component {
     }
 
     render() {
-        //const { activePage, pageOffset, itemCount} = this.state
+        const {retailerData} = this.state
         return (
             <Layout title="Manage Retailer">
                 <NavLink to={`/home/manage-retailer/create-retailer`}>
@@ -236,13 +330,14 @@ class ManageRetailer extends React.Component {
                         <p style={{ margin: '10px 0' }}>Retailer Field</p>
                         <Select
                             placeholder="Select an field..."
-                            value={this.state.searchField}
-                            name="searchField"
+                            value={this.state.column}
+                            name="column"
                             options={[
                                 // { text: 'All', value: 'all' },
                                 { text: 'ID', value: 'ID' },
-                                { text: 'ORGANISATION NAME', value: 'Organisation name' },
-                                { text: 'CITY', value: 'City'}
+                                { text: 'RETAILER NAME', value: 'RetailerName' },
+                                { text: 'CITY', value: 'CITYID'},
+                                { text: 'ORGANIZATION ID', value: 'OrganisationID' }
                             ]}
                             onChange={(e) => this.handleChange(e)}
                         />
@@ -258,8 +353,8 @@ class ManageRetailer extends React.Component {
                         <p style={{ margin: '10px 0' }}>Operator</p>
                         <Select
                             placeholder="Select an operator..."
-                            value={this.state.searchOperator}
-                            name="searchOperator"
+                            value={this.state.operator}
+                            name="operator"
                             options={this.state.operators}
                             onChange={(e) => this.handleChange(e)}
                         />
@@ -277,8 +372,8 @@ class ManageRetailer extends React.Component {
                             placeholder="Contains"
                             type="text"
                             size="default"
-                            name="searchText"
-                            value={this.state.searchText}
+                            name="value"
+                            value={this.state.value}
                             onChange={(e) => this.handleChange(e)}
                         />
                     </div>
@@ -301,25 +396,6 @@ class ManageRetailer extends React.Component {
                     </div>
                 </div>
                 {
-                    this.state.loading &&
-                    <div style={{ marginTop: '40px'}}>
-                        <Table
-                            loading
-                            items={[]}
-                        >   
-                            <Table.Column field="id" title="ID" />
-                            <Table.Column field="outletName" title="Outlet Name" />
-                            <Table.Column field="outletAddress" title="Outlet Address" />
-                            {/* <Table.Column field="outletsCount" title="Outlets Count" width="13%"/>
-                            <Table.Column field="selectedKycIdx" title="KYC Status" width="10%"/> */}
-                            <Table.Column field="state" title="State" />
-                            <Table.Column field="city" title="City" />
-                            {/* <Table.Column field="cinNumber" title="CIN Number" width="15%"/> */}
-                        </Table>
-                    </div>
-                }
-                {
-                    !this.state.loading &&
                     <div style={{ marginTop: '40px', marginBottom: '20px' }}>
                         <Table
                             emptyMessage={this.state.loading ? <Spinner /> : 'No records found'}
@@ -331,26 +407,28 @@ class ManageRetailer extends React.Component {
                                     <Button icon="pencil" onClick={(e) => this.editOutletDetail(e, item, 'edit')} />
                                 )}
                             </Table.Column>
-                            <Table.Column field="id" title="ID"/>
-                            <Table.Column field="outletName" title="Outlet Name"/>
-                            <Table.Column field="outletAddress" title="Outlet Address"/>
+                            <Table.Column field="id" title="Retailer Id"/>
+                            <Table.Column field="outlet_name" title="Outlet Name"/>
+                            <Table.Column field="store_address" title="Outlet Address"/>
                             {/* <Table.Column field="retailerStatus" title="Retailer Status"/> */}
-                            <Table.Column field="state" title="State"/>
-                            <Table.Column field="city" title="City"/>
+                            <Table.Column field="state_name" title="State"/>
+                            <Table.Column field="city_name" title="City"/>
+                            <Table.Column field="organisation_id" title="Organization Id"/>
+                            <Table.Column field="organisation_name" title="Organization Name"/>
                             <Table.Column field="actions" title="Outlet Status">
                                 {item => (
-                                    <Switch2 on={item.retailerStatus === 'active' ? true : false} accessibleLabels={[]} onToggle={this.onToggleChange} value={item} />
+                                    <Switch2 on={item.branch_status === 'true' ? 'Active' : 'Inactive'} accessibleLabels={[]} onToggle={() => this.onToggleChange(e)} value={item} />
                                 )}
                             </Table.Column>
                         </Table>
                     </div>
                 }
                 {
-                    this.state.data.length > 0 &&
+                    this.state.retailerData && this.state.retailerData.length > 0 &&
                     <Pagination 
-                        activePage={this.state.activePage}
+                        activePage={parseInt(this.state.activePage)}
                         itemsCountPerPage={this.pagesLimit}
-                        totalItemsCount={this.state.retailerListCount}
+                        totalItemsCount={parseInt(this.state.retailerListCount)}
                         setPage={this.handlePageChange}
                     />
                 }

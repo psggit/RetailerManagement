@@ -134,7 +134,7 @@ class CreateOrganization extends React.Component {
                 email: data.email,
                 otherProof: data.otherProof
             }
-            this.setState({creatingOrg: true, activeSave: false})
+            this.setState({creatingOrg: true})
             this.createOrganization(payload, this.successCallback, this.failureCallback)
         }
     }

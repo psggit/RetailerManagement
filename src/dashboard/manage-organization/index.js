@@ -16,9 +16,9 @@ class ManageOrganization extends React.Component {
     constructor() {
         super()
         this.defaultFilters = {
-           Column: '',
-           Operator: 'EQUAL',
-           Value: ''
+           column: '',
+           operator: 'EQUAL',
+           value: ''
         }
         this.state = {
             activePage: 1,
@@ -29,15 +29,15 @@ class ManageOrganization extends React.Component {
             operators:  [
                 {text: 'EQUAL', value: 'EQUAL'},
                 {text: 'LIKE', value: 'LIKE'},
-                {text: 'IGNORE CASE', value: 'IGNORE CASE'},
+                {text: 'IGNORE CASE', value: 'CASEIGNORE'},
             ],
             ...this.defaultFilters
         }
 
         this.filter = {
-            Column: '',
-            Operator: '',
-            Value: ''
+            column: '',
+            operator: '',
+            value: ''
         }
     
         this.pagesLimit = 5
@@ -103,11 +103,28 @@ class ManageOrganization extends React.Component {
             this.filter[item[0]] = item[1]
         })
         this.setState({ organizationData: [], organisationCount: 0 })
-        this.fetchOrganisationList({
-            offset: queryObj.offset ? parseInt(queryObj.offset) : 0,
-            limit: this.pagesLimit,
-            Filter: this.filter
-        }, this.setResponseData)
+
+        // this.filter = {
+        //     column,
+        //     operator,
+        //     value
+        // }
+       
+        if(queryObj.column && queryObj.column.length > 0) {
+            this.fetchOrganisationList({
+                offset: queryObj.offset ? parseInt(queryObj.offset) : 0,
+                limit: this.pagesLimit,
+                filter: this.filter
+            }, this.setResponseData)
+    
+        } else {
+            this.fetchOrganisationList({
+                offset: queryObj.offset ? parseInt(queryObj.offset) : 0,
+                limit: this.pagesLimit,
+                //filter: this.filter
+            }, this.setResponseData)
+    
+        }
     }
 
     fetchOrganisationList(payloadObj, successCallback) {
@@ -115,18 +132,18 @@ class ManageOrganization extends React.Component {
     }
 
     getFilteredOrganisationList() {
-        const { Column, Operator, Value, activePage, offset } = this.state
+        const { column, operator, value, activePage, offset } = this.state
 
         this.filter = {
-            Column,
-            Operator,
-            Value
+            column,
+            operator,
+            value
         }
        
         const queryObj = {
-            Column,
-            Operator,
-            Value,
+            column,
+            operator,
+            value,
             offset,
             activePage,
         }
@@ -135,16 +152,16 @@ class ManageOrganization extends React.Component {
             organisationCount: 0,  
             offset, 
             activePage,
-            Column,
-            Operator,
-            Value,
+            column,
+            operator,
+            value,
         })
         history.pushState(queryObj, "organisation listing", `/home/manage-organization?${getQueryUri(queryObj)}`)
      
         this.fetchOrganisationList({
             limit: this.pagesLimit,
             offset: 0,
-            Filter: this.filter
+            filter: this.filter
         }, this.setResponseData)
     }
 
@@ -165,16 +182,18 @@ class ManageOrganization extends React.Component {
         const queryUri = location.search.slice(1)
         const queryObj = getQueryObj(queryUri)
         let queryParamsObj = {}
+
+        console.log("query obj", queryObj)
     
         let pageNumber = pageObj.activePage
         let offset = pageObj.offset
         this.setState({ activePage: pageNumber, offset })
 
-        if(queryObj.Column && queryObj.Column.length > 0) {
+        if(queryObj && queryObj.column && queryObj.column.length > 0) {
             queryParamsObj = {
-                Column: queryObj.Column,
-                Operator: queryObj.Operator,
-                Value: queryObj.Value,
+                column: queryObj.column,
+                operator: queryObj.operator,
+                value: queryObj.value,
                 offset: pageObj.offset,
                 activePage: pageObj.activePage,
             }
@@ -185,20 +204,19 @@ class ManageOrganization extends React.Component {
             }
         }
     
-        if(location.search.length) {
+        if(location.search.length && queryObj.column && queryObj.column.length > 0) {
           let filterObj = {
-              Column: queryObj.Column,
-              Operator: queryObj.Operator,
-              Value: queryObj.Value
+              column: queryObj.column,
+              operator: queryObj.operator,
+              value: queryObj.value
           }
           this.fetchOrganisationList({
             offset: pageObj.offset,
             limit: this.pagesLimit,
-            Filter: filterObj
+            filter: filterObj
           }, this.setResponseData)
 
         } else{
-
             this.fetchOrganisationList({
                 offset: pageObj.offset,
                 limit: this.pagesLimit
@@ -206,22 +224,23 @@ class ManageOrganization extends React.Component {
         }
 
         history.pushState(queryParamsObj, "organisation listing", `/home/manage-organization?${getQueryUri(queryParamsObj)}`)
-      }
+    }
 
     handleChange(e) {
        
-        if(e.target.name === "Column" && e.target.value === "ID") {
+        if(e.target.name === "column" && e.target.value === "ID") {
             this.setState({
                 operators: [
                     {text: 'EQUAL', value: 'EQUAL'},
-                ]
+                ],
+                operator: 'EQUAL'
             })
-        } else if(e.target.name === "Column"){
+        } else if(e.target.name === "column"){
             this.setState({
                 operators: [
                     {text: 'EQUAL', value: 'EQUAL'},
                     {text: 'LIKE', value: 'LIKE'},
-                    {text: 'IGNORE CASE', value: 'IGNORE CASE'},
+                    {text: 'IGNORE CASE', value: 'CASEIGNORE'},
                 ]
             })
         }
@@ -236,9 +255,9 @@ class ManageOrganization extends React.Component {
 
     resetFilter() {
         this.setState({
-            Column: '',
-            Operator: 'EQUAL',
-            Value: ''
+            column: '',
+            operator: 'EQUAL',
+            value: ''
         })
     }
 
@@ -266,13 +285,13 @@ class ManageOrganization extends React.Component {
                         <p style={{ margin: '10px 0' }}>Organization Field</p>
                         <Select
                             placeholder="Select an field..."
-                            value={this.state.Column}
-                            name="Column"
+                            value={this.state.column}
+                            name="column"
                             options={[
                                 // { text: 'All', value: 'all' },
                                 { text: 'ID', value: 'ID' },
-                                { text: 'ORGANISATION NAME', value: 'Organisation name' },
-                                { text: 'STATE', value: 'State'}
+                                { text: 'ORGANISATION NAME', value: 'OrganisationName' },
+                                { text: 'STATE', value: 'StateID'}
                             ]}
                             onChange={(e) => this.handleChange(e)}
                         />
@@ -288,8 +307,8 @@ class ManageOrganization extends React.Component {
                         <p style={{ margin: '10px 0' }}>Operator</p>
                         <Select
                             placeholder="Select an operator..."
-                            value={this.state.Operator}
-                            name="Operator"
+                            value={this.state.operator}
+                            name="operator"
                             options={this.state.operators}
                             onChange={(e) => this.handleChange(e)}
                         />
@@ -307,8 +326,8 @@ class ManageOrganization extends React.Component {
                             placeholder="Contains"
                             type="text"
                             size="default"
-                            name="Value"
-                            value={this.state.Value}
+                            name="value"
+                            value={this.state.value}
                             onChange={(e) => this.handleChange(e)}
                         />
                     </div>
@@ -343,16 +362,17 @@ class ManageOrganization extends React.Component {
                         </Table.Column>
                         <Table.Column field="id" title="ID" width="7%" />
                         <Table.Column field="organisation_name" title="Organization Name" width="15%"/>
-                        <Table.Column field="type_of_organisation" title="Organization Type" width="15%"/>
+                        <Table.Column field="type_of_organisation" title="Organization Type" width="10%"/>
                         <Table.Column field="no_of_outlets" title="Outlets Count" width="13%"/>
                         <Table.Column field="kyc_status" title="KYC Status" width="10%"/>
-                        <Table.Column field="status" title="Organization Status" width="15%"/>
+                        <Table.Column field="status" title="Organization Status" width="13%"/>
+                        <Table.Column field="state_name" title="State Name" width="7%"/>
                         <Table.Column field="pan_number" title="PAN Number" width="10%"/>
                         <Table.Column field="cin_no" title="CIN Number" width="10%"/>
                     </Table>
                 </div>
                 {
-                    this.state.organizationData.length > 0 &&
+                    this.state.organizationData && this.state.organizationData.length > 0 &&
                     <Pagination 
                         activePage={parseInt(this.state.activePage)}
                         itemsCountPerPage={this.pagesLimit}

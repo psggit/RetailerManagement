@@ -33,6 +33,8 @@ class RetailerOnboardingForm extends React.Component {
         //     searchOperator: 'EQUAL',
         //     searchText: props.match.params.orgId
         // }
+        this.setRetailerData = this.setRetailerData.bind(this)
+        this.setOrganizationData = this.setOrganizationData.bind(this)
     }
 
     componentDidMount() {
