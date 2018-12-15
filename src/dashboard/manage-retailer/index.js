@@ -304,10 +304,10 @@ class ManageRetailer extends React.Component {
     onToggleChange(value, item) {
         //e.stopPropagation()
         console.log("On toggle change", value, item)
-        // Api.deactivateRetailer({
-        //     id: item.id,
-        //     branch_status: item.branch_status
-        // }, this.callback)
+        Api.deactivateRetailer({
+            id: item.id,
+            branch_status: item.branch_status === "true" ? "false" : "true"
+        }, this.callback)
     }
 
     callback() {
@@ -319,7 +319,11 @@ class ManageRetailer extends React.Component {
 
     handleRowClick(e,item) {
         console.log("row item", item)
-        //this.props.history.push(`/home/manage-retailer/retailer-details/${item.id}`, item)
+        console.log("event", e,e.target.nodeName)
+        if(e.target.nodeName === "SPAN") {
+            return 
+        }
+        this.props.history.push(`/home/manage-retailer/retailer-details/${item.id}`, item)
     }
 
     render() {

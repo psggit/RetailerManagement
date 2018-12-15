@@ -290,7 +290,7 @@ class OrganizationForm extends React.Component {
                         type="date"
                         name="incorporationDate"
                         //defaultValue={this.state.incorporationDate}
-                        value={this.state.incorporationDate}
+                        value={new Date(this.state.incorporationDate)}
                         error={incorporationDateErr.status ? incorporationDateErr.value : ''}
                         onChange={(e) => this.handleTextChange(e)}
                     />
@@ -345,6 +345,7 @@ class OrganizationForm extends React.Component {
                         label="No of Outlets*"
                         type="number"
                         name="outletsCount"
+                        min="0"
                         value={this.state.outletsCount}
                         onChange={(e) => this.handleChange(e)}
                     />
@@ -429,6 +430,7 @@ class OrganizationForm extends React.Component {
                         label="Mobile No*"
                         type="text"
                         name="mobileNo"
+                        autoComplete="fefef"
                         error={mobileNoErr.status ? mobileNoErr.value : ''}
                         defaultValue={this.props.data ? this.props.data.mobile_number : ''}
                         onKeyDown={(e) => {this.handleNumberChange(e)}}
@@ -438,6 +440,7 @@ class OrganizationForm extends React.Component {
                         label="Email*"
                         type="text"
                         name="email"
+                        autoComplete="fefef"
                         error={emailIdErr.status ? emailIdErr.value : ''}
                         value={this.state.email}
                         onChange={(e) => this.handleEmailChange(e)}
