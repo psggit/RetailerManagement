@@ -51,6 +51,7 @@ class ManageRetailer extends React.Component {
         this.onToggleChange = this.onToggleChange.bind(this)
         this.handleRowClick = this.handleRowClick.bind(this)
         this.callback = this.callback.bind(this)
+        this.failureCallback = this.failureCallback.bind(this)
     }
 
     fetchDefaultData() {
@@ -59,7 +60,7 @@ class ManageRetailer extends React.Component {
         this.fetchRetailerList({
             offset: 0,
             limit: this.pagesLimit,
-        }, this.setResponseData)
+        }, this.setResponseData, this.failureCallback)
     }
 
     componentDidMount() {
@@ -85,18 +86,18 @@ class ManageRetailer extends React.Component {
                 offset: queryObj.offset ? parseInt(queryObj.offset) : 0,
                 limit: this.pagesLimit,
                 filter: this.filter
-            }, this.setResponseData)
+            }, this.setResponseData, this.failureCallback)
         } else {
             this.fetchRetailerList({
                 offset: queryObj.offset ? parseInt(queryObj.offset) : 0,
                 limit: this.pagesLimit,
-            }, this.setResponseData)
+            }, this.setResponseData, this.failureCallback)
         }
        
     }
 
-    fetchRetailerList(payloadObj, successCallback) {
-        Api.fetchRetailerList(payloadObj, successCallback)
+    fetchRetailerList(payloadObj, successCallback, failureCallback) {
+        Api.fetchRetailerList(payloadObj, successCallback, failureCallback)
     }
 
     getFilteredRetailersList() {
@@ -133,7 +134,7 @@ class ManageRetailer extends React.Component {
             limit: this.pagesLimit,
             offset: 0,
             filter: this.filter
-        }, this.setResponseData)
+        }, this.setResponseData, this.failureCallback)
     }
 
     setResponseData(response) {
@@ -142,6 +143,10 @@ class ManageRetailer extends React.Component {
         } else {
             this.setState({retailerData: [], retailerListCount: 0, loading: false})
         } 
+    }
+
+    failureCallback() {
+        this.setState({retailerData: [], retailerListCount: 0, loading: false})
     }
 
     handlePageChange(pageObj) {
@@ -178,14 +183,14 @@ class ManageRetailer extends React.Component {
             offset: pageObj.offset,
             limit: this.pagesLimit,
             filter: filterObj
-          }, this.setResponseData)
+          }, this.setResponseData, this.failureCallback)
 
         } else{
 
             this.fetchRetailerList({
                 offset: pageObj.offset,
                 limit: this.pagesLimit
-            }, this.setResponseData)      
+            }, this.setResponseData, this.failureCallback)      
         }
 
         history.pushState(queryParamsObj, "retailer listing", `/home/manage-retailer?${getQueryUri(queryParamsObj)}`)
@@ -207,8 +212,11 @@ class ManageRetailer extends React.Component {
                     {text: 'IGNORE CASE', value: 'CASEIGNORE'},
                 ]
             })
+        } else if(e.target.name === "value") {
+            this.setState({ offset: 0, activePage: 1})
         }
-        this.setState({[e.target.name]: (e.target.value).toString()})  
+        this.setState({[e.target.name]: (e.target.value).toString()}) 
+        //this.setState({[e.target.name]: (e.target.value).toString()})
     }
 
     editOutletDetail(e, item, action) {

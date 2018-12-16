@@ -48,6 +48,7 @@ class ManageOrganization extends React.Component {
         this.setResponseData = this.setResponseData.bind(this)
         this.handleEditOrg = this.handleEditOrg.bind(this)
         this.handleRowClick = this.handleRowClick.bind(this)
+        this.failureCallback = this.failureCallback.bind(this)
     }
 
     fetchDefaultData() {
@@ -55,7 +56,7 @@ class ManageOrganization extends React.Component {
         this.fetchOrganisationList({
             offset: 0,
             limit: this.pagesLimit
-        }, this.setResponseData)
+        }, this.setResponseData, this.failureCallback)
     }
 
     componentDidMount() {
@@ -81,19 +82,19 @@ class ManageOrganization extends React.Component {
                 offset: queryObj.offset ? parseInt(queryObj.offset) : 0,
                 limit: this.pagesLimit,
                 filter: this.filter
-            }, this.setResponseData)
+            }, this.setResponseData, this.failureCallback)
     
         } else {
             this.fetchOrganisationList({
                 offset: queryObj.offset ? parseInt(queryObj.offset) : 0,
                 limit: this.pagesLimit
-            }, this.setResponseData)
+            }, this.setResponseData, this.failureCallback)
     
         }
     }
 
-    fetchOrganisationList(payloadObj, successCallback) {
-        Api.fetchOrganizationList(payloadObj, successCallback)
+    fetchOrganisationList(payloadObj, successCallback, failureCallback) {
+        Api.fetchOrganizationList(payloadObj, successCallback, failureCallback)
     }
 
     getFilteredOrganisationList() {
@@ -128,7 +129,7 @@ class ManageOrganization extends React.Component {
             limit: this.pagesLimit,
             offset: 0,
             filter: this.filter
-        }, this.setResponseData)
+        }, this.setResponseData, this.failureCallback)
     }
 
     setResponseData(response) {
@@ -144,6 +145,10 @@ class ManageOrganization extends React.Component {
         } else {
             this.setState({organizationData: [], organizationCount: 0, loading: false})
         }
+    }
+
+    failureCallback() {
+        this.setState({organizationData: [], organizationCount: 0, loading: false})
     }
 
     handlePageChange(pageObj) {
@@ -180,13 +185,13 @@ class ManageOrganization extends React.Component {
             offset: pageObj.offset,
             limit: this.pagesLimit,
             filter: filterObj
-          }, this.setResponseData)
+          }, this.setResponseData, this.failureCallback)
 
         } else{
             this.fetchOrganisationList({
                 offset: pageObj.offset,
                 limit: this.pagesLimit
-            }, this.setResponseData)      
+            }, this.setResponseData, this.failureCallback)      
         }
 
         history.pushState(queryParamsObj, "organisation listing", `/home/manage-organization?${getQueryUri(queryParamsObj)}`)
@@ -209,9 +214,12 @@ class ManageOrganization extends React.Component {
                     {text: 'IGNORE CASE', value: 'CASEIGNORE'},
                 ]
             })
+        } else if(e.target.name === "value") {
+            this.setState({ offset: 0, activePage: 1})
         }
 
-        this.setState({[e.target.name]: e.target.value})  
+        this.setState({[e.target.name]: e.target.value}) 
+        //this.setState({[e.target.name]: e.target.value}) 
     }
 
     handleEditOrg(e,item, action) {

@@ -1,7 +1,7 @@
 import { POST } from 'Utils/fetch'
 import Notify from 'Components/notify'
 
-export function fetchOrganizationList (payloadObj, successCallback) {
+export function fetchOrganizationList (payloadObj, successCallback, failureCallback) {
         return POST({
             api: '/Api/listOrganisations',
             apiBase: 'retailerMgmt',
@@ -19,6 +19,7 @@ export function fetchOrganizationList (payloadObj, successCallback) {
         })
         .catch(err => {
             err.response.json().then(json => { Notify("danger", json.error) })
+            failureCallback()
         })
      
 }
@@ -114,7 +115,7 @@ export function fetchOrganizationAndStateList (payloadObj, successCallback) {
  
 }
 
-export function fetchRetailerList (payloadObj, successCallback) {
+export function fetchRetailerList (payloadObj, successCallback, failureCallback) {
     return POST({
         api: '/Api/listRetailers',
         apiBase: 'retailerMgmt',
@@ -133,6 +134,7 @@ export function fetchRetailerList (payloadObj, successCallback) {
     .catch(err => {
         console.log("err", err)
         err.response.json().then(json => { Notify("danger", json.message) })
+        failureCallback()
     })
 
     // if (response.status !== 200) {
