@@ -15,6 +15,7 @@ class EditOrganization extends React.Component {
             isFormValid: true,
             stateList: [],
             cityList: [],
+            stateMap: {}
         }
         this.handleSave = this.handleSave.bind(this)
         this.updateOrganization = this.updateOrganization.bind(this)
@@ -35,8 +36,8 @@ class EditOrganization extends React.Component {
     }
 
     formatResponse(data) {
-        const {stateList, cityList} = formatStateAndCityList(data.states)
-        this.setState({stateList, cityList}) 
+        const {stateList, cityList, stateMap} = formatStateAndCityList(data.states)
+        this.setState({stateList, cityList, stateMap}) 
     }
 
     formIsValid() {
@@ -137,7 +138,7 @@ class EditOrganization extends React.Component {
 
     successCallback() {
         this.updateState()
-        location.href = '/home/manage-organization'
+        //location.href = '/home/manage-organization'
     }
 
     failureCallback() {
@@ -161,7 +162,8 @@ class EditOrganization extends React.Component {
                         ref={(node) => { this.organizationDetailsForm = node }}
                         data={this.props.history.location.state}
                         stateList = {stateList}
-                        cityList = {cityList} 
+                        cityList = {cityList}
+                        stateMap= {this.state.stateMap} 
                     />
                     <ButtonGroup align="right">
                         <Button 
