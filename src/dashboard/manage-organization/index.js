@@ -74,7 +74,7 @@ class ManageOrganization extends React.Component {
             this.setState({ [item[0]]: item[1] })
             this.filter[item[0]] = item[1]
         })
-        this.setState({ organizationData: [], organisationCount: 0 })
+        this.setState({ organizationData: [], organisationCount: 0, loading: true })
        
         if(queryObj.column && queryObj.column.length > 0) {
             this.fetchOrganisationList({
@@ -115,6 +115,7 @@ class ManageOrganization extends React.Component {
         this.setState({ 
             organizationData: [], 
             organisationCount: 0,  
+            loading: true,
             offset, 
             activePage,
             column,
@@ -152,7 +153,7 @@ class ManageOrganization extends React.Component {
     
         let pageNumber = pageObj.activePage
         let offset = pageObj.offset
-        this.setState({ activePage: pageNumber, offset })
+        this.setState({ activePage: pageNumber, offset, loading: true })
 
         if(queryObj && queryObj.column && queryObj.column.length > 0) {
             queryParamsObj = {

@@ -78,7 +78,7 @@ class ManageRetailer extends React.Component {
             this.setState({ [item[0]]: item[1] })
             this.filter[item[0]] = item[1]
         })
-        this.setState({retailerData: [], retailerListCount: 0})
+        this.setState({retailerData: [], retailerListCount: 0, loading: true})
 
         if(queryObj.column && queryObj.column.length > 0) {
             this.fetchRetailerList({
@@ -118,7 +118,8 @@ class ManageRetailer extends React.Component {
 
         this.setState({ 
             retailerData: [], 
-            retailerListCount: 0,  
+            retailerListCount: 0,
+            loading: true,  
             offset, 
             activePage,
             column,
@@ -150,7 +151,7 @@ class ManageRetailer extends React.Component {
     
         let pageNumber = pageObj.activePage
         let offset = pageObj.offset
-        this.setState({ activePage: pageNumber, offset })
+        this.setState({ activePage: pageNumber, offset, loading: true })
 
         if(queryObj && queryObj.column && queryObj.column.length > 0) {
             queryParamsObj = {

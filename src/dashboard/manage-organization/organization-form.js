@@ -28,7 +28,7 @@ class OrganizationForm extends React.Component {
 
         this.state = {
             organizationName: props.data ? props.data.organisation_name : '',
-            organizationType: props.data ? props.data.type_of_organisation : 'proprietorship',
+            organizationType: props.data ? (props.data.type_of_organisation === "partnership" || props.data.type_of_organisation === "proprietorship" || props.data.type_of_organisation === "pvtltd" ) ? props.data.type_of_organisation : 'others' : 'partnership',
             incorporationDate: props.data ? props.data.date_of_incorporation : '12/05/1995',
             cinNumber: props.data ? props.data.cin_no : '',
             panNumber: props.data ? props.data.pan_number : '',
