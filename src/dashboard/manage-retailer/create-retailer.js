@@ -129,14 +129,14 @@ class CreateRetailer extends React.Component {
                 store_address: retailerDataForm.outletAddress,
                 landline_number: retailerDataForm.landlineNo,
                 mobile_number: retailerDataForm.mobileNo,
-                email: retailerDataForm.emailId,
+                email: retailerDataForm.email,
                 gps_cordinates: retailerDataForm.gpsCoordinates,
                 bank_name: retailerDataForm.bankName,
                 acc_holder_name: retailerDataForm.accountHolderName,
                 account_number: retailerDataForm.accountNumber,
                 bank_branch: retailerDataForm.branch,
                 acc_type: retailerDataForm.accountType,
-                IFSC: retailerDataForm.IFSC,
+                ifsc_code: retailerDataForm.IFSC,
                 is_cancelled_cheque: retailerDataForm.cancelledCheck,
                 is_excise_license: retailerDataForm.exciseLicense,
                 is_photo_of_outlet: retailerDataForm.outletPhoto
@@ -149,7 +149,7 @@ class CreateRetailer extends React.Component {
 
     successCallback() {
         this.updateState()
-        location.href = '/home/manage-retailer'
+        //location.href = '/home/manage-retailer'
     }
 
     failureCallback() {

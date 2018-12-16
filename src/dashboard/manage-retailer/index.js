@@ -274,7 +274,7 @@ class ManageRetailer extends React.Component {
                             options={[
                                 { text: 'ID', value: 'ID' },
                                 { text: 'RETAILER NAME', value: 'RetailerName' },
-                                { text: 'CITY', value: 'CITYID'},
+                                { text: 'CITY NAME', value: 'CityName'},
                                 { text: 'ORGANIZATION ID', value: 'OrganisationID' }
                             ]}
                             onChange={(e) => this.handleChange(e)}

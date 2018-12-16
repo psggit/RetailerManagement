@@ -257,7 +257,7 @@ class ManageOrganization extends React.Component {
                             options={[
                                 { text: 'ID', value: 'ID' },
                                 { text: 'ORGANISATION NAME', value: 'OrganisationName' },
-                                { text: 'STATE', value: 'StateID'}
+                                { text: 'STATE NAME', value: 'StateName'}
                             ]}
                             onChange={(e) => this.handleChange(e)}
                         />
