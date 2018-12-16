@@ -57,7 +57,7 @@ class OrganizationForm extends React.Component {
             pvtCOI: props.data ? props.data.coi : false,
             pvtLOA: props.data ? props.data.loa : false,
             otherOrgType: props.data ? props.data.others : '',
-            otherProof: props.data ? props.data.otherProof : '',
+            otherProof: props.data ? props.data.other_documents : '',
             isOtherProof: props.data ? props.data.isOtherProof : false,
 
             // otherParnershipProof: false,
@@ -141,11 +141,13 @@ class OrganizationForm extends React.Component {
 
     componentWillReceiveProps(newProps) {
         if(this.props.stateList !== newProps.stateList) {
-            this.setState({stateList: newProps.stateList})
+            console.log("state id", newProps.stateList)
+            this.setState({stateList: newProps.stateList, selectedStateIdx: newProps.stateList[0].value})
         }
 
         if(this.props.cityList !== newProps.cityList) {
-            this.setState({cityList: newProps.cityList})
+            console.log("city id", newProps.cityList)
+            this.setState({cityList: newProps.cityList, selectedCityIdx: newProps.cityList[0].value})
         }
 
         if(this.props.stateMap !== newProps.stateMap) {
@@ -468,7 +470,7 @@ class OrganizationForm extends React.Component {
                         <div>
                             <Form.TextInput
                             label=""
-                            placeholder="Documents as Proof"
+                            placeholder="Aadhar copy, Licence copy"
                             type="text"
                             name="otherProof"
                             error={((isOtherProof && otherProof && otherProof.length === 0)|| otherProofErr.status) ? "Documents attached is required" : ''}

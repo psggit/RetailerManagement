@@ -69,7 +69,7 @@ class RetailerOnboardingForm extends React.Component {
                                         Application Number:
                                     </mark>
                                 </span>
-                                <span style={{fontWeight: '600'}}><mark>TN1234</mark></span>
+                                <span style={{fontWeight: '600'}}><mark>{organizationData.application_number}</mark></span>
                             </div>
                             <div className="content" style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                                 <div style={{display: 'flex', flexDirection: 'column', alignContent: 'flex-start'}}>

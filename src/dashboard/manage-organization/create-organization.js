@@ -127,7 +127,7 @@ class CreateOrganization extends React.Component {
                 landline_number: data.landlineNo,
                 mobile_number: data.mobileNo,
                 email: data.email,
-                otherProof: data.otherProof
+                other_documents: data.otherProof
             }
             this.setState({creatingOrg: true})
             this.createOrganization(payload, this.successCallback, this.failureCallback)

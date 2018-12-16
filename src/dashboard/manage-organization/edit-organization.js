@@ -127,7 +127,8 @@ class EditOrganization extends React.Component {
                 state_id: (data.selectedStateIdx).toString(),
                 landline_number: data.landlineNo,
                 mobile_number: data.mobileNo,
-                email: data.email
+                email: data.email,
+                other_documents: data.otherProof
             }
             this.setState({updatingOrg: true})
             this.updateOrganization(payload, this.successCallback, this.failureCallback)
