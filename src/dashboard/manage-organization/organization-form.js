@@ -28,7 +28,7 @@ class OrganizationForm extends React.Component {
 
         this.state = {
             organizationName: props.data ? props.data.organisation_name : '',
-            organizationType: props.data ? (props.data.type_of_organisation === "partnership" || props.data.type_of_organisation === "proprietorship" || props.data.type_of_organisation === "pvtltd" ) ? props.data.type_of_organisation : 'others' : 'partnership',
+            organizationType: props.data ? (props.data.type_of_organisation === "partnership" || props.data.type_of_organisation === "proprietorship" || props.data.type_of_organisation === "pvtltd" ) ? props.data.type_of_organisation : 'others' : 'proprietorship',
             incorporationDate: props.data ? props.data.date_of_incorporation : '12/05/1995',
             cinNumber: props.data ? props.data.cin_no : '',
             panNumber: props.data ? props.data.pan_number : '',
@@ -56,9 +56,9 @@ class OrganizationForm extends React.Component {
             pvtPancard: props.data ? props.data.is_pan : false,
             pvtCOI: props.data ? props.data.coi : false,
             pvtLOA: props.data ? props.data.loa : false,
-            otherOrgType: props.data ? props.data.others : '',
+            otherOrgType: props.data ? props.data.type_of_organisation : '',
             otherProof: props.data ? props.data.other_documents : '',
-            isOtherProof: props.data ? props.data.isOtherProof : false,
+            isOtherProof: props.data && props.data.other_documents && props.data.other_documents.length > 0 ? true : false,
 
             // otherParnershipProof: false,
             // otherPvtLtdProof: false,
@@ -176,7 +176,11 @@ class OrganizationForm extends React.Component {
     }
 
     handleSelectChange(e) {
-        this.setState({[e.target.name]: e.target.checked})
+        if(!e.target.checked) {
+            this.setState({[e.target.name]: e.target.checked, otherProof: ''})
+        } else {
+            this.setState({[e.target.name]: e.target.checked})
+        }
     }
  
     handleTextChange(e) {
@@ -297,7 +301,7 @@ class OrganizationForm extends React.Component {
                             placeholder="Organization Type"
                             type="text"
                             name="otherOrgType"
-                            error={((organizationType === "others" && otherOrgType.length === 0) || otherOrgTypeErr.status) ? "Organization type is required" : ''}
+                            error={((organizationType === "others" && otherOrgType && otherOrgType.length === 0) || otherOrgTypeErr.status) ? "Organization type is required" : ''}
                             value={this.state.otherOrgType}
                             onChange={(e) => this.handleTextChange(e)}
                             />

@@ -442,7 +442,7 @@ class RetailerOnboardingForm extends React.Component {
                                                     <div><p>IFSC Code</p></div> 
                                                     <div>
                                                         <span>
-                                                            {item.IFSC}
+                                                            {item.ifsc_code}
                                                         </span>
                                                     </div>
                                             </div>

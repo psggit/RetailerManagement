@@ -23,8 +23,8 @@ class RetailerDetails extends React.Component {
                         <p><b>Discount Percent</b>: { data.discount_percent } </p>
                         <p><b>Service Charge Percent</b>: { data.service_charge_percent } </p>
                         <p><b>Delivery Discount Percent</b>: { data.delivery_discount_percent } </p>
-                        <p><b>KYC Status</b>: { data.branch_status === "true" ? 'Verified' : 'Not verified' } </p>
-                        <p><b>Retailer Status</b>: { data.kyc_status === "true"? 'Active' : 'Not Active' } </p>
+                        <p><b>KYC Status</b>: { data.kyc_status === "true" ? 'Verified' : 'Not verified' } </p>
+                        <p><b>Retailer Status</b>: { data.branch_status === "true"? 'Active' : 'Not Active' } </p>
                         
                         <h3>Outlet Contact Details</h3>
                         <p><b>Outlet Address</b>: { data.store_address } </p>
@@ -48,7 +48,7 @@ class RetailerDetails extends React.Component {
                         <p><b>Account Number</b>: { data.account_number } </p>
                         <p><b>Branch</b>: { data.bank_branch } </p>
                         <p><b>Account Type</b>: { data.acc_type } </p>
-                        <p><b>IFSC Code</b>: { data.IFSC } </p>
+                        <p><b>IFSC Code</b>: { data.ifsc_code} </p>
                        
                     </div>
                 </Card>

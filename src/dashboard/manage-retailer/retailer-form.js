@@ -26,6 +26,7 @@ class RetailerForm extends React.Component {
             pincode: 'Pincode',
             email: 'Email'
         }
+        
         this.state = {
             organizationList: this.props.organizationList,
             organizationMap: this.props.organizationMap,
@@ -57,7 +58,7 @@ class RetailerForm extends React.Component {
             accountNumber: props.data ? props.data.account_number : '',
             branch: props.data ? props.data.bank_branch : '',
             accountType: props.data ? props.data.acc_type : 'savings',
-            IFSC: props.data ? props.data.IFSC : '',
+            IFSC: props.data ? props.data.ifsc_code : '',
             cancelledCheck: props.data ? props.data.is_cancelled_cheque : false,
             exciseLicense: props.data ? props.data.is_excise_license : false,
             outletPhoto: props.data ? props.data.is_photo_of_outlet : false,
@@ -312,7 +313,7 @@ class RetailerForm extends React.Component {
                         type="text"
                         name="discountPercent"
                         //value={this.state.discountPercent}
-                        defaultValue={this.props.data ? this.props.data.discountPercent : ''}
+                        defaultValue={this.state.discountPercent}
                         error={discountPercentErr.status ? discountPercentErr.value : ''}
                         onKeyDown={(e) => {this.handleNumberChange(e)}}
                         onKeyUp={(e) => {this.handleNumberChange(e)}}
@@ -321,7 +322,7 @@ class RetailerForm extends React.Component {
                         label="Service Charge Percent*"
                         type="text"
                         name="serviceChargePercent"
-                        defaultValue={this.props.data ? this.props.data.serviceChargePercent : ''}
+                        defaultValue={this.state.serviceChargePercent}
                         error={serviceChargePercentErr.status ? serviceChargePercentErr.value : ''}
                         onKeyDown={(e) => {this.handleNumberChange(e)}}
                         onKeyUp={(e) => {this.handleNumberChange(e)}}
@@ -330,7 +331,7 @@ class RetailerForm extends React.Component {
                         label="Delivery Discount Percent*"
                         type="text"
                         name="deliveryDiscountPercent"
-                        defaultValue={this.props.data ? this.props.data.deliveryDiscountPercent : ''}
+                        defaultValue={this.state.deliveryDiscountPercent}
                         //value={this.state.deliveryDiscountPercent}
                         error={deliveryDiscountPercentErr.status ? deliveryDiscountPercentErr.value : ''}
                         //error={activeFieldName === "deliveryDiscountPercent" && activeField.errStatus ? activeField.errValue : ''}
@@ -490,7 +491,7 @@ class RetailerForm extends React.Component {
                     />
                     <Form.TextInput
                         label="Mobile No*"
-                        defaultValue={this.props.data ? this.props.data.mobileNo : ''}
+                        defaultValue={this.state.mobileNo}
                         name="mobileNo"
                         autoComplete="fefef"
                         error={mobileNoErr.status ? mobileNoErr.value : ''}

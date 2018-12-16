@@ -42,7 +42,8 @@ class OrganizationDetails extends React.Component {
                         <p><b>Photo of Authorized Signatory</b>: { data.photo_of_auth_signatory ? 'Attached' : 'Not Attached' } </p>
                         <p><b>PAN of Authorized Signatory</b>: { data.pan_of_auth_signatory ? 'Attached' : 'Not Attached' } </p>
                         <p><b>Address Proof of Authorized Signatory</b>: { data.address_proof_auth_signatory ? 'Attached' : 'Not Attached' } </p>
-                        
+                        <p><b>Other Documents</b>: { data.other_documents && data.other_documents.length > 0 ? data.other_documents : '-' } </p>
+
                         {   
                             data.type_of_organisation === "partnership" && 
                             <React.Fragment>

@@ -221,6 +221,7 @@ class ManageRetailer extends React.Component {
 
     editOutletDetail(e, item, action) {
         e.stopPropagation()
+        console.log("item", item)
         this.props.history.push(`/home/manage-retailer/edit-retailer/${item.id}`, item)
     }
 
@@ -234,12 +235,12 @@ class ManageRetailer extends React.Component {
         this.props.history.push(`/home/manage-retailer`)
     }
 
-    onToggleChange(value, item) {
+    onToggleChange(item, value) {
         //e.stopPropagation()
-        //console.log("On toggle change", value, item)
+        //console.log("On toggle change", value, item, value.id, value.branch_status)
         Api.deactivateRetailer({
-            id: item.id,
-            branch_status: item.branch_status === "true" ? "false" : "true"
+            Id: item.id,
+            BranchStatus: item.branch_status === "true" ? "false" : "true"
         }, this.callback)
     }
 
@@ -364,7 +365,7 @@ class ManageRetailer extends React.Component {
                             <Table.Column field="organisation_name" title="Organization Name"/>
                             <Table.Column field="actions" title="Outlet Status">
                                 {item => (
-                                    <Switch2 on={item.branch_status === 'true' ? 'Active' : 'Inactive'} accessibleLabels={[]} onToggle={this.onToggleChange} value={item} />
+                                    <Switch2 on={item.branch_status === 'true' ? true : false} accessibleLabels={[]} onToggle={this.onToggleChange} value={item} />
                                 )}
                             </Table.Column>
                         </Table>

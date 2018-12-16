@@ -188,6 +188,7 @@ export function updateRetailer(payloadObj, successCallback, failureCallback) {
 }
 
 export function deactivateRetailer(payloadObj, callback) {
+    console.log("payload", payloadObj)
     return POST({
         api: '/Api/changeRetailerStatus',
         apiBase: 'retailerMgmt',
