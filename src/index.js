@@ -52,7 +52,15 @@ class App extends React.Component {
                   
                     <Route path='/home' component={Dashboard} />
 
-                    <Route path='/retailer-onboarding-form/:orgId' component={RetailerForm} />
+                    <Route 
+                        path='/retailer-onboarding-form/:orgId' 
+                        //component={RetailerForm}
+                          render={
+                            props => (
+                                <RetailerForm {...props} />
+                            )
+                        } 
+                    />
                 </div>
             </Router>
         )

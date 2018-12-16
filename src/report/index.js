@@ -19,14 +19,25 @@ class RetailerOnboardingForm extends React.Component {
     }
 
     componentDidMount() {
+        //console.log("props", this.props, this.props.match.params.orgId)
         this.fetchOrganisationList({
             offset: 0,
             limit: this.pagesLimit,
+            filter: {
+                column: 'ID',
+                operator: 'EQUAL',
+                value: this.props.match.params.orgId
+            }
         }, this.setOrganizationData)
 
         this.fetchRetailerList({
             limit: this.pagesLimit,
             offset: 0,
+            filter: {
+                column: 'OrganisationID',
+                operator: 'EQUAL',
+                value: this.props.match.params.orgId
+            }
         }, this.setRetailerData)
     }
 
@@ -39,7 +50,8 @@ class RetailerOnboardingForm extends React.Component {
     }
 
     setOrganizationData(data) {
-        this.setState({organizationData: data.org_response})
+        console.log("data", data)
+        this.setState({organizationData: data.org_response[0]})
     }
 
     setRetailerData(data) {
