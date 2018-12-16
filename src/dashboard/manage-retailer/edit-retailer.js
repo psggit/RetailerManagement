@@ -108,7 +108,6 @@ class EditRetailer extends React.Component {
 
     handleSave() {
         const retailerDataForm = this.retailerDetailsForm.getData()
-        console.log("data", retailerDataForm)
         this.setState({isFormValid: this.formIsValid()})
         if(this.formIsValid()) {
             const payload = {
@@ -153,7 +152,7 @@ class EditRetailer extends React.Component {
 
     successCallback() {
         this.updateState()
-        //location.href = '/home/manage-retailer'
+        location.href = '/home/manage-retailer'
     }
 
     failureCallback() {

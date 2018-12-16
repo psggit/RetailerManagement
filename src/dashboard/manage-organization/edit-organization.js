@@ -138,7 +138,7 @@ class EditOrganization extends React.Component {
 
     successCallback() {
         this.updateState()
-        //location.href = '/home/manage-organization'
+        location.href = '/home/manage-organization'
     }
 
     failureCallback() {

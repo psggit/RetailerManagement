@@ -26,7 +26,7 @@ class RetailerForm extends React.Component {
             pincode: 'Pincode',
             email: 'Email'
         }
-        
+
         this.state = {
             organizationList: this.props.organizationList,
             organizationMap: this.props.organizationMap,
@@ -181,7 +181,7 @@ class RetailerForm extends React.Component {
                 [e.target.name]: e.target.value
             })
         } else {
-            console.log("name", e.target.name, "val", e.target.value)
+            //console.log("name", e.target.name, "val", e.target.value)
             this.setState({
                 [e.target.name]: e.target.value
             })

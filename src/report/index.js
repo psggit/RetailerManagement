@@ -50,7 +50,7 @@ class RetailerOnboardingForm extends React.Component {
     }
 
     setOrganizationData(data) {
-        console.log("data", data)
+        //console.log("data", data)
         this.setState({organizationData: data.org_response[0]})
     }
 
