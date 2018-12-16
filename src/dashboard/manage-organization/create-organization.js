@@ -52,7 +52,7 @@ class CreateOrganization extends React.Component {
                 landlineNoErr,
                 authorizedPersonErr,
                 mobileNoErr,
-                emailIdErr,
+                emailErr,
                 otherOrgTypeErr,
                 otherOrgType,
                 otherProofErr,
@@ -76,7 +76,7 @@ class CreateOrganization extends React.Component {
             landlineNoErr,
             authorizedPersonErr,
             mobileNoErr,
-            emailIdErr,
+            emailErr,
             otherOrgTypeErr,
             otherProofErr
         }

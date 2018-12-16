@@ -72,7 +72,7 @@ class EditRetailer extends React.Component {
                 pincodeErr,
                 landlineNoErr,
                 mobileNoErr,
-                emailIdErr,
+                emailErr,
                 gpsCoordinatesErr
             } = retailerDataForm 
         
@@ -93,7 +93,7 @@ class EditRetailer extends React.Component {
             pincodeErr,
             landlineNoErr,
             mobileNoErr,
-            emailIdErr,
+            emailErr,
             gpsCoordinatesErr
         }
         

@@ -64,7 +64,7 @@ class RetailerOnboardingForm extends React.Component {
 
     render() {
         const {organizationData, retailerData} = this.state
-        //console.log("organization details", organizationData, "retailer", retailerData)
+        console.log("organization details", organizationData, "retailer", retailerData)
         return(
             <React.Fragment>
                 <div className="container">
@@ -207,6 +207,23 @@ class RetailerOnboardingForm extends React.Component {
                                         </span>
                                     </div>
                             </div>
+                            {/* {
+                                (organizationData.other_documents && organizationData.other_documents.length > 0 || organizationData.photo_of_auth_signatory || organizationData.pan_of_auth_signatory || organizationData.address_proof_auth_signatory) && */}
+                                <div className="sub-title">
+                                    <h3>DOCUMENTS ATTACHED</h3>
+                                </div>
+{/* -                           } */}
+                            {      
+                                organizationData.other_documents &&  organizationData.other_documents.length > 0 &&
+                                <div className="content">
+                                    <div>
+                                        <span className="icon">{getIcon('tick')}</span>
+                                        <span className="text">
+                                            { organizationData.other_documents}
+                                        </span>
+                                    </div>
+                                </div>
+                            }
                             {
                                  organizationData.photo_of_auth_signatory &&
                                  <div className="content">

@@ -53,7 +53,7 @@ class EditOrganization extends React.Component {
                 landlineNoErr,
                 authorizedPersonErr,
                 mobileNoErr,
-                emailIdErr,
+                emailErr,
                 otherOrgTypeErr,
                 otherOrgType,
                 otherProofErr,
@@ -77,7 +77,7 @@ class EditOrganization extends React.Component {
             landlineNoErr,
             authorizedPersonErr,
             mobileNoErr,
-            emailIdErr,
+            emailErr,
             otherOrgTypeErr,
             otherProofErr
         }

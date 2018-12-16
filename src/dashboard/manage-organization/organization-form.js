@@ -125,7 +125,7 @@ class OrganizationForm extends React.Component {
                 value: '',
                 status: false
             },
-            emailIdErr: {
+            emailErr: {
                 value: '',
                 status: false
             }
@@ -193,6 +193,7 @@ class OrganizationForm extends React.Component {
 
     handleEmailChange(e) {
         const errName = `${e.target.name}Err`
+        console.log("err", this.inputNameMap[e.target.name], e.target.value, validateEmail(this.inputNameMap[e.target.name], e.target.value))
         this.setState({
             [e.target.name]: e.target.value,
             [errName]: validateEmail(this.inputNameMap[e.target.name], e.target.value),
@@ -247,7 +248,7 @@ class OrganizationForm extends React.Component {
             landlineNoErr,
             authorizedPersonErr,
             mobileNoErr,
-            emailIdErr,
+            emailErr,
             // partnershipDocErr,
             // privateDocErr,
             otherOrgTypeErr,
@@ -259,6 +260,7 @@ class OrganizationForm extends React.Component {
             cityList,
             stateList
         } = this.state
+        //console.log("other proof", otherProof, isOtherProof)
         return (
             <Form layout="label-on-top">
                 <Form.FieldSet label="Organization Details">
@@ -426,7 +428,7 @@ class OrganizationForm extends React.Component {
                         type="text"
                         name="email"
                         autoComplete="fefef"
-                        error={emailIdErr.status ? emailIdErr.value : ''}
+                        error={emailErr.status ? emailErr.value : ''}
                         value={this.state.email}
                         onChange={(e) => this.handleEmailChange(e)}
                     />
@@ -484,7 +486,7 @@ class OrganizationForm extends React.Component {
                             placeholder="Aadhar copy, Licence copy"
                             type="text"
                             name="otherProof"
-                            error={((isOtherProof && otherProof && otherProof.length === 0)|| otherProofErr.status) ? "Documents attached is required" : ''}
+                            error={((isOtherProof && otherProof.length === 0)|| otherProofErr.status) ? "Documents attached is required" : ''}
                             value={this.state.otherProof}
                             //size="small"
                             onChange={(e) => this.handleTextChange(e)}

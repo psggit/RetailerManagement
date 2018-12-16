@@ -107,7 +107,7 @@ class RetailerForm extends React.Component {
                 value: '',
                 status: false
             },
-            emailIdErr: {
+            emailErr: {
                 value: '',
                 status: false
             },
@@ -267,7 +267,7 @@ class RetailerForm extends React.Component {
             pincodeErr,
             landlineNoErr,
             mobileNoErr,
-            emailIdErr,
+            emailErr,
             gpsCoordinatesErr
         } = this.state
        
@@ -503,7 +503,7 @@ class RetailerForm extends React.Component {
                         type="text"
                         name="email"
                         autoComplete="fefef"
-                        error={emailIdErr.status ? emailIdErr.value : ''}
+                        error={emailErr.status ? emailErr.value : ''}
                         value={this.state.email}
                         onChange={(e) => this.handleEmailChange(e)}
                     />
