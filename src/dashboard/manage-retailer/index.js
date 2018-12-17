@@ -335,7 +335,7 @@ class ManageRetailer extends React.Component {
                         }}
                     >
                         {/* <Button onClick={() => this.getFilteredRetailersList()}>Search</Button> */}
-                        <CustomButton text="Search" onClick={this.getFilteredRetailersList} />
+                        <CustomButton text="Search" handleClick={this.getFilteredRetailersList} />
                     </div>
                     <div
                         style={{
@@ -344,7 +344,7 @@ class ManageRetailer extends React.Component {
                         }}
                     >
                         {/* <Button onClick={() => this.resetFilter()}>Reset</Button> */}
-                        <CustomButton text="Reset" onClick={this.resetFilter} />
+                        <CustomButton text="Reset" handleClick={this.resetFilter} />
                     </div>
                 </div>
                 {

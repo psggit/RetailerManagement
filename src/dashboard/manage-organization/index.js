@@ -315,7 +315,7 @@ class ManageOrganization extends React.Component {
                         }}
                     >
                         {/* <Button onClick={() => this.getFilteredOrganisationList()}>Search</Button> */}
-                        <CustomButton text="Search" onClick={this.getFilteredOrganisationList} />
+                        <CustomButton text="Search" handleClick={this.getFilteredOrganisationList} />
                     </div>
                     <div
                         style={{
@@ -324,7 +324,7 @@ class ManageOrganization extends React.Component {
                         }}
                     >
                         {/* <Button onClick={() => this.resetFilter()}>Reset</Button> */}
-                        <CustomButton text="Reset" onClick={this.resetFilter} />
+                        <CustomButton text="Reset" handleClick={this.resetFilter} />
                     </div>
                 </div>
                 <div style={{ marginTop: '40px', marginBottom: '20px' }}>
