@@ -4,7 +4,7 @@ const app = express();
 // const ASSET_PATH = process.env.ASSET_PATH || '/'
 
 app.get('*.js', function (req, res, next) {
-  // const runtimeUrlRegex = /runtime.*.js/
+  const runtimeUrlRegex = /runtime.*.js/
   const vendorUrlRegex = /vendor.*.js/
   if(!runtimeUrlRegex.test(req.url)) {
      req.url = req.url + '.gz';
