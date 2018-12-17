@@ -176,7 +176,7 @@ class OrganizationForm extends React.Component {
     }
 
     handleSelectChange(e) {
-        if(!e.target.checked && e.target.name === "otherProof") {
+        if(!e.target.checked && e.target.name === "isOtherProof") {
             this.setState({[e.target.name]: e.target.checked, otherProof: ''})
         } else {
             this.setState({[e.target.name]: e.target.checked})

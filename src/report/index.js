@@ -112,13 +112,13 @@ class RetailerOnboardingForm extends React.Component {
                             <div className="content" style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                                 <div style={{display: 'flex', flexDirection: 'column', alignContent: 'flex-start'}}>
                                     <div><p>PAN</p></div>
-                                    <div><span>{organizationData.pan_number}</span></div>
+                                    <div><span>{organizationData.pan_number ? organizationData.pan_number : '--'}</span></div>
                                 </div>
                                 <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-start'}}>
                                     <div><p>CIN</p></div> 
                                     <div>
                                         <span>
-                                            {organizationData.cin_no}
+                                            {organizationData.cin_no ? organizationData.cin_no : '--'}
                                         </span>
                                     </div>
                                 </div>
@@ -219,7 +219,7 @@ class RetailerOnboardingForm extends React.Component {
                                     <div>
                                         <span className="icon">{getIcon('tick')}</span>
                                         <span className="text">
-                                            { organizationData.other_documents}
+                                            {organizationData.other_documents}
                                         </span>
                                     </div>
                                 </div>
