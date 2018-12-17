@@ -176,7 +176,7 @@ class OrganizationForm extends React.Component {
     }
 
     handleSelectChange(e) {
-        if(!e.target.checked) {
+        if(!e.target.checked && e.target.name === "otherProof") {
             this.setState({[e.target.name]: e.target.checked, otherProof: ''})
         } else {
             this.setState({[e.target.name]: e.target.checked})
@@ -261,6 +261,7 @@ class OrganizationForm extends React.Component {
             stateList
         } = this.state
         //console.log("other proof", otherProof, isOtherProof)
+        console.log("proof", isOtherProof, otherProof, otherProofErr)
         return (
             <Form layout="label-on-top">
                 <Form.FieldSet label="Organization Details">
