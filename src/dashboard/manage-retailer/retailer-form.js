@@ -325,7 +325,6 @@ class RetailerForm extends React.Component {
                          }),
             })
         } else if(item.name === "email") {
-            //console.log("else if")
             const error = validateEmail(this.inputNameMap[item.name], item.value)
             if (error.status) {
                 this.errorFlag = true
@@ -335,7 +334,6 @@ class RetailerForm extends React.Component {
             })
 
         } else {
-            //console.log("else")
             const error = validateTextField(this.inputNameMap[item.name], item.value)
             if (error.status) {
                 this.errorFlag = true

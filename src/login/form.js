@@ -81,34 +81,34 @@ class Form extends React.Component {
           <span> RETAILER MANAGEMENT </span>
         </div>
         {/* <div className="form-wrapper" style={{width: '100%'}}> */}
-          <div className="form-group">
-            <input
-              placeholder="Username"
-              type="text"
-              name="username"
-              onChange={this.handleChange}
-              onKeyDown={this.handlePress}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              placeholder="Password"
-              type="password"
-              name="password"
-              onChange={this.handleChange}
-              onKeyDown={this.handlePress}
-            />
-          </div>
-          <button
-            disabled={this.state.isSubmitting}
-            onClick={this.handleSubmit}
-            style={{ marginTop: '20px', width: '100%', height: '40px', background: '#616161', cursor: this.state.isSubmitting ? 'progress' : '' }}
-            className="btn btn--primary"
-          >
-            Login
-          </button>
-          { this.state.error ? <p style={{ color: '#ff3b30' }}>Wrong username or password</p> : ''}
+        <div className="form-group">
+          <input
+            placeholder="Username"
+            type="text"
+            name="username"
+            onChange={this.handleChange}
+            onKeyDown={this.handlePress}
+          />
         </div>
+        <div className="form-group">
+          <input
+            placeholder="Password"
+            type="password"
+            name="password"
+            onChange={this.handleChange}
+            onKeyDown={this.handlePress}
+          />
+        </div>
+        <button
+          disabled={this.state.isSubmitting}
+          onClick={this.handleSubmit}
+          style={{ marginTop: '20px', width: '100%', height: '40px', background: '#616161', cursor: this.state.isSubmitting ? 'progress' : '' }}
+          className="btn btn--primary"
+        >
+          Login
+        </button>
+        { this.state.error ? <p style={{ color: '#ff3b30' }}>Wrong username or password</p> : ''}
+      </div>
       // </div>
     )
   }

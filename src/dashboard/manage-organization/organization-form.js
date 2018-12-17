@@ -194,7 +194,6 @@ class OrganizationForm extends React.Component {
     }
  
     handleTextChange(e) {
-        //console.log("date of incor", this.state.incorporationDate.length)
         const errName = `${e.target.name}Err`
         this.setState({
             [e.target.name]: e.target.value,
@@ -204,7 +203,6 @@ class OrganizationForm extends React.Component {
 
     handleEmailChange(e) {
         const errName = `${e.target.name}Err`
-        //console.log("err", this.inputNameMap[e.target.name], e.target.value, validateEmail(this.inputNameMap[e.target.name], e.target.value))
         this.setState({
             [e.target.name]: e.target.value,
             [errName]: validateEmail(this.inputNameMap[e.target.name], e.target.value),
@@ -247,8 +245,7 @@ class OrganizationForm extends React.Component {
     handleSave(e) {
         e.preventDefault()
         this.checkForm()
-        console.log("handle save in orgform", this.errorFlag)
-
+       
         if(!this.errorFlag) {
             this.props.handleSave()
         }
@@ -262,7 +259,7 @@ class OrganizationForm extends React.Component {
         const inputsArr = Array.prototype.slice.call(inputCollection)
         
         const textInputs = inputsArr.filter(item => (item.type == 'text' || item.type == "date")  && item.name !== 'otherProof')
-        //console.log(textInputs)
+
         textInputs.forEach(item => {
             this.validate(item)
         })
@@ -270,10 +267,8 @@ class OrganizationForm extends React.Component {
 
     validate(item) {
         const errName = `${item.name}Err`
-        //console.log("field", item.name, "value", item.value, "bool", validateTextField(this.inputNameMap[item.name], item.value))
-       
+     
         if(item.name === "pincode" || item.name === "mobileNo") {
-            //console.log("if")
             this.length = 0
             this.checkLength = true
         
@@ -291,7 +286,6 @@ class OrganizationForm extends React.Component {
                 break;
             }
             const error = validateNumberField({fieldName: this.inputNameMap[item.name], fieldValue: item.value, length: this.length, checkLength: this.checkLength})
-            //console.log("validate number", "name", this.inputNameMap[item.name], "value", item.value, "state", validateNumberField(this.inputNameMap[item.name], item.value, this.length, this.checkLength))
             if (error.status) {
                 this.errorFlag = true
             }
@@ -299,7 +293,6 @@ class OrganizationForm extends React.Component {
                 [errName]: validateNumberField({fieldName: this.inputNameMap[item.name], fieldValue: item.value, length: this.length, checkLength: this.checkLength}),
             })
         } else if(item.name === "email") {
-            //console.log("else if")
             const error = validateEmail(this.inputNameMap[item.name], item.value)
             if (error.status) {
                 this.errorFlag = true
@@ -309,7 +302,6 @@ class OrganizationForm extends React.Component {
             })
 
         } else {
-            //console.log("else")
             const error = validateTextField(this.inputNameMap[item.name], item.value)
             if (error.status) {
                 this.errorFlag = true
@@ -347,9 +339,7 @@ class OrganizationForm extends React.Component {
             cityList,
             stateList
         } = this.state
-        //console.log("date of incor", this.state.incorporationDate.length)
-        //console.log("other proof", otherProof, isOtherProof)
-        //console.log("proof", isOtherProof, otherProof, otherProofErr)
+
         return (
             <div id="OrgName">
             <Form layout="label-on-top">
