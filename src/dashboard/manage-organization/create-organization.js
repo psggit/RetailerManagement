@@ -21,7 +21,7 @@ class CreateOrganization extends React.Component {
         this.successCallback = this.successCallback.bind(this)
         this.failureCallback = this.failureCallback.bind(this)
         this.updateState = this.updateState.bind(this)
-        this.formIsValid =  this.formIsValid.bind(this)
+        //this.formIsValid =  this.formIsValid.bind(this)
         this.fetchStateAndCityList = this.fetchStateAndCityList.bind(this)
         this.formatResponse = this.formatResponse.bind(this)
     }
@@ -39,69 +39,76 @@ class CreateOrganization extends React.Component {
         this.setState({stateList, cityList, stateMap})   
     }
 
-    formIsValid() {
-        const organizationDetailsForm = this.organizationDetailsForm.getData()
+    // formIsValid() {
+    //     const organizationDetailsForm = this.organizationDetailsForm.getData()
     
-        const { organizationNameErr, 
-                incorporationDateErr, 
-                cinNumberErr, 
-                panNumberErr, 
-                GSTNumberErr,
-                organizationAddressErr,
-                pincodeErr,
-                landlineNoErr,
-                authorizedPersonErr,
-                mobileNoErr,
-                emailErr,
-                otherOrgTypeErr,
-                otherOrgType,
-                otherProofErr,
-                otherProof,
-                organizationType,
-                isOtherProof
-                // otherParnershipProof,
-                // partnershipDocErr,
-                // otherPvtLtdProof,
-                // privateDocErr
-            } = organizationDetailsForm 
+    //     const { organizationNameErr, 
+    //             incorporationDateErr, 
+    //             cinNumberErr, 
+    //             panNumberErr, 
+    //             GSTNumberErr,
+    //             organizationAddressErr,
+    //             pincodeErr,
+    //             landlineNoErr,
+    //             authorizedPersonErr,
+    //             mobileNoErr,
+    //             emailErr,
+    //             otherOrgTypeErr,
+    //             otherOrgType,
+    //             otherProofErr,
+    //             otherProof,
+    //             organizationType,
+    //             isOtherProof
+    //             // otherParnershipProof,
+    //             // partnershipDocErr,
+    //             // otherPvtLtdProof,
+    //             // privateDocErr
+    //         } = organizationDetailsForm 
         
-        const formData = {
-            organizationNameErr, 
-            incorporationDateErr, 
-            cinNumberErr, 
-            panNumberErr, 
-            GSTNumberErr,
-            organizationAddressErr,
-            pincodeErr,
-            landlineNoErr,
-            authorizedPersonErr,
-            mobileNoErr,
-            emailErr,
-            otherOrgTypeErr,
-            otherProofErr
-        }
+    //     const formData = {
+    //         organizationNameErr, 
+    //         incorporationDateErr, 
+    //         cinNumberErr, 
+    //         panNumberErr, 
+    //         GSTNumberErr,
+    //         organizationAddressErr,
+    //         pincodeErr,
+    //         landlineNoErr,
+    //         authorizedPersonErr,
+    //         mobileNoErr,
+    //         emailErr,
+    //         otherOrgTypeErr,
+    //         otherProofErr
+    //     }
 
-        for(const key in formData) {
-            if(formData[key].status && formData[key].value.toString().length === 0){
-                return false
-            } 
-        }
+    //     // for(const key in formData) {
+    //     //     if(formData[key].value.toString().length === 0){
+    //     //         return false
+    //     //     } 
+    //     // }
+    //     console.log("Form data", formData)
+    //     for(const key in formData) {
+    //         if(formData[key].status){
+    //             return false
+    //         } 
+    //     }
 
-        if(organizationType === "others" && otherOrgType.toString().length === 0) {
-                return false
-        }
+    //     if(organizationType === "others" && otherOrgType.toString().length === 0) {
+    //             return false
+    //     }
 
-        if(isOtherProof && otherProof.toString().length === 0) {
-                return false
-        }
+    //     if(isOtherProof && otherProof.toString().length === 0) {
+    //             return false
+    //     }
 
-       return true
-    }
+    //    return true
+    // }
 
     handleSave() {
         const data = this.organizationDetailsForm.getData()
-        this.setState({isFormValid: this.formIsValid()})
-        if(this.formIsValid()) {
+        //this.setState({isFormValid: this.formIsValid()})
+        //console.log("is form valis", this.state.isFormValid)
+        //if(this.formIsValid()) {
             const payload = {
                 type_of_organisation: data.organizationType === "others" ? data.otherOrgType : data.organizationType,
                 organisation_name: data.organizationName,
@@ -131,7 +138,7 @@ class CreateOrganization extends React.Component {
             }
             this.setState({creatingOrg: true})
             this.createOrganization(payload, this.successCallback, this.failureCallback)
-        }
+        //}
     }
 
     successCallback() {
@@ -162,8 +169,9 @@ class CreateOrganization extends React.Component {
                         stateList = {this.state.stateList}
                         cityList = {this.state.cityList}
                         stateMap= {this.state.stateMap}
+                        handleSave={this.handleSave}
                     />
-                    <ButtonGroup align="right">
+                    {/* <ButtonGroup align="right">
                         <Button 
                             onClick={() => this.handleSave()} 
                             loading={this.state.creatingOrg}
@@ -171,7 +179,7 @@ class CreateOrganization extends React.Component {
                         > 
                             Save 
                         </Button>
-                    </ButtonGroup>
+                    </ButtonGroup> */}
                 </Card> 
             </Layout>
         )

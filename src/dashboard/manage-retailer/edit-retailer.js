@@ -175,8 +175,9 @@ class EditRetailer extends React.Component {
                         organizationMap = {this.state.organizationMap}
                         stateMap = {this.state.stateMap}
                         cityList = {this.state.cityList}
+                        handleSave = {this.handleSave}
                     />
-                    <ButtonGroup align="right">
+                    {/* <ButtonGroup align="right">
                         <Button 
                             onClick={() => this.handleSave()}
                             loading={this.state.updatingRetailer}
@@ -184,7 +185,7 @@ class EditRetailer extends React.Component {
                         > 
                             Save 
                         </Button>
-                    </ButtonGroup>
+                    </ButtonGroup> */}
                 </Card>
             </Layout>
         )

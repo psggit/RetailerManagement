@@ -27,6 +27,29 @@ class RetailerForm extends React.Component {
             email: 'Email'
         }
 
+        this.inputErrorNameMap = {
+            ksbclCodeErr: 'KSBCL code',
+            outletNameErr: 'Outlet name',
+            exciseLicenceNoErr: 'Excise license no',
+            discountPercentErr: 'Discount percent',
+            serviceChargePercentErr: 'Service charge percent',
+            deliveryDiscountPercentErr: 'Delivery discount percent',
+            FSSAINumberErr: 'FSSAI number',
+            bankNameErr: 'Bank name',
+            accountHolderNameErr: 'Account holder name',
+            accountNumberErr: 'Account number',
+            branchErr: 'Branch',
+            IFSCErr: 'IFSC code',
+            outletAddressErr: 'Outlet address',
+            landlineNoErr: 'Landline number',
+            mobileNoErr: 'Mobile number',
+            gpsCoordinatesErr: 'GPS coordinates',
+            pincodeErr: 'Pincode',
+            emailErr: 'Email'
+        }
+
+        this.errorFlag = false,
+
         this.state = {
             organizationList: this.props.organizationList,
             organizationMap: this.props.organizationMap,
@@ -143,6 +166,9 @@ class RetailerForm extends React.Component {
         this.handleEmailChange = this.handleEmailChange.bind(this)
         this.handleNumberChange = this.handleNumberChange.bind(this) 
         this.getData = this.getData.bind(this)
+        this.checkForm = this.checkForm.bind(this)
+        this.handleSave = this.handleSave.bind(this)
+        this.validate = this.validate.bind(this)
     }
 
     componentWillReceiveProps(newProps) {
@@ -249,6 +275,36 @@ class RetailerForm extends React.Component {
         return this.state
     }
 
+    handleSave(e) {
+        e.preventDefault()
+        this.checkForm()
+        //console.log("handle save in orgform")
+        this.props.handleSave()
+    }
+
+    checkForm() {
+        this.errorFlag = false
+        const formEl = document.getElementById('RetailerForm')
+        const inputCollection = formEl.getElementsByTagName('input')
+        const inputsArr = Array.prototype.slice.call(inputCollection)
+        
+        const textInputs = inputsArr.filter(item => item.type == 'text')
+        textInputs.forEach(item => {
+            this.validate(item)
+        })
+    }
+
+    validate(item) {
+        const errName = `${item.name}Err`
+        const error = validateTextField(this.inputNameMap[item.name], item.value)
+        if (error.status) {
+            this.errorFlag = true
+        }
+        this.setState({
+            [errName]: validateTextField(this.inputNameMap[item.name], item.value),
+        })
+    }
+
     render() {
         const {
             ksbclCodeErr,
@@ -272,6 +328,7 @@ class RetailerForm extends React.Component {
         } = this.state
        
         return(
+            <div id="RetailerForm">
             <Form layout="label-on-top">
                 <Form.FieldSet label="Organization Details">
                     <Form.Select
@@ -528,8 +585,12 @@ class RetailerForm extends React.Component {
                         onKeyUp={(e) => this.handleNumberChange(e)}
                         //onChange={(e) => this.handleNumberChange(e)}
                     />
+                    <ButtonGroup align="right">
+                        <Button onClick={(e) => this.handleSave(e)}>Save</Button>
+                    </ButtonGroup>
                 </Form.FieldSet>
             </Form>
+            </div>
         )
     }
 }

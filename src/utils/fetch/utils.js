@@ -56,6 +56,8 @@ export function checkStatus(response) {
   } else {
     // console.log(response.statusText);
     var error = new Error(response.statusText)
+    //console.log("res", response)
+    //var error = new Error(response.error)
     error.response = response
     throw error
   }

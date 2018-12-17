@@ -12,7 +12,7 @@ class OrganizationForm extends React.Component {
             organizationType: 'Organization type',
             incorporationDate: 'Date of incorporation',
             cinNumber: 'Cin number',
-            panNumber: 'Pin number',
+            panNumber: 'Pan number',
             GSTNumber: 'GST number',
             organizationAddress: 'Organization address',
             landlineNo: 'Landline number',
@@ -29,7 +29,7 @@ class OrganizationForm extends React.Component {
         this.state = {
             organizationName: props.data ? props.data.organisation_name : '',
             organizationType: props.data ? (props.data.type_of_organisation === "partnership" || props.data.type_of_organisation === "proprietorship" || props.data.type_of_organisation === "pvtltd" ) ? props.data.type_of_organisation : 'others' : 'proprietorship',
-            incorporationDate: props.data ? props.data.date_of_incorporation : '12/05/1995',
+            incorporationDate: props.data ? props.data.date_of_incorporation : '',
             cinNumber: props.data ? props.data.cin_no : '',
             panNumber: props.data ? props.data.pan_number : '',
             outletsCount: props.data ? props.data.no_of_outlets : 0,
@@ -68,6 +68,7 @@ class OrganizationForm extends React.Component {
             stateList: this.props.stateList ? this.props.stateList : '',
             cityList: this.props.cityList ? this.props.cityList : '',
             stateMap: this.props.stateMap ? this.props.stateMap : '',
+            //errorFlag: false,
 
             // partnershipDocErr: {
             //     value: '',
@@ -131,12 +132,18 @@ class OrganizationForm extends React.Component {
             }
         }
 
+        this.errorFlag = false,
+
         this.handleChange = this.handleChange.bind(this)
         this.handleTextChange = this.handleTextChange.bind(this)
         this.handleNumberChange = this.handleNumberChange.bind(this)
         this.handleEmailChange = this.handleEmailChange.bind(this) 
         this.handleSelectChange = this.handleSelectChange.bind(this)
         this.getData = this.getData.bind(this)
+        this.checkForm = this.checkForm.bind(this)
+        this.handleSave = this.handleSave.bind(this)
+        this.validate = this.validate.bind(this)
+        //this.formIsValid = this.formIsValid.bind(this)
     }
 
     componentWillReceiveProps(newProps) {
@@ -193,7 +200,7 @@ class OrganizationForm extends React.Component {
 
     handleEmailChange(e) {
         const errName = `${e.target.name}Err`
-        console.log("err", this.inputNameMap[e.target.name], e.target.value, validateEmail(this.inputNameMap[e.target.name], e.target.value))
+        //console.log("err", this.inputNameMap[e.target.name], e.target.value, validateEmail(this.inputNameMap[e.target.name], e.target.value))
         this.setState({
             [e.target.name]: e.target.value,
             [errName]: validateEmail(this.inputNameMap[e.target.name], e.target.value),
@@ -233,6 +240,107 @@ class OrganizationForm extends React.Component {
         }   
     }
 
+    handleSave(e) {
+        e.preventDefault()
+        this.checkForm()
+        //console.log("handle save in orgform")
+
+        if(!this.errorFlag) {
+            this.props.handleSave()
+        }
+       
+    }
+
+    checkForm() {
+        this.errorFlag = false
+        const formEl = document.getElementById('OrgName')
+        const inputCollection = formEl.getElementsByTagName('input')
+        const inputsArr = Array.prototype.slice.call(inputCollection)
+        
+        const textInputs = inputsArr.filter(item => item.type == 'text' && item.name !== 'otherProof')
+        //console.log(textInputs)
+        textInputs.forEach(item => {
+            this.validate(item)
+        })
+    }
+
+    validate(item) {
+        const errName = `${item.name}Err`
+        //console.log("field", item.name, "value", item.value, "bool", validateTextField(this.inputNameMap[item.name], item.value))
+        const error = validateTextField(this.inputNameMap[item.name], item.value)
+        if (error.status) {
+            this.errorFlag = true
+        }
+        this.setState({
+            [errName]: validateTextField(this.inputNameMap[item.name], item.value),
+        })
+    }
+
+    // formIsValid() {
+    //     //const organizationDetailsForm = this.organizationDetailsForm.getData()
+    
+    //     const { organizationNameErr, 
+    //             incorporationDateErr, 
+    //             cinNumberErr, 
+    //             panNumberErr, 
+    //             GSTNumberErr,
+    //             organizationAddressErr,
+    //             pincodeErr,
+    //             landlineNoErr,
+    //             authorizedPersonErr,
+    //             mobileNoErr,
+    //             emailErr,
+    //             otherOrgTypeErr,
+    //             otherOrgType,
+    //             otherProofErr,
+    //             otherProof,
+    //             organizationType,
+    //             isOtherProof
+    //             // otherParnershipProof,
+    //             // partnershipDocErr,
+    //             // otherPvtLtdProof,
+    //             // privateDocErr
+    //         } = this.state 
+        
+    //     const formData = {
+    //         organizationNameErr, 
+    //         incorporationDateErr, 
+    //         cinNumberErr, 
+    //         panNumberErr, 
+    //         GSTNumberErr,
+    //         organizationAddressErr,
+    //         pincodeErr,
+    //         landlineNoErr,
+    //         authorizedPersonErr,
+    //         mobileNoErr,
+    //         emailErr,
+    //         otherOrgTypeErr,
+    //         otherProofErr
+    //     }
+
+    //     // for(const key in formData) {
+    //     //     if(formData[key].value.toString().length === 0){
+    //     //         return false
+    //     //     } 
+    //     // }
+    //     console.log("Form data", this.state)
+    //     for(const key in formData) {
+    //         if(formData[key].status){
+    //             return false
+    //         } 
+    //     }
+
+    //     if(organizationType === "others" && otherOrgType.toString().length === 0) {
+    //             return false
+    //     }
+
+    //     if(isOtherProof && otherProof.toString().length === 0) {
+    //             return false
+    //     }
+
+    //    return true
+    // }
+
     getData() {
         return this.state
     }
@@ -263,6 +371,7 @@ class OrganizationForm extends React.Component {
         //console.log("other proof", otherProof, isOtherProof)
         //console.log("proof", isOtherProof, otherProof, otherProofErr)
         return (
+            <div id="OrgName">
             <Form layout="label-on-top">
                 <Form.FieldSet label="Organization Details">
                     <Form.TextInput
@@ -574,8 +683,12 @@ class OrganizationForm extends React.Component {
                             </div>
                         </div>
                     }
+                    <ButtonGroup align="right">
+                        <Button onClick={(e) => this.handleSave(e)}>Save</Button>
+                    </ButtonGroup>
                 </Form.FieldSet>
             </Form>
+            </div>
         )
     }
 }

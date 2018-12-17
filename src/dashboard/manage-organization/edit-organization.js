@@ -163,9 +163,10 @@ class EditOrganization extends React.Component {
                         data={this.props.history.location.state}
                         stateList = {stateList}
                         cityList = {cityList}
-                        stateMap= {this.state.stateMap} 
+                        stateMap= {this.state.stateMap}
+                        handleSave = {this.handleSave} 
                     />
-                    <ButtonGroup align="right">
+                    {/* <ButtonGroup align="right">
                         <Button 
                             onClick={() => this.handleSave()} 
                             loading={this.state.updatingOrg}
@@ -173,7 +174,7 @@ class EditOrganization extends React.Component {
                         > 
                             Save 
                         </Button>
-                    </ButtonGroup>
+                    </ButtonGroup> */}
                 </Card>
             </Layout>
         )
