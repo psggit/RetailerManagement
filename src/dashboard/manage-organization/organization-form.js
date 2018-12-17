@@ -259,7 +259,7 @@ class OrganizationForm extends React.Component {
         const inputCollection = formEl.getElementsByTagName('input')
         const inputsArr = Array.prototype.slice.call(inputCollection)
         
-        const textInputs = inputsArr.filter(item => item.type == 'text' || item.type == "date"  && item.name !== 'otherProof')
+        const textInputs = inputsArr.filter(item => (item.type == 'text' || item.type == "date")  && item.name !== 'otherProof')
         //console.log(textInputs)
         textInputs.forEach(item => {
             this.validate(item)
