@@ -299,13 +299,64 @@ class RetailerForm extends React.Component {
 
     validate(item) {
         const errName = `${item.name}Err`
-        const error = validateTextField(this.inputNameMap[item.name], item.value)
-        if (error.status) {
-            this.errorFlag = true
+      
+        if(item.name === "pincode" || item.name === "mobileNo" || item.name === "discountPercent" || item.name === "serviceChargePercent" || item.name === "deliveryDiscountPercent") {
+            this.length = 0
+            this.checkLength = true
+        
+            switch(item.name) {
+        
+                case 'pincode':
+                    this.length = 6
+                    this.checkLength = true
+                break;
+    
+                case 'mobileNo':
+                    this.length = 10
+                    this.checkLength = true
+                break;
+    
+                default:
+                    this.checkLength = false
+                break;
+            }
+            const error = validateNumberField({
+                            fieldName: this.inputNameMap[item.name], 
+                            fieldValue: item.value, 
+                            length: this.length, 
+                            checkLength: this.checkLength
+                        })
+            if (error.status) {
+                this.errorFlag = true
+            }
+            this.setState({
+                [errName]: validateNumberField({
+                            fieldName: this.inputNameMap[item.name], 
+                            fieldValue: item.value, 
+                            length: this.length, 
+                            checkLength: this.checkLength
+                         }),
+            })
+        } else if(item.name === "email") {
+            //console.log("else if")
+            const error = validateEmail(this.inputNameMap[item.name], item.value)
+            if (error.status) {
+                this.errorFlag = true
+            }
+            this.setState({
+                [errName]: validateEmail(this.inputNameMap[item.name], item.value),
+            })
+
+        } else {
+            //console.log("else")
+            const error = validateTextField(this.inputNameMap[item.name], item.value)
+            if (error.status) {
+                this.errorFlag = true
+            }
+            this.setState({
+                [errName]: validateTextField(this.inputNameMap[item.name], item.value),
+            })
         }
-        this.setState({
-            [errName]: validateTextField(this.inputNameMap[item.name], item.value),
-        })
     }
 
     render() {

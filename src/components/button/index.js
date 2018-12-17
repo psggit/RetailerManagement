@@ -4,11 +4,18 @@ import { Button } from '@auth0/cosmos'
 class Button2 extends React.Component {
     constructor() {
         super()
+        this.handleClick = this.handleClick.bind(this)
+    }
+
+    handleClick(e) {
+        if(this.props.handleClick){
+            this.props.handleClick(e)
+        }
     }
 
     render() {
         return (
-            <Button style={{border: '1px solid #757575'}} onClick={(e) => this.props.handleClick(e)}>{this.props.text}</Button>
+            <Button style={{border: '1px solid #757575'}} onClick={(e) => this.handleClick(e)}>{this.props.text}</Button>
         )
     }
 }

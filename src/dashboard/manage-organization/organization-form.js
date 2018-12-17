@@ -244,7 +244,7 @@ class OrganizationForm extends React.Component {
     handleSave(e) {
         e.preventDefault()
         this.checkForm()
-        //console.log("handle save in orgform")
+        console.log("handle save in orgform", this.errorFlag)
 
         if(!this.errorFlag) {
             this.props.handleSave()
@@ -268,13 +268,53 @@ class OrganizationForm extends React.Component {
     validate(item) {
         const errName = `${item.name}Err`
         //console.log("field", item.name, "value", item.value, "bool", validateTextField(this.inputNameMap[item.name], item.value))
-        const error = validateTextField(this.inputNameMap[item.name], item.value)
-        if (error.status) {
-            this.errorFlag = true
+       
+        if(item.name === "pincode" || item.name === "mobileNo") {
+            //console.log("if")
+            this.length = 0
+            this.checkLength = true
+        
+            switch(item.name) {
+        
+                case 'pincode':
+                    this.length = 6
+                break;
+    
+                case 'mobileNo':
+                    this.length = 10
+                break;
+    
+                default:
+                break;
+            }
+            const error = validateNumberField({fieldName: this.inputNameMap[item.name], fieldValue: item.value, length: this.length, checkLength: this.checkLength})
+            //console.log("validate number", "name", this.inputNameMap[item.name], "value", item.value, "state", validateNumberField(this.inputNameMap[item.name], item.value, this.length, this.checkLength))
+            if (error.status) {
+                this.errorFlag = true
+            }
+            this.setState({
+                [errName]: validateNumberField({fieldName: this.inputNameMap[item.name], fieldValue: item.value, length: this.length, checkLength: this.checkLength}),
+            })
+        } else if(item.name === "email") {
+            //console.log("else if")
+            const error = validateEmail(this.inputNameMap[item.name], item.value)
+            if (error.status) {
+                this.errorFlag = true
+            }
+            this.setState({
+                [errName]: validateEmail(this.inputNameMap[item.name], item.value),
+            })
+
+        } else {
+            //console.log("else")
+            const error = validateTextField(this.inputNameMap[item.name], item.value)
+            if (error.status) {
+                this.errorFlag = true
+            }
+            this.setState({
+                [errName]: validateTextField(this.inputNameMap[item.name], item.value),
+            })
         }
-        this.setState({
-            [errName]: validateTextField(this.inputNameMap[item.name], item.value),
-        })
     }
 
     getData() {
@@ -532,7 +572,7 @@ class OrganizationForm extends React.Component {
                             placeholder="Aadhar copy, Licence copy"
                             type="text"
                             name="otherProof"
-                            error={((isOtherProof && otherProof.length === 0)|| otherProofErr.status) ? "Documents attached is required" : ''}
+                            error={((isOtherProof && otherProof.length === 0)|| otherProofErr.status) ? "Documents attached are required" : ''}
                             value={this.state.otherProof}
                             //size="small"
                             onChange={(e) => this.handleTextChange(e)}
