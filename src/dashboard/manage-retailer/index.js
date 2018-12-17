@@ -128,7 +128,7 @@ class ManageRetailer extends React.Component {
             value
         })
     
-        history.pushState(queryObj, "retailer listing", `/home/manage-retailer?${getQueryUri(queryObj)}`)
+        history.pushState(queryObj, "retailer listing", `/admin/retailer?${getQueryUri(queryObj)}`)
       
         this.fetchRetailerList({
             limit: this.pagesLimit,
@@ -193,7 +193,7 @@ class ManageRetailer extends React.Component {
             }, this.setResponseData, this.failureCallback)      
         }
 
-        history.pushState(queryParamsObj, "retailer listing", `/home/manage-retailer?${getQueryUri(queryParamsObj)}`)
+        history.pushState(queryParamsObj, "retailer listing", `/admin/retailer?${getQueryUri(queryParamsObj)}`)
     }
 
     handleChange(e) {
@@ -222,7 +222,7 @@ class ManageRetailer extends React.Component {
     editOutletDetail(e, item, action) {
         e.stopPropagation()
         //console.log("item", item)
-        this.props.history.push(`/home/manage-retailer/edit-retailer/${item.id}`, item)
+        this.props.history.push(`/admin/retailer/edit/${item.id}`, item)
     }
 
     resetFilter() {
@@ -232,7 +232,7 @@ class ManageRetailer extends React.Component {
             value: ''
         })
         this.fetchDefaultData()
-        this.props.history.push(`/home/manage-retailer`)
+        this.props.history.push(`/admin/retailer`)
     }
 
     onToggleChange(item, value) {
@@ -255,14 +255,14 @@ class ManageRetailer extends React.Component {
         if(e.target.nodeName === "SPAN") {
             return 
         }
-        this.props.history.push(`/home/manage-retailer/retailer-details/${item.id}`, item)
+        this.props.history.push(`/admin/retailer/${item.id}`, item)
     }
 
     render() {
         const {retailerData} = this.state
         return (
             <Layout title="Manage Retailer">
-                <NavLink to={`/home/manage-retailer/create-retailer`}>
+                <NavLink to={`/admin/retailer/create`}>
                     <div style={{marginTop: '20px'}}>
                         <Button> Create Retailer </Button>
                     </div>

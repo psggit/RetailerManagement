@@ -108,7 +108,7 @@ class GenerateReport extends React.Component {
                             options={stateList}
                         /> */}
                     </Form>
-                    <a href={`/retailer-onboarding-form/${this.state.selectedOrganizationIdx}`} target="_blank">
+                    <a href={`/admin/retailer-onboarding-form/${this.state.selectedOrganizationIdx}`} target="_blank">
                         <Button> Download </Button>
                     </a>
                 </Card>

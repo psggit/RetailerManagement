@@ -20,7 +20,7 @@ class Dashboard extends React.Component {
   constructor() {
     super()
     this.state = {
-      currentRoute: location.pathname.split('/')[2] || 'manage-organization',
+      currentRoute: location.pathname.split('/')[2] || 'organization',
     }
   }
 
@@ -50,8 +50,8 @@ class Dashboard extends React.Component {
         <Navbar
           history={history} 
           menuItems={[
-            { label: 'Manage Organization', value: 'manage-organization' },
-            { label: 'Manage Retailer', value: 'manage-retailer' },
+            { label: 'Manage Organization', value: 'organization' },
+            { label: 'Manage Retailer', value: 'retailer' },
             { label: 'Generate Report', value: 'generate-report' }
           ]}
           currentRoute={this.state.currentRoute}
@@ -60,8 +60,8 @@ class Dashboard extends React.Component {
           <SideMenu
             history={history}
             menuItems={[
-              { label: 'Manage Organization', value: 'manage-organization' },
-              { label: 'Manage Retailer', value: 'manage-retailer' },
+              { label: 'Manage Organization', value: 'organization' },
+              { label: 'Manage Retailer', value: 'retailer' },
               { label: 'Generate Report', value: 'generate-report' }
             ]}
             currentRoute={this.state.currentRoute}
@@ -70,7 +70,7 @@ class Dashboard extends React.Component {
             <Switch>
               <Route
                 exact
-                path="/home/manage-organization/create-organization"
+                path="/admin/organization/create"
                 //component={CreateOrganization}
                 render={
                   props => (
@@ -81,7 +81,7 @@ class Dashboard extends React.Component {
 
               <Route
                 exact
-                path="/home/manage-organization/edit-organization/:organizationId"
+                path="/admin/organization/edit/:organizationId"
                 //component={EditOrganization}
                 render={
                   props => (
@@ -92,7 +92,7 @@ class Dashboard extends React.Component {
             
               <Route
                 exact
-                path="/home/manage-organization/organization-details/:organizationId"
+                path="/admin/organization/:organizationId"
                 //component={EditOrganization}
                 render={
                   props => (
@@ -103,7 +103,7 @@ class Dashboard extends React.Component {
 
               <Route
                 exact
-                path="/home/manage-retailer"
+                path="/admin/retailer"
                 //component={ManageRetailer}
                 render={
                   props => (
@@ -114,7 +114,7 @@ class Dashboard extends React.Component {
 
               <Route
                 exact
-                path="/home/manage-retailer/create-retailer"
+                path="/admin/retailer/create"
                 //component={CreateRetailer}
                 render={
                   props => (
@@ -125,7 +125,7 @@ class Dashboard extends React.Component {
 
               <Route
                 exact
-                path="/home/manage-retailer/edit-retailer/:retailerId"
+                path="/admin/retailer/edit/:retailerId"
                 //component={EditOrganization}
                 render={
                   props => (
@@ -137,7 +137,7 @@ class Dashboard extends React.Component {
 
               <Route
                 exact
-                path="/home/manage-retailer/retailer-details/:retailerId"
+                path="/admin/retailer/:retailerId"
                 component={RetailerDetails}
                 // render={
                 //   props => (
@@ -148,7 +148,7 @@ class Dashboard extends React.Component {
 
               <Route
                 exact
-                path="/home/generate-report"
+                path="/admin/generate-report"
                 component={GenerateReport}
                 // render={
                 //   props => (
@@ -159,7 +159,7 @@ class Dashboard extends React.Component {
 
               <Route
                 //exact
-                path="/home"
+                path="/admin"
                 //component={ManageOrganization}
                 render={
                   props => (

@@ -12,7 +12,7 @@ class SideMenu extends React.Component {
   handleChangeRoute(e, currentRoute) {
     e.preventDefault()
     //this.props.history.push(`/home/${currentRoute}`)
-    location.href = `/home/${currentRoute}`
+    location.href = `/admin/${currentRoute}`
   }
 
   render() {
@@ -23,7 +23,7 @@ class SideMenu extends React.Component {
           menuItems.map((item, i) => (
             <div key={i} className={`side-menu__item ${this.checkActiveClass(item.value)}`}>
               <a
-                href={`/home/${item.value}`}
+                href={`/admin/${item.value}`}
                 onClick={(e) => { this.handleChangeRoute(e, item.value) }}
               >
                 { item.label }

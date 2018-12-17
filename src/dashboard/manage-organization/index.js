@@ -123,7 +123,7 @@ class ManageOrganization extends React.Component {
             operator,
             value,
         })
-        history.pushState(queryObj, "organisation listing", `/home/manage-organization?${getQueryUri(queryObj)}`)
+        history.pushState(queryObj, "organisation listing", `/admin/organization?${getQueryUri(queryObj)}`)
      
         this.fetchOrganisationList({
             limit: this.pagesLimit,
@@ -194,7 +194,7 @@ class ManageOrganization extends React.Component {
             }, this.setResponseData, this.failureCallback)      
         }
 
-        history.pushState(queryParamsObj, "organisation listing", `/home/manage-organization?${getQueryUri(queryParamsObj)}`)
+        history.pushState(queryParamsObj, "organisation listing", `/admin/organization?${getQueryUri(queryParamsObj)}`)
     }
 
     handleChange(e) {
@@ -224,7 +224,7 @@ class ManageOrganization extends React.Component {
 
     handleEditOrg(e,item, action) {
         e.stopPropagation()
-        this.props.history.push(`/home/manage-organization/edit-organization/${item.id}`, item)
+        this.props.history.push(`/admin/organization/edit/${item.id}`, item)
     }
 
     resetFilter() {
@@ -234,17 +234,17 @@ class ManageOrganization extends React.Component {
             value: ''
         })
         this.fetchDefaultData()
-        this.props.history.push(`/home/manage-organization`)
+        this.props.history.push(`/admin/organization`)
     }
 
     handleRowClick(e,item) {
-        this.props.history.push(`/home/manage-organization/organization-details/${item.id}`, item)
+        this.props.history.push(`/admin/organization/${item.id}`, item)
     }
 
     render() {
         return (
             <Layout title="Manage Organization">
-                <NavLink to={`/home/manage-organization/create-organization`}>
+                <NavLink to={`/admin/organization/create`}>
                     <div style={{marginTop: '20px'}}>
                         <Button> Create Organization </Button>
                     </div>

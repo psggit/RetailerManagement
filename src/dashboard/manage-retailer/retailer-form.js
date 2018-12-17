@@ -279,7 +279,9 @@ class RetailerForm extends React.Component {
         e.preventDefault()
         this.checkForm()
         //console.log("handle save in orgform")
-        this.props.handleSave()
+        if(!this.errorFlag) {
+            this.props.handleSave()
+        }
     }
 
     checkForm() {

@@ -39,71 +39,6 @@ class CreateOrganization extends React.Component {
         this.setState({stateList, cityList, stateMap})   
     }
 
-    // formIsValid() {
-    //     const organizationDetailsForm = this.organizationDetailsForm.getData()
-    
-    //     const { organizationNameErr, 
-    //             incorporationDateErr, 
-    //             cinNumberErr, 
-    //             panNumberErr, 
-    //             GSTNumberErr,
-    //             organizationAddressErr,
-    //             pincodeErr,
-    //             landlineNoErr,
-    //             authorizedPersonErr,
-    //             mobileNoErr,
-    //             emailErr,
-    //             otherOrgTypeErr,
-    //             otherOrgType,
-    //             otherProofErr,
-    //             otherProof,
-    //             organizationType,
-    //             isOtherProof
-    //             // otherParnershipProof,
-    //             // partnershipDocErr,
-    //             // otherPvtLtdProof,
-    //             // privateDocErr
-    //         } = organizationDetailsForm 
-        
-    //     const formData = {
-    //         organizationNameErr, 
-    //         incorporationDateErr, 
-    //         cinNumberErr, 
-    //         panNumberErr, 
-    //         GSTNumberErr,
-    //         organizationAddressErr,
-    //         pincodeErr,
-    //         landlineNoErr,
-    //         authorizedPersonErr,
-    //         mobileNoErr,
-    //         emailErr,
-    //         otherOrgTypeErr,
-    //         otherProofErr
-    //     }
-
-    //     // for(const key in formData) {
-    //     //     if(formData[key].value.toString().length === 0){
-    //     //         return false
-    //     //     } 
-    //     // }
-    //     console.log("Form data", formData)
-    //     for(const key in formData) {
-    //         if(formData[key].status){
-    //             return false
-    //         } 
-    //     }
-
-    //     if(organizationType === "others" && otherOrgType.toString().length === 0) {
-    //             return false
-    //     }
-
-    //     if(isOtherProof && otherProof.toString().length === 0) {
-    //             return false
-    //     }
-
-    //    return true
-    // }
-
     handleSave() {
         const data = this.organizationDetailsForm.getData()
         //this.setState({isFormValid: this.formIsValid()})
@@ -144,7 +79,7 @@ class CreateOrganization extends React.Component {
     successCallback() {
         //console.log("success callback")
         this.updateState()
-        location.href = '/home/manage-organization'
+        location.href = '/admin/organization'
     }
 
     failureCallback() {

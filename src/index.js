@@ -32,8 +32,8 @@ class App extends React.Component {
                 }
                 response.json().then((data) => {
                     createSession(data)
-                    if(!location.pathname.includes('home') && !location.pathname.includes('retailer')) {
-                        location.href = '/home'
+                    if(!location.pathname.includes('admin') && !location.pathname.includes('retailer')) {
+                        location.href = '/admin'
                     }
                 })
             })
@@ -50,10 +50,10 @@ class App extends React.Component {
                 <div>
                     <Route path='/login' component={Login} />
                   
-                    <Route path='/home' component={Dashboard} />
+                    <Route path='/admin' component={Dashboard} />
 
                     <Route 
-                        path='/retailer-onboarding-form/:orgId' 
+                        path='/admin/retailer-onboarding-form/:orgId' 
                         //component={RetailerForm}
                           render={
                             props => (

@@ -152,7 +152,7 @@ class EditRetailer extends React.Component {
 
     successCallback() {
         this.updateState()
-        location.href = '/home/manage-retailer'
+        location.href = '/admin/retailer'
     }
 
     failureCallback() {
