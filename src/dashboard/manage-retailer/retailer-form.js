@@ -28,28 +28,8 @@ class RetailerForm extends React.Component {
             email: 'Email'
         }
 
-        this.inputErrorNameMap = {
-            ksbclCodeErr: 'KSBCL code',
-            outletNameErr: 'Outlet name',
-            exciseLicenceNoErr: 'Excise license no',
-            discountPercentErr: 'Discount percent',
-            serviceChargePercentErr: 'Service charge percent',
-            deliveryDiscountPercentErr: 'Delivery discount percent',
-            FSSAINumberErr: 'FSSAI number',
-            bankNameErr: 'Bank name',
-            accountHolderNameErr: 'Account holder name',
-            accountNumberErr: 'Account number',
-            branchErr: 'Branch',
-            IFSCErr: 'IFSC code',
-            outletAddressErr: 'Outlet address',
-            landlineNoErr: 'Landline number',
-            mobileNoErr: 'Mobile number',
-            gpsCoordinatesErr: 'GPS coordinates',
-            pincodeErr: 'Pincode',
-            emailErr: 'Email'
-        }
-
         this.errorFlag = false,
+        this.orgIndexError = false,
 
         this.state = {
             organizationList: this.props.organizationList,
@@ -76,6 +56,7 @@ class RetailerForm extends React.Component {
             gpsCoordinates: props.data ? props.data.gps_cordinates : '',
             mobileNo: props.data ? props.data.mobile_number : '',
             email: props.data ? props.data.email : '',
+            //orgIndexError: false,
             
             bankName: props.data ? props.data.bank_name : '',
             accountHolderName: props.data ? props.data.acc_holder_name : '',
@@ -202,6 +183,7 @@ class RetailerForm extends React.Component {
 
     handleChange(e) {
         if(e.target.name.includes("Organization")) {
+            this.orgIndexError = !this.orgIndexError
             this.setState({
                 selectedStateIdx: parseInt(this.state.organizationMap[e.target.value].state_id),
                 cityList: this.state.stateMap[parseInt(this.state.organizationMap[e.target.value].state_id)],
@@ -279,8 +261,8 @@ class RetailerForm extends React.Component {
     handleSave(e) {
         e.preventDefault()
         this.checkForm()
-        //console.log("handle save in orgform")
-        if(!this.errorFlag) {
+        //console.log("handle save in orgform", this.orgIndexError)
+        if(!this.errorFlag && !this.orgIndexError) {
             this.props.handleSave()
         }
     }
@@ -290,6 +272,11 @@ class RetailerForm extends React.Component {
         const formEl = document.getElementById('RetailerForm')
         const inputCollection = formEl.getElementsByTagName('input')
         const inputsArr = Array.prototype.slice.call(inputCollection)
+        //console.log("org id", this.state.selectedOrganizationIdx)
+        if(this.state.selectedOrganizationIdx === 0) {
+            //console.log("org id", )
+            this.orgIndexError = true
+        }
         
         const textInputs = inputsArr.filter(item => item.type == 'text')
         textInputs.forEach(item => {
@@ -378,7 +365,8 @@ class RetailerForm extends React.Component {
             landlineNoErr,
             mobileNoErr,
             emailErr,
-            gpsCoordinatesErr
+            gpsCoordinatesErr,
+            //orgIndexError
         } = this.state
        
         return(
@@ -390,6 +378,7 @@ class RetailerForm extends React.Component {
                         label="Organization*"
                         value={this.state.selectedOrganizationIdx}
                         name="selectedOrganizationIdx"
+                        error={this.orgIndexError ? 'Organization name is required' : ''}
                         options={this.state.organizationList}
                         onChange={(e) => this.handleChange(e)}
                     />
