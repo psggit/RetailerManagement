@@ -192,6 +192,7 @@ class OrganizationForm extends React.Component {
     }
  
     handleTextChange(e) {
+        //console.log("date of incor", this.state.incorporationDate.length)
         const errName = `${e.target.name}Err`
         this.setState({
             [e.target.name]: e.target.value,
@@ -258,7 +259,7 @@ class OrganizationForm extends React.Component {
         const inputCollection = formEl.getElementsByTagName('input')
         const inputsArr = Array.prototype.slice.call(inputCollection)
         
-        const textInputs = inputsArr.filter(item => item.type == 'text' && item.name !== 'otherProof')
+        const textInputs = inputsArr.filter(item => item.type == 'text' || item.type == "date"  && item.name !== 'otherProof')
         //console.log(textInputs)
         textInputs.forEach(item => {
             this.validate(item)
@@ -344,6 +345,7 @@ class OrganizationForm extends React.Component {
             cityList,
             stateList
         } = this.state
+        //console.log("date of incor", this.state.incorporationDate.length)
         //console.log("other proof", otherProof, isOtherProof)
         //console.log("proof", isOtherProof, otherProof, otherProofErr)
         return (
