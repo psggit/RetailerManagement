@@ -1,6 +1,6 @@
 const path = require('path');
 const webpack = require('webpack')
-//const CleanWebpackPlugin = require('clean-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CompressionPlugin = require("compression-webpack-plugin")
 //const AbsolutePathProviderPlugin = require('abspath-webpack-plugin')
@@ -44,7 +44,7 @@ module.exports = {
     }
   },
   plugins: [
-    // //new CleanWebpackPlugin(['dist']),
+    new CleanWebpackPlugin(['dist']),
     // new AbsolutePathProviderPlugin(/^@sass/, path.resolve('./src/sass')),
     // new AbsolutePathProviderPlugin(/^@utils/, path.resolve('./src/utils')),
     // new AbsolutePathProviderPlugin(/^@components/, path.resolve('./src/components')),
