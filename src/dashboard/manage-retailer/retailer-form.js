@@ -183,7 +183,7 @@ class RetailerForm extends React.Component {
 
     handleChange(e) {
         if(e.target.name.includes("Organization")) {
-            this.orgIndexError = !this.orgIndexError
+            this.orgIndexError = false
             this.setState({
                 selectedStateIdx: parseInt(this.state.organizationMap[e.target.value].state_id),
                 cityList: this.state.stateMap[parseInt(this.state.organizationMap[e.target.value].state_id)],

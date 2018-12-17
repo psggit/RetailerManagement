@@ -27,10 +27,12 @@ class OrganizationForm extends React.Component {
             otherProof: 'Documents attached'
         }
 
+        console.log("data", props.data ? props.data : '')
+
         this.state = {
             organizationName: props.data ? props.data.organisation_name : '',
             organizationType: props.data ? (props.data.type_of_organisation === "partnership" || props.data.type_of_organisation === "proprietorship" || props.data.type_of_organisation === "pvtltd" ) ? props.data.type_of_organisation : 'others' : 'proprietorship',
-            incorporationDate: props.data ? props.data.date_of_incorporation : '',
+            incorporationDate: props.data ? new Date(props.data.date_of_incorporation).toISOString().substr(0, 10) : '',
             cinNumber: props.data ? props.data.cin_no : '',
             panNumber: props.data ? props.data.pan_number : '',
             outletsCount: props.data ? props.data.no_of_outlets : 0,
@@ -480,7 +482,7 @@ class OrganizationForm extends React.Component {
                         label="Pincode*"
                         type="text"
                         name="pincode"
-                        defaultValue={this.props.data ? this.props.data.pincode : ''}
+                        defaultValue={this.state.pincode}
                         error={pincodeErr.status ? pincodeErr.value : ''}
                         onKeyDown={(e) => this.handleNumberChange(e)}
                         onKeyUp={(e) => this.handleNumberChange(e)}
@@ -507,7 +509,7 @@ class OrganizationForm extends React.Component {
                         name="mobileNo"
                         autoComplete="fefef"
                         error={mobileNoErr.status ? mobileNoErr.value : ''}
-                        defaultValue={this.props.data ? this.props.data.mobile_number : ''}
+                        defaultValue={this.state.mobileNo}
                         onKeyDown={(e) => {this.handleNumberChange(e)}}
                         onKeyUp={(e) => this.handleNumberChange(e)}
                     />

@@ -463,9 +463,13 @@ class RetailerOnboardingForm extends React.Component {
                                                         </span>
                                                     </div>
                                             </div>
-                                            <div className="sub-title">
-                                                <h3>DOCUMENTS ATTACHED</h3>
-                                            </div>
+                                            {
+                                                item.is_cancelled_cheque || item.is_excise_license || item.is_photo_of_outlet &&
+                                                <div className="sub-title">
+                                                    <h3>DOCUMENTS ATTACHED</h3>
+                                                </div>
+                                            }
+                                           
                                             {
                                                 item.is_cancelled_cheque &&
                                                 <div className="content">
