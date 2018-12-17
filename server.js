@@ -3,14 +3,14 @@ const path = require('path')
 const app = express();
 // const ASSET_PATH = process.env.ASSET_PATH || '/'
 
-// app.get('*.js', function (req, res, next) {
-//   const runtimeUrlRegex = /runtime.*.js/
-//   if(!runtimeUrlRegex.test(req.url)) {
-//     req.url = req.url + '.gz';
-//     res.set('Content-Encoding', 'gzip');
-//   } 
-//   next();
-// });
+app.get('*.js', function (req, res, next) {
+  const runtimeUrlRegex = /runtime.*.js/
+  if(!runtimeUrlRegex.test(req.url)) {
+     req.url = req.url + '.gz';
+    res.set('Content-Encoding', 'gzip');
+  } 
+  next();
+});
 
 app.use('/admin', express.static(path.join(__dirname, 'dist')))
 
