@@ -52,14 +52,14 @@ module.exports = {
       title: 'Output Management',
       template: './index.html'
     }),
-    new CompressionPlugin({  
-      test: /\.js$|\.css$|\.html$/,
-      filename: "[path].gz[query]",
-      exclude: /node_modules/,
-      algorithm: 'gzip',
-      threshold: 10240,
-      minRatio: 0.8
-    })
+    // new CompressionPlugin({  
+    //   test: /\.js$|\.css$|\.html$/,
+    //   filename: "[path].gz[query]",
+    //   exclude: /node_modules/,
+    //   algorithm: 'gzip',
+    //   threshold: 10240,
+    //   minRatio: 0.8
+    // })
     // new webpack.DefinePlugin({
     //   'process.env.ASSET_PATH': JSON.stringify(ASSET_PATH)
     // })

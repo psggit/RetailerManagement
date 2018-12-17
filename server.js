@@ -4,12 +4,16 @@ const app = express();
 // const ASSET_PATH = process.env.ASSET_PATH || '/'
 
 app.get('*.js', function (req, res, next) {
-  const runtimeUrlRegex = /runtime.*.js/
-  if(!runtimeUrlRegex.test(req.url)) {
-     req.url = req.url + '.gz';
-    res.set('Content-Encoding', 'gzip');
-    res.set('Content-Type', 'text/javascript');
-  } 
+  // const runtimeUrlRegex = /runtime.*.js/
+  const vendorUrlRegex = /vendor.*.js/
+  // if(!runtimeUrlRegex.test(req.url)) {
+  //    req.url = req.url + '.gz';
+  //   res.set('Content-Encoding', 'gzip');
+  //   res.set('Content-Type', 'text/javascript');
+  // } 
+  if (vendorUrlRegex.test(req.url)) {
+    res.setHeader('Cache-Control', 'private, max-age=31536000')
+  }
   next();
 });
 
