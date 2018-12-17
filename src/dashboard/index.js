@@ -158,8 +158,19 @@ class Dashboard extends React.Component {
               /> 
 
               <Route
-                //exact
+                exact
                 path="/admin"
+                //component={ManageOrganization}
+                render={
+                  props => (
+                    <ManageOrganization {...props} />
+                  )
+                }
+              />
+
+              <Route
+                exact
+                path="/admin/organization"
                 //component={ManageOrganization}
                 render={
                   props => (

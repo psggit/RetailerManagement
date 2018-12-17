@@ -26,18 +26,18 @@ class Navbar extends React.Component {
             if (response.status !== 200) {
             console.log(`Looks like there was a problem. Status Code: ${response.status}`)
             localStorage.clear()
-            location.href = '/login'
+            location.href = '/admin/login'
             return
             }
             response.json().then((data) => {
             localStorage.clear()
-            location.href = '/login'
+            location.href = '/admin/login'
             })
         })
         .catch((err) => {
             console.log('Fetch Error :-S', err)
             localStorage.clear()
-            location.href = '/login'
+            location.href = '/admin/login'
         })
 
     }

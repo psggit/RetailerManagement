@@ -397,7 +397,7 @@ class RetailerOnboardingForm extends React.Component {
                                                     </div>
                                             </div>
                                             <div className="content">
-                                                    <div><p>KSBCL Code</p></div> 
+                                                    <div><p>Store Code</p></div> 
                                                     <div>
                                                         <span>
                                                             {item.ksbcl_code}
