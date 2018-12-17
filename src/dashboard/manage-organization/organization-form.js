@@ -261,7 +261,7 @@ class OrganizationForm extends React.Component {
             stateList
         } = this.state
         //console.log("other proof", otherProof, isOtherProof)
-        console.log("proof", isOtherProof, otherProof, otherProofErr)
+        //console.log("proof", isOtherProof, otherProof, otherProofErr)
         return (
             <Form layout="label-on-top">
                 <Form.FieldSet label="Organization Details">
