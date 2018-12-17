@@ -85,7 +85,7 @@ class App extends React.Component {
                     <Route path='/admin/login' component={Login} />
 
                     <Route 
-                        path='/retailer-onboarding-form/:orgId' 
+                        path='/admin/retailer-onboarding-form/:orgId' 
                         //component={RetailerForm}
                           render={
                             props => (

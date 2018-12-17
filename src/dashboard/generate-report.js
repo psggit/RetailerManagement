@@ -90,7 +90,7 @@ class GenerateReport extends React.Component {
     }
 
     handleClick() {
-        window.open(`/retailer-onboarding-form/${this.state.selectedOrganizationIdx}`, '_blank')
+        window.open(`/admin/retailer-onboarding-form/${this.state.selectedOrganizationIdx}`, '_blank')
     }
 
     render() {
