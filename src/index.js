@@ -53,7 +53,7 @@ class App extends React.Component {
                     <Route path='/admin' component={Dashboard} />
 
                     <Route 
-                        path='/admin/retailer-onboarding-form/:orgId' 
+                        path='/retailer-onboarding-form/:orgId' 
                         //component={RetailerForm}
                           render={
                             props => (

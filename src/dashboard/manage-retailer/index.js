@@ -9,6 +9,7 @@ import { getQueryObj, getQueryUri } from 'Utils/url-utils'
 import { NavLink } from 'react-router-dom'
 import Switch2 from 'Components/switch'
 import * as Api from './../../api'
+import CustomButton from 'Components/button'
 
 class ManageRetailer extends React.Component {
 
@@ -264,7 +265,8 @@ class ManageRetailer extends React.Component {
             <Layout title="Manage Retailer">
                 <NavLink to={`/admin/retailer/create`}>
                     <div style={{marginTop: '20px'}}>
-                        <Button> Create Retailer </Button>
+                        {/* <Button> Create Retailer </Button> */}
+                        <CustomButton text="CREATE RETAILER" />
                     </div>
                 </NavLink>
                
@@ -332,7 +334,8 @@ class ManageRetailer extends React.Component {
                             marginRight: '20px'
                         }}
                     >
-                        <Button onClick={() => this.getFilteredRetailersList()}>Search</Button>
+                        {/* <Button onClick={() => this.getFilteredRetailersList()}>Search</Button> */}
+                        <CustomButton text="Search" onClick={this.getFilteredRetailersList} />
                     </div>
                     <div
                         style={{
@@ -340,7 +343,8 @@ class ManageRetailer extends React.Component {
                             display: 'inline-block',
                         }}
                     >
-                        <Button onClick={() => this.resetFilter()}>Reset</Button>
+                        {/* <Button onClick={() => this.resetFilter()}>Reset</Button> */}
+                        <CustomButton text="Reset" onClick={this.resetFilter} />
                     </div>
                 </div>
                 {

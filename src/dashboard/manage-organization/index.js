@@ -8,6 +8,7 @@ import Pagination from 'Components/pagination'
 import { getQueryObj, getQueryUri } from 'Utils/url-utils'
 import { NavLink } from 'react-router-dom'
 import * as Api from './../../api'
+import CustomButton from 'Components/button'
 
 class ManageOrganization extends React.Component {
 
@@ -246,7 +247,7 @@ class ManageOrganization extends React.Component {
             <Layout title="Manage Organization">
                 <NavLink to={`/admin/organization/create`}>
                     <div style={{marginTop: '20px'}}>
-                        <Button> Create Organization </Button>
+                        <CustomButton text="CREATE ORGANIZATION" />
                     </div>
                 </NavLink>
                
@@ -313,7 +314,8 @@ class ManageOrganization extends React.Component {
                             marginRight: '20px'
                         }}
                     >
-                        <Button onClick={() => this.getFilteredOrganisationList()}>Search</Button>
+                        {/* <Button onClick={() => this.getFilteredOrganisationList()}>Search</Button> */}
+                        <CustomButton text="Search" onClick={this.getFilteredOrganisationList} />
                     </div>
                     <div
                         style={{
@@ -321,7 +323,8 @@ class ManageOrganization extends React.Component {
                             display: 'inline-block',
                         }}
                     >
-                        <Button onClick={() => this.resetFilter()}>Reset</Button>
+                        {/* <Button onClick={() => this.resetFilter()}>Reset</Button> */}
+                        <CustomButton text="Reset" onClick={this.resetFilter} />
                     </div>
                 </div>
                 <div style={{ marginTop: '40px', marginBottom: '20px' }}>

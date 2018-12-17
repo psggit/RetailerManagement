@@ -2,6 +2,7 @@ import React from 'react'
 import { Form, Checkbox, Button, ButtonGroup } from '@auth0/cosmos'
 import { validateTextField, validateEmail, validateNumberField } from 'Utils/validators'
 import { checkCtrlA, validateNumType, checkCtrlV } from 'Utils/logic-utils'
+import CustomButton from 'Components/button'
 
 class RetailerForm extends React.Component {
     constructor(props) {
@@ -588,8 +589,10 @@ class RetailerForm extends React.Component {
                         //onChange={(e) => this.handleNumberChange(e)}
                     />
                     <ButtonGroup align="right">
-                        <Button onClick={(e) => this.handleSave(e)}>Save</Button>
+                        {/* <Button onClick={(e) => this.handleSave(e)}>Save</Button> */}
+                        <CustomButton text="Save" handleClick={this.handleSave}/>
                     </ButtonGroup>
+                   
                 </Form.FieldSet>
             </Form>
             </div>

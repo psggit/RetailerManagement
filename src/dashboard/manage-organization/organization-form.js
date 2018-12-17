@@ -2,6 +2,7 @@ import React from 'react'
 import { Form, TextInput, Checkbox, Button, ButtonGroup } from '@auth0/cosmos'
 import { validateTextField, validateEmail, validateNumberField } from 'Utils/validators'
 import { checkCtrlA, validateNumType, checkCtrlV } from 'Utils/logic-utils'
+import CustomButton from 'Components/button'
 
 class OrganizationForm extends React.Component {
 
@@ -275,71 +276,6 @@ class OrganizationForm extends React.Component {
             [errName]: validateTextField(this.inputNameMap[item.name], item.value),
         })
     }
-
-    // formIsValid() {
-    //     //const organizationDetailsForm = this.organizationDetailsForm.getData()
-    
-    //     const { organizationNameErr, 
-    //             incorporationDateErr, 
-    //             cinNumberErr, 
-    //             panNumberErr, 
-    //             GSTNumberErr,
-    //             organizationAddressErr,
-    //             pincodeErr,
-    //             landlineNoErr,
-    //             authorizedPersonErr,
-    //             mobileNoErr,
-    //             emailErr,
-    //             otherOrgTypeErr,
-    //             otherOrgType,
-    //             otherProofErr,
-    //             otherProof,
-    //             organizationType,
-    //             isOtherProof
-    //             // otherParnershipProof,
-    //             // partnershipDocErr,
-    //             // otherPvtLtdProof,
-    //             // privateDocErr
-    //         } = this.state 
-        
-    //     const formData = {
-    //         organizationNameErr, 
-    //         incorporationDateErr, 
-    //         cinNumberErr, 
-    //         panNumberErr, 
-    //         GSTNumberErr,
-    //         organizationAddressErr,
-    //         pincodeErr,
-    //         landlineNoErr,
-    //         authorizedPersonErr,
-    //         mobileNoErr,
-    //         emailErr,
-    //         otherOrgTypeErr,
-    //         otherProofErr
-    //     }
-
-    //     // for(const key in formData) {
-    //     //     if(formData[key].value.toString().length === 0){
-    //     //         return false
-    //     //     } 
-    //     // }
-    //     console.log("Form data", this.state)
-    //     for(const key in formData) {
-    //         if(formData[key].status){
-    //             return false
-    //         } 
-    //     }
-
-    //     if(organizationType === "others" && otherOrgType.toString().length === 0) {
-    //             return false
-    //     }
-
-    //     if(isOtherProof && otherProof.toString().length === 0) {
-    //             return false
-    //     }
-
-    //    return true
-    // }
 
     getData() {
         return this.state
@@ -684,7 +620,8 @@ class OrganizationForm extends React.Component {
                         </div>
                     }
                     <ButtonGroup align="right">
-                        <Button onClick={(e) => this.handleSave(e)}>Save</Button>
+                        {/* <Button onClick={(e) => this.handleSave(e)}>Save</Button> */}
+                        <CustomButton text="Save" handleClick={this.handleSave}/>
                     </ButtonGroup>
                 </Form.FieldSet>
             </Form>

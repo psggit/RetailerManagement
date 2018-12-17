@@ -6,6 +6,7 @@ import { Form, Button, ButtonGroup } from '@auth0/cosmos'
 import Card from 'Components/card'
 import * as Api from './../api'
 import {formatStateAndCityList, formatStateAndOrganizationList} from 'Utils/response-format-utils'
+import CustomButton from 'Components/button'
 // import {organizationAndStateList, stateAndCityList} from './../mockData'
 
 class GenerateReport extends React.Component {
@@ -25,6 +26,7 @@ class GenerateReport extends React.Component {
         this.fetchStateAndCityList = this.fetchStateAndCityList.bind(this)
         this.formatResponse = this.formatResponse.bind(this)
         this.handleChange = this.handleChange.bind(this)
+        this.handleClick = this.handleClick.bind(this)
     }
 
     componentDidMount() {
@@ -87,6 +89,10 @@ class GenerateReport extends React.Component {
         // doc.save('file.pdf');
     }
 
+    handleClick() {
+        window.open(`/retailer-onboarding-form/${this.state.selectedOrganizationIdx}`, '_blank')
+    }
+
     render() {
         const {organizationList, stateList} = this.state
         return (
@@ -108,9 +114,10 @@ class GenerateReport extends React.Component {
                             options={stateList}
                         /> */}
                     </Form>
-                    <a href={`/admin/retailer-onboarding-form/${this.state.selectedOrganizationIdx}`} target="_blank">
-                        <Button> Download </Button>
-                    </a>
+                    {/* <a href={`/admin/retailer-onboarding-form/${this.state.selectedOrganizationIdx}`} target="_blank"> */}
+                        {/* <Button> Download </Button> */}
+                        <CustomButton text="Download" handleClick={this.handleClick}/>
+                    {/* </a> */}
                 </Card>
             </Layout>
         ) 
