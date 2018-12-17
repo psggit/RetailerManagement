@@ -18,6 +18,7 @@ export function fetchOrganizationList (payloadObj, successCallback, failureCallb
             successCallback(json)
         })
         .catch(err => {
+            console.log("Error in fetching organisation list", err)
             err.response.json().then(json => { Notify("danger", json.error) })
             failureCallback()
         })
@@ -42,7 +43,7 @@ export function fetchStateAndCityList(payloadObj, successCallback) {
         successCallback(response)
     })
     .catch(err => {
-        console.log("Error", err)
+        console.log("Error in fetching state and city map", err)
         err.response.json().then(json => { Notify("danger", json.message) })
     })
  
@@ -66,6 +67,8 @@ export function createOrganization(payloadObj, successCallback, failureCallback)
         successCallback()
     })
     .catch(err => {
+        console.log("Error in create organization", err)
+        Notify("danger", "Error in creating organization")
         err.response.json().then(json => { Notify("danger", json.message) })
         failureCallback()
     })
@@ -88,6 +91,8 @@ export function updateOrganization(payloadObj, successCallback, failureCallback)
         successCallback(json)
     })
     .catch(err => {
+        console.log("Error in updating organization", err)
+        Notify("danger", "Error in updating organization")
         err.response.json().then(json => { Notify("danger", json.message) })
         failureCallback()
     })
@@ -110,6 +115,7 @@ export function fetchOrganizationAndStateList (payloadObj, successCallback) {
         successCallback(json)
     })
     .catch(err => {
+        console.log("Error in fetching organization and state map", err)
         err.response.json().then(json => { Notify("danger", json.message) })
     })
  
@@ -159,8 +165,9 @@ export function createRetailer(payloadObj, successCallback, failureCallback) {
         successCallback(json)
     })
     .catch(err => {
-        err.response.json().then(json => { Notify("danger", json.message) })
+        //err.response.json().then(json => { Notify("danger", json.message) })
         console.log("Error in create retailer", err)
+        Notify("danger", "Error in creating retailer")
         failureCallback()
     })
 }
@@ -182,7 +189,9 @@ export function updateRetailer(payloadObj, successCallback, failureCallback) {
         successCallback(json)
     })
     .catch(err => {
-        err.response.json().then(json => { Notify("danger", json.message) })
+        //err.response.json().then(json => { Notify("danger", json.message) })
+        console.log("Error in updating retailer", err)
+        Notify("danger", "Error in updating retailer")
         failureCallback()
     })
 }
@@ -199,6 +208,8 @@ export function deactivateRetailer(payloadObj, callback) {
        callback()
     })
     .catch(err => {
+        console.log("Error in updating retailer status", err)
+        Notify("danger", "Error in updating branch status")
         err.response.json().then(json => { Notify("danger", json.message) })
         //failureCallback()
     })
