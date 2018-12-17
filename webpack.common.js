@@ -1,8 +1,11 @@
 const path = require('path');
+const webpack = require('webpack')
 //const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CompressionPlugin = require("compression-webpack-plugin")
 //const AbsolutePathProviderPlugin = require('abspath-webpack-plugin')
+
+// const ASSET_PATH = process.env.ASSET_PATH || '/'
 
 module.exports = {
   entry: {
@@ -57,11 +60,14 @@ module.exports = {
       threshold: 10240,
       minRatio: 0.8
     })
+    // new webpack.DefinePlugin({
+    //   'process.env.ASSET_PATH': JSON.stringify(ASSET_PATH)
+    // })
   ],
   output: {
     filename: '[name].[chunkhash].js',
     path: path.resolve(__dirname, 'dist'),
-    publicPath: '/'
+    publicPath: '/admin'
   },
   optimization: {
     splitChunks: {
