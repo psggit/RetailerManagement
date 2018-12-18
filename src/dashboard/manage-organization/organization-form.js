@@ -27,7 +27,7 @@ class OrganizationForm extends React.Component {
             otherProof: 'Documents attached'
         }
 
-        console.log("data", props.data ? props.data : '')
+        //console.log("data", props.data ? props.data : '')
 
         this.state = {
             organizationName: props.data ? props.data.organisation_name : '',
