@@ -151,7 +151,7 @@ class CreateRetailer extends React.Component {
 
     successCallback() {
         this.updateState()
-        //location.href = '/admin/retailer'
+        location.href = '/admin/retailer'
     }
 
     failureCallback() {
