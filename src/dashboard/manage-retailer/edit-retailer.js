@@ -136,7 +136,7 @@ class EditRetailer extends React.Component {
                 account_number: retailerDataForm.accountNumber,
                 bank_branch: retailerDataForm.branch,
                 acc_type: retailerDataForm.accountType,
-                ifsc_code: retailerDataForm.ifsc_code,
+                ifsc_code: retailerDataForm.IFSC,
                 is_cancelled_cheque: retailerDataForm.cancelledCheck,
                 is_excise_license: retailerDataForm.exciseLicense,
                 is_photo_of_outlet: retailerDataForm.outletPhoto
