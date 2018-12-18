@@ -10,7 +10,7 @@ import {  Api } from 'Utils/config'
 import { createSession } from './login/utils'
 
 import Login from './login'
-import Dashboard from './dashboard'
+//import Dashboard from './dashboard'
 import RetailerForm from './report'
 import SideMenu from 'Components/sidemenu'
 import Navbar from 'Components/navbar'

@@ -79,7 +79,7 @@ class CreateOrganization extends React.Component {
     successCallback() {
         //console.log("success callback")
         this.updateState()
-        location.href = '/admin/organization'
+        //location.href = '/admin/organization'
     }
 
     failureCallback() {

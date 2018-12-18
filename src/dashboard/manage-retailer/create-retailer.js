@@ -109,14 +109,16 @@ class CreateRetailer extends React.Component {
 
     handleSave() {
         const retailerDataForm = this.retailerDetailsForm.getData()
+
+        console.log("data", retailerDataForm)
         // this.setState({isFormValid: this.formIsValid()})
         // if(this.formIsValid()) {
             const payload = {
                 organisation_id: retailerDataForm.selectedOrganizationIdx,
                 branch_status: retailerDataForm.selectedOutletStatusIdx,
-                ksbcl_code: retailerDataForm.ksbclCode,
+                ksbcl_code: retailerDataForm.storeCode,
                 outlet_name: retailerDataForm.outletName,
-                excise_licence_number: retailerDataForm.exciseLicenseNo,
+                excise_licence_number: retailerDataForm.exciseLicenceNo,
                 discount_percent: retailerDataForm.discountPercent,
                 delivery_discount_percent: retailerDataForm.deliveryDiscountPercent,
                 service_charge_percent: retailerDataForm.serviceChargePercent,
@@ -149,7 +151,7 @@ class CreateRetailer extends React.Component {
 
     successCallback() {
         this.updateState()
-        location.href = '/admin/retailer'
+        //location.href = '/admin/retailer'
     }
 
     failureCallback() {
