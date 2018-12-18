@@ -25,7 +25,7 @@ class CreateRetailer extends React.Component {
         this.successCallback = this.successCallback.bind(this)
         this.failureCallback = this.failureCallback.bind(this)
         this.updateState = this.updateState.bind(this)
-        this.formIsValid = this.formIsValid.bind(this)
+        //this.formIsValid = this.formIsValid.bind(this)
         this.fetchOrganizationAndStateList = this.fetchOrganizationAndStateList.bind(this)
         this.formatOrganizationList = this.formatOrganizationList.bind(this)
         this.fetchStateAndCityList = this.fetchStateAndCityList.bind(this)
@@ -55,62 +55,62 @@ class CreateRetailer extends React.Component {
         this.setState({stateList, cityList, stateMap})   
     }
 
-    formIsValid() {
-        const retailerDataForm = this.retailerDetailsForm.getData()
-        const { ksbclCodeErr,
-                outletNameErr,
-                exciseLicenceNoErr,
-                discountPercentErr,
-                serviceChargePercentErr,
-                deliveryDiscountPercentErr,
-                FSSAINumberErr,
-                bankNameErr,
-                accountHolderNameErr,
-                accountNumberErr,
-                branchErr,
-                IFSCErr,
-                outletAddressErr,
-                pincodeErr,
-                landlineNoErr,
-                mobileNoErr,
-                emailErr,
-                gpsCoordinatesErr
-            } = retailerDataForm 
+    // formIsValid() {
+    //     const retailerDataForm = this.retailerDetailsForm.getData()
+    //     const { ksbclCodeErr,
+    //             outletNameErr,
+    //             exciseLicenceNoErr,
+    //             discountPercentErr,
+    //             serviceChargePercentErr,
+    //             deliveryDiscountPercentErr,
+    //             FSSAINumberErr,
+    //             bankNameErr,
+    //             accountHolderNameErr,
+    //             accountNumberErr,
+    //             branchErr,
+    //             IFSCErr,
+    //             outletAddressErr,
+    //             pincodeErr,
+    //             landlineNoErr,
+    //             mobileNoErr,
+    //             emailErr,
+    //             gpsCoordinatesErr
+    //         } = retailerDataForm 
         
-        const formData = {
-            ksbclCodeErr,
-            outletNameErr,
-            exciseLicenceNoErr,
-            discountPercentErr,
-            serviceChargePercentErr,
-            deliveryDiscountPercentErr,
-            FSSAINumberErr,
-            bankNameErr,
-            accountHolderNameErr,
-            accountNumberErr,
-            branchErr,
-            IFSCErr,
-            outletAddressErr,
-            pincodeErr,
-            landlineNoErr,
-            mobileNoErr,
-            emailErr,
-            gpsCoordinatesErr
-        }
-       //console.log("form data", formData)
-       for(const key in formData) {
-           if(formData[key].status && formData[key].value.toString().length === 0){
-               return false
-           } 
-       }
+    //     const formData = {
+    //         ksbclCodeErr,
+    //         outletNameErr,
+    //         exciseLicenceNoErr,
+    //         discountPercentErr,
+    //         serviceChargePercentErr,
+    //         deliveryDiscountPercentErr,
+    //         FSSAINumberErr,
+    //         bankNameErr,
+    //         accountHolderNameErr,
+    //         accountNumberErr,
+    //         branchErr,
+    //         IFSCErr,
+    //         outletAddressErr,
+    //         pincodeErr,
+    //         landlineNoErr,
+    //         mobileNoErr,
+    //         emailErr,
+    //         gpsCoordinatesErr
+    //     }
+    //    //console.log("form data", formData)
+    //    for(const key in formData) {
+    //        if(formData[key].status && formData[key].value.toString().length === 0){
+    //            return false
+    //        } 
+    //    }
 
-       return true
-    }
+    //    return true
+    // }
 
     handleSave() {
         const retailerDataForm = this.retailerDetailsForm.getData()
-        this.setState({isFormValid: this.formIsValid()})
-        if(this.formIsValid()) {
+        // this.setState({isFormValid: this.formIsValid()})
+        // if(this.formIsValid()) {
             const payload = {
                 organisation_id: retailerDataForm.selectedOrganizationIdx,
                 branch_status: retailerDataForm.selectedOutletStatusIdx,
@@ -143,7 +143,7 @@ class CreateRetailer extends React.Component {
             }
             this.setState({creatingRetailer: true})
             this.createRetailer(payload, this.successCallback, this.failureCallback)
-        }
+        //}
         //e.preventDefault()
     }
 

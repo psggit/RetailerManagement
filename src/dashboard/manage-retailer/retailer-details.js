@@ -18,13 +18,13 @@ class RetailerDetails extends React.Component {
                         <span></span> */}
                         <p><b>Retailer Id</b>: { data.id }</p>
                         <p><b>Outlet Name</b>: { data.outlet_name }</p>
-                        <p><b>KSBCL Code</b>: { data.ksbcl_code } </p>
+                        <p><b>Store Code</b>: { data.ksbcl_code } </p>
                         <p><b>Excise Licence Number</b>: { data.excise_licence_number } </p>
                         <p><b>Discount Percent</b>: { data.discount_percent } </p>
                         <p><b>Service Charge Percent</b>: { data.service_charge_percent } </p>
                         <p><b>Delivery Discount Percent</b>: { data.delivery_discount_percent } </p>
                         <p><b>KYC Status</b>: { data.kyc_status === "true" ? 'Verified' : 'Not verified' } </p>
-                        <p><b>Retailer Status</b>: { data.branch_status === "true"? 'Active' : 'Not Active' } </p>
+                        <p><b>Outlet Status</b>: { data.branch_status === "true"? 'Active' : 'Not Active' } </p>
                         
                         <h3>Outlet Contact Details</h3>
                         <p><b>Outlet Address</b>: { data.store_address } </p>

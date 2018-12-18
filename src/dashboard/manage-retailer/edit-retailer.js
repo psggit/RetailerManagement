@@ -56,7 +56,7 @@ class EditRetailer extends React.Component {
 
     formIsValid() {
         const retailerDataForm = this.retailerDetailsForm.getData()
-        const { ksbclCodeErr,
+        const { storeCodeErr,
                 outletNameErr,
                 exciseLicenceNoErr,
                 discountPercentErr,
@@ -77,7 +77,7 @@ class EditRetailer extends React.Component {
             } = retailerDataForm 
         
         const formData = {
-            ksbclCodeErr,
+            storeCodeErr,
             outletNameErr,
             exciseLicenceNoErr,
             discountPercentErr,
@@ -114,7 +114,7 @@ class EditRetailer extends React.Component {
                 id: parseInt(this.props.location.state.id),
                 organisation_id: retailerDataForm.selectedOrganizationIdx,
                 branch_status: retailerDataForm.selectedOutletStatusIdx,
-                ksbcl_code: retailerDataForm.ksbclCode,
+                ksbcl_code: retailerDataForm.storeCode,
                 outlet_name: retailerDataForm.outletName,
                 excise_licence_number: retailerDataForm.exciseLicenseNo,
                 discount_percent: retailerDataForm.discountPercent,

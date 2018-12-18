@@ -8,7 +8,7 @@ class RetailerForm extends React.Component {
     constructor(props) {
         super(props)
         this.inputNameMap = {
-            ksbclCode: 'KSBCL code',
+            storeCode: 'Store code',
             outletName: 'Outlet name',
             exciseLicenceNo: 'Excise license no',
             discountPercent: 'Discount percent',
@@ -38,7 +38,7 @@ class RetailerForm extends React.Component {
             stateMap: this.props.stateMap,
             cityList: this.props.cityList,
             selectedOrganizationIdx: props.data ? props.data.organisation_id : 0,
-            ksbclCode: props.data ? props.data.ksbcl_code : '',
+            storeCode: props.data ? props.data.ksbcl_code : '',
             outletName: props.data ? props.data.outlet_name : '',
             exciseLicenceNo: props.data ? props.data.excise_licence_number : '',
             discountPercent: props.data ? props.data.discount_percent : '',
@@ -68,7 +68,7 @@ class RetailerForm extends React.Component {
             exciseLicense: props.data ? props.data.is_excise_license : false,
             outletPhoto: props.data ? props.data.is_photo_of_outlet : false,
 
-            ksbclCodeErr: {
+            storeCodeErr: {
                 value: '',
                 status: false
             },
@@ -346,7 +346,7 @@ class RetailerForm extends React.Component {
 
     render() {
         const {
-            ksbclCodeErr,
+            storeCodeErr,
             outletNameErr,
             exciseLicenceNoErr,
             discountPercentErr,
@@ -382,11 +382,11 @@ class RetailerForm extends React.Component {
                     />
                     <Form.TextInput
                         //placeholder="101"
-                        label="KSBCL Code*"
+                        label="Store Code*"
                         type="text"
-                        name="ksbclCode"
-                        value={this.state.ksbclCode}
-                        error={ksbclCodeErr.status ? ksbclCodeErr.value : ''}
+                        name="storeCode"
+                        value={this.state.storeCode}
+                        error={storeCodeErr.status ? storeCodeErr.value : ''}
                         onChange={(e) => this.handleTextChange(e)}
                     />
                     <Form.TextInput
