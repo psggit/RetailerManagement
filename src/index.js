@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import {
   Switch,
   Route,
-  Link
+  Link,
 } from 'react-router-dom'
 import {Router} from 'react-router'
 import {  Api } from 'Utils/config'
