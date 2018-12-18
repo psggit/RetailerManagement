@@ -60,7 +60,7 @@ class OrganizationForm extends React.Component {
             pvtCOI: props.data ? props.data.coi : false,
             pvtLOA: props.data ? props.data.loa : false,
             otherOrgType: props.data ? props.data.type_of_organisation : '',
-            otherProof: props.data ? props.data.other_documents : '',
+            otherProof: props.data ? props.data.other_documents ? props.data.other_documents : '' : '',
             isOtherProof: props.data && props.data.other_documents && props.data.other_documents.length > 0 ? true : false,
 
             // otherParnershipProof: false,
