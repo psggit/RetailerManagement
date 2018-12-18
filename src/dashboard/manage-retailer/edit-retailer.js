@@ -116,7 +116,7 @@ class EditRetailer extends React.Component {
                 branch_status: retailerDataForm.selectedOutletStatusIdx,
                 ksbcl_code: retailerDataForm.storeCode,
                 outlet_name: retailerDataForm.outletName,
-                excise_licence_number: retailerDataForm.exciseLicenseNo,
+                excise_licence_number: retailerDataForm.exciseLicenceNo,
                 discount_percent: retailerDataForm.discountPercent,
                 delivery_discount_percent: retailerDataForm.deliveryDiscountPercent,
                 service_charge_percent: retailerDataForm.serviceChargePercent,
