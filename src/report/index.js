@@ -64,7 +64,7 @@ class RetailerOnboardingForm extends React.Component {
 
     render() {
         const {organizationData, retailerData} = this.state
-        console.log("organization details", organizationData, "retailer", retailerData)
+        //console.log("organization details", organizationData, "retailer", retailerData)
         return(
             <React.Fragment>
                 <div className="container">
@@ -348,6 +348,7 @@ class RetailerOnboardingForm extends React.Component {
                         </div>
                         {
                             retailerData && retailerData.length > 0 && retailerData.map((item, index) => {
+                                const shouldShowTitle = item.is_cancelled_cheque || item.is_excise_license || item.is_photo_of_outlet 
                                 return(
                                     <React.Fragment>
                                         <div className="outlet-info">
@@ -464,7 +465,8 @@ class RetailerOnboardingForm extends React.Component {
                                                     </div>
                                             </div>
                                             {
-                                                item.is_cancelled_cheque || item.is_excise_license || item.is_photo_of_outlet &&
+                                                //item.is_cancelled_cheque || item.is_excise_license || item.is_photo_of_outlet &&
+                                                shouldShowTitle &&
                                                 <div className="sub-title">
                                                     <h3>DOCUMENTS ATTACHED</h3>
                                                 </div>
