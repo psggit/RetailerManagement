@@ -39,7 +39,7 @@ class ManageOrganization extends React.Component {
             value: ''
         }
     
-        this.pagesLimit = 5
+        this.pagesLimit = 10
         this.handlePageChange = this.handlePageChange.bind(this)
         this.resetFilter = this.resetFilter.bind(this)
         this.handleChange = this.handleChange.bind(this)

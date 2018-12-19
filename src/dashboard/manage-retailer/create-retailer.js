@@ -122,8 +122,8 @@ class CreateRetailer extends React.Component {
                 discount_percent: retailerDataForm.discountPercent,
                 delivery_discount_percent: retailerDataForm.deliveryDiscountPercent,
                 service_charge_percent: retailerDataForm.serviceChargePercent,
-                kyc_status: retailerDataForm.selectedKycIdx === "1" ? "true" : "false",
-                branch_status: retailerDataForm.selectedOutletStatusIdx === "1" ? "true" : "false",
+                kyc_status: retailerDataForm.selectedKycIdx === 1 ? "true" : "false",
+                branch_status: retailerDataForm.selectedOutletStatusIdx === 1 ? "true" : "false",
                 fssai_no: retailerDataForm.FSSAINumber,
                 city_id: retailerDataForm.selectedCityIdx,
                 state_id: retailerDataForm.selectedStateIdx,
@@ -151,7 +151,7 @@ class CreateRetailer extends React.Component {
 
     successCallback() {
         this.updateState()
-        location.href = '/admin/retailer'
+        //location.href = '/admin/retailer'
     }
 
     failureCallback() {
