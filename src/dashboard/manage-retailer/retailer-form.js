@@ -165,19 +165,22 @@ class RetailerForm extends React.Component {
             }
         }
 
-        if(newProps.cityList && this.props.cityList !== newProps.cityList) {
-            this.setState({cityList: newProps.cityList})
-            if(location.pathname.includes("create")) {
-                this.setState({selectedCityIdx: newProps.cityList[0].value})
-            }
-        }
-
         if(this.props.organizationMap !== newProps.organizationMap) {
             this.setState({organizationMap: newProps.organizationMap})
+            if(location.pathname.includes("edit")) {
+                this.setState({cityList: newProps.stateMap[newProps.organizationMap[this.props.data.organisation_id].state_id]})
+            }
         }
 
         if(this.props.stateMap !== newProps.stateMap) {
             this.setState({stateMap: newProps.stateMap})
+        }
+
+        if(newProps.cityList && this.props.cityList !== newProps.cityList) {
+            if(location.pathname.includes("create")) {
+                this.setState({cityList: newProps.cityList})
+                this.setState({selectedCityIdx: newProps.cityList[0].value})
+            } 
         }
     }
 
