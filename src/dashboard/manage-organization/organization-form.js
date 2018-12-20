@@ -258,10 +258,15 @@ class OrganizationForm extends React.Component {
         const inputCollection = formEl.getElementsByTagName('input')
         const inputsArr = Array.prototype.slice.call(inputCollection)
         
-        const textInputs = inputsArr.filter(item => (item.type == 'text' || item.type == "date")  && item.name !== 'otherProof')
+        const textInputs = inputsArr.filter(item => (item.type == 'text' || item.type == "date"))
 
         textInputs.forEach(item => {
-            this.validate(item)
+            if(item.name === 'otherProof' && this.state.isOtherProof) {
+                this.validate(item)
+            } else{
+                this.validate(item)
+            }
+           
         })
     }
 
@@ -303,6 +308,7 @@ class OrganizationForm extends React.Component {
 
         } else {
             const error = validateTextField(this.inputNameMap[item.name], item.value)
+            //console.log("error", error, item.name)
             if (error.status) {
                 this.errorFlag = true
             }
