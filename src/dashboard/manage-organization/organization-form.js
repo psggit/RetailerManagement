@@ -363,6 +363,7 @@ class OrganizationForm extends React.Component {
                     <Form.TextInput
                         label="Date of Incorporation*"
                         type="date"
+                        max="9999-12-31"
                         name="incorporationDate"
                         //defaultValue={this.state.incorporationDate}
                         value={this.state.incorporationDate}
