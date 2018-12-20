@@ -10,6 +10,8 @@ class OrganizationDetails extends React.Component {
 
     render() {
         const data = this.props.history.location.state
+
+        console.log("data in details", data)
        
         return(
             <Layout title="Organization Details">
@@ -24,9 +26,9 @@ class OrganizationDetails extends React.Component {
                         <p><b>CIN Number</b>: { data.cin_no } </p>
                         <p><b>PAN Number</b>: { data.pan_number } </p>
                         <p><b>No of Outlets</b>: { data.no_of_outlets } </p>
-                        <p><b>KYC Verified</b>: { data.kyc_status === "true" ? 'Verified' : 'Not Verified' } </p>
+                        <p><b>KYC Verified</b>: { data.kyc_status} </p>
                         <p><b>GST Number</b>: { data.gst_no } </p>
-                        <p><b>Organization Status</b>: { data.status === "true" ? 'Active' : 'Inactive' } </p>
+                        <p><b>Organization Status</b>: { data.status} </p>
                         
                         <h3>Organization Contact Details</h3>
                         <p><b>Organization Address</b>: { data.org_address } </p>

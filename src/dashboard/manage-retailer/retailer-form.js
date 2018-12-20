@@ -391,6 +391,7 @@ class RetailerForm extends React.Component {
                         value={this.state.storeCode}
                         error={storeCodeErr.status ? storeCodeErr.value : ''}
                         onChange={(e) => this.handleTextChange(e)}
+                        autoComplete="fefef"
                     />
                     <Form.TextInput
                         //placeholder="Goa Wines Patto"
@@ -400,6 +401,7 @@ class RetailerForm extends React.Component {
                         value={this.state.outletName}
                         error={outletNameErr.status ? outletNameErr.value : ''}
                         onChange={(e) => this.handleTextChange(e)}
+                        autoComplete="fefef"
                     />
                     <Form.TextInput
                         label="Excise License Number*"
@@ -408,6 +410,7 @@ class RetailerForm extends React.Component {
                         value={this.state.exciseLicenceNo}
                         error={exciseLicenceNoErr.status ? exciseLicenceNoErr.value : ''}
                         onChange={(e) => this.handleTextChange(e)}
+                        autoComplete="fefef"
                     />
                     <Form.TextInput
                         label="Discount Percent*"
@@ -418,6 +421,7 @@ class RetailerForm extends React.Component {
                         error={discountPercentErr.status ? discountPercentErr.value : ''}
                         onKeyDown={(e) => {this.handleNumberChange(e)}}
                         onKeyUp={(e) => {this.handleNumberChange(e)}}
+                        autoComplete="fefef"
                     />
                     <Form.TextInput
                         label="Service Charge Percent*"
@@ -427,6 +431,7 @@ class RetailerForm extends React.Component {
                         error={serviceChargePercentErr.status ? serviceChargePercentErr.value : ''}
                         onKeyDown={(e) => {this.handleNumberChange(e)}}
                         onKeyUp={(e) => {this.handleNumberChange(e)}}
+                        autoComplete="fefef"
                     />
                     <Form.TextInput
                         label="Delivery Discount Percent*"
@@ -439,6 +444,7 @@ class RetailerForm extends React.Component {
                         //onChange={(e) => this.handleTextChange(e)}
                         onKeyDown={(e) => {this.handleNumberChange(e)}}
                         onKeyUp={(e) => {this.handleNumberChange(e)}}
+                        autoComplete="fefef"
                     />
                     <Form.TextInput
                         label="FSSAI Number*"
@@ -447,6 +453,7 @@ class RetailerForm extends React.Component {
                         value={this.state.FSSAINumber}
                         error={FSSAINumberErr.status ? FSSAINumberErr.value : ''}
                         onChange={(e) => this.handleTextChange(e)}
+                        autoComplete="fefef"
                     />
                     <Form.Select
                         label="KYC Verification Status*"
@@ -475,6 +482,7 @@ class RetailerForm extends React.Component {
                         type="text"
                         name="bankName"
                         value={this.state.bankName}
+                        autoComplete="fefef"
                         error={bankNameErr.status ? bankNameErr.value : ''}
                         onChange={(e) => this.handleTextChange(e)}
                     />
@@ -483,6 +491,7 @@ class RetailerForm extends React.Component {
                         type="text"
                         name="accountHolderName"
                         value={this.state.accountHolderName}
+                        autoComplete="fefef"
                         error={accountHolderNameErr.status ? accountHolderNameErr.value : ''}
                         onChange={(e) => this.handleTextChange(e)}
                     />
@@ -491,6 +500,7 @@ class RetailerForm extends React.Component {
                         type="text"
                         name="accountNumber"
                         value={this.state.accountNumber}
+                        autoComplete="fefef"
                         error={accountNumberErr.status ? accountNumberErr.value : ''}
                         onChange={(e) => this.handleTextChange(e)}
                     />
@@ -499,6 +509,7 @@ class RetailerForm extends React.Component {
                         type="text"
                         name="branch"
                         value={this.state.branch}
+                        autoComplete="fefef"
                         error={branchErr.status ? branchErr.value : ''}
                         onChange={(e) => this.handleTextChange(e)}
                     />
@@ -507,6 +518,7 @@ class RetailerForm extends React.Component {
                         label="Account Type*"
                         type="radio"
                         selected={this.state.accountType}
+                        autoComplete="fefef"
                         onChange={e => this.handleChange(e)}
                         align="horizontal"
                     >
@@ -518,6 +530,7 @@ class RetailerForm extends React.Component {
                         type="text"
                         name="IFSC"
                         value={this.state.IFSC}
+                        autoComplete="fefef"
                         error={IFSCErr.status ? IFSCErr.value : ''}
                         onChange={(e) => this.handleTextChange(e)}
                     />
@@ -564,6 +577,7 @@ class RetailerForm extends React.Component {
                         label="Outlet Address*"
                         type="text"
                         name="outletAddress"
+                        autoComplete="fefef"
                         value={this.state.outletAddress}
                         error={outletAddressErr.status ? outletAddressErr.value : ''}
                         onChange={(e) => this.handleTextChange(e)}
@@ -586,6 +600,7 @@ class RetailerForm extends React.Component {
                         label="Landline No*"
                         type="text"
                         name="landlineNo"
+                        autoComplete="fefef"
                         error={landlineNoErr.status ? landlineNoErr.value : ''}
                         value={this.state.landlineNo}
                         onChange={(e) => this.handleTextChange(e)}
@@ -613,6 +628,7 @@ class RetailerForm extends React.Component {
                         label="GPS Coordinates*"
                         type="text"
                         name="gpsCoordinates"
+                        autoComplete="fefef"
                         error={gpsCoordinatesErr.status ? gpsCoordinatesErr.value : ''}
                         value={this.state.gpsCoordinates}
                         onChange={(e) => this.handleTextChange(e)}
@@ -621,6 +637,7 @@ class RetailerForm extends React.Component {
                         label="Pincode*"
                         type="text"
                         name="pincode"
+                        autoComplete="fefef"
                         defaultValue={this.props.data ? this.props.data.pincode : ''}
                         //value={this.state.pincode}
                         error={pincodeErr.status ? pincodeErr.value : ''}

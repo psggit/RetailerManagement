@@ -41,6 +41,7 @@ class CreateOrganization extends React.Component {
 
     handleSave() {
         const data = this.organizationDetailsForm.getData()
+        //console.log("data", data)
         //this.setState({isFormValid: this.formIsValid()})
         //console.log("is form valis", this.state.isFormValid)
         //if(this.formIsValid()) {

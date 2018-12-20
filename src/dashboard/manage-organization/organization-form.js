@@ -263,7 +263,7 @@ class OrganizationForm extends React.Component {
         textInputs.forEach(item => {
             if(item.name === 'otherProof' && this.state.isOtherProof) {
                 this.validate(item)
-            } else{
+            } else if(item.name !== 'otherProof'){
                 this.validate(item)
             }
            
@@ -355,6 +355,7 @@ class OrganizationForm extends React.Component {
                         label="Organization Name*"
                         type="text"
                         name="organizationName"
+                        autoComplete="fefef"
                         value={this.state.organizationName}
                         error={organizationNameErr.status ? organizationNameErr.value : ''}
                         onChange={(e) => this.handleTextChange(e)}
@@ -400,6 +401,7 @@ class OrganizationForm extends React.Component {
                         label="PAN Number*"
                         type="text"
                         name="panNumber"
+                        autoComplete="fefef"
                         defaultValue={this.props.data ? this.props.data.pan_number : ''}
                         error={panNumberErr.status ? panNumberErr.value : ''}
                         onKeyDown={(e) => this.handleTextChange(e)}
@@ -410,6 +412,7 @@ class OrganizationForm extends React.Component {
                         label="CIN Number*"
                         type="text"
                         name="cinNumber"
+                        autoComplete="fefef"
                         value={this.state.cinNumber}
                         error={cinNumberErr.status ? cinNumberErr.value : ''}
                         onChange={(e) => this.handleTextChange(e)}
@@ -426,6 +429,7 @@ class OrganizationForm extends React.Component {
                         label="GST Number*"
                         type="text"
                         name="GSTNumber"
+                        autoComplete="fefef"
                         value={this.state.GSTNumber}
                         error={GSTNumberErr.status ? GSTNumberErr.value : ''}
                         onChange={(e) => this.handleTextChange(e)}
@@ -455,6 +459,7 @@ class OrganizationForm extends React.Component {
                     <Form.TextArea 
                         label="Organization Address*" 
                         name="organizationAddress"
+                        autoComplete="fefef"
                         error={organizationAddressErr.status ? organizationAddressErr.value : ''}
                         value={this.state.organizationAddress}
                         onChange={(e) => this.handleTextChange(e)} 
@@ -479,6 +484,7 @@ class OrganizationForm extends React.Component {
                         type="text"
                         name="pincode"
                         defaultValue={this.state.pincode}
+                        autoComplete="fefef"
                         error={pincodeErr.status ? pincodeErr.value : ''}
                         onKeyDown={(e) => this.handleNumberChange(e)}
                         onKeyUp={(e) => this.handleNumberChange(e)}
@@ -495,6 +501,7 @@ class OrganizationForm extends React.Component {
                         label="Authorized Person Name*"
                         type="text"
                         name="authorizedPerson"
+                        autoComplete="fefef"
                         error={authorizedPersonErr.status ? authorizedPersonErr.value : ''}
                         value={this.state.authorizedPerson}
                         onChange={(e) => this.handleTextChange(e)}
@@ -572,6 +579,7 @@ class OrganizationForm extends React.Component {
                             placeholder="Aadhar copy, Licence copy"
                             type="text"
                             name="otherProof"
+                            autoComplete="fefef"
                             error={((isOtherProof && otherProof.length === 0)|| otherProofErr.status) ? "Documents attached are required" : ''}
                             value={this.state.otherProof}
                             //size="small"
