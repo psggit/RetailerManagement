@@ -10,6 +10,10 @@ import { NavLink } from 'react-router-dom'
 import Switch2 from 'Components/switch'
 import * as Api from './../../api'
 import CustomButton from 'Components/button'
+import ModalHeader from 'Components/ModalBox/ModalHeader'
+import ModalBody from 'Components/ModalBox/ModalBody'
+import ModalBox from 'Components/ModalBox'
+import ModalFooter from '../../components/ModalBox/ModalFooter';
 
 class ManageRetailer extends React.Component {
 
@@ -28,6 +32,7 @@ class ManageRetailer extends React.Component {
             retailerData: [],
             retailerId: '',
             retailerStatus: '',
+            outletName: '',
             mountDialog: false,
             operators:  [
                 {text: 'EQUAL', value: 'EQUAL'},
@@ -242,8 +247,9 @@ class ManageRetailer extends React.Component {
     }
 
     onToggleChange(item, value) {
-        this.setState({mountDialog: true, retailerId: item.id, retailerStatus: item.branch_status})
+        this.setState({mountDialog: true, retailerId: item.id, retailerStatus: item.branch_status, outletName: item.outlet_name})
         //e.stopPropagation()
+        console.log("item", item)
         //console.log("On toggle change", value, item, value.id, value.branch_status)
 
         // Api.deactivateRetailer({
@@ -396,27 +402,27 @@ class ManageRetailer extends React.Component {
                 }
                 {
                     this.state.mountDialog &&
-                     <Dialog
-                        open={this.state.mountDialog}
-                        title="Deactivate Outlet"
-                        onClose={() => this.setDialogState(false)}
-                        actions={[
-                        <Button
-                            appearance="primary"
-                            onClick={() => this.deactivateRetailer()}
-                        >
-                            OK
-                        </Button>,
-                        <Button
-                            appearance="secondary"
-                            onClick={() => this.setDialogState(false)}
-                        >
-                            Cancel
-                        </Button>
-                        ]}
-                    >
-                        Are you sure you want to deactivate this outlet ?
-                   </Dialog>
+                    <ModalBox>
+                        <ModalHeader>
+                            <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                                <div style={{fontSize: '18px'}}>{this.state.retailerStatus === "true" ? 'Deactivate' : 'Activate'} Outlet</div>
+                            </div>
+                        </ModalHeader>
+                        <ModalBody height='60px'>
+                            <table className='table--hovered'>
+                                <tbody>
+                                    Are you sure you want to {this.state.retailerStatus === "true" ? 'Deactivate' : 'Activate'} this outlet - {this.state.outletName} ({this.state.retailerId})
+                                </tbody>
+                            </table>
+                        </ModalBody>
+                        <ModalFooter>
+                            <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', fontWeight: '600' }}>
+                                <button className='btn btn-primary' onClick={() => this.deactivateRetailer()}> OK </button>
+                                <button className='btn btn-secondary' onClick={() => this.setDialogState()}> Cancel </button>
+                            </div>
+                        </ModalFooter>
+                        
+                    </ModalBox>
                 }
                 {
                     this.state.retailerData && this.state.retailerData.length > 0 &&
