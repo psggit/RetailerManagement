@@ -101,6 +101,7 @@ class EditOrganization extends React.Component {
     
     handleSave() {
         const data = this.organizationDetailsForm.getData()
+        //console.log("data", data)
         this.setState({isFormValid: this.formIsValid()})
         if(this.formIsValid()) {
             const payload = {
@@ -110,8 +111,8 @@ class EditOrganization extends React.Component {
                 date_of_incorporation: data.incorporationDate ? new Date(data.incorporationDate).toISOString() : '',
                 pan_number: data.panNumber,
                 cin_no: data.cinNumber,
-                status: data.selectedOrganizationStatusIdx === 1 ? "true" : "false",
-                kyc_status: data.selectedKycIdx === 1 ? "true" : "false",
+                status: data.selectedOrganizationStatusIdx === "1" ? "true" : "false",
+                kyc_status: data.selectedKycIdx === "1" ? "true" : "false",
                 no_of_outlets: parseInt(data.outletsCount),
                 gst_no: data.GSTNumber,
                 name_of_auth_person: data.authorizedPerson,
