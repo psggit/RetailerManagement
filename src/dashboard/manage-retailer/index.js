@@ -1,7 +1,7 @@
 import React from 'react'
 import Layout from 'Components/layout'
 import { Table } from '@auth0/cosmos'
-import { Icon, Spinner, List } from '@auth0/cosmos'
+import { Icon, Spinner, List, Dialog } from '@auth0/cosmos'
 import { Select, TextInput } from '@auth0/cosmos'
 import { Button } from '@auth0/cosmos'
 import Pagination from 'Components/pagination'
@@ -26,6 +26,9 @@ class ManageRetailer extends React.Component {
             loading: true,
             retailerListCount: 0,
             retailerData: [],
+            retailerId: '',
+            retailerStatus: '',
+            mountDialog: false,
             operators:  [
                 {text: 'EQUAL', value: 'EQUAL'},
                 {text: 'LIKE', value: 'LIKE'},
@@ -53,6 +56,8 @@ class ManageRetailer extends React.Component {
         this.handleRowClick = this.handleRowClick.bind(this)
         this.callback = this.callback.bind(this)
         this.failureCallback = this.failureCallback.bind(this)
+        this.setDialogState = this.setDialogState.bind(this)
+        this.deactivateRetailer = this.deactivateRetailer.bind(this)
     }
 
     fetchDefaultData() {
@@ -237,11 +242,25 @@ class ManageRetailer extends React.Component {
     }
 
     onToggleChange(item, value) {
+        this.setState({mountDialog: true, retailerId: item.id, retailerStatus: item.branch_status})
         //e.stopPropagation()
         //console.log("On toggle change", value, item, value.id, value.branch_status)
+
+        // Api.deactivateRetailer({
+        //     Id: item.id,
+        //     BranchStatus: item.branch_status === "true" ? "false" : "true"
+        // }, this.callback)
+    }
+
+    setDialogState() {
+        this.setState({mountDialog: false})
+    }
+
+    deactivateRetailer() {
+        this.setDialogState()
         Api.deactivateRetailer({
-            Id: item.id,
-            BranchStatus: item.branch_status === "true" ? "false" : "true"
+            Id: this.state.retailerId,
+            BranchStatus: this.state.retailerStatus === "true" ? "false" : "true"
         }, this.callback)
     }
 
@@ -374,6 +393,30 @@ class ManageRetailer extends React.Component {
                             </Table.Column>
                         </Table>
                     </div>
+                }
+                {
+                    this.state.mountDialog &&
+                     <Dialog
+                        open={this.state.mountDialog}
+                        title="Deactivate Outlet"
+                        onClose={() => this.setDialogState(false)}
+                        actions={[
+                        <Button
+                            appearance="primary"
+                            onClick={() => this.deactivateRetailer()}
+                        >
+                            OK
+                        </Button>,
+                        <Button
+                            appearance="secondary"
+                            onClick={() => this.setDialogState(false)}
+                        >
+                            Cancel
+                        </Button>
+                        ]}
+                    >
+                        Are you sure you want to deactivate this outlet ?
+                   </Dialog>
                 }
                 {
                     this.state.retailerData && this.state.retailerData.length > 0 &&

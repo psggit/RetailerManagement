@@ -24,7 +24,7 @@ class OrganizationForm extends React.Component {
             // partnershipDoc: 'For partnership firm, Documents attached',
             // privateDoc: 'For Pvt Ltd, Documents attached',
             otherOrgType: 'Organization type',
-            otherProof: 'Documents attached'
+            otherProof: 'Attached documents'
         }
 
         //console.log("data", props.data ? props.data : '')
@@ -36,9 +36,9 @@ class OrganizationForm extends React.Component {
             cinNumber: props.data ? props.data.cin_no : '',
             panNumber: props.data ? props.data.pan_number : '',
             outletsCount: props.data ? props.data.no_of_outlets : 0,
-            selectedKycIdx: props.data ? (props.data.kyc_status === "true" ? "1" : "2") : "1",
+            selectedKycIdx: props.data ? ((props.data.kyc_status === "true" || props.data.kyc_status === "Verified") ? "1" : "2") : "1",
             GSTNumber: props.data ? props.data.gst_no : '',
-            selectedOrganizationStatusIdx: props.data ? (props.data.status === "Active" ? "1" : "2") : "1",
+            selectedOrganizationStatusIdx: props.data ? ((props.data.status === "Active"  || props.data.status === "true") ? "1" : "2") : "1",
             organizationAddress: props.data ? props.data.org_address : '',
             selectedCityIdx: props.data ? parseInt(props.data.city_id) : 1,
             selectedStateIdx: props.data ? parseInt(props.data.state_id) : 1,
@@ -581,7 +581,7 @@ class OrganizationForm extends React.Component {
                             type="text"
                             name="otherProof"
                             autoComplete="fefef"
-                            error={((isOtherProof && otherProof.length === 0)|| otherProofErr.status) ? "Documents attached are required" : ''}
+                            error={((isOtherProof && otherProof.length === 0)|| otherProofErr.status) ? "Attached documents are required" : ''}
                             value={this.state.otherProof}
                             //size="small"
                             onChange={(e) => this.handleTextChange(e)}
