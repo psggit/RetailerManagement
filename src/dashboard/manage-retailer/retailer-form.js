@@ -48,7 +48,7 @@ class RetailerForm extends React.Component {
             selectedKycIdx: props.data ? (props.data.kyc_status === "true" ? "1" : "2") : "1",
             selectedOutletStatusIdx: props.data ? (props.data.branch_status === "true" ? "1" : "2") : "1",
             FSSAINumber: props.data ? props.data.fssai_no : '',
-            selectedCityIdx: props.data ? props.data.city_id : 0,
+            selectedCityIdx: props.data ? props.data.city_id : this.props.cityList[0].value,
             selectedStateIdx: props.data ? props.data.state_id : 0,
             pincode: props.data ? props.data.pincode : '',
             outletAddress: props.data ? props.data.store_address : '',
@@ -168,7 +168,24 @@ class RetailerForm extends React.Component {
         if(this.props.organizationMap !== newProps.organizationMap) {
             this.setState({organizationMap: newProps.organizationMap})
             if(location.pathname.includes("edit")) {
+                let updateCityIdx = false
+                // console.log("city", newProps.stateMap[newProps.organizationMap[this.props.data.organisation_id].state_id])
+                // console.log("id", newProps.stateMap[newProps.organizationMap[this.props.data.organisation_id].state_id][0].value)
+                // console.log("id", this.state.selectedCityIdx)
                 this.setState({cityList: newProps.stateMap[newProps.organizationMap[this.props.data.organisation_id].state_id]})
+                newProps.stateMap[newProps.organizationMap[this.props.data.organisation_id].state_id].map((item) => {
+                    //console.log(parseInt(item.value), parseInt(this.state.selectedCityIdx))
+                    if(parseInt(item.value) === parseInt(this.state.selectedCityIdx)) {
+                        updateCityIdx = false
+                        //return
+                    } else {
+                        updateCityIdx = true
+                    }
+                })
+                //console.log("status", updateCityIdx)
+                if(updateCityIdx) {
+                    this.setState({selectedCityIdx: newProps.stateMap[newProps.organizationMap[this.props.data.organisation_id].state_id][0].value})
+                }   
             }
         }
 
@@ -180,20 +197,24 @@ class RetailerForm extends React.Component {
             if(location.pathname.includes("create")) {
                 this.setState({cityList: newProps.cityList})
                 this.setState({selectedCityIdx: newProps.cityList[0].value})
-            } 
+            }
         }
     }
 
     handleChange(e) {
+        //console.log("on change", e.target.value)
         if(e.target.name.includes("OrganizationIdx")) {
+            //console.log("if")
             this.orgIndexError = false
+            //console.log("city ind", this.state.stateMap[parseInt(this.state.organizationMap[e.target.value].state_id)][0].value)
             this.setState({
                 selectedStateIdx: parseInt(this.state.organizationMap[e.target.value].state_id),
                 cityList: this.state.stateMap[parseInt(this.state.organizationMap[e.target.value].state_id)],
+                selectedCityIdx: this.state.stateMap[parseInt(this.state.organizationMap[e.target.value].state_id)][0].value,
                 [e.target.name]: e.target.value
             })
         } else {
-            //console.log("name", e.target.name, "val", e.target.value)
+            //onsole.log("else:","name", e.target.name, "val", e.target.value)
             this.setState({
                 [e.target.name]: e.target.value
             })
