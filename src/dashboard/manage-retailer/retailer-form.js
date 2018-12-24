@@ -48,7 +48,7 @@ class RetailerForm extends React.Component {
             selectedKycIdx: props.data ? (props.data.kyc_status === "true" ? "1" : "2") : "1",
             selectedOutletStatusIdx: props.data ? (props.data.branch_status === "true" ? "1" : "2") : "1",
             FSSAINumber: props.data ? props.data.fssai_no : '',
-            selectedCityIdx: props.data ? props.data.city_id : this.props.cityList[0].value,
+            selectedCityIdx: props.data ? props.data.city_id : 0,
             selectedStateIdx: props.data ? props.data.state_id : 0,
             pincode: props.data ? props.data.pincode : '',
             outletAddress: props.data ? props.data.store_address : '',
