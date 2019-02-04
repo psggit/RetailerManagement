@@ -232,7 +232,6 @@ class ManageRetailer extends React.Component {
 
     editOutletDetail(e, item, action) {
         e.stopPropagation()
-        //console.log("item", item)
         this.props.history.push(`/admin/retailer/edit/${item.id}`, item)
     }
 

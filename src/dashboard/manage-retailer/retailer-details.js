@@ -9,7 +9,6 @@ class RetailerDetails extends React.Component {
 
     render() {
         const data = this.props.history.location.state
-      
         return(
             <Layout title="Retailer Details">
                 <Card width="500px">

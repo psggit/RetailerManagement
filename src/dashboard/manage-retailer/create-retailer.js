@@ -179,6 +179,7 @@ class CreateRetailer extends React.Component {
                         stateMap = {this.state.stateMap}
                         cityList = {this.state.cityList}
                         handleSave={this.handleSave}
+                        disableSave={this.state.creatingRetailer}
                     />
                     {/* <ButtonGroup align="right">
                         <Button 

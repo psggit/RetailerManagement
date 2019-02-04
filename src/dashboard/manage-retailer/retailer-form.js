@@ -30,7 +30,6 @@ class RetailerForm extends React.Component {
 
         this.errorFlag = false,
         this.orgIndexError = false,
-
         this.state = {
             organizationList: this.props.organizationList,
             organizationMap: this.props.organizationMap,
@@ -173,17 +172,20 @@ class RetailerForm extends React.Component {
                 // console.log("id", newProps.stateMap[newProps.organizationMap[this.props.data.organisation_id].state_id][0].value)
                 // console.log("id", this.state.selectedCityIdx)
                 this.setState({cityList: newProps.stateMap[newProps.organizationMap[this.props.data.organisation_id].state_id]})
-                newProps.stateMap[newProps.organizationMap[this.props.data.organisation_id].state_id].map((item) => {
-                    //console.log(parseInt(item.value), parseInt(this.state.selectedCityIdx))
-                    if(parseInt(item.value) === parseInt(this.state.selectedCityIdx)) {
-                        updateCityIdx = false
-                        //return
-                    } else {
-                        updateCityIdx = true
-                    }
-                })
-                //console.log("status", updateCityIdx)
-                if(updateCityIdx) {
+                // newProps.stateMap[newProps.organizationMap[this.props.data.organisation_id].state_id].map((item) => {
+                //     console.log(parseInt(item.value), parseInt(this.state.selectedCityIdx))
+                //     if(parseInt(item.value) === parseInt(this.state.selectedCityIdx)) {
+                //         updateCityIdx = false
+                //         return
+                //     } else {
+                //         updateCityIdx = true
+                //     }
+                // })
+
+                const cityFound =  newProps.stateMap[newProps.organizationMap[this.props.data.organisation_id].state_id].find((item) => parseInt(item.value) === parseInt(this.state.selectedCityIdx))
+
+                //console.log("status", updateCityIdx, cityFound, !cityFound)
+                if(!cityFound) {
                     this.setState({selectedCityIdx: newProps.stateMap[newProps.organizationMap[this.props.data.organisation_id].state_id][0].value})
                 }   
             }
@@ -669,7 +671,11 @@ class RetailerForm extends React.Component {
                     />
                     <ButtonGroup align="right">
                         {/* <Button onClick={(e) => this.handleSave(e)}>Save</Button> */}
-                        <CustomButton text="Save" handleClick={this.handleSave}/>
+                        <CustomButton 
+                            text="Save" 
+                            handleClick={this.handleSave} 
+                            disableSave={this.props.disableSave}
+                        />
                     </ButtonGroup>
                    
                 </Form.FieldSet>

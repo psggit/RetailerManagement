@@ -106,6 +106,7 @@ class CreateOrganization extends React.Component {
                         cityList = {this.state.cityList}
                         stateMap= {this.state.stateMap}
                         handleSave={this.handleSave}
+                        disableSave={this.state.creatingOrg}
                     />
                     {/* <ButtonGroup align="right">
                         <Button 

@@ -177,6 +177,7 @@ class EditRetailer extends React.Component {
                         stateMap = {this.state.stateMap}
                         cityList = {this.state.cityList}
                         handleSave = {this.handleSave}
+                        disableSave={this.state.updatingRetailer}
                     />
                     {/* <ButtonGroup align="right">
                         <Button 

@@ -166,6 +166,7 @@ class EditOrganization extends React.Component {
                         cityList = {cityList}
                         stateMap= {this.state.stateMap}
                         handleSave = {this.handleSave} 
+                        disableSave={this.state.updatingOrg}
                     />
                     {/* <ButtonGroup align="right">
                         <Button 

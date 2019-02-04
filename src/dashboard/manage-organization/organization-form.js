@@ -670,7 +670,11 @@ class OrganizationForm extends React.Component {
                     }
                     <ButtonGroup align="right">
                         {/* <Button onClick={(e) => this.handleSave(e)}>Save</Button> */}
-                        <CustomButton text="Save" handleClick={this.handleSave}/>
+                        <CustomButton 
+                            text="Save" 
+                            handleClick={this.handleSave}
+                            disableSave={this.props.disableSave}
+                        />
                     </ButtonGroup>
                 </Form.FieldSet>
             </Form>
