@@ -245,11 +245,13 @@ class ManageOrganization extends React.Component {
     render() {
         return (
             <Layout title="Manage Organization">
-                <NavLink to={`/admin/organization/create`}>
-                    <div style={{marginTop: '20px'}}>
-                        <CustomButton text="CREATE ORGANIZATION" />
-                    </div>
-                </NavLink>
+                <div style={{width: '200px', marginTop: '20px'}}>
+                    <NavLink to={`/admin/organization/create`}>
+                        <div style={{marginTop: '20px'}}>
+                            <CustomButton text="CREATE ORGANIZATION" />
+                        </div>
+                    </NavLink>
+                </div> 
                
                 <div style={{marginTop: '20px'}}>
                     <div style={{

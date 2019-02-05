@@ -287,12 +287,15 @@ class ManageRetailer extends React.Component {
         const {retailerData} = this.state
         return (
             <Layout title="Manage Retailer">
-                <NavLink to={`/admin/retailer/create`}>
-                    <div style={{marginTop: '20px'}}>
-                        {/* <Button> Create Retailer </Button> */}
-                        <CustomButton text="CREATE RETAILER" />
-                    </div>
-                </NavLink>
+               
+                <div style={{width: '200px', marginTop: '20px'}}>
+                    <NavLink to={`/admin/retailer/create`}>
+                        {/* <div style={{marginTop: '20px'}}> */}
+                            {/* <Button> Create Retailer </Button> */}
+                            <CustomButton text="CREATE RETAILER" />
+                        {/* </div> */}
+                    </NavLink>
+                </div> 
                
                 <div style={{marginTop: '20px'}}>
                     <div style={{
