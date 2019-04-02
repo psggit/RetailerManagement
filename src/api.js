@@ -9,12 +9,6 @@ export function fetchOrganizationList (payloadObj, successCallback, failureCallb
             handleError: true
         })
         .then((json) => {
-            //this.setState({
-            //       data: json.data,
-            //       count: json.count,
-            //       loading: false
-            //     })
-            //Notify("success", "Successfully created organization")
             successCallback(json)
         })
         .catch(err => {
@@ -33,13 +27,6 @@ export function fetchStateAndCityList(payloadObj, successCallback) {
         handleError: true
     })
     .then((response) => {
-        //this.setState({
-        //       data: json.data,
-        //       count: json.count,
-        //       loading: false
-        //     })
-        //Notify("success", "Successfully created organization")
-        //console.log("json states", response)
         successCallback(response)
     })
     .catch(err => {
@@ -58,11 +45,6 @@ export function createOrganization(payloadObj, successCallback, failureCallback)
         handleError: true
     })
     .then((json) => {
-        //this.setState({
-        //       data: json.data,
-        //       count: json.count,
-        //       loading: false
-        //     })
         Notify("success", "Successfully created organization")
         successCallback()
     })
@@ -82,11 +64,6 @@ export function updateOrganization(payloadObj, successCallback, failureCallback)
         handleError: true
     })
     .then((json) => {
-        //this.setState({
-        //       data: json.data,
-        //       count: json.count,
-        //       loading: false
-        //     })
         Notify("success", "Successfully updated organization")
         successCallback(json)
     })
@@ -106,12 +83,6 @@ export function fetchOrganizationAndStateList (payloadObj, successCallback) {
         handleError: true
     })
     .then((json) => {
-        //this.setState({
-        //       data: json.data,
-        //       count: json.count,
-        //       loading: false
-        //     })
-        //Notify("success", "Successfully created organization")
         successCallback(json)
     })
     .catch(err => {
@@ -129,12 +100,6 @@ export function fetchRetailerList (payloadObj, successCallback, failureCallback)
         handleError: true
     })
     .then((json) => {
-        //this.setState({
-        //       data: json.data,
-        //       count: json.count,
-        //       loading: false
-        //     })
-        //Notify("success", "Successfully created organization")
         successCallback(json)
     })
     .catch(err => {
@@ -142,13 +107,9 @@ export function fetchRetailerList (payloadObj, successCallback, failureCallback)
         err.response.json().then(json => { Notify("danger", json.message) })
         failureCallback()
     })
-
-    // if (response.status !== 200) {
- 
 }
 
 export function createRetailer(payloadObj, successCallback, failureCallback) {
-    //console.log("id", payloadObj)
     return POST({
         api: '/Api/createRetailer',
         apiBase: 'retailerMgmt',
@@ -156,16 +117,10 @@ export function createRetailer(payloadObj, successCallback, failureCallback) {
         handleError: true
     })
     .then((json) => {
-        //this.setState({
-        //       data: json.data,
-        //       count: json.count,
-        //       loading: false
-        //     })
         Notify("success", "Successfully created retailer")
         successCallback(json)
     })
     .catch(err => {
-        //err.response.json().then(json => { Notify("danger", json.message) })
         console.log("Error in create retailer", err)
         Notify("danger", "Error in creating retailer")
         failureCallback()
@@ -180,16 +135,10 @@ export function updateRetailer(payloadObj, successCallback, failureCallback) {
         handleError: true
     })
     .then((json) => {
-        //this.setState({
-        //       data: json.data,
-        //       count: json.count,
-        //       loading: false
-        //     })
         Notify("success", "Successfully updated retailer")
         successCallback(json)
     })
     .catch(err => {
-        //err.response.json().then(json => { Notify("danger", json.message) })
         console.log("Error in updating retailer", err)
         Notify("danger", "Error in updating retailer")
         failureCallback()
@@ -197,7 +146,6 @@ export function updateRetailer(payloadObj, successCallback, failureCallback) {
 }
 
 export function deactivateRetailer(payloadObj, callback) {
-    //console.log("payload", payloadObj)
     return POST({
         api: '/Api/changeRetailerStatus',
         apiBase: 'retailerMgmt',
@@ -211,6 +159,5 @@ export function deactivateRetailer(payloadObj, callback) {
         console.log("Error in updating retailer status", err)
         Notify("danger", "Error in updating branch status")
         err.response.json().then(json => { Notify("danger", json.message) })
-        //failureCallback()
     })
 }
