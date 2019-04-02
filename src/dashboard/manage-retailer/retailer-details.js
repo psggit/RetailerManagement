@@ -13,8 +13,6 @@ class RetailerDetails extends React.Component {
             <Layout title="Retailer Details">
                 <Card width="500px">
                     <div>
-                        {/* <h3>Organization Details</h3>
-                        <span></span> */}
                         <p><b>Retailer Id</b>: { data.id }</p>
                         <p><b>Outlet Name</b>: { data.outlet_name }</p>
                         <p><b>Store Code</b>: { data.ksbcl_code } </p>
@@ -48,7 +46,6 @@ class RetailerDetails extends React.Component {
                         <p><b>Branch</b>: { data.bank_branch } </p>
                         <p><b>Account Type</b>: { data.acc_type } </p>
                         <p><b>IFSC Code</b>: { data.ifsc_code} </p>
-                       
                     </div>
                 </Card>
             </Layout>

@@ -15,7 +15,6 @@ class GenerateReport extends React.Component {
         this.state = {
             selectedOrganizationIdx: 1,
             selectedStateIdx: 1,
-            //organizationId: 1001,
             organizationList: [],
             stateList: [],
             organizationMap: {},
@@ -35,10 +34,8 @@ class GenerateReport extends React.Component {
     }
 
     handleChange(e) {
-        //console.log("chenage")
         this.setState({
             selectedStateIdx: parseInt(this.state.organizationMap[e.target.value].state_id),
-            //cityList: this.state.stateMap[parseInt(this.state.organizationMap[e.target.value].state_id)],
             [e.target.name]: e.target.value
         })
     }
@@ -106,18 +103,8 @@ class GenerateReport extends React.Component {
                             options={organizationList}
                             onChange={(e) => this.handleChange(e)}
                         />
-                        {/* <Form.Select
-                            label="State"
-                            disabled={true}
-                            value={this.state.selectedStateIdx}
-                            name="selectedStateIdx"
-                            options={stateList}
-                        /> */}
                     </Form>
-                    {/* <a href={`/admin/retailer-onboarding-form/${this.state.selectedOrganizationIdx}`} target="_blank"> */}
-                        {/* <Button> Download </Button> */}
-                        <CustomButton text="Download" handleClick={this.handleClick}/>
-                    {/* </a> */}
+                    <CustomButton text="Download" handleClick={this.handleClick}/>
                 </Card>
             </Layout>
         ) 

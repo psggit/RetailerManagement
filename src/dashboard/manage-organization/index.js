@@ -220,7 +220,6 @@ class ManageOrganization extends React.Component {
         }
 
         this.setState({[e.target.name]: e.target.value}) 
-        //this.setState({[e.target.name]: e.target.value}) 
     }
 
     handleEditOrg(e,item, action) {
@@ -316,7 +315,6 @@ class ManageOrganization extends React.Component {
                             marginRight: '20px'
                         }}
                     >
-                        {/* <Button onClick={() => this.getFilteredOrganisationList()}>Search</Button> */}
                         <CustomButton text="Search" handleClick={this.getFilteredOrganisationList} />
                     </div>
                     <div
@@ -325,7 +323,6 @@ class ManageOrganization extends React.Component {
                             display: 'inline-block',
                         }}
                     >
-                        {/* <Button onClick={() => this.resetFilter()}>Reset</Button> */}
                         <CustomButton text="Reset" handleClick={this.resetFilter} />
                     </div>
                 </div>

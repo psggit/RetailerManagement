@@ -55,8 +55,6 @@ class RetailerForm extends React.Component {
             gpsCoordinates: props.data ? props.data.gps_cordinates : '',
             mobileNo: props.data ? props.data.mobile_number : '',
             email: props.data ? props.data.email : '',
-            //orgIndexError: false,
-            
             bankName: props.data ? props.data.bank_name : '',
             accountHolderName: props.data ? props.data.acc_holder_name : '',
             accountNumber: props.data ? props.data.account_number : '',
@@ -168,23 +166,10 @@ class RetailerForm extends React.Component {
             this.setState({organizationMap: newProps.organizationMap})
             if(location.pathname.includes("edit")) {
                 let updateCityIdx = false
-                // console.log("city", newProps.stateMap[newProps.organizationMap[this.props.data.organisation_id].state_id])
-                // console.log("id", newProps.stateMap[newProps.organizationMap[this.props.data.organisation_id].state_id][0].value)
-                // console.log("id", this.state.selectedCityIdx)
                 this.setState({cityList: newProps.stateMap[newProps.organizationMap[this.props.data.organisation_id].state_id]})
-                // newProps.stateMap[newProps.organizationMap[this.props.data.organisation_id].state_id].map((item) => {
-                //     console.log(parseInt(item.value), parseInt(this.state.selectedCityIdx))
-                //     if(parseInt(item.value) === parseInt(this.state.selectedCityIdx)) {
-                //         updateCityIdx = false
-                //         return
-                //     } else {
-                //         updateCityIdx = true
-                //     }
-                // })
 
                 const cityFound =  newProps.stateMap[newProps.organizationMap[this.props.data.organisation_id].state_id].find((item) => parseInt(item.value) === parseInt(this.state.selectedCityIdx))
 
-                //console.log("status", updateCityIdx, cityFound, !cityFound)
                 if(!cityFound) {
                     this.setState({selectedCityIdx: newProps.stateMap[newProps.organizationMap[this.props.data.organisation_id].state_id][0].value})
                 }   
@@ -204,11 +189,8 @@ class RetailerForm extends React.Component {
     }
 
     handleChange(e) {
-        //console.log("on change", e.target.value)
         if(e.target.name.includes("OrganizationIdx")) {
-            //console.log("if")
             this.orgIndexError = false
-            //console.log("city ind", this.state.stateMap[parseInt(this.state.organizationMap[e.target.value].state_id)][0].value)
             this.setState({
                 selectedStateIdx: parseInt(this.state.organizationMap[e.target.value].state_id),
                 cityList: this.state.stateMap[parseInt(this.state.organizationMap[e.target.value].state_id)],
@@ -216,7 +198,6 @@ class RetailerForm extends React.Component {
                 [e.target.name]: e.target.value
             })
         } else {
-            //onsole.log("else:","name", e.target.name, "val", e.target.value)
             this.setState({
                 [e.target.name]: e.target.value
             })
@@ -287,7 +268,6 @@ class RetailerForm extends React.Component {
     handleSave(e) {
         e.preventDefault()
         this.checkForm()
-        //console.log("handle save in orgform", this.orgIndexError)
         if(!this.errorFlag && !this.orgIndexError) {
             this.props.handleSave()
         }
@@ -298,9 +278,7 @@ class RetailerForm extends React.Component {
         const formEl = document.getElementById('RetailerForm')
         const inputCollection = formEl.getElementsByTagName('input')
         const inputsArr = Array.prototype.slice.call(inputCollection)
-        //console.log("org id", this.state.selectedOrganizationIdx)
         if(this.state.selectedOrganizationIdx === 0) {
-            //console.log("org id", )
             this.orgIndexError = true
         }
         

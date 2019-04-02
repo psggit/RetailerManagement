@@ -11,14 +11,10 @@ class OrganizationDetails extends React.Component {
     render() {
         const data = this.props.history.location.state
 
-        console.log("data in details", data)
-       
         return(
             <Layout title="Organization Details">
                 <Card width="500px">
                     <div>
-                        {/* <h3>Organization Details</h3>
-                        <span></span> */}
                         <p><b>Organization Id</b>: { data.id }</p>
                         <p><b>Organization Name</b>: { data.organisation_name }</p>
                         <p><b>Organization Type</b>: { data.type_of_organisation }</p>

@@ -60,10 +60,6 @@ class EditOrganization extends React.Component {
                 otherProof,
                 organizationType,
                 isOtherProof
-                // otherParnershipProof,
-                // partnershipDocErr,
-                // otherPvtLtdProof,
-                // privateDocErr
             } = organizationDetailsForm 
         
         const formData = {
@@ -101,7 +97,6 @@ class EditOrganization extends React.Component {
     
     handleSave() {
         const data = this.organizationDetailsForm.getData()
-        //console.log("data", data)
         this.setState({isFormValid: this.formIsValid()})
         if(this.formIsValid()) {
             const payload = {
@@ -168,15 +163,6 @@ class EditOrganization extends React.Component {
                         handleSave = {this.handleSave} 
                         disableSave={this.state.updatingOrg}
                     />
-                    {/* <ButtonGroup align="right">
-                        <Button 
-                            onClick={() => this.handleSave()} 
-                            loading={this.state.updatingOrg}
-                            disabled={this.state.updatingOrg}
-                        > 
-                            Save 
-                        </Button>
-                    </ButtonGroup> */}
                 </Card>
             </Layout>
         )

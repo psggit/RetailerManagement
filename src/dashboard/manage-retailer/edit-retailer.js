@@ -109,7 +109,6 @@ class EditRetailer extends React.Component {
     handleSave() {
         const retailerDataForm = this.retailerDetailsForm.getData()
         this.setState({isFormValid: this.formIsValid()})
-        console.log("data in ret", retailerDataForm)
         if(this.formIsValid()) {
             const payload = {
                 id: parseInt(this.props.location.state.id),
@@ -179,15 +178,6 @@ class EditRetailer extends React.Component {
                         handleSave = {this.handleSave}
                         disableSave={this.state.updatingRetailer}
                     />
-                    {/* <ButtonGroup align="right">
-                        <Button 
-                            onClick={() => this.handleSave()}
-                            loading={this.state.updatingRetailer}
-                            disabled={this.state.updatingRetailer}
-                        > 
-                            Save 
-                        </Button>
-                    </ButtonGroup> */}
                 </Card>
             </Layout>
         )

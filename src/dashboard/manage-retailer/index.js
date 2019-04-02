@@ -247,14 +247,6 @@ class ManageRetailer extends React.Component {
 
     onToggleChange(item, value) {
         this.setState({mountDialog: true, retailerId: item.id, retailerStatus: item.branch_status, outletName: item.outlet_name})
-        //e.stopPropagation()
-        console.log("item", item)
-        //console.log("On toggle change", value, item, value.id, value.branch_status)
-
-        // Api.deactivateRetailer({
-        //     Id: item.id,
-        //     BranchStatus: item.branch_status === "true" ? "false" : "true"
-        // }, this.callback)
     }
 
     setDialogState() {
@@ -290,10 +282,7 @@ class ManageRetailer extends React.Component {
                
                 <div style={{width: '200px', marginTop: '20px'}}>
                     <NavLink to={`/admin/retailer/create`}>
-                        {/* <div style={{marginTop: '20px'}}> */}
-                            {/* <Button> Create Retailer </Button> */}
-                            <CustomButton text="CREATE RETAILER" />
-                        {/* </div> */}
+                        <CustomButton text="CREATE RETAILER" />
                     </NavLink>
                 </div> 
                
@@ -361,7 +350,6 @@ class ManageRetailer extends React.Component {
                             marginRight: '20px'
                         }}
                     >
-                        {/* <Button onClick={() => this.getFilteredRetailersList()}>Search</Button> */}
                         <CustomButton text="Search" handleClick={this.getFilteredRetailersList} />
                     </div>
                     <div
@@ -370,7 +358,6 @@ class ManageRetailer extends React.Component {
                             display: 'inline-block',
                         }}
                     >
-                        {/* <Button onClick={() => this.resetFilter()}>Reset</Button> */}
                         <CustomButton text="Reset" handleClick={this.resetFilter} />
                     </div>
                 </div>
@@ -389,7 +376,6 @@ class ManageRetailer extends React.Component {
                             <Table.Column field="id" title="Retailer Id"/>
                             <Table.Column field="outlet_name" title="Outlet Name"/>
                             <Table.Column field="store_address" title="Outlet Address"/>
-                            {/* <Table.Column field="retailerStatus" title="Retailer Status"/> */}
                             <Table.Column field="state_name" title="State"/>
                             <Table.Column field="city_name" title="City"/>
                             <Table.Column field="organisation_id" title="Organization Id"/>

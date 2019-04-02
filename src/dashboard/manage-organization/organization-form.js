@@ -151,7 +151,6 @@ class OrganizationForm extends React.Component {
 
     componentWillReceiveProps(newProps) {
         if(this.props.stateList !== newProps.stateList) {
-            //console.log("state id", newProps.stateList)
             this.setState({stateList: newProps.stateList})
             if(location.pathname.includes("create")) {
                 this.setState({selectedStateIdx: newProps.stateList[0].value})
@@ -159,7 +158,6 @@ class OrganizationForm extends React.Component {
         }
 
         if(this.props.cityList !== newProps.cityList) {
-            //console.log("city id", newProps.cityList)
             this.setState({cityList: newProps.cityList})
             if(location.pathname.includes("create")) {
                 this.setState({selectedCityIdx: newProps.cityList[0].value})
@@ -173,7 +171,6 @@ class OrganizationForm extends React.Component {
 
     handleChange(e) {
         if(e.target.name.toString().includes("StateIdx")) {
-            //console.log("citylist", this.state.stateMap, this.state.stateMap[e.target.value])
             this.setState({
                 cityList: this.state.stateMap[e.target.value],
                 [e.target.name]: e.target.value
