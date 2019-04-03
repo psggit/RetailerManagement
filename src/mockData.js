@@ -490,7 +490,12 @@ export const organizationList = {
     "count": "3"
 }
 
-
+export const deviceList = [
+    {email: "abc@gmail.com", mobile: "7639626759", name: "aparna", is_active: true},
+    {email: "abc1@gmail.com", mobile: "7639626759", name: "aparna", is_active: false},
+    {email: "abc2@gmail.com", mobile: "7639626759", name: "aparna", is_active: true},
+    {email: "abc3@gmail.com", mobile: "7639626759", name: "aparna", is_active: true}
+]
 
 export const retailerList = {
     "ret_response": [

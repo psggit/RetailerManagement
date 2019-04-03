@@ -109,6 +109,40 @@ export function fetchRetailerList (payloadObj, successCallback, failureCallback)
     })
 }
 
+export function fetchDeviceList (payloadObj, successCallback, failureCallback) {
+    return POST({
+        api: '/Api/listDevices',
+        apiBase: 'retailerMgmt',
+        data: payloadObj,
+        handleError: true
+    })
+    .then((json) => {
+        successCallback(json)
+    })
+    .catch(err => {
+        console.log("Error in fetching device list", err)
+        err.response.json().then(json => { Notify("danger", json.message) })
+        failureCallback()
+    })
+}
+
+export function deactivateDevice (payloadObj, successCallback) {
+    return POST({
+        api: '/Api/listDevices',
+        apiBase: 'retailerMgmt',
+        data: payloadObj,
+        handleError: true
+    })
+    .then((json) => {
+        successCallback(json)
+    })
+    .catch(err => {
+        console.log("Error in fetching device list", err)
+        err.response.json().then(json => { Notify("danger", json.message) })
+        //failureCallback()
+    })
+}
+
 export function createRetailer(payloadObj, successCallback, failureCallback) {
     return POST({
         api: '/Api/createRetailer',

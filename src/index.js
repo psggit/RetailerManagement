@@ -23,6 +23,8 @@ import RetailerDetails from './dashboard/manage-retailer/retailer-details'
 import ManageRetailer from './dashboard/manage-retailer/index'
 import CreateRetailer from './dashboard/manage-retailer/create-retailer';
 import EditRetailer from './dashboard/manage-retailer/edit-retailer';
+import RetailerList from "./dashboard/device-management/index";
+import DeviceList from "./dashboard/device-management/device-list"
 import GenerateReport from './dashboard/generate-report'
 
 const history = createHistory()
@@ -119,7 +121,8 @@ class App extends React.Component {
 									menuItems={[
 										{ label: 'Manage Organization', value: 'organization' },
 										{ label: 'Manage Retailer', value: 'retailer' },
-										{ label: 'Generate Report', value: 'generate-report' }
+										{ label: 'Generate Report', value: 'generate-report' },
+										{ label: 'Device Management', value: 'device-management' }
 									]}
 									currentRoute={this.state.currentRoute}
 								/>
@@ -211,6 +214,28 @@ class App extends React.Component {
 									//     <GenerateReport {...props} />
 									//   )
 									// }
+									/>
+
+									<Route
+										exact
+										path="/admin/device-management"
+										//component={ManageOrganization}
+										render={
+											props => (
+												<RetailerList {...props} />
+											)
+										}
+									/>
+
+									<Route
+										exact
+										path="/admin/device-management/:retailerId"
+										//component={ManageOrganization}
+										render={
+											props => (
+												<DeviceList {...props} />
+											)
+										}
 									/>
 
 									<Route
