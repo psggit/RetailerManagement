@@ -251,7 +251,7 @@ class DeviceList extends React.Component {
           {
             <div style={{ marginTop: '20px', marginBottom: '20px' }}>
               <Table
-                emptyMessage={this.state.loadingDeviceList ? <Spinner /> : 'No records found'}
+                emptyMessage={this.state.loadingDeviceList ? <Spinner /> : 'No devices found'}
                 items={deviceList}
                 //onRowClick={(e, item) => this.handleRowClick(e, item)}
               >

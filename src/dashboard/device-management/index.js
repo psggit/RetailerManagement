@@ -323,7 +323,7 @@ class DeviceManagement extends React.Component {
         {
           <div style={{ marginTop: '40px', marginBottom: '20px' }}>
             <Table
-              emptyMessage={this.state.loading ? <Spinner /> : 'No records found'}
+              emptyMessage={this.state.loading ? <Spinner /> : 'No retailers found'}
               items={retailerData}
               //onRowClick={(e, item) => this.handleRowClick(e, item)}
             >
