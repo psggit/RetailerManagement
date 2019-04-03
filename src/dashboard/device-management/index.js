@@ -192,7 +192,7 @@ class DeviceManagement extends React.Component {
 			}, this.setResponseData, this.failureCallback)
 		}
 
-		history.pushState(queryParamsObj, "retailer listing", `/admin/retailer?${getQueryUri(queryParamsObj)}`)
+		history.pushState(queryParamsObj, "retailer listing", `/admin/device-management?${getQueryUri(queryParamsObj)}`)
   }
   
   handleChange(e) {
@@ -325,8 +325,13 @@ class DeviceManagement extends React.Component {
             <Table
               emptyMessage={this.state.loading ? <Spinner /> : 'No records found'}
               items={retailerData}
-              onRowClick={(e, item) => this.handleRowClick(e, item)}
+              //onRowClick={(e, item) => this.handleRowClick(e, item)}
             >
+							<Table.Column field="actions">
+								{item => (
+									<Button icon="pencil" onClick={(e) => this.handleRowClick(e, item)} />
+								)}
+							</Table.Column>
               <Table.Column field="id" title="Retailer Id" />
               <Table.Column field="outlet_name" title="Outlet Name" />
               <Table.Column field="store_address" title="Outlet Address" />
@@ -338,7 +343,7 @@ class DeviceManagement extends React.Component {
           </div>
         }
         {
-          this.state.retailerData && this.state.retailerData.length > 10 &&
+          this.state.retailerData && this.state.retailerData.length >= 10 &&
           <Pagination
             activePage={parseInt(this.state.activePage)}
             itemsCountPerPage={this.pagesLimit}
