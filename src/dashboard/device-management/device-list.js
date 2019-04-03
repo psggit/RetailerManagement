@@ -207,7 +207,7 @@ class DeviceList extends React.Component {
         }
       })
       return false;
-    } else if(!emailRegex.test(this.state.email)) {
+    } else if(!emailRegex.test(this.state.email.trim())) {
       this.setState({
         emailErr: {
           value: "Email is invalid",
