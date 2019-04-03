@@ -21,6 +21,7 @@ class DeviceList extends React.Component {
       loadingDeviceList: true,
       mountDialog: false,
       mountAddDevice: false,
+      addingDevice: false,
       posId: "",
       deviceStatus: "",
       deviceNumber: "",
@@ -66,6 +67,7 @@ class DeviceList extends React.Component {
     this.successDeviceListCallback = this.successDeviceListCallback.bind(this)
     this.failureDeviceListCallback = this.failureDeviceListCallback.bind(this)
     this.setDefaultState = this.setDefaultState.bind(this)
+    this.failureAddDeviceCallback = this.failureAddDeviceCallback.bind(this)
   }
 
   componentDidMount() {
@@ -115,10 +117,15 @@ class DeviceList extends React.Component {
 	}
 
 	successCallback() {
+    this.unmountDialog('mountAddDevice')
     this.setDefaultState()
 		this.fetchDeviceList({
       retailer_id: this.props.location.state.id,
 		})
+  }
+
+  failureAddDeviceCallback() {
+    this.setState({addingDevice: false})
   }
 
   setDefaultState() {
@@ -149,7 +156,8 @@ class DeviceList extends React.Component {
       mobileErr: {
         value: "",
         status: false
-      }
+      },
+      addingDevice: false
     })
   }
 
@@ -241,7 +249,8 @@ class DeviceList extends React.Component {
 
   addDevice() {
     if(this.isFormValid()) {
-      this.unmountDialog('mountAddDevice')
+      // this.unmountDialog('mountAddDevice')
+      this.setState({addingDevice: true})
       Api.addDevice({
         retailer_id: this.props.location.state.id,
         email: this.state.email.trim(),
@@ -250,12 +259,12 @@ class DeviceList extends React.Component {
         operator: this.state.operator.trim(),
         password: this.state.password.trim(),
         is_active: this.state.newDeviceStatus
-      }, this.successCallback)
+      }, this.successCallback, this.failureAddDeviceCallback)
     }
   }
  
   render() {
-    const {retailerData, deviceList, emailErr, newDeviceNumberErr, mobileErr, passwordErr, operatorErr} = this.state
+    const {retailerData, deviceList, emailErr, newDeviceNumberErr, mobileErr, passwordErr, operatorErr, addingDevice} = this.state
     return (
       <Layout title="Device Management">
         <div id="deviceManagement">
@@ -406,7 +415,7 @@ class DeviceList extends React.Component {
               </ModalBody>
               <ModalFooter>
                 <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', fontWeight: '600' }}>
-                  <button className='btn btn-primary' onClick={() => this.addDevice()}> Add </button>
+                  <button className='btn btn-primary' disabled={addingDevice} onClick={() => this.addDevice()}> Add </button>
                   <button className='btn btn-secondary' onClick={() => this.unmountDialog('mountAddDevice')}> Cancel </button>
                 </div>
               </ModalFooter>

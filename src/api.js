@@ -143,7 +143,7 @@ export function deactivateDevice (payloadObj, successCallback) {
     })
 }
 
-export function addDevice (payloadObj, successCallback) {
+export function addDevice (payloadObj, successCallback, failureCallback) {
     return POST({
         api: '/Api/createDevice',
         apiBase: 'retailerMgmt',
@@ -156,7 +156,7 @@ export function addDevice (payloadObj, successCallback) {
     .catch(err => {
         console.log("Error in updating device status", err)
         err.response.json().then(json => { Notify("danger", json.message) })
-        //failureCallback()
+        failureCallback()
     })
 }
 
