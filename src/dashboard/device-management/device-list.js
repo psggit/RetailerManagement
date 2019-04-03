@@ -59,12 +59,13 @@ class DeviceList extends React.Component {
     this.fetchDeviceList = this.fetchDeviceList.bind(this)
     this.mountAddDeviceModal = this.mountAddDeviceModal.bind(this)
     this.addDevice = this.addDevice.bind(this)
+    this.handleFieldChange = this.handleFieldChange.bind(this)
     this.handleTextChange = this.handleTextChange.bind(this)
-    this.handleEmailChange = this.handleEmailChange.bind(this)
     this.isFormValid = this.isFormValid.bind(this)
     this.handleStatusChange = this.handleStatusChange.bind(this)
     this.successDeviceListCallback = this.successDeviceListCallback.bind(this)
     this.failureDeviceListCallback = this.failureDeviceListCallback.bind(this)
+    this.setDefaultState = this.setDefaultState.bind(this)
   }
 
   componentDidMount() {
@@ -101,6 +102,7 @@ class DeviceList extends React.Component {
   }
   
   unmountDialog(modalName) {
+    this.setDefaultState()
 		this.setState({ [modalName]: false })
 	}
 
@@ -113,6 +115,13 @@ class DeviceList extends React.Component {
 	}
 
 	successCallback() {
+    this.setDefaultState()
+		this.fetchDeviceList({
+      retailer_id: this.props.location.state.id,
+		})
+  }
+
+  setDefaultState() {
     this.setState({
       email: "",
       mobile: "",
@@ -122,12 +131,9 @@ class DeviceList extends React.Component {
       selectedDeviceStatusIdx: 1,
       newDeviceStatus: true
     })
-		this.fetchDeviceList({
-      retailer_id: this.props.location.state.id,
-		})
   }
 
-  handleTextChange(evt) {
+  handleFieldChange(evt) {
     const errName = `${evt.target.name}Err`
     this.setState({
       [errName] : {
@@ -144,14 +150,15 @@ class DeviceList extends React.Component {
     }
   }
 
-  handleEmailChange(e) {
+  handleTextChange(e) {
+    const errName = `${e.target.name}Err`
     this.setState({
-      emailErr : {
+      [errName] : {
         value: "",
         status: false
       }
     })
-    this.setState({email: e.target.value})
+    this.setState({[e.target.name]: e.target.value})
   }
 
   isFormValid() {
@@ -308,7 +315,7 @@ class DeviceList extends React.Component {
                       autoComplete="fefef"
                       value={this.state.email}
                       error={emailErr.status ? emailErr.value : ''}
-                      onChange={(e) => this.handleEmailChange(e)}
+                      onChange={(e) => this.handleTextChange(e)}
                     />
                     <Form.TextInput
                       //placeholder="Crystal Wines"
@@ -320,7 +327,7 @@ class DeviceList extends React.Component {
                       autoComplete="fefef"
                       value={this.state.mobile}
                       error={mobileErr.status ? mobileErr.value : ''}
-                      onChange={(e) => this.handleTextChange(e)}
+                      onChange={(e) => this.handleFieldChange(e)}
                     />
                     <Form.TextInput
                       //placeholder="Crystal Wines"
@@ -329,7 +336,7 @@ class DeviceList extends React.Component {
                       name="newDeviceNumber"
                       autoComplete="fefef"
                       //maxLength={16}
-                      pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                      //pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                       value={this.state.newDeviceNumber}
                       error={newDeviceNumberErr.status ? newDeviceNumberErr.value : ''}
                       onChange={(e) => this.handleTextChange(e)}
@@ -343,7 +350,7 @@ class DeviceList extends React.Component {
                       pattern="[a-zA-Z]*"
                       value={this.state.operator}
                       error={operatorErr.status ? operatorErr.value : ''}
-                      onChange={(e) => this.handleTextChange(e)}
+                      onChange={(e) => this.handleFieldChange(e)}
                     />
                     <Form.TextInput
                       //placeholder="Crystal Wines"
@@ -354,7 +361,7 @@ class DeviceList extends React.Component {
                       pattern="[a-zA-Z0-9!#@]*"
                       value={this.state.password}
                       error={passwordErr.status ? passwordErr.value : ''}
-                      onChange={(e) => this.handleTextChange(e)}
+                      onChange={(e) => this.handleFieldChange(e)}
                     />
                     <Form.Select
                       label="Status*"
