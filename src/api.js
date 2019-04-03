@@ -128,7 +128,7 @@ export function fetchDeviceList (payloadObj, successCallback, failureCallback) {
 
 export function deactivateDevice (payloadObj, successCallback) {
     return POST({
-        api: '/Api/listDevices',
+        api: '/Api/changeDeviceStatus',
         apiBase: 'retailerMgmt',
         data: payloadObj,
         handleError: true
@@ -137,7 +137,24 @@ export function deactivateDevice (payloadObj, successCallback) {
         successCallback(json)
     })
     .catch(err => {
-        console.log("Error in fetching device list", err)
+        console.log("Error in updating device status", err)
+        err.response.json().then(json => { Notify("danger", json.message) })
+        //failureCallback()
+    })
+}
+
+export function addDevice (payloadObj, successCallback) {
+    return POST({
+        api: '/Api/createDevice',
+        apiBase: 'retailerMgmt',
+        data: payloadObj,
+        handleError: true
+    })
+    .then((json) => {
+        successCallback(json)
+    })
+    .catch(err => {
+        console.log("Error in updating device status", err)
         err.response.json().then(json => { Notify("danger", json.message) })
         //failureCallback()
     })

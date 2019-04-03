@@ -39,7 +39,7 @@ class ModalBox extends React.Component {
   render () {
     return (
       <div className='modal-overlay'>
-        <div className='modal-container' style={{ width: this.state.width, maxHeight: this.state.maxHeight }}>
+        <div className='modal-container' style={{ width: this.state.width, maxHeight: this.state.maxHeight, overflowY: 'auto' }}>
           { this.props.children }
         </div>
       </div>

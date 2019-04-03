@@ -4,8 +4,7 @@ import { Table } from '@auth0/cosmos'
 import { Icon, Spinner, List, Dialog } from '@auth0/cosmos'
 import { Form, Checkbox, ButtonGroup } from '@auth0/cosmos'
 import Button from "Components/button"
-import Select from '@auth0/cosmos'
-import{deviceList} from "./../../mockData"
+import * as Api from './../../api'
 import "./device-management.scss"
 import Switch2 from 'Components/switch'
 import ModalHeader from 'Components/ModalBox/ModalHeader'
@@ -19,25 +18,20 @@ class DeviceList extends React.Component {
     this.state = {
       retailerData: {},
       deviceList: [],
-      loading: false,
+      loadingDeviceList: true,
       mountDialog: false,
       mountAddDevice: false,
-      deviceId: "",
+      posId: "",
       deviceStatus: "",
-      deviceName: "",
-      // newDevice: {
-      //   email: "",
-      //   mobile: "",
-      //   name: "",
-      //   is_active: ""
-      // },
+      deviceNumber: "",
       email: "",
+      operator: "",
       password: "",
-      newDeviceName: "",
+      newDeviceNumber: "",
       newDeviceStatus: true,
       selectedDeviceStatusIdx: 1,
       mobile: "",
-      newDeviceNameErr: {
+      newDeviceNumberErr: {
         value: "",
         status: false
       },
@@ -49,6 +43,10 @@ class DeviceList extends React.Component {
         value: "",
         status: false
       },
+      operatorErr: {
+        value: "",
+        status: false
+      },
       mobileErr: {
         value: "",
         status: false
@@ -56,7 +54,6 @@ class DeviceList extends React.Component {
     }
 
     this.onToggleChange = this.onToggleChange.bind(this)
-    //this.setDialogState = this.setDialogState.bind(this)
     this.deactivateDevice = this.deactivateDevice.bind(this)
     this.successCallback = this.successCallback.bind(this)
     this.fetchDeviceList = this.fetchDeviceList.bind(this)
@@ -66,10 +63,11 @@ class DeviceList extends React.Component {
     this.handleEmailChange = this.handleEmailChange.bind(this)
     this.isFormValid = this.isFormValid.bind(this)
     this.handleStatusChange = this.handleStatusChange.bind(this)
+    this.successDeviceListCallback = this.successDeviceListCallback.bind(this)
+    this.failureDeviceListCallback = this.failureDeviceListCallback.bind(this)
   }
 
   componentDidMount() {
-    //console.log("props", this.props.location.state, deviceList)
     this.setState({retailerData: this.props.location.state})
     this.fetchDeviceList({
       retailer_id: this.props.location.state.id
@@ -77,20 +75,29 @@ class DeviceList extends React.Component {
   }
 
   fetchDeviceList(payload) {
-    this.setState({deviceList})
-    //Api.fetchDeviceList(payloadObj, this.setResponseData, this.failureCallback)
+    Api.fetchDeviceList(payload, this.successDeviceListCallback, this.failureDeviceListCallback)
   }
 
+  successDeviceListCallback(response) {
+		if (response && response.device_details) {
+			this.setState({ deviceList: response.device_details, loadingDeviceList: false })
+		} else {
+			this.setState({ deviceList: [], loadingDeviceList: false })
+		}
+	}
+
+	failureDeviceListCallback() {
+		this.setState({ deviceList: [], loadingDeviceList: false })
+	}
+
   onToggleChange(item, value) {
-		this.setState({ mountConfirmationDialog: true, deviceId: item.id, deviceStatus: item.is_active, deviceName: item.name })
+		this.setState({ mountConfirmationDialog: true, posId: item.id, deviceStatus: item.is_active, deviceNumber: item.device_number })
   }
 
   handleStatusChange(e) {
     this.setState({
       newDeviceStatus: e.target.value === 1 ? true : false,
-      selectedDeviceStatusIdx: e.target.value}, () => {
-      //console.log("status", this.state)
-    })
+      selectedDeviceStatusIdx: e.target.value})
   }
   
   unmountDialog(modalName) {
@@ -98,17 +105,25 @@ class DeviceList extends React.Component {
 	}
 
 	deactivateDevice() {
-		this.setDialogState()
+		this.unmountDialog('mountConfirmationDialog')
 		Api.deactivateDevice({
-			Id: this.state.retailerId,
-			BranchStatus: this.state.deviceStatus === "true" ? "false" : "true"
+			pos_id: this.state.posId,
+			is_active: this.state.deviceStatus === true ? false : true
 		}, this.successCallback)
 	}
 
 	successCallback() {
+    this.setState({
+      email: "",
+      mobile: "",
+      newDeviceNumber: "",
+      operator: "",
+      password: "",
+      selectedDeviceStatusIdx: 1,
+      newDeviceStatus: true
+    })
 		this.fetchDeviceList({
       retailer_id: this.props.location.state.id,
-      is_active: this.state.deviceStatus ? false : true
 		})
   }
 
@@ -141,10 +156,10 @@ class DeviceList extends React.Component {
 
   isFormValid() {
     const emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    if(this.state.newDeviceName.trim().length === 0) {
+    if(this.state.newDeviceNumber.trim().length === 0) {
       this.setState({
-        newDeviceNameErr: {
-          value: "Name is required",
+        newDeviceNumberErr: {
+          value: "Device number is required",
           status: true
         }
       })
@@ -191,12 +206,21 @@ class DeviceList extends React.Component {
 
   addDevice() {
     if(this.isFormValid()) {
-      console.log("add device", this.state)
+      this.unmountDialog('mountAddDevice')
+      Api.addDevice({
+        retailer_id: this.props.location.state.id,
+        email: this.state.email,
+        mobile_number: this.state.mobile,
+        device_number: this.state.newDeviceNumber,
+        operator: this.state.operator,
+        password: this.state.password,
+        is_active: this.state.newDeviceStatus
+      }, this.successCallback)
     }
   }
  
   render() {
-    const {retailerData, deviceList, emailErr, newDeviceNameErr, mobileErr, passwordErr} = this.state
+    const {retailerData, deviceList, emailErr, newDeviceNumberErr, mobileErr, passwordErr, operatorErr} = this.state
     return (
       <Layout title="Device Management">
         <div id="deviceManagement">
@@ -227,14 +251,13 @@ class DeviceList extends React.Component {
           {
             <div style={{ marginTop: '20px', marginBottom: '20px' }}>
               <Table
-                emptyMessage={this.state.loading ? <Spinner /> : 'No records found'}
+                emptyMessage={this.state.loadingDeviceList ? <Spinner /> : 'No records found'}
                 items={deviceList}
                 //onRowClick={(e, item) => this.handleRowClick(e, item)}
               >
                 <Table.Column field="email" title="Email" />
-                <Table.Column field="mobile" title="Mobile" />
-                <Table.Column field="name" title="Name" />
-                {/* <Table.Column field="is_active" title="Status" /> */}
+                <Table.Column field="mobile_number" title="Mobile" />
+                <Table.Column field="device_number" title="Device Number" />
                 <Table.Column field="actions" title="Status">
                   {item => (
                     <Switch2 on={item.is_active === true} accessibleLabels={[]} onToggle={this.onToggleChange} value={item} />
@@ -248,13 +271,13 @@ class DeviceList extends React.Component {
             <ModalBox>
               <ModalHeader>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <div style={{ fontSize: '18px' }}>{this.state.deviceStatus === "true" ? 'Deactivate' : 'Activate'} Device</div>
+                  <div style={{ fontSize: '18px' }}>{this.state.deviceStatus === true ? 'Deactivate' : 'Activate'} Device</div>
                 </div>
               </ModalHeader>
               <ModalBody height='60px'>
                 <table className='table--hovered'>
                   <tbody>
-                    Are you sure you want to {this.state.deviceStatus === "true" ? 'Deactivate' : 'Activate'} this device - {this.state.deviceName}
+                    Are you sure you want to {this.state.deviceStatus === true ? 'Deactivate' : 'Activate'} this device - {this.state.deviceNumber}
                   </tbody>
                 </table>
               </ModalBody>
@@ -271,9 +294,7 @@ class DeviceList extends React.Component {
             this.state.mountAddDevice &&
             <ModalBox>
               <ModalHeader>
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <div style={{ fontSize: '18px' }}>Add Device</div>
-                </div>
+                Add Device
               </ModalHeader>
               <ModalBody>
                 <div>
@@ -303,16 +324,28 @@ class DeviceList extends React.Component {
                     />
                     <Form.TextInput
                       //placeholder="Crystal Wines"
-                      label="Name*"
+                      label="Device Number*"
                       type="text"
-                      name="newDeviceName"
+                      name="newDeviceNumber"
                       autoComplete="fefef"
-                      pattern="^[A-Za-z0-9 ]*$"
-                      value={this.state.newDeviceName}
-                      error={newDeviceNameErr.status ? newDeviceNameErr.value : ''}
+                      //maxLength={16}
+                      pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                      value={this.state.newDeviceNumber}
+                      error={newDeviceNumberErr.status ? newDeviceNumberErr.value : ''}
                       onChange={(e) => this.handleTextChange(e)}
                     />
-                     <Form.TextInput
+                    <Form.TextInput
+                      //placeholder="Crystal Wines"
+                      label="Operator*"
+                      type="text"
+                      name="operator"
+                      autoComplete="fefef"
+                      pattern="[a-zA-Z]*"
+                      value={this.state.operator}
+                      error={operatorErr.status ? operatorErr.value : ''}
+                      onChange={(e) => this.handleTextChange(e)}
+                    />
+                    <Form.TextInput
                       //placeholder="Crystal Wines"
                       label="Password*"
                       type="text"
@@ -324,7 +357,7 @@ class DeviceList extends React.Component {
                       onChange={(e) => this.handleTextChange(e)}
                     />
                     <Form.Select
-                      label="Status"
+                      label="Status*"
                       value={this.state.selectedDeviceStatusIdx}
                       name="newDeviceStatus"
                       options={[
