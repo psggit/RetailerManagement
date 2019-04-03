@@ -437,7 +437,7 @@ class DeviceList extends React.Component {
               </ModalBody>
               <ModalFooter>
                 <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', fontWeight: '600' }}>
-                  <button className='btn btn-secondary' onClick={() => this.unmountDialog('mountNotification')}> OK </button>
+                  <button className='btn btn-primary' onClick={() => this.unmountDialog('mountNotification')}> OK </button>
                 </div>
               </ModalFooter>
             </ModalBox>
