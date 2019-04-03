@@ -244,11 +244,11 @@ class DeviceList extends React.Component {
       this.unmountDialog('mountAddDevice')
       Api.addDevice({
         retailer_id: this.props.location.state.id,
-        email: this.state.email,
-        mobile_number: this.state.mobile,
-        device_number: this.state.newDeviceNumber,
-        operator: this.state.operator,
-        password: this.state.password,
+        email: this.state.email.trim(),
+        mobile_number: this.state.mobile.trim(),
+        device_number: this.state.newDeviceNumber.trim(),
+        operator: this.state.operator.trim(),
+        password: this.state.password.trim(),
         is_active: this.state.newDeviceStatus
       }, this.successCallback)
     }
