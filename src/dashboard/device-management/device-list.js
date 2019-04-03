@@ -21,7 +21,8 @@ class DeviceList extends React.Component {
       loadingDeviceList: true,
       mountDialog: false,
       mountAddDevice: false,
-      addingDevice: false,
+      mountNotification: false,
+      //addingDevice: false,
       posId: "",
       deviceStatus: "",
       deviceNumber: "",
@@ -117,7 +118,7 @@ class DeviceList extends React.Component {
 	}
 
 	successCallback() {
-    this.unmountDialog('mountAddDevice')
+    // this.unmountDialog('mountAddDevice')
     this.setDefaultState()
 		this.fetchDeviceList({
       retailer_id: this.props.location.state.id,
@@ -125,7 +126,7 @@ class DeviceList extends React.Component {
   }
 
   failureAddDeviceCallback() {
-    this.setState({addingDevice: false})
+    this.setState({mountNotification: true})
   }
 
   setDefaultState() {
@@ -157,7 +158,7 @@ class DeviceList extends React.Component {
         value: "",
         status: false
       },
-      addingDevice: false
+      //addingDevice: false
     })
   }
 
@@ -249,8 +250,8 @@ class DeviceList extends React.Component {
 
   addDevice() {
     if(this.isFormValid()) {
-      // this.unmountDialog('mountAddDevice')
-      this.setState({addingDevice: true})
+      this.unmountDialog('mountAddDevice')
+      //this.setState({addingDevice: true})
       Api.addDevice({
         retailer_id: this.props.location.state.id,
         email: this.state.email.trim(),
@@ -264,7 +265,7 @@ class DeviceList extends React.Component {
   }
  
   render() {
-    const {retailerData, deviceList, emailErr, newDeviceNumberErr, mobileErr, passwordErr, operatorErr, addingDevice} = this.state
+    const {retailerData, deviceList, emailErr, newDeviceNumberErr, mobileErr, passwordErr, operatorErr} = this.state
     return (
       <Layout title="Device Management">
         <div id="deviceManagement">
@@ -415,8 +416,28 @@ class DeviceList extends React.Component {
               </ModalBody>
               <ModalFooter>
                 <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', fontWeight: '600' }}>
-                  <button className='btn btn-primary' disabled={addingDevice} onClick={() => this.addDevice()}> Add </button>
+                  <button className='btn btn-primary' onClick={() => this.addDevice()}> Add </button>
                   <button className='btn btn-secondary' onClick={() => this.unmountDialog('mountAddDevice')}> Cancel </button>
+                </div>
+              </ModalFooter>
+            </ModalBox>
+          }
+          {
+            this.state.mountNotification &&
+            <ModalBox>
+              <ModalHeader>
+                Notification
+              </ModalHeader>
+              <ModalBody height='60px'>
+                <table className='table--hovered'>
+                  <tbody>
+                    Something went wrong
+                  </tbody>
+                </table>
+              </ModalBody>
+              <ModalFooter>
+                <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', fontWeight: '600' }}>
+                  <button className='btn btn-secondary' onClick={() => this.unmountDialog('mountNotification')}> OK </button>
                 </div>
               </ModalFooter>
             </ModalBox>
