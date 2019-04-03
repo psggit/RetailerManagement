@@ -129,7 +129,27 @@ class DeviceList extends React.Component {
       operator: "",
       password: "",
       selectedDeviceStatusIdx: 1,
-      newDeviceStatus: true
+      newDeviceStatus: true,
+      newDeviceNumberErr: {
+        value: "",
+        status: false
+      },
+      passwordErr: {
+        value: "",
+        status: false
+      },
+      emailErr: {
+        value: "",
+        status: false
+      },
+      operatorErr: {
+        value: "",
+        status: false
+      },
+      mobileErr: {
+        value: "",
+        status: false
+      }
     })
   }
 
@@ -199,6 +219,14 @@ class DeviceList extends React.Component {
       this.setState({
         mobileErr: {
           value: "Mobile is required",
+          status: true
+        }
+      })
+      return false;
+    } else if(this.state.operator.trim().length === 0) {
+      this.setState({
+        operatorErr: {
+          value: "Operator is required",
           status: true
         }
       })
