@@ -259,7 +259,7 @@ class DeviceManagement extends React.Component {
               value={this.state.column}
               name="column"
               options={[
-                { text: 'ID', value: 'ID' },
+                { text: 'RETAILER ID', value: 'ID' },
                 { text: 'RETAILER NAME', value: 'RetailerName' },
                 { text: 'CITY NAME', value: 'CityName' },
                 { text: 'ORGANIZATION ID', value: 'OrganisationID' }
