@@ -218,11 +218,6 @@ class DeviceManagement extends React.Component {
 		//this.setState({[e.target.name]: (e.target.value).toString()})
 	}
 
-	// editOutletDetail(e, item, action) {
-	// 	e.stopPropagation()
-	// 	this.props.history.push(`/admin/retailer/edit/${item.id}`, item)
-	// }
-
 	resetFilter() {
 		this.setState({
 			column: '',
@@ -233,7 +228,7 @@ class DeviceManagement extends React.Component {
 		this.props.history.push(`/admin/retailer`)
   }
   
-  handleRowClick(e, item) {
+  editRetailerDetails(e, item) {
 		if (e.target.nodeName === "SPAN") {
 			return
 		}
@@ -329,7 +324,7 @@ class DeviceManagement extends React.Component {
             >
 							<Table.Column field="actions">
 								{item => (
-									<Button icon="pencil" onClick={(e) => this.handleRowClick(e, item)} />
+									<Button icon="pencil" onClick={(e) => this.editRetailerDetails(e, item)} />
 								)}
 							</Table.Column>
               <Table.Column field="id" title="Retailer Id" />

@@ -155,7 +155,7 @@ export function addDevice (payloadObj, successCallback, failureCallback) {
     })
     .catch(err => {
         console.log("Error in adding device", err)
-        err.response.json().then(json => { Notify("danger", json.message) })
+        //err.response.json().then(json => { Notify("danger", json.message) })
         failureCallback()
     })
 }
