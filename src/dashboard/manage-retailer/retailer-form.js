@@ -148,6 +148,7 @@ class RetailerForm extends React.Component {
 		this.checkForm = this.checkForm.bind(this)
 		this.handleSave = this.handleSave.bind(this)
 		this.validate = this.validate.bind(this)
+		this.handleStateChange = this.handleStateChange.bind(this)
 	}
 
 	componentWillReceiveProps(newProps) {
@@ -185,6 +186,15 @@ class RetailerForm extends React.Component {
 				this.setState({ cityList: newProps.cityList })
 				this.setState({ selectedCityIdx: newProps.cityList[0].value })
 			}
+		}
+	}
+
+	handleStateChange (e) {
+		if (e.target.name.toString().includes("StateIdx")) {
+			this.setState({
+				cityList: this.state.stateMap[e.target.value],
+				[e.target.name]: e.target.value
+			})
 		}
 	}
 
@@ -585,11 +595,12 @@ class RetailerForm extends React.Component {
 							onChange={(e) => this.handleTextChange(e)}
 						/>
 						<Form.Select
-							disabled={true}
+							//disabled={true}
 							label="State*"
 							value={this.state.selectedStateIdx}
 							name="selectedStateIdx"
 							options={this.state.stateList}
+							onChange={(e) => this.handleStateChange(e)}
 						/>
 						<Form.Select
 							label="City*"
