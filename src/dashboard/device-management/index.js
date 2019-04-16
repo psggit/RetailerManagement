@@ -138,7 +138,11 @@ class DeviceManagement extends React.Component {
   
   setResponseData(response) {
 		if (response && response.ret_response) {
-			this.setState({ retailerData: response.ret_response, retailerListCount: response.count, loading: false })
+			this.setState({ 
+				retailerData: response.ret_response, 
+				retailerListCount: response.count, 
+				loading: false 
+			})
 		} else {
 			this.setState({ retailerData: [], retailerListCount: 0, loading: false })
 		}
@@ -196,7 +200,9 @@ class DeviceManagement extends React.Component {
   }
   
   handleChange(e) {
-		if (e.target.name === "column" && (e.target.value === "ID" || e.target.value === "OrganisationID")) {
+		if (e.target.name === "column" && 
+				(e.target.value === "ID" || e.target.value === "OrganisationID")
+			 ) {
 			this.setState({
 				operators: [
 					{ text: 'EQUAL', value: 'EQUAL' },

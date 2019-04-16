@@ -137,7 +137,7 @@ class OrganizationForm extends React.Component {
 
 		this.errorFlag = false,
 
-			this.handleChange = this.handleChange.bind(this)
+		this.handleChange = this.handleChange.bind(this)
 		this.handleTextChange = this.handleTextChange.bind(this)
 		this.handleNumberChange = this.handleNumberChange.bind(this)
 		this.handleEmailChange = this.handleEmailChange.bind(this)
@@ -535,7 +535,7 @@ class OrganizationForm extends React.Component {
 									checked={this.state.photo}
 								>
 									Photo of Authorized Signatory
-                            </Checkbox>
+                </Checkbox>
 							</div>
 							<div>
 								<Checkbox
@@ -545,7 +545,7 @@ class OrganizationForm extends React.Component {
 									checked={this.state.pancard}
 								>
 									PAN of Authorized Signatory
-                            </Checkbox>
+            		</Checkbox>
 							</div>
 						</div>
 						<div style={{ display: 'flex', marginBottom: '20px' }}>
@@ -557,7 +557,7 @@ class OrganizationForm extends React.Component {
 									checked={this.state.address}
 								>
 									Address proof of Authorized Signatory
-                            </Checkbox>
+                </Checkbox>
 							</div>
 							<div>
 								<Checkbox
@@ -567,7 +567,7 @@ class OrganizationForm extends React.Component {
 									checked={this.state.isOtherProof}
 								>
 									Others
-                            </Checkbox>
+                </Checkbox>
 							</div>
 						</div>
 						{
@@ -601,7 +601,7 @@ class OrganizationForm extends React.Component {
 											checked={this.state.partnershipPancard}
 										>
 											PAN
-                                    </Checkbox>
+                    </Checkbox>
 									</div>
 									<div style={{ marginRight: '24px' }}>
 										<Checkbox
@@ -621,7 +621,7 @@ class OrganizationForm extends React.Component {
 											checked={this.state.partnershipLOA}
 										>
 											LOA
-                                    </Checkbox>
+                    </Checkbox>
 									</div>
 								</div>
 							</div>
@@ -641,7 +641,7 @@ class OrganizationForm extends React.Component {
 											checked={this.state.pvtPancard}
 										>
 											PAN
-                                    </Checkbox>
+                    </Checkbox>
 									</div>
 									<div style={{ marginRight: '20px' }}>
 										<Checkbox
@@ -651,7 +651,7 @@ class OrganizationForm extends React.Component {
 											checked={this.state.pvtCOI}
 										>
 											COI
-                                    </Checkbox>
+                    </Checkbox>
 									</div>
 									<div style={{ marginRight: '20px' }}>
 										<Checkbox
@@ -661,7 +661,7 @@ class OrganizationForm extends React.Component {
 											checked={this.state.pvtLOA}
 										>
 											Board Resolution / LOA
-                                    </Checkbox>
+                    </Checkbox>
 									</div>
 								</div>
 							</div>

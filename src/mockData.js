@@ -713,3 +713,18 @@ export const organizationAndStateList = {
         }
     ]
 }
+
+export const stockData = [
+    {
+        sku_id: '1',
+        sku_pricing_id: '2'
+    },
+    {
+        sku_id: '3',
+        sku_pricing_id: '4'
+    },
+    {
+        sku_id: '5',
+        sku_pricing_id: '6'
+    }
+]

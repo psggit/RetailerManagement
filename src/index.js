@@ -26,6 +26,8 @@ import EditRetailer from './dashboard/manage-retailer/edit-retailer';
 import RetailerList from "./dashboard/device-management/index";
 import DeviceList from "./dashboard/device-management/device-list"
 import GenerateReport from './dashboard/generate-report'
+import StockAndPriceList from './dashboard/stock-and-price'
+import CreateOrUpdateStockPrice from './dashboard/stock-and-price/create-or-update-stock-price';
 
 const history = createHistory()
 
@@ -122,7 +124,8 @@ class App extends React.Component {
 										{ label: 'Manage Organization', value: 'organization' },
 										{ label: 'Manage Retailer', value: 'retailer' },
 										{ label: 'Generate Report', value: 'generate-report' },
-										{ label: 'Device Management', value: 'device-management' }
+										{ label: 'Device Management', value: 'device-management' },
+										{	label: 'Stock and Price', value: 'stock-and-price' }
 									]}
 									currentRoute={this.state.currentRoute}
 								/>
@@ -214,6 +217,28 @@ class App extends React.Component {
 									//     <GenerateReport {...props} />
 									//   )
 									// }
+									/>
+
+									<Route
+										exact
+										path="/admin/stock-and-price"
+										//component={ManageOrganization}
+										render={
+											props => (
+												<StockAndPriceList {...props} />
+											)
+										}
+									/>
+
+									<Route
+										exact
+										path="/admin/stock-and-price/update"
+										//component={ManageOrganization}
+										render={
+											props => (
+												<CreateOrUpdateStockPrice {...props} />
+											)
+										}
 									/>
 
 									<Route

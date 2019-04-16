@@ -240,7 +240,7 @@ class ManageOrganization extends React.Component {
 	handleRowClick(e, item) {
 		this.props.history.push(`/admin/organization/${item.id}`, item)
 	}
-
+	
 	render() {
 		return (
 			<Layout title="Manage Organization">
@@ -346,6 +346,11 @@ class ManageOrganization extends React.Component {
 						<Table.Column field="state_name" title="State Name" width="7%" />
 						<Table.Column field="pan_number" title="PAN Number" width="10%" />
 						<Table.Column field="cin_no" title="CIN Number" width="10%" />
+						{/* <Table.Column field="actions" title="hello">
+							{item => (
+								<input style={{width: '30px'}} onClick={this.handleInputEdit} />
+							)}
+						</Table.Column> */}
 					</Table>
 				</div>
 				{
