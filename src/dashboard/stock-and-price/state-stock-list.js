@@ -17,6 +17,7 @@ class StockList extends React.Component {
     this.enableEdit = this.enableEdit.bind(this)
     this.handleCheckboxes = this.handleCheckboxes.bind(this)
     this.handlePriceChange = this.handlePriceChange.bind(this)
+    this.handleStockChange = this.handleStockChange.bind(this)
   }
 
   componentDidMount() {
@@ -40,18 +41,13 @@ class StockList extends React.Component {
       enableEdit: true
     })
     if(this.state.enableEdit) {
-      const selectedStockList = this.state.stockList.filter((item) => {
-        if(item.is_modified) {
-          return  item
-        }
-      })
-      this.props.createOrUpdateStockAndPrice(selectedStockList)
+      this.props.createOrUpdateStockAndPrice(this.state.stockList)
     }
   }
 
   handleCheckboxes(e, skuPricingId) {
     let updatedMap = Object.assign({}, this.state.stockMap)
-    updatedMap[skuPricingId].is_modified = (e.target.checked)
+    updatedMap[skuPricingId].is_active = (e.target.checked)
     this.setState({ stockMap: updatedMap, stockList: Object.values(updatedMap) })
   }
 
@@ -62,8 +58,14 @@ class StockList extends React.Component {
     this.setState({stockMap: updatedMap, stockList: Object.values(updatedMap)})
   }
 
+  handleStockChange(e, skuPricingId) {
+    e.stopPropagation()
+    let updatedMap = Object.assign({}, this.state.stockMap)
+    updatedMap[skuPricingId].stock = parseInt(e.target.value)
+    this.setState({stockMap: updatedMap, stockList: Object.values(updatedMap)})
+  }
+
   render() {
-    console.log("props", this.props, this.state)
     return (
       <React.Fragment>
       {
@@ -87,32 +89,45 @@ class StockList extends React.Component {
       {
         <div style={{ marginTop: '20px', marginBottom: '20px' }}>
           <Table
-            emptyMessage={this.props.loadingStockList ? <Spinner /> : 'No stock found'}
+            emptyMessage={this.props.loadingStockList ? <Spinner /> : 'No sku found'}
             items={this.state.stockList}
             //onRowClick={(e, item) => this.handleRowClick(e, item)}
           >
-            <Table.Column field="actions">
+            <Table.Column field="actions" title="IsActive">
 							{item => (
-								// <input style={{width: '30px'}} onClick={this.handleInputEdit} />
                 <input 
                   type="checkbox"
                   onChange={(e) => this.handleCheckboxes(e, item.sku_pricing_id)}
-                  checked={this.state.stockMap[item.sku_pricing_id].is_modified}
-                  name="isModified"
+                  checked={this.state.stockMap[item.sku_pricing_id].is_active}
+                  name="isActive"
                   disabled={!this.state.enableEdit}
+                />
+							)}
+						</Table.Column>
+            <Table.Column field="actions" title="Price">
+							{item => (
+                <input 
+                  style = {{ width: '80px', padding: '0 10px'}}
+                  onChange={(e) => this.handlePriceChange(e, item.sku_pricing_id)} 
+                  disabled={!this.state.enableEdit}
+                  type="number"
+                  value={this.state.stockMap[(item.sku_pricing_id)].price} 
                 />
 							)}
 						</Table.Column>
             <Table.Column field="sku_id" title="Sku Id" />
             <Table.Column field="sku_pricing_id" title="Sku Pricing Id" />
-            <Table.Column field="actions" title="Price">
+            <Table.Column field="brand_id" title="Brand Id" />
+            <Table.Column field="brand_name" title="Brand Name" />
+            <Table.Column field="volume" title="Volume" />
+            <Table.Column field="actions" title="Stock">
 							{item => (
                 <input 
                   style = {{ width: '60px', padding: '0 10px'}}
-                  onChange={(e) => this.handlePriceChange(e, item.sku_pricing_id)} 
-                  disabled={!this.state.stockMap[item.sku_pricing_id].is_modified}
+                  onChange={(e) => this.handleStockChange(e, item.sku_pricing_id)} 
+                  disabled={!this.state.enableEdit}
                   type="number"
-                  value={this.state.stockMap[(item.sku_pricing_id)].price} 
+                  value={this.state.stockMap[(item.sku_pricing_id)].stock}
                 />
 							)}
 						</Table.Column>

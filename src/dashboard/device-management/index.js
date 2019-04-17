@@ -127,7 +127,7 @@ class DeviceManagement extends React.Component {
 			value
 		})
 
-		history.pushState(queryObj, "retailer listing", `/admin/retailer?${getQueryUri(queryObj)}`)
+		history.pushState(queryObj, "retailer listing", `/admin/device-management?${getQueryUri(queryObj)}`)
 
 		this.fetchRetailerList({
 			limit: this.pagesLimit,
@@ -231,7 +231,7 @@ class DeviceManagement extends React.Component {
 			value: ''
 		})
 		this.fetchDefaultData()
-		this.props.history.push(`/admin/retailer`)
+		this.props.history.push(`/admin/device-management`)
   }
   
   editRetailerDetails(e, item) {

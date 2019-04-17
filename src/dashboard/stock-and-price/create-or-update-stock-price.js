@@ -4,114 +4,113 @@ import * as Api from './../../api'
 import Layout from 'Components/layout'
 import Card from 'Components/card'
 import CustomButton from 'Components/button'
-import {stockData} from "./../../mockData"
-import StockList from "./stock-list"
+import {mockSkuList} from "./../../mockData"
+import StockList from "./state-stock-list"
 
 class CreateOrUpdateStockPrice extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
 
     this.state = {
-      retailerData: [],
-      retailerList: [],
-      loadingRetailerData: true,
-      selectedRetailerIdx: 0,
-      stateId: 0,
-      stockList: [],
-      stockMap: {},
-      loadingStockList: true,
-      isSavingDetails: false
+      // retailerData: [],
+      // retailerList: [],
+      // loadingRetailerData: true,
+      // selectedRetailerIdx: 0,
+      // stateId: 0,
+      // stockList: [],
+      // stockMap: {},
+      // loadingStockList: true,
+      loadingGenreList: true,
+      genreList: [],
+      genreCount: 0,
+      selectedGenreIdx: 0,
+      loadingSkuList: true,
+      skuList: [],
+      skuMap: {},
+      skuCount: 0,
+      isSavingDetails: false,
+      stateId: props.location.state.state_id
     }
 
-    this.fetchRetailerList = this.fetchRetailerList.bind(this)
-    this.fetchStockList = this.fetchStockList.bind(this)
+    this.fetchGenreList = this.fetchGenreList.bind(this)
+    this.fetchSkuList = this.fetchSkuList.bind(this)
     this.createOrUpdateStockAndPrice = this.createOrUpdateStockAndPrice.bind(this)
-    this.successRetailerListCallback = this.successRetailerListCallback.bind(this)
-    this.failureRetailerListCallback = this.failureRetailerListCallback.bind(this)
-    this.successSkuLListCallback = this.successSkuLListCallback.bind(this)
-    this.failureSkuListCallback = this.failureSkuListCallback.bind(this)
+    this.successGenreListCallback = this.successGenreListCallback.bind(this)
+    //this.failureGenreListCallback = this.failureGenreListCallback.bind(this)
+    // this.successSkuListCallback = this.successSkuListCallback.bind(this)
+    // this.failureSkuListCallback = this.failureSkuListCallback.bind(this)
     this.successCreateOrUpdateStockPriceCallback = this.successCreateOrUpdateStockPriceCallback.bind(this)
   }
 
   componentDidMount() {
-    this.fetchRetailerList({
-			limit: 10000,
-			offset: 0
-		}, this.successRetailerListCallback, this.failureRetailerListCallback)
+    console.log("props", this.props)
+    this.fetchGenreList({}, this.successGenreListCallback)
   }
 
-  handleChange(e) {
-    console.log("data", this.state.retailerMap[e.target.value])
-    this.setState({
-      [e.target.name]: e.target.value,
-      stateId: this.state.retailerMap[e.target.value].state_id
-    })
+  fetchGenreList(payloadObj, successCallback) {
+    Api.fetchGenreList(payloadObj, successCallback)
   }
 
-  fetchRetailerList(payloadObj, successCallback, failureCallback) {
-		Api.fetchRetailerList(payloadObj, successCallback, failureCallback)
-  }
-  
-  successRetailerListCallback(response) {
-    console.log("success", response)
-    let retailerMap = {}
-    const retailerList = response.ret_response.map((item) => {
-      retailerMap[item.id] = item
+  successGenreListCallback(genres) {
+    const genreList = genres.map((item, i) => {
       return {
-        text: item.outlet_name,
+        text: item.genre_name,
         value: item.id
       }
     })
+    // console.log("genre list", genreList, genres)
     this.setState({
-      retailerData: response.ret_response, 
-      loadingRetailerData: false,
-      retailerList,
-      retailerMap,
-      selectedRetailerIdx: response.ret_response[0].id,
-      stateId: response.ret_response[0].state_id
+      genreList, 
+      selectedGenreIdx: genres[0].id,
+      loadingGenreList: false
     })
   }
 
-  failureRetailerListCallback() {
-    console.log("failure")
-    this.setState({retailerData: [], loadingRetailerData: false, retailerMap: {}})
+  handleChange(e) {
+    //console.log("data", this.state.retailerMap[e.target.value])
+    this.setState({
+      [e.target.name]: e.target.value
+    })
   }
 
-  fetchStockList(e) {
+  fetchSkuList(e) {
     e.preventDefault()
-    console.log("fetch stock list", this.state)
-    this.setState({loadingStockList: true})
+    this.setState({loadingSkuList: true})
     const payloadObj = {
-      retailer_id: this.state.retailer_id,
-      state_id: this.state.state_id
+      genre_id: this.state.selectedGenreIdx,
+      state_id: this.state.stateId
     }
-    //this.fetchStockListApi(payloadObj, this.successSkuLListCallback, this.failureSkuListCallback)
-    this.successSkuLListCallback()
+    //this.fetchSkuListApi(payloadObj, this.successSkuListCallback, this.failureSkuListCallback)
+    this.successSkuListCallback(mockSkuList)
   }
 
-  fetchStockListApi(payloadObj, successSkuListCallback, failureSkuListCallback) {
-    Api.fetchStockList(payloadObj, successSkuListCallback, failureSkuListCallback)
+  fetchSkuListApi(payloadObj, successSkuListCallback) {
+    //Api.fetchSkuList(payloadObj, successSkuListCallback, failureSkuListCallback)
+    this.successSkuListCallback(mockSkuList)
   }
 
   successSkuListCallback(response) {
-    console.log("stock data", stockData)
-    const stockMap = {}
-    stockData.map((item) => {
-      stockMap[item.sku_pricing_id] = Object.assign({}, item, {price: item.price ? item.price : 0, is_modified: false})
+    // console.log("stock data", mockSkuList)
+    const skuList = mockSkuList
+    let stockMap = {}, stockList = []
+    stockList = skuList.map((item) => {
+      stockMap[item.sku_pricing_id] = Object.assign({}, item, {price: item.price ? item.price : 0, stock: 0, retailer_id: this.props.location.state.id, version: 0})
+      return Object.assign({}, item, {price: item.price ? item.price : 0, stock: 0, retailer_id: this.props.location.state.id, version: 0})
     })
+    // console.log("list and map", stockList, stockMap)
     this.setState({
-      stockList: stockData, loadingStockList: false, stockMap
+      skuList: stockList, loadingSkuList: false, skuMap: stockMap
     })
-  }
-
-  failureSkuListCallback() {
-    this.setState({stockList: [], loadingStockList: false, stockMap: {}})
   }
 
   createOrUpdateStockAndPrice(stockList) {
-    console.log("create or update stock and price", stockList)
+    // console.log("create or update stock and price", stockList)
     this.setState({isSavingDetails: true})
-    //this.createOrUpdateStockPriceApi(stockList, this.successCreateOrUpdateStockPriceCallback)
+    const payload = {
+      inventories: stockList
+    }
+    // console.log("payload", payload)
+    this.createOrUpdateStockPriceApi(payload, this.successCreateOrUpdateStockPriceCallback)
   }
 
   createOrUpdateStockPriceApi(payloadObj, successCallback) {
@@ -124,39 +123,39 @@ class CreateOrUpdateStockPrice extends React.Component {
       retailer_id: this.state.retailer_id,
       state_id: this.state.state_id
     }
-    this.fetchStockList(payloadObj, this.successSkuLListCallback, this.failureSkuListCallback)
+    this.fetchSkuListApi(payloadObj, this.successSkuLListCallback)
   }
 
   render() {
     return (
-      <Layout title="Stock and Price Update">
+      <Layout title="Create Stock and Price">
       	<Card width="500px">
           <div>
             <Form layout="label-on-top">
-              <Form.FieldSet label="Retailer Details">
+              <Form.FieldSet label="StockList">
                 <Form.Select
-                  label="Retailer*"
-                  value={this.state.selectedRetailerIdx}
-                  name="selectedRetailerIdx"
-                  options={this.state.retailerList}
+                  label="Genre*"
+                  value={this.state.selectedGenreIdx}
+                  name="selectedGenreIdx"
+                  options={this.state.genreList}
                   onChange={(e) => this.handleChange(e)}
                 />
               </Form.FieldSet>
               <CustomButton
 								text="Fetch Stock List"
-								handleClick={this.fetchStockList}
-								disableSave={this.state.loadingRetailerData}
+								handleClick={this.fetchSkuList}
+								disableSave={this.state.loadingGenreList}
 							/>
             </Form>
           </div>
         </Card>
         {
-          !this.state.loadingStockList &&
+          !this.state.loadingSkuList &&
           <React.Fragment>
             <StockList 
-              stockData={this.state.stockList}
-              stockMap={this.state.stockMap}
-              loadingStockList={this.state.loadingStockList}
+              stockData={this.state.skuList}
+              stockMap={this.state.skuMap}
+              loadingStockList={this.state.loadingSkuList}
               isSavingDetails={this.state.isSavingDetails}
               createOrUpdateStockAndPrice={this.createOrUpdateStockAndPrice}
             />

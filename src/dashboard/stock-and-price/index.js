@@ -1,111 +1,339 @@
 import React from "react"
-import Layout from 'Components/layout'
+import Layout from "Components/layout"
 import { Table } from '@auth0/cosmos'
+import { Icon, Spinner, List, Dialog } from '@auth0/cosmos'
+import { Select, TextInput } from '@auth0/cosmos'
+import { Button } from '@auth0/cosmos'
 import Pagination from 'Components/pagination'
-import { Spinner } from '@auth0/cosmos'
-import { getQueryObj, getQueryUri } from 'Utils/url-utils'
+import { NavLink } from 'react-router-dom'
+import Switch2 from 'Components/switch'
 import CustomButton from 'Components/button'
+import { getQueryObj, getQueryUri } from 'Utils/url-utils'
+import * as Api from './../../api'
 
-class StockAndPriceList extends React.Component {
+class StockAndPrice extends React.Component {
   constructor() {
     super()
-
-    this.state = {
-      activePage: 1,
+    this.defaultFilters = {
+			column: '',
+			operator: 'EQUAL',
+			value: ''
+		}
+		this.state = {
+			activePage: 1,
 			offset: 0,
-			loadingData: true,
-			stockAndPriceCount: 0,
-			stockAndPriceData: []
-    }
+			loading: true,
+			retailerListCount: 0,
+			retailerData: [],
+			retailerId: '',
+			retailerStatus: '',
+			outletName: '',
+			mountDialog: false,
+			operators: [
+				{ text: 'EQUAL', value: 'EQUAL' },
+				{ text: 'LIKE', value: 'LIKE' },
+				{ text: 'IGNORE CASE', value: 'CASEIGNORE' },
+			],
+			...this.defaultFilters
+		}
 
-    this.pageLimit = 10
-    this.handlePageChange = this.handlePageChange.bind(this)
-    this.handleClick = this.handleClick.bind(this)
-    this.successFetchStockAndPriceCallback = this.successFetchStockAndPriceCallback.bind(this)
-    this.failureFetchStockAndPriceCallback = this.failureFetchStockAndPriceCallback.bind(this)
+		this.filter = {
+			column: '',
+			operator: '',
+			value: ''
+		}
+
+		this.pagesLimit = 10
+		this.handlePageChange = this.handlePageChange.bind(this)
+		this.resetFilter = this.resetFilter.bind(this)
+		this.handleChange = this.handleChange.bind(this)
+		this.getFilteredRetailersList = this.getFilteredRetailersList.bind(this)
+		this.fetchDefaultData = this.fetchDefaultData.bind(this)
+		this.fetchRetailerList = this.fetchRetailerList.bind(this)
+		this.setResponseData = this.setResponseData.bind(this)
   }
 
   componentDidMount() {
-    const queryUri = location.search.slice(1)
-    const queryObj = getQueryObj(queryUri)
+		if (location.search.length) {
+			this.setQueryParamas()
+		} else {
+			this.fetchDefaultData()
+		}
+  }
+
+  fetchDefaultData() {
+		this.setState({ retailerData: [], retailerListCount: 0 })
+		//this.fetchOrganizationList({}, this.formatOrganizationList)
+		this.fetchRetailerList({
+			offset: 0,
+			limit: this.pagesLimit,
+		}, this.setResponseData, this.failureCallback)
+  }
+  
+  setQueryParamas() {
+		const queryUri = location.search.slice(1)
+		const queryObj = getQueryObj(queryUri)
 
 		Object.entries(queryObj).forEach((item) => {
-      this.setState({ [item[0]]: item[1] })
-    })
+			this.setState({ [item[0]]: item[1] })
+			this.filter[item[0]] = item[1]
+		})
+		this.setState({ retailerData: [], retailerListCount: 0, loading: true })
 
-    this.fetchStockAndPriceList({
-      offset: queryObj.offset ? parseInt(queryObj.offset) : 0,
-      limit: this.pageLimit,
-    }, this.successFetchStockAndPriceCallback, this.failureFetchStockAndPriceCallback)
+		if (queryObj.column && queryObj.column.length > 0) {
+			this.fetchRetailerList({
+				offset: queryObj.offset ? parseInt(queryObj.offset) : 0,
+				limit: this.pagesLimit,
+				filter: this.filter
+			}, this.setResponseData, this.failureCallback)
+		} else {
+			this.fetchRetailerList({
+				offset: queryObj.offset ? parseInt(queryObj.offset) : 0,
+				limit: this.pagesLimit,
+			}, this.setResponseData, this.failureCallback)
+		}
+
   }
+  
+  fetchRetailerList(payloadObj, successCallback, failureCallback) {
+		Api.fetchRetailerList(payloadObj, successCallback, failureCallback)
+	}
 
-  handleClick() {
-    this.props.history.push('/admin/stock-and-price/update')
-  }
+	getFilteredRetailersList() {
+		const { column, operator, value, offset, activePage } = this.state
 
-  handlePageChange(pageObj) {
+		this.filter = {
+			column,
+			operator,
+			value
+		}
+
+		const queryObj = {
+			column,
+			operator,
+			value,
+			offset,
+			activePage,
+		}
+
+		this.setState({
+			retailerData: [],
+			retailerListCount: 0,
+			loading: true,
+			offset,
+			activePage,
+			column,
+			operator,
+			value
+		})
+
+		history.pushState(queryObj, "stock and price listing", `/admin/stock-and-price?${getQueryUri(queryObj)}`)
+
+		this.fetchRetailerList({
+			limit: this.pagesLimit,
+			offset: 0,
+			filter: this.filter
+		}, this.setResponseData, this.failureCallback)
+	}
+  
+  setResponseData(response) {
+		if (response && response.ret_response) {
+			this.setState({ 
+				retailerData: response.ret_response, 
+				retailerListCount: response.count, 
+				loading: false 
+			})
+		} else {
+			this.setState({ retailerData: [], retailerListCount: 0, loading: false })
+		}
+	}
+
+	failureCallback() {
+		this.setState({ retailerData: [], retailerListCount: 0, loading: false })
+	}
+
+	handlePageChange(pageObj) {
 		const queryUri = location.search.slice(1)
 		const queryObj = getQueryObj(queryUri)
 		let queryParamsObj = {}
 
 		let pageNumber = pageObj.activePage
 		let offset = pageObj.offset
-    this.setState({ activePage: pageNumber, offset, loadingData: true })
-    
-    this.fetchStockAndPriceList({
-      offset: pageObj.offset,
-      limit: this.pageLimit
-    }, this.successFetchStockAndPriceCallback, this.failureFetchStockAndPriceCallback)
+		this.setState({ activePage: pageNumber, offset, loading: true })
+
+		if (queryObj && queryObj.column && queryObj.column.length > 0) {
+			queryParamsObj = {
+				column: queryObj.column,
+				operator: queryObj.operator,
+				value: queryObj.value,
+				offset: pageObj.offset,
+				activePage: pageObj.activePage,
+			}
+		} else {
+			queryParamsObj = {
+				offset: pageObj.offset,
+				activePage: pageObj.activePage,
+			}
+		}
+
+		if (location.search.length && queryObj.column && queryObj.column.length > 0) {
+			let filterObj = {
+				column: queryObj.column,
+				operator: queryObj.operator,
+				value: queryObj.value
+			}
+			this.fetchRetailerList({
+				offset: pageObj.offset,
+				limit: this.pagesLimit,
+				filter: filterObj
+			}, this.setResponseData, this.failureCallback)
+
+		} else {
+
+			this.fetchRetailerList({
+				offset: pageObj.offset,
+				limit: this.pagesLimit
+			}, this.setResponseData, this.failureCallback)
+		}
+
+		history.pushState(queryParamsObj, "stock and price listing", `/admin/stock-and-price?${getQueryUri(queryParamsObj)}`)
+  }
   
-    history.pushState(
-      queryParamsObj, 
-      "stock and price listing", 
-      `/admin/stock-and-price-list?${getQueryUri(queryParamsObj)}`
-    )
-  }
+  handleChange(e) {
+		if (e.target.name === "column" && 
+				(e.target.value === "ID" || e.target.value === "OrganisationID")
+			 ) {
+			this.setState({
+				operators: [
+					{ text: 'EQUAL', value: 'EQUAL' },
+				],
+				operator: 'EQUAL'
+			})
+		} else if (e.target.name === "column") {
+			this.setState({
+				operators: [
+					{ text: 'EQUAL', value: 'EQUAL' },
+					{ text: 'LIKE', value: 'LIKE' },
+					{ text: 'IGNORE CASE', value: 'CASEIGNORE' },
+				]
+			})
+		} else if (e.target.name === "value") {
+			this.setState({ offset: 0, activePage: 1 })
+		}
+		this.setState({ [e.target.name]: (e.target.value).toString() })
+		//this.setState({[e.target.name]: (e.target.value).toString()})
+	}
 
-  fetchStockAndPriceList(payload, successCallback, failureCallback) {
-    //Api.fetchStockAndPriceList(payload, successCallback, failureCallback)
+	resetFilter() {
+		this.setState({
+			column: '',
+			operator: 'EQUAL',
+			value: ''
+		})
+		this.fetchDefaultData()
+		this.props.history.push(`/admin/stock-and-price`)
   }
-
-  successFetchStockAndPriceCallback() {
-    this.setState({ 
-      stockAndPriceData: response.ret_response, 
-      stockAndPriceCount: response.count, 
-      loadingData: false 
-    })
-  }
-
-  failureFetchStockAndPriceCallback() {
-    this.setState({ 
-      stockAndPriceData: [], 
-      stockAndPriceCount: 0, 
-      loadingData: false 
-    })
-  }
+  
+  editRetailerStock(e, item) {
+		if (e.target.nodeName === "SPAN") {
+			return
+    }
+    console.log("item", item)
+		this.props.history.push(`/admin/stock-and-price/edit/${item.id}`, item)
+	}
 
   render() {
-    return (
-      <Layout title="Manage Stock and Price">
-        <div
-          style={{
-            verticalAlign: 'bottom',
-            display: 'inline-block',
-            margin: '20px 0 0 0'
-          }}
-        >
-          <CustomButton 
-            text="CREATE OR UPDATE STOCK AND PRICE" 
-            handleClick={this.handleClick} 
-          />
+    const { retailerData } = this.state
+    console.log("this.state", this.state)
+    return(
+      <Layout title="Manage Retailer">
+        <div style={{ marginTop: '20px' }}>
+          <div style={{
+              width: '210px',
+              display: 'inline-block',
+              verticalAlign: 'bottom',
+              marginRight: '20px'
+            }}
+          >
+            <p style={{ margin: '10px 0' }}>Field</p>
+            <Select
+              placeholder="Select an field..."
+              value={this.state.column}
+              name="column"
+              options={[
+                { text: 'RETAILER ID', value: 'ID' },
+                { text: 'RETAILER NAME', value: 'RetailerName' },
+                { text: 'CITY NAME', value: 'CityName' },
+                { text: 'ORGANIZATION ID', value: 'OrganisationID' }
+              ]}
+              onChange={(e) => this.handleChange(e)}
+            />
+          </div>
+
+          <div style={{
+              width: '180px',
+              display: 'inline-block',
+              verticalAlign: 'bottom',
+              marginRight: '20px'
+            }}
+          >
+            <p style={{ margin: '10px 0' }}>Operator</p>
+            <Select
+              placeholder="Select an operator..."
+              value={this.state.operator}
+              name="operator"
+              options={this.state.operators}
+              onChange={(e) => this.handleChange(e)}
+            />
+          </div>
+
+          <div style={{
+              width: '240px',
+              display: 'inline-block',
+              verticalAlign: 'bottom',
+              marginRight: '20px'
+            }}
+          >
+            <p style={{ margin: '10px 0' }}>Search Text</p>
+            <TextInput
+              placeholder="Contains"
+              type="text"
+              size="default"
+              name="value"
+              value={this.state.value}
+              onChange={(e) => this.handleChange(e)}
+            />
+          </div>
+          <div
+            style={{
+              verticalAlign: 'bottom',
+              display: 'inline-block',
+              marginRight: '20px'
+            }}
+          >
+            <CustomButton text="Search" handleClick={this.getFilteredRetailersList} />
+          </div>
+          <div
+            style={{
+              verticalAlign: 'bottom',
+              display: 'inline-block',
+            }}
+          >
+            <CustomButton text="Reset" handleClick={this.resetFilter} />
+          </div>
         </div>
         {
           <div style={{ marginTop: '40px', marginBottom: '20px' }}>
             <Table
-              emptyMessage={this.state.loadingData ? <Spinner /> : 'No stock found'}
-              items={this.state.stockAndPriceData}
+              emptyMessage={this.state.loading ? <Spinner /> : 'No retailers found'}
+              items={retailerData}
               //onRowClick={(e, item) => this.handleRowClick(e, item)}
             >
+							<Table.Column field="actions">
+								{item => (
+									<Button icon="pencil" onClick={(e) => this.editRetailerStock(e, item)} />
+								)}
+							</Table.Column>
               <Table.Column field="id" title="Retailer Id" />
               <Table.Column field="outlet_name" title="Outlet Name" />
               <Table.Column field="store_address" title="Outlet Address" />
@@ -117,17 +345,17 @@ class StockAndPriceList extends React.Component {
           </div>
         }
         {
-          !this.state.loadingData && this.state.stockAndPriceData &&
+          this.state.retailerData && this.state.retailerData.length >= 10 &&
           <Pagination
             activePage={parseInt(this.state.activePage)}
-            itemsCountPerPage={this.pageLimit}
-            totalItemsCount={parseInt(this.state.stockAndPriceCount)}
+            itemsCountPerPage={this.pagesLimit}
+            totalItemsCount={parseInt(this.state.retailerListCount)}
             setPage={this.handlePageChange}
           />
         }
       </Layout>
     )
   }
-} 
+}
 
-export default StockAndPriceList
+export default StockAndPrice

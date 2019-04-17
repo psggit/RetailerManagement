@@ -143,6 +143,40 @@ export function createOrUpdateStockPrice (payloadObj, successCallback, failureCa
     })
 }
 
+export function fetchGenreList (payloadObj, successCallback) {
+    return POST({
+        api: '/Api/getGenreMap',
+        apiBase: 'catalog',
+        data: payloadObj,
+        handleError: true
+    })
+    .then((json) => {
+        successCallback(json.genreDetail)
+    })
+    .catch(err => {
+        console.log("Error in fetching genre list", err)
+        err.response.json().then(json => { Notify("danger", json.message) })
+        //failureCallback()
+    })
+}
+
+export function fetchSkuList (payloadObj, successCallback) {
+    return POST({
+        api: '/Api/getGenreMap',
+        apiBase: 'odin',
+        data: payloadObj,
+        handleError: true
+    })
+    .then((json) => {
+        successCallback(json.genreDetail)
+    })
+    .catch(err => {
+        console.log("Error in fetching sku list", err)
+        err.response.json().then(json => { Notify("danger", json.message) })
+        //failureCallback()
+    })
+}
+
 export function fetchDeviceList (payloadObj, successCallback, failureCallback) {
     return POST({
         api: '/Api/listDevices',

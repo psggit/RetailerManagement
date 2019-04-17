@@ -714,17 +714,32 @@ export const organizationAndStateList = {
     ]
 }
 
-export const stockData = [
+export const mockSkuList = [
     {
-        sku_id: '1',
-        sku_pricing_id: '2'
+        brand_id: '1',
+        brand_name: "aaa",
+        sku_id: '2',
+        sku_pricing_id: 2,
+        volume: 120,
+        price: 1000,
+        is_active: true
     },
     {
-        sku_id: '3',
-        sku_pricing_id: '4'
+        brand_id: '1',
+        brand_name: "aaa",
+        sku_id: '2',
+        sku_pricing_id: 4,
+        volume: 120,
+        price: 1000,
+        is_active: false
     },
     {
-        sku_id: '5',
-        sku_pricing_id: '6'
+        brand_id: '1',
+        brand_name: "aaa",
+        sku_id: '2',
+        sku_pricing_id: 3,
+        volume: 120,
+        price: 1000,
+        is_active: true
     }
 ]

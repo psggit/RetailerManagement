@@ -28,6 +28,7 @@ import DeviceList from "./dashboard/device-management/device-list"
 import GenerateReport from './dashboard/generate-report'
 import StockAndPriceList from './dashboard/stock-and-price'
 import CreateOrUpdateStockPrice from './dashboard/stock-and-price/create-or-update-stock-price';
+import RetailerInventory from './dashboard/stock-and-price/retailer-inventory'
 
 const history = createHistory()
 
@@ -232,11 +233,22 @@ class App extends React.Component {
 
 									<Route
 										exact
-										path="/admin/stock-and-price/update"
+										path="/admin/stock-and-price/create"
 										//component={ManageOrganization}
 										render={
 											props => (
 												<CreateOrUpdateStockPrice {...props} />
+											)
+										}
+									/>
+
+									<Route
+										exact
+										path="/admin/stock-and-price/edit/:retailerId"
+										//component={ManageOrganization}
+										render={
+											props => (
+												<RetailerInventory {...props} />
 											)
 										}
 									/>
