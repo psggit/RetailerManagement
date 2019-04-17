@@ -25,11 +25,12 @@ class CreateOrUpdateStockPrice extends React.Component {
 
     this.fetchRetailerList = this.fetchRetailerList.bind(this)
     this.fetchStockList = this.fetchStockList.bind(this)
+    this.createOrUpdateStockAndPrice = this.createOrUpdateStockAndPrice.bind(this)
     this.successRetailerListCallback = this.successRetailerListCallback.bind(this)
     this.failureRetailerListCallback = this.failureRetailerListCallback.bind(this)
     this.successSkuLListCallback = this.successSkuLListCallback.bind(this)
     this.failureSkuListCallback = this.failureSkuListCallback.bind(this)
-    this.createOrUpdateStockAndPrice = this.createOrUpdateStockAndPrice.bind(this)
+    this.successCreateOrUpdateStockPriceCallback = this.successCreateOrUpdateStockPriceCallback.bind(this)
   }
 
   componentDidMount() {
@@ -39,10 +40,6 @@ class CreateOrUpdateStockPrice extends React.Component {
 		}, this.successRetailerListCallback, this.failureRetailerListCallback)
   }
 
-  fetchRetailerList(payloadObj, successCallback, failureCallback) {
-		Api.fetchRetailerList(payloadObj, successCallback, failureCallback)
-  }
-  
   handleChange(e) {
     console.log("data", this.state.retailerMap[e.target.value])
     this.setState({
@@ -51,6 +48,10 @@ class CreateOrUpdateStockPrice extends React.Component {
     })
   }
 
+  fetchRetailerList(payloadObj, successCallback, failureCallback) {
+		Api.fetchRetailerList(payloadObj, successCallback, failureCallback)
+  }
+  
   successRetailerListCallback(response) {
     console.log("success", response)
     let retailerMap = {}
@@ -84,11 +85,15 @@ class CreateOrUpdateStockPrice extends React.Component {
       retailer_id: this.state.retailer_id,
       state_id: this.state.state_id
     }
-    //Api.fetchSkuList(payloadObj, this.successSkuLListCallback, this.failureSkuListCallback)
+    //this.fetchStockListApi(payloadObj, this.successSkuLListCallback, this.failureSkuListCallback)
     this.successSkuLListCallback()
   }
 
-  successSkuLListCallback(response) {
+  fetchStockListApi(payloadObj, successSkuListCallback, failureSkuListCallback) {
+    Api.fetchStockList(payloadObj, successSkuListCallback, failureSkuListCallback)
+  }
+
+  successSkuListCallback(response) {
     console.log("stock data", stockData)
     const stockMap = {}
     stockData.map((item) => {
@@ -105,7 +110,21 @@ class CreateOrUpdateStockPrice extends React.Component {
 
   createOrUpdateStockAndPrice(stockList) {
     console.log("create or update stock and price", stockList)
+    this.setState({isSavingDetails: true})
+    //this.createOrUpdateStockPriceApi(stockList, this.successCreateOrUpdateStockPriceCallback)
+  }
+
+  createOrUpdateStockPriceApi(payloadObj, successCallback) {
+    Api.createOrUpdateStockPrice(payloadObj, successCallback)
+  }
+
+  successCreateOrUpdateStockPriceCallback() {
     this.setState({isSavingDetails: false})
+    const payloadObj = {
+      retailer_id: this.state.retailer_id,
+      state_id: this.state.state_id
+    }
+    this.fetchStockList(payloadObj, this.successSkuLListCallback, this.failureSkuListCallback)
   }
 
   render() {

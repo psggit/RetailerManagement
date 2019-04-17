@@ -103,7 +103,41 @@ export function fetchRetailerList (payloadObj, successCallback, failureCallback)
         successCallback(json)
     })
     .catch(err => {
-        console.log("Error in fetchRetailer", err)
+        console.log("Error in fetching retailer list", err)
+        err.response.json().then(json => { Notify("danger", json.message) })
+        failureCallback()
+    })
+}
+
+export function fetchStockList (payloadObj, successCallback, failureCallback) {
+    return POST({
+        api: '/Api/listRetailers',
+        apiBase: 'retailerMgmt',
+        data: payloadObj,
+        handleError: true
+    })
+    .then((json) => {
+        successCallback(json)
+    })
+    .catch(err => {
+        console.log("Error in fetching stock list", err)
+        err.response.json().then(json => { Notify("danger", json.message) })
+        failureCallback()
+    })
+}
+
+export function createOrUpdateStockPrice (payloadObj, successCallback, failureCallback) {
+    return POST({
+        api: '/Api/stockandprice/inventory/createorupdate',
+        apiBase: 'stockandprice',
+        data: payloadObj,
+        handleError: true
+    })
+    .then((json) => {
+        successCallback(json)
+    })
+    .catch(err => {
+        console.log("Error in creating/updating stock and price", err)
         err.response.json().then(json => { Notify("danger", json.message) })
         failureCallback()
     })
