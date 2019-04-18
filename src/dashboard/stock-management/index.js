@@ -41,20 +41,14 @@ class CitySelection extends React.Component {
     this.setResponseData = this.setResponseData.bind(this)
     this.failureCallback = this.failureCallback.bind(this)
     this.fetchRetailers = this.fetchRetailers.bind(this)
+    this.listRetailerInventory = this.listRetailerInventory.bind(this)
   }
-
-  // componentDidMount() {
-  //   this.fetchStateAndCityList({}, this.formatResponse)
-  // }
 
   componentDidMount() {
     this.fetchStateAndCityList({}, this.formatResponse)
 		if (location.search.length) {
 			this.setQueryParamas()
-    } 
-    // else {
-		// 	this.fetchDefaultData()
-		// }
+    }
   }
 
   fetchDefaultData(filterObj) {
@@ -162,10 +156,14 @@ class CitySelection extends React.Component {
     })
 		this.setState({ cityList, cityMap, loadingCityList: false })
   }
+
+  listRetailerInventory(item) {
+    this.props.history.push(`/admin/stock-and-price/list/${item.id}`, item)
+  }
   
   renderOutlet(item) {
     return (
-      <div className="retailer">
+      <div className="retailer" onClick={() => this.listRetailerInventory(item)}>
         <div className="details">
           <p>{item.id}</p>
           <p>{item.outlet_name}</p>

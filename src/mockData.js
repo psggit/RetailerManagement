@@ -714,32 +714,47 @@ export const organizationAndStateList = {
     ]
 }
 
-export const mockSkuList = [
-    {
-        brand_id: '1',
-        brand_name: "aaa",
-        sku_id: '2',
-        sku_pricing_id: 2,
-        volume: 120,
-        price: 1000,
-        is_active: true
-    },
-    {
-        brand_id: '1',
-        brand_name: "aaa",
-        sku_id: '2',
-        sku_pricing_id: 4,
-        volume: 120,
-        price: 1000,
-        is_active: false
-    },
-    {
-        brand_id: '1',
-        brand_name: "aaa",
-        sku_id: '2',
-        sku_pricing_id: 3,
-        volume: 120,
-        price: 1000,
-        is_active: true
-    }
-]
+export const mockSkuList = {
+	"brands": [
+		{
+			"brand_id": 725,
+			"brand_name": "testBrand12",
+			"sku": [
+				{
+					"sku_id": 935,
+					"sku_pricing_id": 100,
+					"volume": 650,
+					"price": 50,
+					"is_active": true
+				},
+				{
+					"sku_id": 934,
+					"volume": 1000,
+					"sku_pricing_id": 101,
+					"price": 100,
+					"is_active": true
+				}
+			]
+		},
+		{
+			"brand_id": 726,
+			"brand_name": "testBrand13",
+			"sku": [
+				{
+					"sku_id": 935,
+					"sku_pricing_id": 102,
+					"volume": 650,
+					"price": 50,
+					"is_active": true
+				},
+				{
+					"sku_id": 934,
+					"volume": 1000,
+					"sku_pricing_id": 103,
+					"price": 100,
+					"is_active": true
+				}
+			]
+		}
+	]
+}
