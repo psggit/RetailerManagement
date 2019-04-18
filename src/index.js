@@ -29,6 +29,7 @@ import GenerateReport from './dashboard/generate-report'
 import StockAndPriceList from './dashboard/stock-and-price'
 import CreateOrUpdateStockPrice from './dashboard/stock-and-price/create-or-update-stock-price';
 import RetailerInventory from './dashboard/stock-and-price/retailer-inventory'
+import StockManagement from "./dashboard/stock-management"
 
 const history = createHistory()
 
@@ -226,7 +227,7 @@ class App extends React.Component {
 										//component={ManageOrganization}
 										render={
 											props => (
-												<StockAndPriceList {...props} />
+												<StockManagement {...props} />
 											)
 										}
 									/>

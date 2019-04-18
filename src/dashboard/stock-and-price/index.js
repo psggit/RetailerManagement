@@ -51,6 +51,7 @@ class StockAndPrice extends React.Component {
 		this.fetchDefaultData = this.fetchDefaultData.bind(this)
 		this.fetchRetailerList = this.fetchRetailerList.bind(this)
 		this.setResponseData = this.setResponseData.bind(this)
+		this.setQueryParamas = this.setQueryParamas.bind(this)
   }
 
   componentDidMount() {

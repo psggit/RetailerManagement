@@ -1,16 +1,17 @@
 import React from 'react'
+import "./layout.scss"
 
 const Layout = ({title, children}) => {
     return (
-        <div
-            style={{
-                marginLeft: '240px',
-                marginTop: '60px',
-                padding: '60px',
-                width: 'calc(100% - 240px)',
-                height: 'calc(100vh - 60px',
-                overflow: 'auto'
-            }}
+        <div className='container'
+            // style={{
+            //     marginLeft: '240px',
+            //     marginTop: '60px',
+            //     padding: '60px',
+            //     width: 'calc(100% - 240px)',
+            //     height: 'calc(100vh - 60px',
+            //     overflow: 'auto'
+            // }}
         >
             <p
                 style={{
