@@ -1,16 +1,13 @@
 import React from "react"
-import { Form, TextInput } from '@auth0/cosmos'
 import CustomButton from 'Components/button'
-import { Icon, Spinner, List, Dialog } from '@auth0/cosmos'
 import * as Api from './../../api'
 import "Sass/style.scss"
 import Layout from "Components/layout"
-import { Table } from '@auth0/cosmos'
 import { formatStateAndCityList } from 'Utils/response-format-utils'
 import { getQueryObj, getQueryUri } from 'Utils/url-utils'
 import Pagination from 'Components/pagination'
 
-class CitySelection extends React.Component {
+class RetailerList extends React.Component {
   constructor() {
     super()
     this.state = {
@@ -27,19 +24,13 @@ class CitySelection extends React.Component {
       isCitySelected: false
     }
     this.pagesLimit = 10
-    this.filter = {
-			column: '',
-			operator: '',
-			value: ''
-		}
-
 		this.handlePageChange = this.handlePageChange.bind(this)
-    this.handleChange = this.handleChange.bind(this)
+    this.handleCityChange = this.handleCityChange.bind(this)
     this.fetchStateAndCityList = this.fetchStateAndCityList.bind(this)
     this.formatResponse = this.formatResponse.bind(this)
     this.fetchRetailerList = this.fetchRetailerList.bind(this)
-    this.setResponseData = this.setResponseData.bind(this)
-    this.failureCallback = this.failureCallback.bind(this)
+    this.successFetchRetailerCallback = this.successFetchRetailerCallback.bind(this)
+    this.failureFetchRetailerCallback = this.failureFetchRetailerCallback.bind(this)
     this.fetchRetailers = this.fetchRetailers.bind(this)
     this.listRetailerInventory = this.listRetailerInventory.bind(this)
   }
@@ -64,7 +55,7 @@ class CitySelection extends React.Component {
 		this.fetchRetailerList({
 			offset: 0,
 			limit: this.pagesLimit,
-		}, this.setResponseData, this.failureCallback)
+		}, this.successFetchRetailerCallback, this.failureFetchRetailerCallback)
   }
   
   setQueryParamas() {
@@ -84,7 +75,7 @@ class CitySelection extends React.Component {
       offset: queryObj.offset ? parseInt(queryObj.offset) : 0,
       limit: this.pagesLimit,
       filter: JSON.parse(queryObj.filter)
-    }, this.setResponseData, this.failureCallback)
+    }, this.successFetchRetailerCallback, this.failureFetchRetailerCallback)
   }
 
   handlePageChange(pageObj) {
@@ -106,7 +97,7 @@ class CitySelection extends React.Component {
       offset: pageObj.offset,
       limit: this.pagesLimit,
       filter: JSON.parse(queryObj.filter)
-    }, this.setResponseData, this.failureCallback)
+    }, this.successFetchRetailerCallback, this.failureFetchRetailerCallback)
     
 		history.pushState(queryParamsObj, "stock and price listing", `/admin/stock-and-price?${getQueryUri(queryParamsObj)}`)
   }
@@ -117,32 +108,32 @@ class CitySelection extends React.Component {
       operator: 'CASEIGNORE',
       value: this.state.cityMap[this.state.selectedCityIdx].text
     }
+
+    this.setState({loadingRetailerData: true})
     this.fetchDefaultData(filterObj)
   }
 
-  handleChange(e) {
-    console.log("data", this.state.cityMap, e.target.value)
+  handleCityChange(e) {
     this.setState({
       selectedCityIdx: e.target.value,
-      isCitySelected: true
+      isCitySelected: true,
+      loadingRetailerData: true
     })
   }
 
   fetchRetailerList(payloadObj, successCallback, failureCallback) {
-    console.log("payload", payloadObj)
 		Api.fetchRetailerList(payloadObj, successCallback, failureCallback)
 	}
 
-  setResponseData(response) {
+  successFetchRetailerCallback(response) {
 		if (response && response.ret_response) {
 			this.setState({ retailerData: response.ret_response, retailerListCount: response.count, loadingRetailerData: false })
     }
 	}
 
-	failureCallback() {
+	failureFetchRetailerCallback() {
 		this.setState({ retailerData: [], retailerListCount: 0, loadingRetailerData: false })
 	}
-
 
   fetchStateAndCityList(payload, stateListSuccessCallback) {
 		Api.fetchStateAndCityList(payload, stateListSuccessCallback)
@@ -173,7 +164,7 @@ class CitySelection extends React.Component {
   }
 
   render() {
-    const {retailerData, isCitySelected, selectedCityIdx} = this.state
+    const {retailerData, isCitySelected, selectedCityIdx, loadingRetailerData} = this.state
     console.log("state", this.state)
     return (
       <React.Fragment>
@@ -181,7 +172,7 @@ class CitySelection extends React.Component {
           <div className="select-container">
             <select 
               id="city" 
-              onChange={(e) => this.handleChange(e)} 
+              onChange={(e) => this.handleCityChange(e)} 
               value={selectedCityIdx ? parseInt(selectedCityIdx) : ""}
             >
               <option value="" disabled selected>
@@ -193,8 +184,8 @@ class CitySelection extends React.Component {
             </select>
             <div className="btn--container">
               <CustomButton 
-                text="Select City" 
-                disableSave={this.state.loadingCityList}
+                text="Fetch Retailers" 
+                disableSave={this.state.loadingCityList || !this.state.isCitySelected}
                 handleClick={this.fetchRetailers}
               />
             </div>
@@ -212,44 +203,31 @@ class CitySelection extends React.Component {
               ))
             }
             {
-              isCitySelected && retailerData.length === 0 &&
+              isCitySelected && loadingRetailerData && retailerData.length === 0 &&
+              <p className="note">Loading Retailers ...</p>
+            }
+            {
+              isCitySelected && !loadingRetailerData && retailerData.length === 0 &&
               <p className="note">No retailers found</p>
             }
             {
-              !this.state.isCitySelected &&
+              !isCitySelected &&
               <p className="note">Please select city to list retailer</p>
             }
           </div>
-          {/* {
-					<div style={{ marginTop: '40px', marginBottom: '20px' }}>
-						<Table
-							emptyMessage={this.state.loadingRetailerData ? <Spinner /> : 'No records found'}
-							items={this.state.retailerData}
-							onRowClick={(e, item) => this.handleRowClick(e, item)}
-						>
-							<Table.Column field="id" title="Retailer Id" />
-							<Table.Column field="outlet_name" title="Outlet Name" />
-							<Table.Column field="branch_status" title="Outlet Status">
-								{
-                 item => (item.branch_status === 'true' ? 'Active' : 'Inactive')
-                }
-							</Table.Column>
-						</Table>
-					</div>
-        } */}
-        {
-					this.state.retailerData && this.state.retailerData.length > 0 &&
-					<Pagination
-						activePage={parseInt(this.state.activePage)}
-						itemsCountPerPage={this.pagesLimit}
-						totalItemsCount={parseInt(this.state.retailerListCount)}
-						setPage={this.handlePageChange}
-					/>
-				}
+          {
+            retailerData && retailerData.length > 0 &&
+            <Pagination
+              activePage={parseInt(this.state.activePage)}
+              itemsCountPerPage={this.pagesLimit}
+              totalItemsCount={parseInt(this.state.retailerListCount)}
+              setPage={this.handlePageChange}
+            />
+          }
         </Layout>
       </React.Fragment>
     )
   }
 }
 
-export default CitySelection
+export default RetailerList

@@ -37,7 +37,7 @@ class App extends React.Component {
 	constructor() {
 		super()
 		this.state = {
-			currentRoute: location.pathname.split('/')[2] || 'organization',
+			currentRoute: location.pathname.split('/')[2] || 'stock-and-price',
 		}
 	}
 	componentDidMount() {
