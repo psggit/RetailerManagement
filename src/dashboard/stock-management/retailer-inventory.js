@@ -123,27 +123,25 @@ class RetailerInventory extends React.Component {
         return item
       }
     })
-    //console.log("modified", modifiedInventorylist)
+    console.log("modified", modifiedInventorylist)
     let storedSavedInvertories = localStorage.getItem("modifiedInventoryList") ? JSON.parse(localStorage.getItem("modifiedInventoryList")) : []
-    //console.log("stored", storedSavedInvertories)
-    let inventories = []
-    if(storedSavedInvertories.length > 0) {
-      //console.log("if")
-      inventories = modifiedInventorylist.map((item) => {
-        if(storedSavedInvertories.find((newitem) => newitem.sku_pricing_id === item.sku_pricing_id)) {
-          //console.log("1")
-          return {...item, ...this.state.inventoryMap[item.sku_pricing_id]}        
-        } else {
-          //console.log("2")
-          return this.state.inventoryMap[item.sku_pricing_id]
-        }
-      })
-    } else {
-      //console.log("else")
-      inventories = [...storedSavedInvertories, ...modifiedInventorylist]
-    }
-    console.log("new1", inventories)
-    localStorage.setItem("modifiedInventoryList", JSON.stringify(inventories))
+    console.log("stored", storedSavedInvertories)
+    const newInventories = [...storedSavedInvertories, ...modifiedInventorylist]
+  
+    const uniqueInventories = newInventories.reduce((acc, current) => {
+      //console.log("acc", acc)
+      const x = acc.find(item => item.sku_pricing_id === current.sku_pricing_id);
+      if (!x) {
+        //console.log("1",  acc.concat([current]))
+        return acc.concat([current]);
+      } else {
+        //console.log("2", acc,  acc)
+        acc[acc.findIndex(item => item.sku_pricing_id === current.sku_pricing_id)]= {...acc[acc.findIndex(item => item.sku_pricing_id === current.sku_pricing_id)], ...current}
+        return acc
+      }
+    }, []);
+    console.log("filtered arr", uniqueInventories)
+    localStorage.setItem("modifiedInventoryList", JSON.stringify(uniqueInventories))
   }
 
   handlePageChange(pageObj) {

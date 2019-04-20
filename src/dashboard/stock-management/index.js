@@ -57,7 +57,8 @@ class RetailerList extends React.Component {
     history.pushState(queryObj, "retailer listing", `/admin/stock-and-price?${getQueryUri(queryObj)}`)
 		this.fetchRetailerList({
 			offset: 0,
-			limit: this.pagesLimit,
+      limit: this.pagesLimit,
+      filter: (filterObj)
 		}, this.successFetchRetailerCallback, this.failureFetchRetailerCallback)
   }
   
