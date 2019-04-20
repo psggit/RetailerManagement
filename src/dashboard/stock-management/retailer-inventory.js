@@ -7,7 +7,9 @@ import {mockSkuList} from "./../../mockData"
 import Accordian from "Components/accordian"
 import AccordianItem from "Components/accordian/accordian-item"
 import Icon from "Components/icon"
+//import Pager from "Components/pager"
 import Pagination from 'Components/pagination'
+// import PaginationToolbar from 'Components/paginationToolbar'
 import { getQueryObj, getQueryUri } from 'Utils/url-utils'
 
 class RetailerInventory extends React.Component {
@@ -21,6 +23,8 @@ class RetailerInventory extends React.Component {
       selectedGenreIdx: "",
       genreList: [],
       loadingInventory: true,
+      fetchingInventories: false,
+      creatingInventory: false,
       inventoryList: [],
       modifiedInventorylist: [],
       inventoryMap: {},
@@ -32,15 +36,19 @@ class RetailerInventory extends React.Component {
       stateId: "",
       outletName: ""
     }
-    this.pagesLimit = 10
+    this.pagesLimit = 5
     this.formatResponse = this.formatResponse.bind(this)
     this.handleGenreChange = this.handleGenreChange.bind(this)
     this.fetchRetailerInventory = this.fetchRetailerInventory.bind(this)
     this.successInventorylistCallback = this.successInventorylistCallback.bind(this)
+    this.failureInventorylistCallback = this.failureInventorylistCallback.bind(this)
     this.setActiveAccordian = this.setActiveAccordian.bind(this)
     this.toggleAccordian = this.toggleAccordian.bind(this)
     this.createOrUpdateInventory = this.createOrUpdateInventory.bind(this)
-    this.handleCheckboxes = this.handleCheckboxes.bind(this)
+    this.handleSkuStatusCheckboxChange = this.handleSkuStatusCheckboxChange.bind(this)
+    this.handleIsPriceSetCheckboxChange = this.handleIsPriceSetCheckboxChange.bind(this)
+    this.successCreateInventoryCallback =this.successCreateInventoryCallback.bind(this)
+    this.failureCreateInventoryCallback = this.failureCreateInventoryCallback.bind(this)
     this.handlePriceChange = this.handlePriceChange.bind(this)
     this.handlePageChange = this.handlePageChange.bind(this)
     this.setQueryParamas = this.setQueryParamas.bind(this)
@@ -48,10 +56,13 @@ class RetailerInventory extends React.Component {
   }
 
   componentDidMount() {
-    this.fetchGenreList({}, this.formatResponse)
     if (location.search.length) {
 			this.setQueryParamas()
     } else {
+      this.fetchGenreList({
+        state_id: this.props.location.state.state_id
+      }, this.formatResponse)
+      //console.log("state", this.props)
       this.setState({
         outletName: this.props.location.state.outlet_name,
         retailerId: this.props.location.state.id,
@@ -67,7 +78,7 @@ class RetailerInventory extends React.Component {
 	formatResponse(data) {
     const genreList = data.map((item) => {
       return {
-        text: item.genre_name,
+        text: item.name,
         value: item.id
       }
     })
@@ -91,13 +102,18 @@ class RetailerInventory extends React.Component {
       inventoryListCount: 0, 
       loadingInventory: true
     })
-    this.fetchRetailerInventoryList({
-      offset: queryObj.offset ? parseInt(queryObj.offset) : 0,
-      limit: this.pagesLimit,
-      retailer_id:  queryObj.retailerId,
-      genre_id: this.state.selectedGenreIdx,
+    this.fetchGenreList({
       state_id:  queryObj.stateId
-    }, this.successInventorylistCallback)
+    }, this.formatResponse)
+    //if(queryObj.retailerId) {
+      this.fetchRetailerInventoryList({
+        offset: queryObj.offset ? parseInt(queryObj.offset) : 0,
+        limit: this.pagesLimit,
+        retailer_id:  parseInt(queryObj.retailerId),
+        genre_id: parseInt(queryObj.selectedGenreIdx),
+        state_id:  parseInt(queryObj.stateId)
+      }, this.successInventorylistCallback, this.failureInventorylistCallback)
+    //}
   }
 
   saveModifiedStock() {
@@ -107,12 +123,27 @@ class RetailerInventory extends React.Component {
         return item
       }
     })
-    //console.log("modified", modifiedInventorylist, "saved", localStorage.getItem("modifiedInventoryList"))
+    //console.log("modified", modifiedInventorylist)
     let storedSavedInvertories = localStorage.getItem("modifiedInventoryList") ? JSON.parse(localStorage.getItem("modifiedInventoryList")) : []
-    //console.log("new", [...storedSavedInvertories, ...modifiedInventorylist])
-    localStorage.setItem("modifiedInventoryList", JSON.stringify([...storedSavedInvertories, ...modifiedInventorylist]))
-    
-    //this.setState({modifiedInventorylist: Object.assign({}, this.state.modifiedInventorylist, modifiedInventorylist)})
+    //console.log("stored", storedSavedInvertories)
+    let inventories = []
+    if(storedSavedInvertories.length > 0) {
+      //console.log("if")
+      inventories = modifiedInventorylist.map((item) => {
+        if(storedSavedInvertories.find((newitem) => newitem.sku_pricing_id === item.sku_pricing_id)) {
+          //console.log("1")
+          return {...item, ...this.state.inventoryMap[item.sku_pricing_id]}        
+        } else {
+          //console.log("2")
+          return this.state.inventoryMap[item.sku_pricing_id]
+        }
+      })
+    } else {
+      //console.log("else")
+      inventories = [...storedSavedInvertories, ...modifiedInventorylist]
+    }
+    console.log("new1", inventories)
+    localStorage.setItem("modifiedInventoryList", JSON.stringify(inventories))
   }
 
   handlePageChange(pageObj) {
@@ -121,10 +152,9 @@ class RetailerInventory extends React.Component {
   
 		let pageNumber = pageObj.activePage
 		let offset = pageObj.offset
-		this.setState({ activePage: pageNumber, offset, loadingInventory: true })
+		this.setState({ activePage: pageNumber, offset, loadingInventory: true, inventoryList: [] })
 
     const queryParamsObj = {
-      //filter: (queryObj.filter),
       offset: pageObj.offset,
       activePage: pageObj.activePage,
       selectedGenreIdx: this.state.selectedGenreIdx,
@@ -132,16 +162,14 @@ class RetailerInventory extends React.Component {
       stateId: this.state.stateId,
       outletName: this.state.outletName
     }
-
-    this.saveModifiedStock()
-		
+    //this.saveModifiedStock()
     this.fetchRetailerInventoryList({
       offset: pageObj.offset,
       limit: this.pagesLimit,
-      retailer_id: this.state.retailerId,
-      genre_id: this.state.selectedGenreIdx,
-      state_id: this.state.stateId
-    }, this.successInventorylistCallback)
+      retailer_id: parseInt(this.state.retailerId),
+      genre_id: parseInt(this.state.selectedGenreIdx),
+      state_id: parseInt(this.state.stateId)
+    }, this.successInventorylistCallback, this.failureInventorylistCallback)
     
 		history.pushState(queryParamsObj, "stock and price listing", `/admin/stock-and-price/list/${this.state.retailerId}?${getQueryUri(queryParamsObj)}`)
   }
@@ -155,45 +183,48 @@ class RetailerInventory extends React.Component {
 
   fetchRetailerInventory() {
     const payload = {
-      retailer_id: this.state.retailerId,
-      genre_id: this.state.selectedGenreIdx,
+      retailer_id: parseInt(this.state.retailerId),
+      genre_id: parseInt(this.state.selectedGenreIdx),
       limit: this.pagesLimit,
       offset: 0,
-      state_id: this.state.stateId
+      state_id: parseInt(this.state.stateId)
     }
-    this.setState({loadingInventory: true})
-    this.fetchRetailerInventoryList(payload, this.successInventorylistCallback)
+    this.setState({loadingInventory: true, fetchingInventories: true, inventoryList: []})
+    this.fetchRetailerInventoryList(payload, this.successInventorylistCallback, this.failureInventorylistCallback)
   }
 
-  fetchRetailerInventoryList(payload, successCallback) {
-    //Api.fetchRetailerInventoyr(payload, successCallback)
-    successCallback(mockSkuList.brands)
+  fetchRetailerInventoryList(payload, successCallback, failureCallback) {
+    Api.fetchRetailerInventory(payload, successCallback, failureCallback)
   }
 
-  successInventorylistCallback(inventoryList) {
+  successInventorylistCallback(response) {
     const inventoryMap = {}
-    const retailerInventoryList = inventoryList.map((item) => {
+    const retailerInventoryList = response.brands.map((item) => {
       item.sku.map((sku) => {
         inventoryMap[sku.sku_pricing_id] = {
           sku_pricing_id: sku.sku_pricing_id,
           is_active: sku.is_active,
-          sku_id: sku.sku_id,
-          price: sku.price,
+          catalog_price: sku.catalog_price,
           volume: sku.volume,
-          newPrice: 0, 
-          is_modified: false
+          price: sku.retailer_price,
+          is_retailer_price_set: sku.is_retailer_price_set,
+          retailer_id: parseInt(this.state.retailerId), 
+          is_modified: false,
+          stock: 0,
+          version: 0
         }
       })
       return item
     })
 
-    const savedInventoryList = localStorage.getItem("modifiedInventoryList") ? localStorage.getItem("modifiedInventoryList") : []
+    const savedInventoryList = localStorage.getItem("modifiedInventoryList") ? JSON.parse(localStorage.getItem("modifiedInventoryList")) : []
     if(savedInventoryList.length > 0) {
       savedInventoryList.map((item) => {
         if(inventoryMap[item.sku_pricing_id]) {
           inventoryMap[item.sku_pricing_id].is_modified = item.is_modified
           inventoryMap[item.sku_pricing_id].is_active = item.is_active
-          inventoryMap[item.sku_pricing_id].newPrice = item.newPrice
+          inventoryMap[item.sku_pricing_id].is_retailer_price_set = item.is_retailer_price_set
+          inventoryMap[item.sku_pricing_id].price = item.price
         }
       })
     }
@@ -201,8 +232,19 @@ class RetailerInventory extends React.Component {
     this.setState({
       inventoryList: retailerInventoryList, 
       loadingInventory: false,
+      fetchingInventories: false,
       inventoryMap,
-      inventoryListCount: 100
+      inventoryListCount: response.count
+    })
+  }
+
+  failureInventorylistCallback() {
+    this.setState({
+      inventoryList: [], 
+      loadingInventory: false,
+      fetchingInventories: false,
+      inventoryMap: {},
+      inventoryListCount: 0
     })
   }
 
@@ -214,30 +256,57 @@ class RetailerInventory extends React.Component {
     this.setState({activeAccordian: -1})
   }
 
-  handleCheckboxes(e, skuPricingId) {
+  handleIsPriceSetCheckboxChange(e, skuPricingId) {
     let updatedMap = Object.assign({}, this.state.inventoryMap)
     updatedMap[skuPricingId].is_modified = true
-    if(e.target.name === "is_active") {
-      updatedMap[skuPricingId].is_active = (e.target.checked)
-    }
+    updatedMap[skuPricingId].is_retailer_price_set = !updatedMap[skuPricingId].is_retailer_price_set
     this.setState({ inventoryMap: updatedMap})
+    this.saveModifiedStock()
+  }
+
+  handleSkuStatusCheckboxChange(e, skuPricingId) {
+    let updatedMap = Object.assign({}, this.state.inventoryMap)
+    updatedMap[skuPricingId].is_modified = true
+    updatedMap[skuPricingId].is_active = !updatedMap[skuPricingId].is_active
+    this.setState({ inventoryMap: updatedMap})
+    this.saveModifiedStock()
   }
 
   handlePriceChange(e, skuPricingId) {
     let updatedMap = Object.assign({}, this.state.inventoryMap)
-    updatedMap[skuPricingId].is_modified = (e.target.checked)
-    updatedMap[skuPricingId].newPrice = (e.target.value)
+    updatedMap[skuPricingId].is_modified = true
+    updatedMap[skuPricingId].price = parseInt(e.target.value)
     this.setState({ inventoryMap: updatedMap})
+    this.saveModifiedStock()
   }
 
   createOrUpdateInventory() {
-    const modifiedInventoryList =  localStorage.getItem("modifiedInventoryList")
-    console.log("stored inventories", modifiedInventoryList)
+    const modifiedInventoryList =  localStorage.getItem("modifiedInventoryList") ? JSON.parse(localStorage.getItem("modifiedInventoryList")) : []
     localStorage.removeItem("modifiedInventoryList")
+    const payload = {
+      inventories: modifiedInventoryList
+    }
+    if(modifiedInventoryList.length > 0) {
+      this.setState({creatingInventory: true})
+      this.createOrUpdateRetailerInventory(payload, this.successCreateInventoryCallback, this.failureCreateInventoryCallback)
+    }
+    //this.props.history.push("/admin/stock-and-price")
+  }
+
+  successCreateInventoryCallback() {
+    this.setState({creatingInventory: false})
+  }
+
+  failureCreateInventoryCallback() {
+    this.setState({creatingInventory: false})
+  }
+
+  createOrUpdateRetailerInventory(payload, successcallback) {
+    Api.createOrUpdateStockPrice(payload, successcallback)
   }
 
   render() {
-    const {loadingInventory, inventoryList, selectedGenreIdx} = this.state
+    const {loadingInventory, inventoryList, selectedGenreIdx, fetchingInventories} = this.state
     return (
       <Layout title="Retailer Inventory">
         <div>
@@ -249,7 +318,6 @@ class RetailerInventory extends React.Component {
               id="genre" 
               onChange={(e) => this.handleGenreChange(e)} 
               value={parseInt(selectedGenreIdx)}
-              //value={selectedCityIdx ? parseInt(selectedCityIdx) : ""}
             >
               {this.state.genreList.map(item => {
                 return <option value={item.value}>{item.text}</option>
@@ -270,6 +338,12 @@ class RetailerInventory extends React.Component {
             </div>
           }
           {
+            loadingInventory && fetchingInventories &&
+            <div className="header">
+              <p style={{fontWeight: '600'}}>Loading...</p>
+            </div>
+          }
+          {
             !loadingInventory && inventoryList.length === 0 &&
             <div className="header">
               <p style={{fontWeight: '600'}}>No inventory found</p>
@@ -277,7 +351,7 @@ class RetailerInventory extends React.Component {
           }
           <div className="inventory-list">
             {
-              inventoryList.length > 0 &&
+              !loadingInventory && inventoryList.length > 0 &&
               <Accordian
                 setActiveAccordian={this.setActiveAccordian}
                 toggleAccordian={this.toggleAccordian}
@@ -285,53 +359,50 @@ class RetailerInventory extends React.Component {
               >
                 {
                   inventoryList.map((item, index) => (
-                    <AccordianItem key={index} title={item.brand_name} icon={this.state.activeAccordian !== -1 && this.state.activeAccordian === index ? <Icon name="minus" /> : <Icon name="plus" />} id={index}>
+                    <AccordianItem key={index} title={item.brand_name} icon={this.state.activeAccordian !== -1 && this.state.activeAccordian === index ? <Icon name="upArrow" /> : <Icon name="downArrow" />} id={index}>
                      {
                         item.sku.map((prod) => {
-                          return <div className="sku">
-                            <div className="sku-details">
-                              <div>
-                                <p>Volume(ml)</p>
-                                <p>{prod.volume}</p>
-                              </div>
-                              <div>
-                                <p>Price</p>
-                                <p>{prod.price}</p>
-                              </div>
-                              <div>
-                                <p>Status</p>
+                          return (
+                            <div className="sku">
+                              <div className="sku-details">
                                 <div>
-                                  <input 
-                                    type="checkbox"
-                                    onChange={(e) => this.handleCheckboxes(e, prod.sku_pricing_id)}
-                                    checked={
-                                      this.state.inventoryMap[prod.sku_pricing_id].is_active
-                                    }
-                                    name="is_active"
-                                    //disabled={!this.state.enableEdit}
-                                  />
+                                  <p>Volume(ml)</p>
+                                  <p>{prod.volume}</p>
+                                </div>
+                                <div>
+                                  <p>Price</p>
+                                  <p>{prod.catalog_price}</p>
+                                </div>
+                                <div>
+                                  <p>Status</p>
+                                  <div>
+                                    <span onClick={(e) => this.handleSkuStatusCheckboxChange(e, prod.sku_pricing_id)}>
+                                      {
+                                        this.state.inventoryMap[prod.sku_pricing_id].is_active ? <Icon name="filledRectangle" /> : <Icon name="rectangle" />
+                                      }
+                                    </span>
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                            <div className="retailer-stock-price">
+                              <div className="retailer-stock-price">
+                                <div>
+                                  <span>Retailer Price</span>
+                                  <span onClick={(e) => this.handleIsPriceSetCheckboxChange(e, prod.sku_pricing_id)}>
+                                    {
+                                      this.state.inventoryMap[prod.sku_pricing_id].is_retailer_price_set ? <Icon name="filledRectangle" /> : <Icon name="rectangle" />
+                                    }
+                                  </span>
+                                </div>
+                              </div>
                               <div>
                                 <input 
-                                  type="checkbox"
-                                  onChange={(e) => this.handleCheckboxes(e, prod.sku_pricing_id)}
-                                  //checked={this.state.inventoryMap[prod.sku_pricing_id].is_active}
-                                  //name="isActive"
-                                  //disabled={!this.state.enableEdit}
+                                  onChange={(e) => this.handlePriceChange(e, prod.sku_pricing_id)} 
+                                  type="number"
+                                  value={this.state.inventoryMap[(prod.sku_pricing_id)].price} 
                                 />
-                                <span>Retailer Price</span>
                               </div>
-                              {/* <span>{prod.newPrice}</span> */}
-                              <input 
-                                onChange={(e) => this.handlePriceChange(e, prod.sku_pricing_id)} 
-                                type="number"
-                                value={this.state.inventoryMap[(prod.sku_pricing_id)].newPrice} 
-                              />
                             </div>
-                          </div>
+                          )
                         })
                      }
                     </AccordianItem>
@@ -345,6 +416,7 @@ class RetailerInventory extends React.Component {
                 <CustomButton 
                   text="SAVE" 
                   handleClick={this.createOrUpdateInventory} 
+                  disableSave={this.state.creatingInventory}
                 />
               </div>
             }

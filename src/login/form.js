@@ -64,7 +64,7 @@ class Form extends React.Component {
         }
         response.json().then((data) => {
           createSession(data)
-          location.href = '/admin/organization'
+          location.href = '/admin/stock-and-price'
         })
       })
       .catch((err) => {

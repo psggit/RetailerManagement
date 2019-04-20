@@ -71,7 +71,7 @@ class App extends React.Component {
 					createSession(data)
 					if (location.pathname.includes('login') || location.pathname == '/') {
 						//location.href = '/admin/organization'
-						history.push('/admin/organization')
+						history.push('/admin/stock-and-price')
 					}
 				})
 			})

@@ -1,6 +1,6 @@
 import React from 'react'
 //import ReactPagination from 'react-js-pagination'
-import { Pagination } from '@auth0/cosmos'
+import { PaginationToolbar } from '@auth0/cosmos'
 
 class PaginationBar extends React.Component {
   constructor(props) {
@@ -27,7 +27,7 @@ class PaginationBar extends React.Component {
   render() {
     //console.log("pag props", this.props)
     return (
-      <Pagination 
+      <PaginationToolbar
           page={this.props.activePage} 
           perPage={this.props.itemsCountPerPage} 
           items={this.props.totalItemsCount} 

@@ -1,4 +1,4 @@
-import { POST } from 'Utils/fetch'
+import { POST, GET } from 'Utils/fetch'
 import Notify from 'Components/notify'
 
 export function fetchOrganizationList (payloadObj, successCallback, failureCallback) {
@@ -109,22 +109,22 @@ export function fetchRetailerList (payloadObj, successCallback, failureCallback)
     })
 }
 
-export function fetchStockList (payloadObj, successCallback, failureCallback) {
-    return POST({
-        api: '/Api/listRetailers',
-        apiBase: 'retailerMgmt',
-        data: payloadObj,
-        handleError: true
-    })
-    .then((json) => {
-        successCallback(json)
-    })
-    .catch(err => {
-        console.log("Error in fetching stock list", err)
-        err.response.json().then(json => { Notify("danger", json.message) })
-        failureCallback()
-    })
-}
+// export function fetchStockList (payloadObj, successCallback, failureCallback) {
+//     return POST({
+//         api: '/Api/listRetailers',
+//         apiBase: 'retailerMgmt',
+//         data: payloadObj,
+//         handleError: true
+//     })
+//     .then((json) => {
+//         successCallback(json)
+//     })
+//     .catch(err => {
+//         console.log("Error in fetching stock list", err)
+//         err.response.json().then(json => { Notify("danger", json.message) })
+//         failureCallback()
+//     })
+// }
 
 export function createOrUpdateStockPrice (payloadObj, successCallback, failureCallback) {
     return POST({
@@ -135,6 +135,10 @@ export function createOrUpdateStockPrice (payloadObj, successCallback, failureCa
     })
     .then((json) => {
         successCallback(json)
+        Notify("success", "Successfully created or updated stock")
+        // setTimeout(() => {
+        //     location.href = '/admin/stock-and-price'
+        // }, 500)
     })
     .catch(err => {
         console.log("Error in creating/updating stock and price", err)
@@ -144,14 +148,14 @@ export function createOrUpdateStockPrice (payloadObj, successCallback, failureCa
 }
 
 export function fetchGenreList (payloadObj, successCallback) {
-    return POST({
-        api: '/Api/getGenreMap',
-        apiBase: 'catalog',
-        data: payloadObj,
+    return GET({
+        api: `/Api/stockandprice/listing/genres/${payloadObj.state_id}`,
+        apiBase: 'stockandprice',
+        //data: payloadObj,
         handleError: true
     })
     .then((json) => {
-        successCallback(json.genreDetail)
+        successCallback(json.genres)
     })
     .catch(err => {
         console.log("Error in fetching genre list", err)
@@ -160,22 +164,39 @@ export function fetchGenreList (payloadObj, successCallback) {
     })
 }
 
-export function fetchSkuList (payloadObj, successCallback) {
+export function fetchRetailerInventory (payloadObj, successCallback, failureCallback) {
     return POST({
-        api: '/Api/getGenreMap',
-        apiBase: 'odin',
+        api: '/Api/stockandprice/retailer/brands',
+        apiBase: 'stockandprice',
         data: payloadObj,
         handleError: true
     })
     .then((json) => {
-        successCallback(json.genreDetail)
+        successCallback(json)
     })
     .catch(err => {
-        console.log("Error in fetching sku list", err)
-        err.response.json().then(json => { Notify("danger", json.message) })
-        //failureCallback()
+        console.log("Error in fetching retailer inventory list", err)
+        //err.response.json().then(json => { Notify("danger", json.message) })
+        failureCallback()
     })
 }
+
+// export function fetchSkuList (payloadObj, successCallback) {
+//     return POST({
+//         api: '/Api/getGenreMap',
+//         apiBase: 'odin',
+//         data: payloadObj,
+//         handleError: true
+//     })
+//     .then((json) => {
+//         successCallback(json.genreDetail)
+//     })
+//     .catch(err => {
+//         console.log("Error in fetching sku list", err)
+//         err.response.json().then(json => { Notify("danger", json.message) })
+//         //failureCallback()
+//     })
+// }
 
 export function fetchDeviceList (payloadObj, successCallback, failureCallback) {
     return POST({

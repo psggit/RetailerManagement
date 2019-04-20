@@ -112,3 +112,13 @@
 //   width: 306px;
 //   font-size: 16px;
 // }
+
+@media only screen and (max-width: 411px) {
+  .form {
+    width: 280px;
+
+    input {
+      width: 240px;
+    }
+  }
+}

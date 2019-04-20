@@ -21,7 +21,8 @@ class RetailerList extends React.Component {
       filter: {},
       loadingRetailerData: true,
       loadingCityList: true,
-      isCitySelected: false
+      isCitySelected: false,
+      fetchingRetailers: false
     }
     this.pagesLimit = 10
 		this.handlePageChange = this.handlePageChange.bind(this)
@@ -43,13 +44,15 @@ class RetailerList extends React.Component {
   }
 
   fetchDefaultData(filterObj) {
-		this.setState({ retailerData: [], retailerListCount: 0 })
+		this.setState({ retailerData: [], retailerListCount: 0, fetchingRetailers: true })
     const queryObj = {
 			filter: JSON.stringify(filterObj),
 			offset: 0,
       activePage: 1,
       selectedCityIdx: this.state.selectedCityIdx
     }
+
+    this.setState({	offset: 0,activePage: 1})
    
     history.pushState(queryObj, "retailer listing", `/admin/stock-and-price?${getQueryUri(queryObj)}`)
 		this.fetchRetailerList({
@@ -127,7 +130,12 @@ class RetailerList extends React.Component {
 
   successFetchRetailerCallback(response) {
 		if (response && response.ret_response) {
-			this.setState({ retailerData: response.ret_response, retailerListCount: response.count, loadingRetailerData: false })
+			this.setState({ 
+        retailerData: response.ret_response, 
+        retailerListCount: response.count, 
+        loadingRetailerData: false, 
+        fetchingRetailers: false 
+      })
     }
 	}
 
@@ -164,7 +172,7 @@ class RetailerList extends React.Component {
   }
 
   render() {
-    const {retailerData, isCitySelected, selectedCityIdx, loadingRetailerData} = this.state
+    const {retailerData, isCitySelected, selectedCityIdx, loadingRetailerData, fetchingRetailers} = this.state
     console.log("state", this.state)
     return (
       <React.Fragment>
@@ -203,7 +211,7 @@ class RetailerList extends React.Component {
               ))
             }
             {
-              isCitySelected && loadingRetailerData && retailerData.length === 0 &&
+              isCitySelected && fetchingRetailers &&
               <p className="note">Loading Retailers ...</p>
             }
             {
