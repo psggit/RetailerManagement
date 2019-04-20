@@ -128,6 +128,7 @@ class RetailerInventory extends React.Component {
     console.log("stored", storedSavedInvertories)
     const newInventories = [...storedSavedInvertories, ...modifiedInventorylist]
   
+    //Removes duplicates from array of objects
     const uniqueInventories = newInventories.reduce((acc, current) => {
       //console.log("acc", acc)
       const x = acc.find(item => item.sku_pricing_id === current.sku_pricing_id);
@@ -136,7 +137,8 @@ class RetailerInventory extends React.Component {
         return acc.concat([current]);
       } else {
         //console.log("2", acc,  acc)
-        acc[acc.findIndex(item => item.sku_pricing_id === current.sku_pricing_id)]= {...acc[acc.findIndex(item => item.sku_pricing_id === current.sku_pricing_id)], ...current}
+        const pricingIdx = acc.findIndex(item => item.sku_pricing_id === current.sku_pricing_id)
+        acc[pricingIdx] = {...acc[pricingIdx], ...current}
         return acc
       }
     }, []);
