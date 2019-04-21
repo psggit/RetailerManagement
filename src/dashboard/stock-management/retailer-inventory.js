@@ -27,6 +27,7 @@ class RetailerInventory extends React.Component {
       creatingInventory: false,
       inventoryList: [],
       modifiedInventorylist: [],
+      savedInventories: [],
       inventoryMap: {},
       inventoryListCount: 0,
       activeAccordian: -1,
@@ -44,31 +45,33 @@ class RetailerInventory extends React.Component {
     this.failureInventorylistCallback = this.failureInventorylistCallback.bind(this)
     this.setActiveAccordian = this.setActiveAccordian.bind(this)
     this.toggleAccordian = this.toggleAccordian.bind(this)
-    this.createOrUpdateInventory = this.createOrUpdateInventory.bind(this)
+    //this.createOrUpdateInventory = this.createOrUpdateInventory.bind(this)
     this.handleSkuStatusCheckboxChange = this.handleSkuStatusCheckboxChange.bind(this)
     this.handleIsPriceSetCheckboxChange = this.handleIsPriceSetCheckboxChange.bind(this)
-    this.successCreateInventoryCallback =this.successCreateInventoryCallback.bind(this)
-    this.failureCreateInventoryCallback = this.failureCreateInventoryCallback.bind(this)
+    // this.successCreateInventoryCallback =this.successCreateInventoryCallback.bind(this)
+    // this.failureCreateInventoryCallback = this.failureCreateInventoryCallback.bind(this)
     this.handlePriceChange = this.handlePriceChange.bind(this)
     this.handlePageChange = this.handlePageChange.bind(this)
     this.setQueryParamas = this.setQueryParamas.bind(this)
     this.saveModifiedStock = this.saveModifiedStock.bind(this)
+    this.showModifiedStockList = this.showModifiedStockList.bind(this)
   }
 
   componentDidMount() {
     if (location.search.length) {
 			this.setQueryParamas()
-    } else {
-      this.fetchGenreList({
-        state_id: this.props.location.state.state_id
-      }, this.formatResponse)
-      //console.log("state", this.props)
-      this.setState({
-        outletName: this.props.location.state.outlet_name,
-        retailerId: this.props.location.state.id,
-        stateId: this.props.location.state.state_id
-      })
-    }
+    } 
+    // else {
+    //   this.fetchGenreList({
+    //     state_id: this.props.location.state.state_id
+    //   }, this.formatResponse)
+    //   //console.log("state", this.props)
+    //   this.setState({
+    //     outletName: this.props.location.state.outlet_name,
+    //     retailerId: this.props.location.state.id,
+    //     stateId: this.props.location.state.state_id
+    //   })
+    // }
   }
 
   fetchGenreList(payload, genreListSuccessCallback) {
@@ -100,12 +103,14 @@ class RetailerInventory extends React.Component {
 		this.setState({ 
       inventoryList: [], 
       inventoryListCount: 0, 
-      loadingInventory: true
+      loadingInventory: true,
+      savedInventories: localStorage.getItem("modifiedInventoryList") ? JSON.parse(localStorage.getItem("modifiedInventoryList")) : []
     })
     this.fetchGenreList({
       state_id:  queryObj.stateId
     }, this.formatResponse)
-    //if(queryObj.retailerId) {
+
+    if(queryObj.selectedGenreIdx) {
       this.fetchRetailerInventoryList({
         offset: queryObj.offset ? parseInt(queryObj.offset) : 0,
         limit: this.pagesLimit,
@@ -113,7 +118,7 @@ class RetailerInventory extends React.Component {
         genre_id: parseInt(queryObj.selectedGenreIdx),
         state_id:  parseInt(queryObj.stateId)
       }, this.successInventorylistCallback, this.failureInventorylistCallback)
-    //}
+    }
   }
 
   saveModifiedStock() {
@@ -143,6 +148,7 @@ class RetailerInventory extends React.Component {
       }
     }, []);
     console.log("filtered arr", uniqueInventories)
+    this.setState({savedInventories: uniqueInventories})
     localStorage.setItem("modifiedInventoryList", JSON.stringify(uniqueInventories))
   }
 
@@ -208,8 +214,12 @@ class RetailerInventory extends React.Component {
           volume: sku.volume,
           price: sku.retailer_price,
           is_retailer_price_set: sku.is_retailer_price_set,
+          genre_id: this.state.selectedGenreIdx,
+          state_id: this.state.stateId,
           retailer_id: parseInt(this.state.retailerId), 
+          outlet_name: this.state.outletName,
           is_modified: false,
+          brand_name: item.brand_name,
           stock: 0,
           version: 0
         }
@@ -280,29 +290,33 @@ class RetailerInventory extends React.Component {
     this.saveModifiedStock()
   }
 
-  createOrUpdateInventory() {
-    const modifiedInventoryList =  localStorage.getItem("modifiedInventoryList") ? JSON.parse(localStorage.getItem("modifiedInventoryList")) : []
-    localStorage.removeItem("modifiedInventoryList")
-    const payload = {
-      inventories: modifiedInventoryList
-    }
-    if(modifiedInventoryList.length > 0) {
-      this.setState({creatingInventory: true})
-      this.createOrUpdateRetailerInventory(payload, this.successCreateInventoryCallback, this.failureCreateInventoryCallback)
-    }
-    //this.props.history.push("/admin/stock-and-price")
-  }
+  // createOrUpdateInventory() {
+  //   const modifiedInventoryList =  localStorage.getItem("modifiedInventoryList") ? JSON.parse(localStorage.getItem("modifiedInventoryList")) : []
+  //   localStorage.removeItem("modifiedInventoryList")
+  //   const payload = {
+  //     inventories: modifiedInventoryList
+  //   }
+  //   if(modifiedInventoryList.length > 0) {
+  //     this.setState({creatingInventory: true})
+  //     this.createOrUpdateRetailerInventory(payload, this.successCreateInventoryCallback, this.failureCreateInventoryCallback)
+  //   }
+  //   //this.props.history.push("/admin/stock-and-price")
+  // }
 
-  successCreateInventoryCallback() {
-    this.setState({creatingInventory: false})
-  }
+  // successCreateInventoryCallback() {
+  //   this.setState({creatingInventory: false})
+  // }
 
-  failureCreateInventoryCallback() {
-    this.setState({creatingInventory: false})
-  }
+  // failureCreateInventoryCallback() {
+  //   this.setState({creatingInventory: false})
+  // }
 
-  createOrUpdateRetailerInventory(payload, successcallback) {
-    Api.createOrUpdateStockPrice(payload, successcallback)
+  // createOrUpdateRetailerInventory(payload, successcallback) {
+  //   Api.createOrUpdateStockPrice(payload, successcallback)
+  // }
+
+  showModifiedStockList() {
+    this.props.history.push(`/admin/stock-and-price/modified-list/${this.state.outletName}`)
   }
 
   render() {
@@ -411,12 +425,12 @@ class RetailerInventory extends React.Component {
               </Accordian>
             }
             {
-              inventoryList.length > 0 &&
+              this.state.savedInventories.length > 0 &&
               <div className="btn--container">
                 <CustomButton 
-                  text="SAVE" 
-                  handleClick={this.createOrUpdateInventory} 
-                  disableSave={this.state.creatingInventory}
+                  text="Modified Stock List" 
+                  handleClick={this.showModifiedStockList} 
+                  //disableSave={!this.state.savedInventories}
                 />
               </div>
             }

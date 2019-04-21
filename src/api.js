@@ -136,9 +136,9 @@ export function createOrUpdateStockPrice (payloadObj, successCallback, failureCa
     .then((json) => {
         successCallback(json)
         Notify("success", "Successfully created or updated stock")
-        // setTimeout(() => {
-        //     location.href = '/admin/stock-and-price'
-        // }, 500)
+        setTimeout(() => {
+            location.href = `/admin/stock-and-price/list?retailerId=${payloadObj.inventories[0].retailer_id}&outletName=${payloadObj.inventories[0].outlet_name}&stateId=${payloadObj.inventories[0].state_id}&selectedGenreIdx=${payloadObj.inventories[0].genre_id}`
+        }, 500)
     })
     .catch(err => {
         console.log("Error in creating/updating stock and price", err)

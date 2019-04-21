@@ -104,6 +104,36 @@
       }
     }
   }
+
+  .modified-inventory-list {
+    &:not(:last-child) {
+      border-bottom: 1px solid #555555;
+      margin-bottom: 10px;
+    }
+
+    &:not(:first-child) {
+      margin-top: 20px;
+    }
+    .product {
+      margin: 20px 0;
+
+      .product-details {
+        display: flex;
+        justify-content: space-between;
+        margin: 5px 0px;
+        div:first-child {
+          text-align: left;
+        }
+        div:nth-child(2) {
+          text-align: right;
+        }
+
+        .title {
+          font-weight: 600;
+        }
+      }
+    }
+  }
   
   @media only screen and (max-width: 411px) { 
     .select-container {

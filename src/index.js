@@ -30,6 +30,7 @@ import StockAndPriceList from './dashboard/stock-and-price'
 import CreateOrUpdateStockPrice from './dashboard/stock-management/retailer-inventory';
 import RetailerInventory from './dashboard/stock-and-price/retailer-inventory'
 import StockManagement from "./dashboard/stock-management"
+import ModifiedStockList from "./dashboard/stock-management/modifiedStockSummary"
 
 const history = createHistory()
 
@@ -234,11 +235,22 @@ class App extends React.Component {
 
 									<Route
 										exact
-										path="/admin/stock-and-price/list/:retailerId"
+										path="/admin/stock-and-price/list"
 										//component={ManageOrganization}
 										render={
 											props => (
 												<CreateOrUpdateStockPrice {...props} />
+											)
+										}
+									/>
+
+									<Route
+										exact
+										path="/admin/stock-and-price/modified-list/:outletName"
+										//component={ManageOrganization}
+										render={
+											props => (
+												<ModifiedStockList {...props} />
 											)
 										}
 									/>

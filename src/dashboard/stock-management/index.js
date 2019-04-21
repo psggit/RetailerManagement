@@ -158,7 +158,8 @@ class RetailerList extends React.Component {
   }
 
   listRetailerInventory(item) {
-    this.props.history.push(`/admin/stock-and-price/list/${item.id}`, item)
+    //this.props.history.push(`/admin/stock-and-price/list/${item.id}`, item)
+    this.props.history.push(`/admin/stock-and-price/list?retailerId=${item.id}&outletName=${item.outlet_name}&stateId=${item.state_id}`, item)
   }
   
   renderOutlet(item) {
