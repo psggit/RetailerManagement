@@ -88,7 +88,7 @@ class RetailerList extends React.Component {
   
 		let pageNumber = pageObj.activePage
 		let offset = pageObj.offset
-		this.setState({ activePage: pageNumber, offset, loadingRetailerData: true, retailerData: [] })
+		this.setState({ activePage: pageNumber, offset, loadingRetailerData: true, retailerData: [], fetchingRetailers: true })
 
     const queryParamsObj = {
       filter: (queryObj.filter),
