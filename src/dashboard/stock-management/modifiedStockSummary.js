@@ -68,7 +68,11 @@ class StockSummary extends React.Component {
     }
     if(this.state.modifiedStockList.length > 0) {
       this.setState({creatingInventory: true})
-      this.createOrUpdateRetailerInventory(payload, this.successCreateInventoryCallback, this.failureCreateInventoryCallback)
+      this.createOrUpdateRetailerInventory(
+        payload, 
+        this.successCreateInventoryCallback, 
+        this.failureCreateInventoryCallback
+      )
     }
     //this.props.history.push("/admin/stock-and-price")
   }

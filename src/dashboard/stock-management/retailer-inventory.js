@@ -19,7 +19,6 @@ class RetailerInventory extends React.Component {
 
     this.state = {
       loadingGenreList: true,
-      //isGenreSelected: false,
       selectedGenreIdx: "",
       genreList: [],
       loadingInventory: true,
@@ -74,6 +73,36 @@ class RetailerInventory extends React.Component {
     // }
   }
 
+  setQueryParamas() {
+    const queryUri = decodeURI(location.search.slice(1))
+		const queryObj = getQueryObj(queryUri)
+
+		Object.entries(queryObj).forEach((item) => {
+			this.setState({ [item[0]]: item[1] })
+    })
+    
+		this.setState({ 
+      inventoryList: [], 
+      inventoryListCount: 0, 
+      loadingInventory: true,
+      savedInventories: localStorage.getItem("modifiedInventoryList") ? JSON.parse(localStorage.getItem("modifiedInventoryList")) : []
+    })
+
+    this.fetchGenreList({
+      state_id:  queryObj.stateId
+    }, this.formatResponse)
+
+    if(queryObj.selectedGenreIdx) {
+      this.fetchRetailerInventoryList({
+        offset: queryObj.offset ? parseInt(queryObj.offset) : 0,
+        limit: this.pagesLimit,
+        retailer_id:  parseInt(queryObj.retailerId),
+        genre_id: parseInt(queryObj.selectedGenreIdx),
+        state_id:  parseInt(queryObj.stateId)
+      }, this.successInventorylistCallback, this.failureInventorylistCallback)
+    }
+  }
+
   fetchGenreList(payload, genreListSuccessCallback) {
 		Api.fetchGenreList(payload, genreListSuccessCallback)
 	}
@@ -93,34 +122,6 @@ class RetailerInventory extends React.Component {
     })
   }
 
-  setQueryParamas() {
-    const queryUri = decodeURI(location.search.slice(1))
-		const queryObj = getQueryObj(queryUri)
-
-		Object.entries(queryObj).forEach((item) => {
-			this.setState({ [item[0]]: item[1] })
-		})
-		this.setState({ 
-      inventoryList: [], 
-      inventoryListCount: 0, 
-      loadingInventory: true,
-      savedInventories: localStorage.getItem("modifiedInventoryList") ? JSON.parse(localStorage.getItem("modifiedInventoryList")) : []
-    })
-    this.fetchGenreList({
-      state_id:  queryObj.stateId
-    }, this.formatResponse)
-
-    if(queryObj.selectedGenreIdx) {
-      this.fetchRetailerInventoryList({
-        offset: queryObj.offset ? parseInt(queryObj.offset) : 0,
-        limit: this.pagesLimit,
-        retailer_id:  parseInt(queryObj.retailerId),
-        genre_id: parseInt(queryObj.selectedGenreIdx),
-        state_id:  parseInt(queryObj.stateId)
-      }, this.successInventorylistCallback, this.failureInventorylistCallback)
-    }
-  }
-
   saveModifiedStock() {
     const inventoryList = Object.values(this.state.inventoryMap)
     const modifiedInventorylist = inventoryList.filter((item) => {
@@ -128,9 +129,11 @@ class RetailerInventory extends React.Component {
         return item
       }
     })
-    console.log("modified", modifiedInventorylist)
-    let storedSavedInvertories = localStorage.getItem("modifiedInventoryList") ? JSON.parse(localStorage.getItem("modifiedInventoryList")) : []
-    console.log("stored", storedSavedInvertories)
+    //console.log("modified", modifiedInventorylist)
+    let storedSavedInvertories = localStorage.getItem("modifiedInventoryList") 
+                                  ? JSON.parse(localStorage.getItem("modifiedInventoryList")) 
+                                  : []
+    //console.log("stored", storedSavedInvertories)
     const newInventories = [...storedSavedInvertories, ...modifiedInventorylist]
   
     //Removes duplicates from array of objects
@@ -147,7 +150,7 @@ class RetailerInventory extends React.Component {
         return acc
       }
     }, []);
-    console.log("filtered arr", uniqueInventories)
+    //console.log("filtered arr", uniqueInventories)
     this.setState({savedInventories: uniqueInventories})
     localStorage.setItem("modifiedInventoryList", JSON.stringify(uniqueInventories))
   }
@@ -157,8 +160,14 @@ class RetailerInventory extends React.Component {
     const queryObj = getQueryObj(queryUri)
   
 		let pageNumber = pageObj.activePage
-		let offset = pageObj.offset
-		this.setState({ activePage: pageNumber, offset, loadingInventory: true, inventoryList: [] })
+    let offset = pageObj.offset
+    
+		this.setState({ 
+      activePage: pageNumber, 
+      offset, 
+      loadingInventory: true, 
+      inventoryList: [] 
+    })
 
     const queryParamsObj = {
       offset: pageObj.offset,
@@ -227,14 +236,18 @@ class RetailerInventory extends React.Component {
       return item
     })
 
-    const savedInventoryList = localStorage.getItem("modifiedInventoryList") ? JSON.parse(localStorage.getItem("modifiedInventoryList")) : []
+    const savedInventoryList = localStorage.getItem("modifiedInventoryList") 
+                                ? JSON.parse(localStorage.getItem("modifiedInventoryList")) 
+                                : []
+
     if(savedInventoryList.length > 0) {
       savedInventoryList.map((item) => {
         if(inventoryMap[item.sku_pricing_id]) {
-          inventoryMap[item.sku_pricing_id].is_modified = item.is_modified
-          inventoryMap[item.sku_pricing_id].is_active = item.is_active
-          inventoryMap[item.sku_pricing_id].is_retailer_price_set = item.is_retailer_price_set
-          inventoryMap[item.sku_pricing_id].price = item.price
+          inventoryMap[item.sku_pricing_id] = {...inventoryMap[item.sku_pricing_id], ...item}
+          // inventoryMap[item.sku_pricing_id].is_modified = item.is_modified
+          // inventoryMap[item.sku_pricing_id].is_active = item.is_active
+          // inventoryMap[item.sku_pricing_id].is_retailer_price_set = item.is_retailer_price_set
+          // inventoryMap[item.sku_pricing_id].price = item.price
         }
       })
     }
@@ -392,7 +405,9 @@ class RetailerInventory extends React.Component {
                                   <div>
                                     <span onClick={(e) => this.handleSkuStatusCheckboxChange(e, prod.sku_pricing_id)}>
                                       {
-                                        this.state.inventoryMap[prod.sku_pricing_id].is_active ? <Icon name="filledRectangle" /> : <Icon name="rectangle" />
+                                        this.state.inventoryMap[prod.sku_pricing_id].is_active 
+                                        ? <Icon name="filledRectangle" /> 
+                                        : <Icon name="rectangle" />
                                       }
                                     </span>
                                   </div>
@@ -403,7 +418,9 @@ class RetailerInventory extends React.Component {
                                   <span>Retailer Price</span>
                                   <span onClick={(e) => this.handleIsPriceSetCheckboxChange(e, prod.sku_pricing_id)}>
                                     {
-                                      this.state.inventoryMap[prod.sku_pricing_id].is_retailer_price_set ? <Icon name="filledRectangle" /> : <Icon name="rectangle" />
+                                      this.state.inventoryMap[prod.sku_pricing_id].is_retailer_price_set 
+                                      ? <Icon name="filledRectangle" /> 
+                                      : <Icon name="rectangle" />
                                     }
                                   </span>
                                 </div>

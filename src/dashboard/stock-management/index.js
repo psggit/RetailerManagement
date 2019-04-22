@@ -44,17 +44,22 @@ class RetailerList extends React.Component {
   }
 
   fetchDefaultData(filterObj) {
-		this.setState({ retailerData: [], retailerListCount: 0, fetchingRetailers: true })
+		this.setState({ 
+      retailerData: [], 
+      retailerListCount: 0, 
+      fetchingRetailers: true,
+      offset: 0, 
+      activePage: 1
+    })
     const queryObj = {
 			filter: JSON.stringify(filterObj),
 			offset: 0,
       activePage: 1,
       selectedCityIdx: this.state.selectedCityIdx
     }
-
-    this.setState({	offset: 0,activePage: 1})
    
     history.pushState(queryObj, "retailer listing", `/admin/stock-and-price?${getQueryUri(queryObj)}`)
+
 		this.fetchRetailerList({
 			offset: 0,
       limit: this.pagesLimit,
@@ -68,13 +73,15 @@ class RetailerList extends React.Component {
 
 		Object.entries(queryObj).forEach((item) => {
 			this.setState({ [item[0]]: item[1] })
-		})
+    })
+    
 		this.setState({ 
       retailerData: [], 
       retailerListCount: 0, 
       loadingRetailerData: true,
       isCitySelected: queryObj.selectedCityIdx ? true : false
     })
+
     this.fetchRetailerList({
       offset: queryObj.offset ? parseInt(queryObj.offset) : 0,
       limit: this.pagesLimit,
@@ -87,8 +94,15 @@ class RetailerList extends React.Component {
     const queryObj = getQueryObj(queryUri)
   
 		let pageNumber = pageObj.activePage
-		let offset = pageObj.offset
-		this.setState({ activePage: pageNumber, offset, loadingRetailerData: true, retailerData: [], fetchingRetailers: true })
+    let offset = pageObj.offset
+    
+		this.setState({ 
+      activePage: pageNumber, 
+      offset, 
+      loadingRetailerData: true, 
+      retailerData: [], 
+      fetchingRetailers: true 
+    })
 
     const queryParamsObj = {
       filter: (queryObj.filter),
@@ -141,7 +155,11 @@ class RetailerList extends React.Component {
 	}
 
 	failureFetchRetailerCallback() {
-		this.setState({ retailerData: [], retailerListCount: 0, loadingRetailerData: false })
+		this.setState({ 
+      retailerData: [], 
+      retailerListCount: 0, 
+      loadingRetailerData: false 
+    })
 	}
 
   fetchStateAndCityList(payload, stateListSuccessCallback) {
