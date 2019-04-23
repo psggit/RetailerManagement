@@ -74,6 +74,7 @@ class RetailerInventory extends React.Component {
   }
 
   setQueryParamas() {
+    console.log("mount")
     const queryUri = decodeURI(location.search.slice(1))
 		const queryObj = getQueryObj(queryUri)
 
@@ -166,7 +167,8 @@ class RetailerInventory extends React.Component {
       activePage: pageNumber, 
       offset, 
       loadingInventory: true, 
-      inventoryList: [] 
+      inventoryList: [],
+      activeAccordian: -1
     })
 
     const queryParamsObj = {
@@ -186,7 +188,7 @@ class RetailerInventory extends React.Component {
       state_id: parseInt(this.state.stateId)
     }, this.successInventorylistCallback, this.failureInventorylistCallback)
     
-		history.pushState(queryParamsObj, "stock and price listing", `/admin/stock-and-price/list/${this.state.retailerId}?${getQueryUri(queryParamsObj)}`)
+		history.pushState(queryParamsObj, "stock and price listing", `/admin/stock-and-price/list?${getQueryUri(queryParamsObj)}`)
   }
 
   handleGenreChange(e) {
@@ -205,6 +207,7 @@ class RetailerInventory extends React.Component {
       state_id: parseInt(this.state.stateId)
     }
     this.setState({loadingInventory: true, fetchingInventories: true, inventoryList: []})
+    this.props.history.push(`${location.pathname + location.search}&selectedGenreIdx=${this.state.selectedGenreIdx}`)
     this.fetchRetailerInventoryList(payload, this.successInventorylistCallback, this.failureInventorylistCallback)
   }
 

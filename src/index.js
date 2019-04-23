@@ -28,7 +28,7 @@ import DeviceList from "./dashboard/device-management/device-list"
 import GenerateReport from './dashboard/generate-report'
 import StockAndPriceList from './dashboard/stock-and-price'
 import CreateOrUpdateStockPrice from './dashboard/stock-management/retailer-inventory';
-import RetailerInventory from './dashboard/stock-and-price/retailer-inventory'
+// import RetailerInventory from './dashboard/stock-and-price/retailer-inventory'
 import StockManagement from "./dashboard/stock-management"
 import ModifiedStockList from "./dashboard/stock-management/modifiedStockSummary"
 
@@ -39,6 +39,7 @@ class App extends React.Component {
 		super()
 		this.state = {
 			currentRoute: location.pathname.split('/')[2] || 'stock-and-price',
+			hasuraRole: localStorage.getItem("x-hasura-role") ? localStorage.getItem("x-hasura-role") : ""
 		}
 	}
 	componentDidMount() {
@@ -84,6 +85,7 @@ class App extends React.Component {
 			})
 	}
 	render() {
+		console.log("role", this.state.hasuraRole)
 		return (
 			<Router history={history}>
 				<div>
@@ -255,7 +257,7 @@ class App extends React.Component {
 										}
 									/>
 
-									<Route
+									{/* <Route
 										exact
 										path="/admin/stock-and-price/edit/:retailerId"
 										//component={ManageOrganization}
@@ -264,7 +266,7 @@ class App extends React.Component {
 												<RetailerInventory {...props} />
 											)
 										}
-									/>
+									/> */}
 
 									<Route
 										exact

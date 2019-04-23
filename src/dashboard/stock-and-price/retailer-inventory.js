@@ -16,12 +16,15 @@ class RetailerInventory extends React.Component {
 
     this.pageLimit = 10
     this.handlePageChange = this.handlePageChange.bind(this)
-    this.handleClick = this.handleClick.bind(this)
+		this.handleClick = this.handleClick.bind(this)
+		this.setQueryParamas = this.setQueryParamas.bind(this)
+		this.fetchDefaultData = this.fetchDefaultData.bind(this)
     //this.successFetchStockAndPriceCallback = this.successFetchStockAndPriceCallback.bind(this)
     //this.failureFetchStockAndPriceCallback = this.failureFetchStockAndPriceCallback.bind(this)
   }
 
   componentDidMount() {
+		console.log("mount")
 		if (location.search.length) {
 			this.setQueryParamas()
 		} else {
@@ -39,6 +42,7 @@ class RetailerInventory extends React.Component {
   }
   
   setQueryParamas() {
+		console.log("set query")
 		const queryUri = location.search.slice(1)
 		const queryObj = getQueryObj(queryUri)
 
