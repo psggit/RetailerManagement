@@ -6,6 +6,7 @@ import Layout from "Components/layout"
 import { formatStateAndCityList } from 'Utils/response-format-utils'
 import { getQueryObj, getQueryUri } from 'Utils/url-utils'
 import Pagination from 'Components/pagination'
+import RetailerListItem from "./retailer-list"
 
 class RetailerList extends React.Component {
   constructor() {
@@ -33,7 +34,7 @@ class RetailerList extends React.Component {
     this.successFetchRetailerCallback = this.successFetchRetailerCallback.bind(this)
     this.failureFetchRetailerCallback = this.failureFetchRetailerCallback.bind(this)
     this.fetchRetailers = this.fetchRetailers.bind(this)
-    this.listRetailerInventory = this.listRetailerInventory.bind(this)
+    // this.listRetailerInventory = this.listRetailerInventory.bind(this)
   }
 
   componentDidMount() {
@@ -175,21 +176,21 @@ class RetailerList extends React.Component {
 		this.setState({ cityList, cityMap, loadingCityList: false })
   }
 
-  listRetailerInventory(item) {
-    //this.props.history.push(`/admin/stock-and-price/list/${item.id}`, item)
-    this.props.history.push(`/admin/stock-and-price/list?retailerId=${item.id}&outletName=${item.outlet_name}&stateId=${item.state_id}`, item)
-  }
+  // listRetailerInventory(item) {
+  //   //this.props.history.push(`/admin/stock-and-price/list/${item.id}`, item)
+  //   this.props.history.push(`/admin/stock-and-price/list?retailerId=${item.id}&outletName=${item.outlet_name}&stateId=${item.state_id}`, item)
+  // }
   
-  renderOutlet(item) {
-    return (
-      <div className="retailer" onClick={() => this.listRetailerInventory(item)}>
-        <div className="details">
-          <p>{item.id}</p>
-          <p>{item.outlet_name}</p>
-        </div>
-      </div>
-    )
-  }
+  // renderOutlet(item) {
+  //   return (
+  //     <div className="retailer" onClick={() => this.listRetailerInventory(item)}>
+  //       <div className="details">
+  //         <p>{item.id}</p>
+  //         <p>{item.outlet_name}</p>
+  //       </div>
+  //     </div>
+  //   )
+  // }
 
   render() {
     const {retailerData, isCitySelected, selectedCityIdx, loadingRetailerData, fetchingRetailers} = this.state
@@ -218,31 +219,13 @@ class RetailerList extends React.Component {
               />
             </div>
           </div>
-          <div className="retailer-list">
-            {
-              retailerData.length > 0 &&
-              <div className="header">
-                <h2>Retailer List</h2>
-              </div>
-            }
-            {
-              retailerData.length > 0 && retailerData.map((item) => (
-                this.renderOutlet(item)
-              ))
-            }
-            {
-              isCitySelected && fetchingRetailers &&
-              <p className="note">Loading Retailers ...</p>
-            }
-            {
-              isCitySelected && !loadingRetailerData && retailerData.length === 0 &&
-              <p className="note">No retailers found</p>
-            }
-            {
-              !isCitySelected &&
-              <p className="note">Please select city to list retailer</p>
-            }
-          </div>
+          <RetailerListItem 
+            isCitySelected={isCitySelected}
+            retailerData={retailerData}
+            loadingRetailerData={loadingRetailerData}
+            fetchingRetailers={fetchingRetailers}
+            history={this.props.history}
+          />
           {
             retailerData && retailerData.length > 0 &&
             <Pagination

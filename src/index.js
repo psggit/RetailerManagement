@@ -26,7 +26,7 @@ import EditRetailer from './dashboard/manage-retailer/edit-retailer';
 import RetailerList from "./dashboard/device-management/index";
 import DeviceList from "./dashboard/device-management/device-list"
 import GenerateReport from './dashboard/generate-report'
-import StockAndPriceList from './dashboard/stock-and-price'
+// import StockAndPriceList from './dashboard/stock-and-price'
 import CreateOrUpdateStockPrice from './dashboard/stock-management/retailer-inventory';
 // import RetailerInventory from './dashboard/stock-and-price/retailer-inventory'
 import StockManagement from "./dashboard/stock-management"
