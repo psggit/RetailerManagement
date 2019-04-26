@@ -7,9 +7,7 @@ import {mockSkuList} from "./../../mockData"
 import Accordian from "Components/accordian"
 import AccordianItem from "Components/accordian/accordian-item"
 import Icon from "Components/icon"
-//import Pager from "Components/pager"
 import Pagination from 'Components/pagination'
-// import PaginationToolbar from 'Components/paginationToolbar'
 import { getQueryObj, getQueryUri } from 'Utils/url-utils'
 
 class RetailerInventory extends React.Component {
@@ -44,11 +42,8 @@ class RetailerInventory extends React.Component {
     this.failureInventorylistCallback = this.failureInventorylistCallback.bind(this)
     this.setActiveAccordian = this.setActiveAccordian.bind(this)
     this.toggleAccordian = this.toggleAccordian.bind(this)
-    //this.createOrUpdateInventory = this.createOrUpdateInventory.bind(this)
     this.handleSkuStatusCheckboxChange = this.handleSkuStatusCheckboxChange.bind(this)
     this.handleIsPriceSetCheckboxChange = this.handleIsPriceSetCheckboxChange.bind(this)
-    // this.successCreateInventoryCallback =this.successCreateInventoryCallback.bind(this)
-    // this.failureCreateInventoryCallback = this.failureCreateInventoryCallback.bind(this)
     this.handlePriceChange = this.handlePriceChange.bind(this)
     this.handlePageChange = this.handlePageChange.bind(this)
     this.setQueryParamas = this.setQueryParamas.bind(this)
@@ -60,21 +55,9 @@ class RetailerInventory extends React.Component {
     if (location.search.length) {
 			this.setQueryParamas()
     } 
-    // else {
-    //   this.fetchGenreList({
-    //     state_id: this.props.location.state.state_id
-    //   }, this.formatResponse)
-    //   //console.log("state", this.props)
-    //   this.setState({
-    //     outletName: this.props.location.state.outlet_name,
-    //     retailerId: this.props.location.state.id,
-    //     stateId: this.props.location.state.state_id
-    //   })
-    // }
   }
 
   setQueryParamas() {
-    console.log("mount")
     const queryUri = decodeURI(location.search.slice(1))
 		const queryObj = getQueryObj(queryUri)
 
@@ -130,28 +113,22 @@ class RetailerInventory extends React.Component {
         return item
       }
     })
-    //console.log("modified", modifiedInventorylist)
     let storedSavedInvertories = localStorage.getItem("modifiedInventoryList") 
                                   ? JSON.parse(localStorage.getItem("modifiedInventoryList")) 
                                   : []
-    //console.log("stored", storedSavedInvertories)
     const newInventories = [...storedSavedInvertories, ...modifiedInventorylist]
   
     //Removes duplicates from array of objects
     const uniqueInventories = newInventories.reduce((acc, current) => {
-      //console.log("acc", acc)
-      const x = acc.find(item => item.sku_pricing_id === current.sku_pricing_id);
-      if (!x) {
-        //console.log("1",  acc.concat([current]))
+      const isFoundInventory = acc.find(item => item.sku_pricing_id === current.sku_pricing_id);
+      if (!isFoundInventory) {
         return acc.concat([current]);
       } else {
-        //console.log("2", acc,  acc)
         const pricingIdx = acc.findIndex(item => item.sku_pricing_id === current.sku_pricing_id)
         acc[pricingIdx] = {...acc[pricingIdx], ...current}
         return acc
       }
     }, []);
-    //console.log("filtered arr", uniqueInventories)
     this.setState({savedInventories: uniqueInventories})
     localStorage.setItem("modifiedInventoryList", JSON.stringify(uniqueInventories))
   }
@@ -247,10 +224,6 @@ class RetailerInventory extends React.Component {
       savedInventoryList.map((item) => {
         if(inventoryMap[item.sku_pricing_id]) {
           inventoryMap[item.sku_pricing_id] = {...inventoryMap[item.sku_pricing_id], ...item}
-          // inventoryMap[item.sku_pricing_id].is_modified = item.is_modified
-          // inventoryMap[item.sku_pricing_id].is_active = item.is_active
-          // inventoryMap[item.sku_pricing_id].is_retailer_price_set = item.is_retailer_price_set
-          // inventoryMap[item.sku_pricing_id].price = item.price
         }
       })
     }
@@ -305,31 +278,6 @@ class RetailerInventory extends React.Component {
     this.setState({ inventoryMap: updatedMap})
     this.saveModifiedStock()
   }
-
-  // createOrUpdateInventory() {
-  //   const modifiedInventoryList =  localStorage.getItem("modifiedInventoryList") ? JSON.parse(localStorage.getItem("modifiedInventoryList")) : []
-  //   localStorage.removeItem("modifiedInventoryList")
-  //   const payload = {
-  //     inventories: modifiedInventoryList
-  //   }
-  //   if(modifiedInventoryList.length > 0) {
-  //     this.setState({creatingInventory: true})
-  //     this.createOrUpdateRetailerInventory(payload, this.successCreateInventoryCallback, this.failureCreateInventoryCallback)
-  //   }
-  //   //this.props.history.push("/admin/stock-and-price")
-  // }
-
-  // successCreateInventoryCallback() {
-  //   this.setState({creatingInventory: false})
-  // }
-
-  // failureCreateInventoryCallback() {
-  //   this.setState({creatingInventory: false})
-  // }
-
-  // createOrUpdateRetailerInventory(payload, successcallback) {
-  //   Api.createOrUpdateStockPrice(payload, successcallback)
-  // }
 
   showModifiedStockList() {
     this.props.history.push(`/admin/stock-and-price/modified-list/${this.state.outletName}`)

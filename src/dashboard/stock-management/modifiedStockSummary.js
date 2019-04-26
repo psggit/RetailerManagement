@@ -61,7 +61,6 @@ class StockSummary extends React.Component {
   }
 
   createOrUpdateInventory() {
-    // const modifiedInventoryList =  localStorage.getItem("modifiedInventoryList") ? JSON.parse(localStorage.getItem("modifiedInventoryList")) : []
     localStorage.removeItem("modifiedInventoryList")
     const payload = {
       inventories: this.state.modifiedStockList
@@ -74,7 +73,6 @@ class StockSummary extends React.Component {
         this.failureCreateInventoryCallback
       )
     }
-    //this.props.history.push("/admin/stock-and-price")
   }
 
   successCreateInventoryCallback() {
