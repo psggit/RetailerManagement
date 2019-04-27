@@ -38,8 +38,8 @@ class App extends React.Component {
 	constructor() {
 		super()
 		this.state = {
-			currentRoute: location.pathname.split('/')[2] || 'stock-and-price',
-			hasuraRole: localStorage.getItem("x-hasura-role") ? localStorage.getItem("x-hasura-role") : ""
+			accessRole: localStorage.getItem('x-hasura-role') ? localStorage.getItem('x-hasura-role') : '',
+			currentRoute: location.pathname.split('/')[2] || 'stock-and-price'
 		}
 	}
 	componentDidMount() {
@@ -85,21 +85,237 @@ class App extends React.Component {
 			})
 	}
 	render() {
-		console.log("role", this.state.hasuraRole)
+		console.log("role", this.state.accessRole)
+		// const RetailerManagement = () => {
+		// 	return (
+		// 		<Switch>
+		// 			<Route
+		// 				exact
+		// 				path="/admin/organization/create"
+		// 				//component={CreateOrganization}
+		// 				render={
+		// 					props => (
+		// 						<CreateOrganization {...props} />
+		// 					)
+		// 				}
+		// 			/>
+
+		// 			<Route
+		// 				exact
+		// 				path="/admin/organization/edit/:organizationId"
+		// 				//component={EditOrganization}
+		// 				render={
+		// 					props => (
+		// 						<EditOrganization {...props} />
+		// 					)
+		// 				}
+		// 			/>
+
+		// 			<Route
+		// 				exact
+		// 				path="/admin/organization/:organizationId"
+		// 				//component={EditOrganization}
+		// 				render={
+		// 					props => (
+		// 						<OrganizationDetails {...props} />
+		// 					)
+		// 				}
+		// 			/>
+
+		// 			<Route
+		// 				exact
+		// 				path="/admin/retailer"
+		// 				//component={ManageRetailer}
+		// 				render={
+		// 					props => (
+		// 						<ManageRetailer {...props} />
+		// 					)
+		// 				}
+		// 			/>
+
+		// 			<Route
+		// 				exact
+		// 				path="/admin/retailer/create"
+		// 				//component={CreateRetailer}
+		// 				render={
+		// 					props => (
+		// 						<CreateRetailer {...props} />
+		// 					)
+		// 				}
+		// 			/>
+
+		// 			<Route
+		// 				exact
+		// 				path="/admin/retailer/edit/:retailerId"
+		// 				//component={EditOrganization}
+		// 				render={
+		// 					props => (
+		// 						<EditRetailer {...props} />
+		// 					)
+		// 				}
+		// 			/>
+
+
+		// 			<Route
+		// 				exact
+		// 				path="/admin/retailer/:retailerId"
+		// 				component={RetailerDetails}
+		// 			// render={
+		// 			//   props => (
+		// 			//     <RetailerDetails {...props} />
+		// 			//   )
+		// 			// }
+		// 			/>
+
+		// 			<Route
+		// 				exact
+		// 				path="/admin/generate-report"
+		// 				component={GenerateReport}
+		// 			// render={
+		// 			//   props => (
+		// 			//     <GenerateReport {...props} />
+		// 			//   )
+		// 			// }
+		// 			/>
+
+		// 			<Route
+		// 				exact
+		// 				path="/admin/stock-and-price"
+		// 				//component={ManageOrganization}
+		// 				render={
+		// 					props => (
+		// 						<StockManagement {...props} />
+		// 					)
+		// 				}
+		// 			/>
+
+		// 			<Route
+		// 				exact
+		// 				path="/admin/stock-and-price/list"
+		// 				//component={ManageOrganization}
+		// 				render={
+		// 					props => (
+		// 						<CreateOrUpdateStockPrice {...props} />
+		// 					)
+		// 				}
+		// 			/>
+
+		// 			<Route
+		// 				exact
+		// 				path="/admin/stock-and-price/modified-list/:outletName"
+		// 				//component={ManageOrganization}
+		// 				render={
+		// 					props => (
+		// 						<ModifiedStockList {...props} />
+		// 					)
+		// 				}
+		// 			/>
+
+		// 			<Route
+		// 				exact
+		// 				path="/admin/device-management"
+		// 				//component={ManageOrganization}
+		// 				render={
+		// 					props => (
+		// 						<RetailerList {...props} />
+		// 					)
+		// 				}
+		// 			/>
+
+		// 			<Route
+		// 				exact
+		// 				path="/admin/device-management/:retailerId"
+		// 				//component={ManageOrganization}
+		// 				render={
+		// 					props => (
+		// 						<DeviceList {...props} />
+		// 					)
+		// 				}
+		// 			/>
+
+		// 			<Route
+		// 				exact
+		// 				path="/admin"
+		// 				//component={ManageOrganization}
+		// 				render={
+		// 					props => (
+		// 						<ManageOrganization {...props} />
+		// 					)
+		// 				}
+		// 			/>
+
+		// 			<Route
+		// 				exact
+		// 				path="/admin/organization"
+		// 				//component={ManageOrganization}
+		// 				render={
+		// 					props => (
+		// 						<ManageOrganization {...props} />
+		// 					)
+		// 				}
+		// 			/>
+		// 		</Switch>
+		// 	)
+		// }
+
+		// const StockManagement = () => {
+		// 	if(this.state.accessRole !== "admin") {
+		// 		return (
+		// 			<React.Fragment>
+		// 				<Route
+		// 					exact
+		// 					path="/admin/stock-and-price"
+		// 					//component={ManageOrganization}
+		// 					render={
+		// 						props => (
+		// 							<StockManagement {...props} />
+		// 						)
+		// 					}
+		// 				/>
+	
+		// 				<Route
+		// 					exact
+		// 					path="/admin/stock-and-price/list"
+		// 					//component={ManageOrganization}
+		// 					render={
+		// 						props => (
+		// 							<CreateOrUpdateStockPrice {...props} />
+		// 						)
+		// 					}
+		// 				/>
+	
+		// 				<Route
+		// 					exact
+		// 					path="/admin/stock-and-price/modified-list/:outletName"
+		// 					//component={ManageOrganization}
+		// 					render={
+		// 						props => (
+		// 							<ModifiedStockList {...props} />
+		// 						)
+		// 					}
+		// 				/>
+		// 			</React.Fragment>
+		// 		)
+		// 	}
+		// }
 		return (
 			<Router history={history}>
-				<div>
+				{
+					<div>
 					<Route path='/admin/login' component={Login} />
 
-					<Route
-						path='/admin/retailer-onboarding-form/:orgId'
-						//component={RetailerForm}
-						render={
-							props => (
-								<RetailerForm {...props} />
-							)
-						}
-					/>
+					{
+						this.state.accessRole !== 'admin' &&
+						<Route
+							path='/admin/retailer-onboarding-form/:orgId'
+							//component={RetailerForm}
+							render={
+								props => (
+									<RetailerForm {...props} />
+								)
+							}
+						/>
+					}
 					{
 						!location.pathname.includes('login') && !location.pathname.includes('onboard') &&
 						<div
@@ -134,190 +350,221 @@ class App extends React.Component {
 									]}
 									currentRoute={this.state.currentRoute}
 								/>
-								<Switch>
-									<Route
-										exact
-										path="/admin/organization/create"
-										//component={CreateOrganization}
-										render={
-											props => (
-												<CreateOrganization {...props} />
+									<Switch>
+										{
+											this.state.accessRole === "admin" 
+											? (
+												<React.Fragment>
+													<Route
+														exact
+														path="/admin/organization/create"
+														//component={CreateOrganization}
+														render={
+															props => (
+																<CreateOrganization {...props} />
+															)
+														}
+													/>
+
+													<Route
+														exact
+														path="/admin/organization/edit/:organizationId"
+														//component={EditOrganization}
+														render={
+															props => (
+																<EditOrganization {...props} />
+															)
+														}
+													/>
+
+													<Route
+														exact
+														path="/admin/organization/:organizationId"
+														//component={EditOrganization}
+														render={
+															props => (
+																<OrganizationDetails {...props} />
+															)
+														}
+													/>
+
+													<Route
+														exact
+														path="/admin/retailer"
+														//component={ManageRetailer}
+														render={
+															props => (
+																<ManageRetailer {...props} />
+															)
+														}
+													/>
+
+													<Route
+														exact
+														path="/admin/retailer/create"
+														//component={CreateRetailer}
+														render={
+															props => (
+																<CreateRetailer {...props} />
+															)
+														}
+													/>
+
+													<Route
+														exact
+														path="/admin/retailer/edit/:retailerId"
+														//component={EditOrganization}
+														render={
+															props => (
+																<EditRetailer {...props} />
+															)
+														}
+													/>
+
+
+													<Route
+														exact
+														path="/admin/retailer/:retailerId"
+														component={RetailerDetails}
+													// render={
+													//   props => (
+													//     <RetailerDetails {...props} />
+													//   )
+													// }
+													/>
+
+													<Route
+														exact
+														path="/admin/generate-report"
+														component={GenerateReport}
+													// render={
+													//   props => (
+													//     <GenerateReport {...props} />
+													//   )
+													// }
+													/>
+
+													<Route
+														exact
+														path="/admin/stock-and-price"
+														//component={ManageOrganization}
+														render={
+															props => (
+																<StockManagement {...props} />
+															)
+														}
+													/>
+
+													<Route
+														exact
+														path="/admin/stock-and-price/list"
+														//component={ManageOrganization}
+														render={
+															props => (
+																<CreateOrUpdateStockPrice {...props} />
+															)
+														}
+													/>
+
+													<Route
+														exact
+														path="/admin/stock-and-price/modified-list/:outletName"
+														//component={ManageOrganization}
+														render={
+															props => (
+																<ModifiedStockList {...props} />
+															)
+														}
+													/>
+
+													<Route
+														exact
+														path="/admin/device-management"
+														//component={ManageOrganization}
+														render={
+															props => (
+																<RetailerList {...props} />
+															)
+														}
+													/>
+
+													<Route
+														exact
+														path="/admin/device-management/:retailerId"
+														//component={ManageOrganization}
+														render={
+															props => (
+																<DeviceList {...props} />
+															)
+														}
+													/>
+
+													<Route
+														exact
+														path="/admin"
+														//component={ManageOrganization}
+														render={
+															props => (
+																<ManageOrganization {...props} />
+															)
+														}
+													/>
+
+													<Route
+														exact
+														path="/admin/organization"
+														//component={ManageOrganization}
+														render={
+															props => (
+																<ManageOrganization {...props} />
+															)
+														}
+													/>
+												</React.Fragment>
+											)
+											: (
+												<React.Fragment>
+													<Route
+														exact
+														path="/admin/stock-and-price"
+														//component={ManageOrganization}
+														render={
+															props => (
+																<StockManagement {...props} />
+															)
+														}
+													/>
+								
+													<Route
+														exact
+														path="/admin/stock-and-price/list"
+														//component={ManageOrganization}
+														render={
+															props => (
+																<CreateOrUpdateStockPrice {...props} />
+															)
+														}
+													/>
+								
+													<Route
+														exact
+														path="/admin/stock-and-price/modified-list/:outletName"
+														//component={ManageOrganization}
+														render={
+															props => (
+																<ModifiedStockList {...props} />
+															)
+														}
+													/>
+												</React.Fragment>
 											)
 										}
-									/>
-
-									<Route
-										exact
-										path="/admin/organization/edit/:organizationId"
-										//component={EditOrganization}
-										render={
-											props => (
-												<EditOrganization {...props} />
-											)
-										}
-									/>
-
-									<Route
-										exact
-										path="/admin/organization/:organizationId"
-										//component={EditOrganization}
-										render={
-											props => (
-												<OrganizationDetails {...props} />
-											)
-										}
-									/>
-
-									<Route
-										exact
-										path="/admin/retailer"
-										//component={ManageRetailer}
-										render={
-											props => (
-												<ManageRetailer {...props} />
-											)
-										}
-									/>
-
-									<Route
-										exact
-										path="/admin/retailer/create"
-										//component={CreateRetailer}
-										render={
-											props => (
-												<CreateRetailer {...props} />
-											)
-										}
-									/>
-
-									<Route
-										exact
-										path="/admin/retailer/edit/:retailerId"
-										//component={EditOrganization}
-										render={
-											props => (
-												<EditRetailer {...props} />
-											)
-										}
-									/>
-
-
-									<Route
-										exact
-										path="/admin/retailer/:retailerId"
-										component={RetailerDetails}
-									// render={
-									//   props => (
-									//     <RetailerDetails {...props} />
-									//   )
-									// }
-									/>
-
-									<Route
-										exact
-										path="/admin/generate-report"
-										component={GenerateReport}
-									// render={
-									//   props => (
-									//     <GenerateReport {...props} />
-									//   )
-									// }
-									/>
-
-									<Route
-										exact
-										path="/admin/stock-and-price"
-										//component={ManageOrganization}
-										render={
-											props => (
-												<StockManagement {...props} />
-											)
-										}
-									/>
-
-									<Route
-										exact
-										path="/admin/stock-and-price/list"
-										//component={ManageOrganization}
-										render={
-											props => (
-												<CreateOrUpdateStockPrice {...props} />
-											)
-										}
-									/>
-
-									<Route
-										exact
-										path="/admin/stock-and-price/modified-list/:outletName"
-										//component={ManageOrganization}
-										render={
-											props => (
-												<ModifiedStockList {...props} />
-											)
-										}
-									/>
-
-									{/* <Route
-										exact
-										path="/admin/stock-and-price/edit/:retailerId"
-										//component={ManageOrganization}
-										render={
-											props => (
-												<RetailerInventory {...props} />
-											)
-										}
-									/> */}
-
-									<Route
-										exact
-										path="/admin/device-management"
-										//component={ManageOrganization}
-										render={
-											props => (
-												<RetailerList {...props} />
-											)
-										}
-									/>
-
-									<Route
-										exact
-										path="/admin/device-management/:retailerId"
-										//component={ManageOrganization}
-										render={
-											props => (
-												<DeviceList {...props} />
-											)
-										}
-									/>
-
-									<Route
-										exact
-										path="/admin"
-										//component={ManageOrganization}
-										render={
-											props => (
-												<ManageOrganization {...props} />
-											)
-										}
-									/>
-
-									<Route
-										exact
-										path="/admin/organization"
-										//component={ManageOrganization}
-										render={
-											props => (
-												<ManageOrganization {...props} />
-											)
-										}
-									/>
-								</Switch>
-
+									</Switch>
 							</div>
 						</div>
 					}
-
 				</div>
+				}
 			</Router>
 		)
 	}
