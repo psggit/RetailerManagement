@@ -30,7 +30,7 @@ class PaginationBar extends React.Component {
       <PaginationToolbar
           page={this.props.activePage} 
           perPage={this.props.itemsCountPerPage} 
-          items={this.props.totalItemsCount} 
+          items={this.props.totalItemsCount ? this.props.totalItemsCount : 0} 
           onPageChanged={this.handlePageChange.bind(this)}
       />
     )
