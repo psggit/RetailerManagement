@@ -305,7 +305,9 @@ class App extends React.Component {
 					<Route path='/admin/login' component={Login} />
 
 					{
-						this.state.accessRole !== 'admin' &&
+						this.state.accessRole === 'admin' ||
+						this.state.accessRole === 'opdataadmin' ||
+						this.state.accessRole === 'opdataentry' ||
 						<Route
 							path='/admin/retailer-onboarding-form/:orgId'
 							//component={RetailerForm}
@@ -352,7 +354,9 @@ class App extends React.Component {
 								/>
 									<Switch>
 										{
-											this.state.accessRole === "admin" 
+											this.state.accessRole === 'admin' ||
+											this.state.accessRole === 'opdataadmin' ||
+											this.state.accessRole === 'opdataentry'
 											? (
 												<React.Fragment>
 													<Route
