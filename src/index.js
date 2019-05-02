@@ -26,6 +26,7 @@ import EditRetailer from './dashboard/manage-retailer/edit-retailer';
 import RetailerList from "./dashboard/device-management/index";
 import DeviceList from "./dashboard/device-management/device-list"
 import GenerateReport from './dashboard/generate-report'
+import AccessLogs from "./dashboard/access-logs"
 // import StockAndPriceList from './dashboard/stock-and-price'
 import CreateOrUpdateStockPrice from './dashboard/stock-management/retailer-inventory';
 // import RetailerInventory from './dashboard/stock-and-price/retailer-inventory'
@@ -169,6 +170,12 @@ function RetailerManagement() {
 				//     <GenerateReport {...props} />
 				//   )
 				// }
+				/>
+
+				<Route
+					exact
+					path="/admin/access-logs"
+					component={AccessLogs}
 				/>
 
 				<Route
@@ -352,7 +359,8 @@ class App extends React.Component {
 										{ label: 'Manage Retailer', value: 'retailer' },
 										{ label: 'Generate Report', value: 'generate-report' },
 										{ label: 'Device Management', value: 'device-management' },
-										{	label: 'Stock and Price', value: 'stock-and-price' }
+										{	label: 'Stock and Price', value: 'stock-and-price' },
+										{	label: 'Access Logs', value: 'access-logs' }
 									]}
 									currentRoute={this.state.currentRoute}
 								/>

@@ -147,6 +147,15 @@ export function createOrUpdateStockPrice (payloadObj, successCallback, failureCa
     })
 }
 
+export function fetchAccessLogs (payloadObj) {
+	return POST({
+		api: `/Api/stockandprice/inventory/accesslog`,
+		apiBase: 'stockandprice',
+		data: payloadObj,
+		handleError: true
+	})
+}
+
 export function fetchGenreList (payloadObj, successCallback) {
     return GET({
         api: `/Api/stockandprice/listing/genres/${payloadObj.state_id}`,
