@@ -285,7 +285,7 @@ class AccessLogs extends React.Component {
                   JSON.parse(item.request_params).RetailerID
                 )}
               </Table.Column>
-              <Table.Column field="actions" title="Price">
+              <Table.Column field="actions" title="Retailer Price">
                 {item => (
                   JSON.parse(item.request_params).Price
                 )}
