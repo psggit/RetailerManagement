@@ -20,13 +20,13 @@ class AccessLogs extends React.Component {
       toDate: new Date().toISOString(),
       fromDate: "",
       activePage: 1,
-      offset: 0,
+      // offset: 0,
       filter: {
-        date: ""
+        to: "",
+        from: ""
       },
       accessLogsCount: 0
     }
-
 
     this.handlePageChange = this.handlePageChange.bind(this)
     this.setQueryParamas = this.setQueryParamas.bind(this)
@@ -81,7 +81,6 @@ class AccessLogs extends React.Component {
       })
     }
   }
-  
   
   fetchAccessLogs(payloadObj) {
     Api.fetchAccessLogs(payloadObj)
@@ -185,9 +184,9 @@ class AccessLogs extends React.Component {
 
   resetFilter() {
     this.setState({
-			column: '',
-			operator: 'EQUAL',
-			value: ''
+      toDate: new Date().toISOString(),
+      fromDate: "",
+      activePage: 1
 		})
 		this.fetchDefaultData()
 		this.props.history.push(`/admin/access-logs`)
