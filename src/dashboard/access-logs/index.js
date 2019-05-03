@@ -20,7 +20,6 @@ class AccessLogs extends React.Component {
       toDate: new Date().toISOString(),
       fromDate: "",
       activePage: 1,
-      // offset: 0,
       filter: {
         to: "",
         from: ""
@@ -268,12 +267,12 @@ class AccessLogs extends React.Component {
 							<Table.Column field="id" title="User Id" />
               <Table.Column field="actions" title="Created At">
                 {item => (
-                  Moment(item.created_at).format("DD-MM-YYYY h:mm A")
+                  Moment(item.created_at).format("DD-MM-YYYY h:mm:s A")
                 )}
               </Table.Column>
               <Table.Column field="actions" title="Updated At">
                 {item => (
-                  Moment(item.updated_at).format("DD-MM-YYYY h:mm A")
+                  Moment(item.updated_at).format("DD-MM-YYYY h:mm:s A")
                 )}
               </Table.Column>
               <Table.Column field="actions" title="Sku Pricing ID">
