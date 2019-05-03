@@ -17,7 +17,8 @@ class AccessLogs extends React.Component {
     this.state = {
       loadingAccessLog: true,
       accessLogs: [],
-      toDate: "",
+      toDate: new Date().toISOString(),
+      fromDate: "",
       activePage: 1,
       offset: 0,
       filter: {
@@ -62,14 +63,20 @@ class AccessLogs extends React.Component {
 		this.setState({ accessLogs: [], accessLogsCount: 0, loadingAccessLog: true })
 
 		if (queryObj.filter) {
+      this.setState({
+        fromDate: JSON.parse(decodeURI(queryObj.filter)).from 
+                  ? JSON.parse(decodeURI(queryObj.filter)).from.substr(0, 10)
+                  : "",
+        toDate: JSON.parse(decodeURI(queryObj.filter)).to.substr(0, 10)
+      })
 			this.fetchAccessLogs({
-				offset: queryObj.activePage ? this.pagesLimit * parseInt(queryObj.activePage) - 1 : 0,
+				offset: queryObj.activePage ? this.pagesLimit * (parseInt(queryObj.activePage) - 1) : 0,
 				limit: this.pagesLimit,
 				filter: JSON.parse(decodeURI(queryObj.filter))
 			})
 		} else {
       this.fetchAccessLogs({
-        offset: queryObj.activePage ? this.pagesLimit * parseInt(queryObj.activePage) - 1 : 0,
+        offset: queryObj.activePage ? this.pagesLimit * (parseInt(queryObj.activePage) - 1) : 0,
         limit: this.pagesLimit
       })
     }
@@ -77,11 +84,10 @@ class AccessLogs extends React.Component {
   
   
   fetchAccessLogs(payloadObj) {
-    console.log("apyload", payloadObj)
     Api.fetchAccessLogs(payloadObj)
     .then((response) => {
       this.setState({
-        accessLogs: response.access_log,
+        accessLogs: response.access_logs,
         accessLogsCount: response.count,
         loadingAccessLog: false
       })
@@ -92,9 +98,18 @@ class AccessLogs extends React.Component {
   }
 
   handleSearch() {
+    let filter = {}
 
-		const filter = {
-      date: new Date(this.state.toDate).toISOString()
+    if(this.state.fromDate) {
+      filter = {
+        from: new Date(this.state.fromDate),
+        to: new Date(this.state.toDate)
+      }
+      this.setState({toDate: (this.state.toDate).toString().substr(0, 10)})
+    } else {
+      filter = {
+        to: new Date(this.state.toDate)
+      }
     }
 
 		const queryObj = {
@@ -133,7 +148,7 @@ class AccessLogs extends React.Component {
 		if (queryObj.filter) {
 			queryParamsObj = {
         activePage: pageObj.activePage,
-        filter: pageObj.filter
+        filter: (queryObj.filter)
 			}
 		} else {
 			queryParamsObj = {
@@ -143,7 +158,8 @@ class AccessLogs extends React.Component {
 
 		if (queryObj.filter) {
 			let filterObj = {
-				toDate: queryObj.filter
+        to: JSON.parse(decodeURI(queryObj.filter)).to,
+        from: JSON.parse(decodeURI(queryObj.filter)).from
 			}
 			this.fetchAccessLogs({
 				offset: pageObj.offset,
@@ -163,7 +179,7 @@ class AccessLogs extends React.Component {
 
   handleDateChange(e) {
     this.setState({
-      toDate: (e.target.value)
+      [e.target.name]: (e.target.value)
     })
   }
 
@@ -179,6 +195,7 @@ class AccessLogs extends React.Component {
 
   render() {
     const {accessLogs, loadingAccessLog} = this.state
+    console.log("state", this.state)
     return (
       <Layout title="Access Logs">
         	<div style={{
@@ -195,12 +212,31 @@ class AccessLogs extends React.Component {
               marginRight: '20px'
             }}
           >
-            <p style={{ margin: '10px 0' }}>Choose Date</p>
+            <p style={{ margin: '10px 0' }}>From Date</p>
             <TextInput
-              placeholder="Contains"
               type="date"
               size="default"
-              name="value"
+              name="fromDate"
+              max="9999-12-31" 
+              //defaultValue={this.state.fromDate}
+              value={this.state.fromDate}
+              onChange={(e) => this.handleDateChange(e)}
+            />
+          </div>
+          <div style={{
+              width: '240px',
+              display: 'inline-block',
+              verticalAlign: 'bottom',
+              marginRight: '20px'
+            }}
+          >
+            <p style={{ margin: '10px 0' }}>To Date</p>
+            <TextInput
+              type="date"
+              size="default"
+              name="toDate"
+              max="9999-12-31"
+              //defaultValue={this.state.toDate}
               value={this.state.toDate}
               onChange={(e) => this.handleDateChange(e)}
             />
