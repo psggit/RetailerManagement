@@ -264,7 +264,7 @@ class AccessLogs extends React.Component {
 							emptyMessage={this.state.loadingAccessLog ? <Spinner /> : 'No logs found'}
 							items={accessLogs}
 						>
-							<Table.Column field="id" title="User Id" />
+							<Table.Column field="user_id" title="User Id" />
               <Table.Column field="actions" title="Created At">
                 {item => (
                   Moment(item.created_at).format("DD-MM-YYYY h:mm:s A")
