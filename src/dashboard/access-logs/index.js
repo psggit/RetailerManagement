@@ -101,12 +101,12 @@ class AccessLogs extends React.Component {
     if(this.state.fromDate) {
       filter = {
         from: new Date(this.state.fromDate),
-        to: new Date(this.state.toDate)
+        to: new Date(new Date(this.state.toDate).setHours(23, 59, 0)).toISOString()
       }
       this.setState({toDate: (this.state.toDate).toString().substr(0, 10)})
     } else {
       filter = {
-        to: new Date(this.state.toDate)
+        to: new Date(new Date(this.state.toDate).setHours(23, 59, 0)).toISOString()
       }
     }
 
