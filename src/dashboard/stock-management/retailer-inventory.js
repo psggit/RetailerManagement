@@ -352,7 +352,7 @@ class RetailerInventory extends React.Component {
                                   <p>{prod.catalog_price}</p>
                                 </div>
                                 <div>
-                                  <p>Status</p>
+                                  <p>Available</p>
                                   <div>
                                     <span onClick={(e) => this.handleSkuStatusCheckboxChange(e, prod.sku_pricing_id)}>
                                       {
