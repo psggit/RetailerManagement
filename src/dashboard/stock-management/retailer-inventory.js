@@ -34,7 +34,7 @@ class RetailerInventory extends React.Component {
       stateId: "",
       outletName: ""
     }
-    this.pagesLimit = 5
+    this.pagesLimit = 20
     this.formatResponse = this.formatResponse.bind(this)
     this.handleGenreChange = this.handleGenreChange.bind(this)
     this.fetchRetailerInventory = this.fetchRetailerInventory.bind(this)
