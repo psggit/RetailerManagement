@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import Pagination from "Components/pagination"
-import { getOffsetUsingPageNo } from "Utils/helpers"
+// import { getOffsetUsingPageNo } from "Utils/helpers"
 import { Spinner } from '@auth0/cosmos'
 import { Table } from '@auth0/cosmos'
 import { fetchRetailerNotes } from "./../../api"
@@ -10,6 +10,7 @@ import Layout from 'Components/layout'
 import CustomButton from 'Components/button'
 import { Button } from '@auth0/cosmos'
 import CreateNoteModal from "./CreateNote"
+import Moment from "moment"
 
 
 export default function RetailerNotes(props) {
@@ -62,9 +63,14 @@ export default function RetailerNotes(props) {
         emptyMessage={isLoaded && retailerNotes.length === 0 ? 'Notes are empty' : <Spinner />}
         items={retailerNotes}
       >
-        <Table.Column field="created_by" title="Created By" />
-        <Table.Column field="description" title="Description" />
+        <Table.Column field="actions" title="Created At">
+          {item => (
+            Moment(item.created_at).format("DD-MM-YYYY h:mm:s A")
+          )}
+        </Table.Column>
         <Table.Column field="issue_code" title="Issue code" />
+        <Table.Column field="description" title="Description" />
+        <Table.Column field="created_by" title="Created By" />
       </Table>
     </Layout>
   )
