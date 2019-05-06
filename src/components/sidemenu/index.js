@@ -1,4 +1,5 @@
 import React from 'react'
+import { NavLink } from "react-router-dom"
 import './sidemenu.scss'
 
 class SideMenu extends React.Component {
@@ -22,12 +23,12 @@ class SideMenu extends React.Component {
         {
           menuItems.map((item, i) => (
             <div key={i} className={`side-menu__item ${this.checkActiveClass(item.value)}`}>
-              <a
-                href={`/admin/${item.value}`}
-                onClick={(e) => { this.handleChangeRoute(e, item.value) }}
+              <NavLink
+                to={`/admin/${item.value}`}
+              // onClick={(e) => { this.handleChangeRoute(e, item.value) }}
               >
-                { item.label }
-              </a>
+                {item.label}
+              </NavLink>
             </div>
           ))
         }
