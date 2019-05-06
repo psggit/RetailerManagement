@@ -269,7 +269,7 @@ class ManageRetailer extends React.Component {
 	}
 
 	handleRowClick(e, item) {
-		if (e.target.nodeName === "SPAN") {
+		if (["SPAN", "A"].indexOf(e.target.nodeName) > -1) {
 			return
 		}
 		this.props.history.push(`/admin/retailer/${item.id}`, item)
@@ -372,6 +372,9 @@ class ManageRetailer extends React.Component {
 								{item => (
 									<Button icon="pencil" onClick={(e) => this.editOutletDetail(e, item, 'edit')} />
 								)}
+							</Table.Column>
+							<Table.Column>
+								{item => <NavLink to={`/admin/retailer/notes/${item.id}`}>Notes</NavLink>}
 							</Table.Column>
 							<Table.Column field="id" title="Retailer Id" />
 							<Table.Column field="outlet_name" title="Outlet Name" />
