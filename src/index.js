@@ -14,13 +14,14 @@ import Login from './login'
 import RetailerForm from './report'
 import SideMenu from 'Components/sidemenu'
 import Navbar from 'Components/navbar'
-import createHistory from 'history/createBrowserHistory'
+import { createBrowserHistory as createHistory } from 'history'
 import ManageOrganization from './dashboard/manage-organization/index'
 import CreateOrganization from './dashboard/manage-organization/create-organization'
 import EditOrganization from './dashboard/manage-organization/edit-organization'
 import OrganizationDetails from './dashboard/manage-organization/organization-details'
 import RetailerDetails from './dashboard/manage-retailer/retailer-details'
 import ManageRetailer from './dashboard/manage-retailer/index'
+import RetailerNotes from "./dashboard/RetailerNotes"
 import CreateRetailer from './dashboard/manage-retailer/create-retailer';
 import EditRetailer from './dashboard/manage-retailer/edit-retailer';
 import RetailerList from "./dashboard/device-management/index";
@@ -38,7 +39,7 @@ const supportedRoles = ["admin", "opdataadmin", "opdataentry"]
 const accessRole = localStorage.getItem('x-hasura-role') ? localStorage.getItem('x-hasura-role') : ''
 
 function StockManagementSwitch() {
-	if(supportedRoles.indexOf(accessRole) === -1) {
+	if (supportedRoles.indexOf(accessRole) === -1) {
 		return (
 			<Switch>
 				<Route
@@ -76,11 +77,11 @@ function StockManagementSwitch() {
 			</Switch>
 		)
 	}
-	return <div/>
+	return <div />
 }
 
 function RetailerManagement() {
-	if(supportedRoles.indexOf(accessRole) !== -1) {
+	if (supportedRoles.indexOf(accessRole) !== -1) {
 		return (
 			<Switch>
 				<Route
@@ -159,6 +160,12 @@ function RetailerManagement() {
 				//     <RetailerDetails {...props} />
 				//   )
 				// }
+				/>
+
+				<Route
+					exact
+					path="/admin/retailer/notes/:retailerId"
+					render={props => <RetailerNotes {...props} />}
 				/>
 
 				<Route
@@ -265,7 +272,7 @@ class App extends React.Component {
 		super()
 		this.state = {
 			currentRoute: location.pathname.split('/')[2] || 'stock-and-price'
-		}	
+		}
 	}
 	componentDidMount() {
 		history.listen((loction) => {
@@ -310,66 +317,66 @@ class App extends React.Component {
 			})
 	}
 	render() {
-	
+
 		return (
 			<Router history={history}>
 				{
 					<div>
-					<Route path='/admin/login' component={Login} />
+						<Route path='/admin/login' component={Login} />
 
-					{
-						supportedRoles.indexOf(accessRole) !== -1 &&
-						<Route
-							path='/admin/retailer-onboarding-form/:orgId'
-							//component={RetailerForm}
-							render={
-								props => (
-									<RetailerForm {...props} />
-								)
-							}
-						/>
-					}
-					{
-						!location.pathname.includes('login') && !location.pathname.includes('onboard') &&
-						<div
-							style={{
-								backgroundColor: '#fbfbfb',
-								width: '100%',
-								//maxWidth: '1920px',
-								//maxWidth: '1440px',
-								margin: '0 auto',
-								height: '100vh',
-								//overflow: 'auto'
-							}}
-						>
-							<Navbar
-								history={history}
-								menuItems={[
-									{ label: 'Manage Organization', value: 'organization' },
-									{ label: 'Manage Retailer', value: 'retailer' },
-									{ label: 'Generate Report', value: 'generate-report' }
-								]}
-								currentRoute={this.state.currentRoute}
+						{
+							supportedRoles.indexOf(accessRole) !== -1 &&
+							<Route
+								path='/admin/retailer-onboarding-form/:orgId'
+								//component={RetailerForm}
+								render={
+									props => (
+										<RetailerForm {...props} />
+									)
+								}
 							/>
-							<div style={{ display: 'flex' }}>
-								<SideMenu
+						}
+						{
+							!location.pathname.includes('login') && !location.pathname.includes('onboard') &&
+							<div
+								style={{
+									backgroundColor: '#fbfbfb',
+									width: '100%',
+									//maxWidth: '1920px',
+									//maxWidth: '1440px',
+									margin: '0 auto',
+									height: '100vh',
+									//overflow: 'auto'
+								}}
+							>
+								<Navbar
 									history={history}
 									menuItems={[
 										{ label: 'Manage Organization', value: 'organization' },
 										{ label: 'Manage Retailer', value: 'retailer' },
-										{ label: 'Generate Report', value: 'generate-report' },
-										{ label: 'Device Management', value: 'device-management' },
-										{	label: 'Stock and Price', value: 'stock-and-price' },
-										{	label: 'Access Logs', value: 'access-logs' }
+										{ label: 'Generate Report', value: 'generate-report' }
 									]}
 									currentRoute={this.state.currentRoute}
 								/>
+								<div style={{ display: 'flex' }}>
+									<SideMenu
+										history={history}
+										menuItems={[
+											{ label: 'Manage Organization', value: 'organization' },
+											{ label: 'Manage Retailer', value: 'retailer' },
+											{ label: 'Generate Report', value: 'generate-report' },
+											{ label: 'Device Management', value: 'device-management' },
+											{ label: 'Stock and Price', value: 'stock-and-price' },
+											{ label: 'Access Logs', value: 'access-logs' }
+										]}
+										currentRoute={this.state.currentRoute}
+									/>
 									<StockManagementSwitch />
 									<RetailerManagement />
+								</div>
 							</div>
-						</div>
-					}
-				</div>
+						}
+					</div>
 				}
 			</Router>
 		)
