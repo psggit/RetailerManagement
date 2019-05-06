@@ -4,24 +4,13 @@ export function getIcon(name) {
   switch (name) {
     case 'logo':
       return (
-        // <svg width="70px" height="70px" viewBox="0 0 62 64" version="1.1">
-        //     <title>HBLogo</title>
-        //     <desc>Created with Sketch.</desc>
-        //     <defs></defs>
-        //     <g id="First-Launch" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
-        //         <g id="Logo/Icon/Woodsmoke" transform="translate(-1.000000, 0.000000)">
-        //             <rect id="Rectangle-2" fillOpacity="0" fill="#D1D2DD" x="0" y="0" width="64" height="64"></rect>
-        //             <path d="M19.1939447,23.2897675 L26.8994081,23.2897675 L37.0533916,23.2897675 L42.1901799,31.8749062 L44.8237555,27.3449208 L44.8237555,5.03752517 L53.6148278,0 L62.4,5.03752517 L62.4,31.9824272 L62.4,58.9566172 L53.6148278,64 L44.8237555,58.9566172 L44.8237555,40.745378 L37.0179913,40.745378 L37.0214069,40.7395204 L26.8994081,40.7395204 L21.7224712,32.0828829 L19.1939447,36.4292556 L19.1939447,58.9624748 L10.4028724,64 L1.6118001,58.9624748 L1.6118001,32.0384137 L1.6,32.0175728 L1.6118001,31.9967178 L1.6118001,5.04338276 L10.4028724,0 L19.1939447,5.04338276 L19.1939447,23.2897675 Z" id="Combined-Shape" fill="#D1D2DD"></path>
-        //         </g>
-        //     </g>
-        // </svg>
         <svg width="40px" height="40px" viewBox="0 0 62 64" version="1.1">
             <title>HBLogo</title>
             <desc>Created with Sketch.</desc>
             <defs></defs>
-            <g id="First-Launch" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g id="First-Launch" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
                 <g id="Logo/Icon/Woodsmoke" transform="translate(-1.000000, 0.000000)">
-                    <rect id="Rectangle-2" fill-opacity="0" fill="#4C6088" x="0" y="0" width="64" height="64"></rect>
+                    <rect id="Rectangle-2" fillOpacity="0" fill="#4C6088" x="0" y="0" width="64" height="64"></rect>
                     <path d="M19.1939447,23.2897675 L26.8994081,23.2897675 L37.0533916,23.2897675 L42.1901799,31.8749062 L44.8237555,27.3449208 L44.8237555,5.03752517 L53.6148278,0 L62.4,5.03752517 L62.4,31.9824272 L62.4,58.9566172 L53.6148278,64 L44.8237555,58.9566172 L44.8237555,40.745378 L37.0179913,40.745378 L37.0214069,40.7395204 L26.8994081,40.7395204 L21.7224712,32.0828829 L19.1939447,36.4292556 L19.1939447,58.9624748 L10.4028724,64 L1.6118001,58.9624748 L1.6118001,32.0384137 L1.6,32.0175728 L1.6118001,31.9967178 L1.6118001,5.04338276 L10.4028724,0 L19.1939447,5.04338276 L19.1939447,23.2897675 Z" id="Combined-Shape" fill="#0C0D0F"></path>
                 </g>
             </g>
