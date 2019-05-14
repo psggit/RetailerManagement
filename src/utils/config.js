@@ -1,7 +1,7 @@
 
 function getAPIObj() {
   if (window.location.href.split(':')[1] === '//localhost' || window.location.href.split(':')[1] === '//192.168.5.1') {
-    
+
     let scheme = 'https'
     let baseHost = '.amebae21.hasura-app.io'
     let appName = 'amebae21'
@@ -16,7 +16,7 @@ function getAPIObj() {
       api2: 'https://api2.' + appName + '.hasura-app.io',
       catalog: 'https://catalog.' + appName + '.hasura-app.io',
       retailerMgmt: 'https://retailer.' + appName + '.hasura-app.io',
-      stockandprice: 'https://stockandprice.' + appName + '.hasura-app.io',
+      //stockandprice: 'https://stockandprice.' + appName + '.hasura-app.io',
     }
   } else {
     let scheme = window.location.href.split(':')[0]
@@ -26,7 +26,7 @@ function getAPIObj() {
     // let authUrl = subdomain === 'support' || subdomain === 'delivery'
     //               ? scheme + '://auth' + baseHost
     //               : scheme + '://gremlin' + baseHost
-    let authUrl =  scheme + '://auth' + baseHost
+    let authUrl = scheme + '://auth' + baseHost
 
     return {
       authUrl: authUrl,
@@ -39,7 +39,7 @@ function getAPIObj() {
       api2: scheme + '://api2' + baseHost,
       catalog: scheme + '://catalog' + baseHost,
       retailerMgmt: scheme + '://retailer' + baseHost,
-      stockandprice: scheme + '://stockandprice' + baseHost,
+      //stockandprice: scheme + '://stockandprice' + baseHost,
     }
   }
 }

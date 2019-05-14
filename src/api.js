@@ -129,7 +129,7 @@ export function fetchRetailerList(payloadObj, successCallback, failureCallback) 
 export function createOrUpdateStockPrice(payloadObj, successCallback, failureCallback) {
 	return POST({
 		api: '/Api/stockandprice/inventory/createorupdate',
-		apiBase: 'stockandprice',
+		apiBase: 'retailerMgmt',
 		data: payloadObj,
 		handleError: true
 	})
@@ -150,7 +150,7 @@ export function createOrUpdateStockPrice(payloadObj, successCallback, failureCal
 export function fetchAccessLogs(payloadObj) {
 	return POST({
 		api: `/Api/stockandprice/inventory/accesslog`,
-		apiBase: 'stockandprice',
+		apiBase: 'retailerMgmt',
 		data: payloadObj,
 		handleError: true
 	})
@@ -159,7 +159,7 @@ export function fetchAccessLogs(payloadObj) {
 export function fetchGenreList(payloadObj, successCallback) {
 	return GET({
 		api: `/Api/stockandprice/listing/genres/${payloadObj.state_id}`,
-		apiBase: 'stockandprice',
+		apiBase: 'retailerMgmt',
 		//data: payloadObj,
 		handleError: true
 	})
@@ -176,7 +176,7 @@ export function fetchGenreList(payloadObj, successCallback) {
 export function fetchRetailerInventory(payloadObj, successCallback, failureCallback) {
 	return POST({
 		api: '/Api/stockandprice/retailer/brands',
-		apiBase: 'stockandprice',
+		apiBase: 'retailerMgmt',
 		data: payloadObj,
 		handleError: true
 	})
