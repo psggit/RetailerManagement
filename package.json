@@ -38,6 +38,7 @@
     "@auth0/cosmos": "^0.9.3",
     "abspath-webpack-plugin": "0.0.1",
     "compression-webpack-plugin": "^1.1.0",
+    "helmet": "^3.18.0",
     "history": "^4.7.2",
     "html2canvas": "^1.0.0-alpha.12",
     "jspdf": "^1.4.1",
