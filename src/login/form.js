@@ -1,11 +1,11 @@
 import React, { Fragment } from 'react'
 import { createSession } from './utils'
-import {  Api } from 'Utils/config'
+import { Api } from 'Utils/config'
 //import "whatwg-fetch"
 import 'Sass/_input.scss'
 import 'Sass/_form.scss'
 import 'Sass/_button.scss'
-import {getIcon} from 'Utils/icon-utils'
+import { getIcon } from 'Utils/icon-utils'
 
 class Form extends React.Component {
   constructor() {
@@ -53,9 +53,9 @@ class Form extends React.Component {
       body: JSON.stringify(formData)
     }
 
-    this.setState({isSubmitting: true})
-
-    fetch(`${Api.authUrl}/login`, fetchOptions)
+    this.setState({ isSubmitting: true })
+    const authLoginUrl = `https://auth.${process.env.BASE_URL}${api}/login`
+    fetch(authLoginUrl, fetchOptions)
       .then((response) => {
         if (response.status !== 200) {
           console.log(`Looks like there was a problem. Status Code: ${response.status}`)
@@ -77,7 +77,7 @@ class Form extends React.Component {
     return (
       <div className="form">
         <div className="login-header">
-          <div className="logo"> <span style={{ width:'40px', height: '40px'}}> {getIcon('logo')} </span> </div>
+          <div className="logo"> <span style={{ width: '40px', height: '40px' }}> {getIcon('logo')} </span> </div>
           <span> RETAILER MANAGEMENT </span>
         </div>
         {/* <div className="form-wrapper" style={{width: '100%'}}> */}
@@ -107,7 +107,7 @@ class Form extends React.Component {
         >
           Login
         </button>
-        { this.state.error ? <p style={{ color: '#ff3b30' }}>Wrong username or password</p> : ''}
+        {this.state.error ? <p style={{ color: '#ff3b30' }}>Wrong username or password</p> : ''}
       </div>
       // </div>
     )

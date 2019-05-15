@@ -291,8 +291,8 @@ class App extends React.Component {
 			mode: 'cors',
 			'x-hasura-role': 'user'
 		}
-
-		fetch(`${Api.authUrl}/user/account/info`, fetchOptions)
+		const authInfoUrl = `https://auth.${process.env.BASE_URL}/user/account/info`
+		fetch(authInfoUrl, fetchOptions)
 			.then((response) => {
 				if (response.status !== 200) {
 					console.log(`Looks like there was a problem. Status Code: ${response.status}`)

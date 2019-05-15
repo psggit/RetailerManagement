@@ -4,7 +4,7 @@ import Notify from 'Components/notify'
 export function fetchOrganizationList(payloadObj, successCallback, failureCallback) {
 	return POST({
 		api: '/Api/listOrganisations',
-		apiBase: 'retailerMgmt',
+		apiBase: 'retailer',
 		data: payloadObj,
 		handleError: true
 	})
@@ -22,7 +22,7 @@ export function fetchOrganizationList(payloadObj, successCallback, failureCallba
 export function fetchStateAndCityList(payloadObj, successCallback) {
 	return POST({
 		api: '/Api/listStates',
-		apiBase: 'retailerMgmt',
+		apiBase: 'retailer',
 		data: payloadObj,
 		handleError: true
 	})
@@ -40,7 +40,7 @@ export function createOrganization(payloadObj, successCallback, failureCallback)
 	//console.log("api create org")
 	return POST({
 		api: '/Api/createOrganisation',
-		apiBase: 'retailerMgmt',
+		apiBase: 'retailer',
 		data: payloadObj,
 		handleError: true
 	})
@@ -59,7 +59,7 @@ export function createOrganization(payloadObj, successCallback, failureCallback)
 export function updateOrganization(payloadObj, successCallback, failureCallback) {
 	return POST({
 		api: '/Api/updateOrganisation',
-		apiBase: 'retailerMgmt',
+		apiBase: 'retailer',
 		data: payloadObj,
 		handleError: true
 	})
@@ -78,7 +78,7 @@ export function updateOrganization(payloadObj, successCallback, failureCallback)
 export function fetchOrganizationAndStateList(payloadObj, successCallback) {
 	return POST({
 		api: '/Api/orgDetails',
-		apiBase: 'retailerMgmt',
+		apiBase: 'retailer',
 		data: payloadObj,
 		handleError: true
 	})
@@ -95,7 +95,7 @@ export function fetchOrganizationAndStateList(payloadObj, successCallback) {
 export function fetchRetailerList(payloadObj, successCallback, failureCallback) {
 	return POST({
 		api: '/Api/listRetailers',
-		apiBase: 'retailerMgmt',
+		apiBase: 'retailer',
 		data: payloadObj,
 		handleError: true
 	})
@@ -112,7 +112,7 @@ export function fetchRetailerList(payloadObj, successCallback, failureCallback) 
 // export function fetchStockList (payloadObj, successCallback, failureCallback) {
 //     return POST({
 //         api: '/Api/listRetailers',
-//         apiBase: 'retailerMgmt',
+//         apiBase: 'retailer',
 //         data: payloadObj,
 //         handleError: true
 //     })
@@ -129,7 +129,7 @@ export function fetchRetailerList(payloadObj, successCallback, failureCallback) 
 export function createOrUpdateStockPrice(payloadObj, successCallback, failureCallback) {
 	return POST({
 		api: '/Api/stockandprice/inventory/createorupdate',
-		apiBase: 'retailerMgmt',
+		apiBase: 'retailer',
 		data: payloadObj,
 		handleError: true
 	})
@@ -150,7 +150,7 @@ export function createOrUpdateStockPrice(payloadObj, successCallback, failureCal
 export function fetchAccessLogs(payloadObj) {
 	return POST({
 		api: `/Api/stockandprice/inventory/accesslog`,
-		apiBase: 'retailerMgmt',
+		apiBase: 'retailer',
 		data: payloadObj,
 		handleError: true
 	})
@@ -159,7 +159,7 @@ export function fetchAccessLogs(payloadObj) {
 export function fetchGenreList(payloadObj, successCallback) {
 	return GET({
 		api: `/Api/stockandprice/listing/genres/${payloadObj.state_id}`,
-		apiBase: 'retailerMgmt',
+		apiBase: 'retailer',
 		//data: payloadObj,
 		handleError: true
 	})
@@ -176,7 +176,7 @@ export function fetchGenreList(payloadObj, successCallback) {
 export function fetchRetailerInventory(payloadObj, successCallback, failureCallback) {
 	return POST({
 		api: '/Api/stockandprice/retailer/brands',
-		apiBase: 'retailerMgmt',
+		apiBase: 'retailer',
 		data: payloadObj,
 		handleError: true
 	})
@@ -210,7 +210,7 @@ export function fetchRetailerInventory(payloadObj, successCallback, failureCallb
 export function fetchDeviceList(payloadObj, successCallback, failureCallback) {
 	return POST({
 		api: '/Api/listDevices',
-		apiBase: 'retailerMgmt',
+		apiBase: 'retailer',
 		data: payloadObj,
 		handleError: true
 	})
@@ -227,7 +227,7 @@ export function fetchDeviceList(payloadObj, successCallback, failureCallback) {
 export function deactivateDevice(payloadObj, successCallback) {
 	return POST({
 		api: '/Api/changeDeviceStatus',
-		apiBase: 'retailerMgmt',
+		apiBase: 'retailer',
 		data: payloadObj,
 		handleError: true
 	})
@@ -244,7 +244,7 @@ export function deactivateDevice(payloadObj, successCallback) {
 export function addDevice(payloadObj, successCallback, failureCallback) {
 	return POST({
 		api: '/Api/createDevice',
-		apiBase: 'retailerMgmt',
+		apiBase: 'retailer',
 		data: payloadObj,
 		handleError: true
 	})
@@ -261,7 +261,7 @@ export function addDevice(payloadObj, successCallback, failureCallback) {
 export function createRetailer(payloadObj, successCallback, failureCallback) {
 	return POST({
 		api: '/Api/createRetailer',
-		apiBase: 'retailerMgmt',
+		apiBase: 'retailer',
 		data: payloadObj,
 		handleError: true
 	})
@@ -279,7 +279,7 @@ export function createRetailer(payloadObj, successCallback, failureCallback) {
 export function updateRetailer(payloadObj, successCallback, failureCallback) {
 	return POST({
 		api: '/Api/updateRetailer',
-		apiBase: 'retailerMgmt',
+		apiBase: 'retailer',
 		data: payloadObj,
 		handleError: true
 	})
@@ -297,7 +297,7 @@ export function updateRetailer(payloadObj, successCallback, failureCallback) {
 export function deactivateRetailer(payloadObj, callback) {
 	return POST({
 		api: '/Api/changeRetailerStatus',
-		apiBase: 'retailerMgmt',
+		apiBase: 'retailer',
 		data: payloadObj,
 		handleError: true
 	})
@@ -315,7 +315,7 @@ export function deactivateRetailer(payloadObj, callback) {
 export function fetchRetailerNotes(req) {
 	return POST({
 		api: `/Api/listNotes`,
-		apiBase: "retailerMgmt",
+		apiBase: "retailer",
 		data: req
 	})
 		.then(json => json)
@@ -324,7 +324,7 @@ export function fetchRetailerNotes(req) {
 export function createRetailerNote(req) {
 	return POST({
 		api: "/Api/createNote",
-		apiBase: "retailerMgmt",
+		apiBase: "retailer",
 		data: req
 	})
 		.then(json => json)
@@ -333,7 +333,7 @@ export function createRetailerNote(req) {
 export function fetchNoteIssues() {
 	return POST({
 		api: "/Api/listIssues",
-		apiBase: "retailerMgmt"
+		apiBase: "retailer"
 	})
 		.then(json => json)
 }
