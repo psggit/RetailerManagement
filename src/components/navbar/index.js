@@ -21,7 +21,7 @@ class Navbar extends React.Component {
       'x-hasura-role': 'user'
     }
 
-    const authLogoutUrl = `https://auth.${process.env.BASE_URL}${api}/user/logout`
+    const authLogoutUrl = `https://auth.${process.env.BASE_URL}/user/logout`
     fetch(authLogoutUrl, fetchOptions)
       .then((response) => {
         if (response.status !== 200) {

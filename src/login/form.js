@@ -54,7 +54,7 @@ class Form extends React.Component {
     }
 
     this.setState({ isSubmitting: true })
-    const authLoginUrl = `https://auth.${process.env.BASE_URL}${api}/login`
+    const authLoginUrl = `https://auth.${process.env.BASE_URL}/login`
     fetch(authLoginUrl, fetchOptions)
       .then((response) => {
         if (response.status !== 200) {
