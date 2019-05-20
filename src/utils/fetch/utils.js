@@ -10,8 +10,7 @@ import "whatwg-fetch"
 
 const getToken = () => ({
   // "Authorization": `Bearer ${localStorage.getItem('auth-token')}`,
-  "x-hasura-role": `${localStorage.getItem('x-hasura-role')}`,
-  "hasura-id": `${localStorage.getItem('hasura-id')}`
+  "x-hasura-role": `${localStorage.getItem('x-hasura-role')}`
 })
 
 function getHeaders(type) {
