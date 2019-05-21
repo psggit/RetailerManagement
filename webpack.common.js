@@ -61,7 +61,7 @@ module.exports = {
       minRatio: 0.8
     }),
     new webpack.DefinePlugin({
-      "process.env.BASE_URL": JSON.stringify(process.env.BASE_URL || "amebae21.hasura-app.io")
+      "process.env.BASE_URL": JSON.stringify(process.env.BASE_URL || "basketball38.hasura-app.io")
     })
   ],
   output: {

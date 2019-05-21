@@ -15,7 +15,8 @@ class Form extends React.Component {
       showError: false,
       error: false,
       username: '',
-      password: ''
+      password: '',
+      errorMessage: ""
     }
 
     this.handleChange = this.handleChange.bind(this)
@@ -58,8 +59,9 @@ class Form extends React.Component {
     fetch(authLoginUrl, fetchOptions)
       .then((response) => {
         if (response.status !== 200) {
-          console.log(`Looks like there was a problem. Status Code: ${response.status}`)
-          this.setState({ isSubmitting: false, error: true })
+          response.json().then(json => {
+            this.setState({ isSubmitting: false, error: true, errorMessage: json.message })
+          })
           return
         }
         response.json().then((data) => {
@@ -107,11 +109,10 @@ class Form extends React.Component {
         >
           Login
         </button>
-        {this.state.error ? <p style={{ color: '#ff3b30' }}>Wrong username or password</p> : ''}
+        {this.state.error ? <p style={{ color: '#ff3b30' }}>{this.state.errorMessage}</p> : ''}
       </div>
-      // </div>
     )
-  }
-}
-
+        }
+      }
+      
 export default Form
