@@ -27,7 +27,9 @@ app.get('*.js', function (req, res, next) {
 app.use('/admin', express.static(path.join(__dirname, 'dist')))
 
 app.get('/*', (req, res) => {
-  //console.log(req.query);
+  if (!/.*.js/.test(req.url)) {
+    res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate, private")
+  }
   res.sendFile(path.join(__dirname, 'dist/index.html'), (err) => {
     if (err) {
       res.status(500).send(err)
