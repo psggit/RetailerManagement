@@ -84,12 +84,9 @@ export function constructFetchUtility(options) {
     fetchOptions.body = constructBody({ type, data })
   }
 
-  return (options.handleError)
-    ? fetch(url, fetchOptions)
-      .then(checkStatus)
-      .then(parseJSON)
-    : fetch(url, fetchOptions)
-      .then(parseJSON)
+  return fetch(url, fetchOptions)
+    .then(checkStatus)
+    .then(parseJSON)
 }
 
 function parseJSON(response) {
