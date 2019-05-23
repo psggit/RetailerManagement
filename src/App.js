@@ -33,7 +33,7 @@ import CreateOrUpdateStockPrice from './dashboard/stock-management/retailer-inve
 // import RetailerInventory from './dashboard/stock-and-price/retailer-inventory'
 import StockManagement from "./dashboard/stock-management"
 import ModifiedStockList from "./dashboard/stock-management/modifiedStockSummary"
-
+import Account from "./dashboard/Account"
 const history = createHistory()
 const supportedRoles = ["admin", "opdataadmin", "opdataentry"]
 const accessRole = localStorage.getItem('x-hasura-role') ? localStorage.getItem('x-hasura-role') : ''
@@ -80,7 +80,7 @@ function StockManagementSwitch() {
 	return <div />
 }
 
-function RetailerManagement() {
+function RetailerManagementSwitch() {
 	if (supportedRoles.indexOf(accessRole) !== -1) {
 		return (
 			<Switch>
@@ -367,12 +367,22 @@ class App extends React.Component {
 											{ label: 'Generate Report', value: 'generate-report' },
 											{ label: 'Device Management', value: 'device-management' },
 											{ label: 'Stock and Price', value: 'stock-and-price' },
-											{ label: 'Access Logs', value: 'access-logs' }
+											{ label: 'Access Logs', value: 'access-logs' },
+											{ label: "Account", value: "account" }
 										]}
 										currentRoute={this.state.currentRoute}
 									/>
 									<StockManagementSwitch />
-									<RetailerManagement />
+									<RetailerManagementSwitch />
+									<Route
+										exact
+										path="/admin/account"
+										render={
+											props => (
+												<Account {...props} />
+											)
+										}
+									/>
 								</div>
 							</div>
 						}

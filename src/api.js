@@ -1,6 +1,15 @@
 import { POST, GET } from 'Utils/fetch'
 import Notify from 'Components/notify'
 
+export function authChangePassword(req) {
+	return POST({
+		api: "/user/password/change",
+		apiBase: "auth",
+		data: req
+	})
+		.then(json => json)
+}
+
 export function fetchOrganizationList(payloadObj, successCallback, failureCallback) {
 	return POST({
 		api: '/Api/listOrganisations',
