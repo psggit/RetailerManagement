@@ -12,6 +12,6 @@ COPY ./ /app
 # ENV NODE_PATH /app/node_modules/
 # ENV NODE_PATH /usr/lib/node_modules/
 
-RUN npm run build-p
+RUN npm run build
 
 ENTRYPOINT ["npm", "run", "start"]

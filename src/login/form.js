@@ -94,6 +94,7 @@ class Form extends React.Component {
         </div>
         <div className="form-group">
           <input
+            autocomplete="fefefef"
             placeholder="Password"
             type="password"
             name="password"
@@ -112,7 +113,7 @@ class Form extends React.Component {
         {this.state.error ? <p style={{ color: '#ff3b30' }}>{this.state.errorMessage}</p> : ''}
       </div>
     )
-        }
-      }
-      
+  }
+}
+
 export default Form
