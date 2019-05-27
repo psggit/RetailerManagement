@@ -44,7 +44,7 @@ module.exports = {
     }
   },
   plugins: [
-    new CleanWebpackPlugin(['dist']),
+    new CleanWebpackPlugin(),
     // new AbsolutePathProviderPlugin(/^@sass/, path.resolve('./src/sass')),
     // new AbsolutePathProviderPlugin(/^@utils/, path.resolve('./src/utils')),
     // new AbsolutePathProviderPlugin(/^@components/, path.resolve('./src/components')),
