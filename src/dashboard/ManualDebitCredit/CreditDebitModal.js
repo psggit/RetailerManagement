@@ -76,6 +76,7 @@ export default function CreditDebitModal(props) {
         insertManualCreditDebit(insertManualCreditDebitReq)
           .then(insertManualCreditDebitRes => {
             Notify("success", insertManualCreditDebitRes.Message)
+            props.toggleReset(!props.isReset)
             unmountModal()
           })
           .catch(err => {

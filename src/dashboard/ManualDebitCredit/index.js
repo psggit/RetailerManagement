@@ -8,13 +8,14 @@ import CustomButton from 'Components/button'
 import Pagination from 'Components/pagination'
 import Moment from "moment"
 
-export default function ManageManualDebitCredit() {
+export default function ManageManualDebitCredit(props) {
   const limit = 10
   const [retailers, setRetailers] = useState([])
   const [retailersCount, setRetailersCount] = useState(0)
   const [isLoaded, setLoading] = useState(false)
   const [offset, setOffset] = useState(0)
   const [activePage, setActivePage] = useState(1)
+  const [isReset, toggleReset] = useState(false)
 
   const handlePageChange = page => {
     const { offset, activePage } = page
@@ -33,12 +34,16 @@ export default function ManageManualDebitCredit() {
         setRetailers(fetchCreditDebitRetailersRes.retailer_manual_det)
         setLoading(true)
       })
-  }, [offset])
+  }, [offset, isReset])
   return (
     <Layout title="Manual credit and debit">
       <div style={{ margin: "10px 0" }}>
         <CustomButton text="Create new" handleClick={() => {
-          mountModal(CreditDebitModal({}))
+          mountModal(CreditDebitModal({
+            history: props.history,
+            toggleReset: toggleReset,
+            isReset: isReset
+          }))
         }} />
       </div>
       <Table
