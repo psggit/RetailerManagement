@@ -6,6 +6,7 @@ import CreditDebitModal from "./CreditDebitModal"
 import { mountModal } from "Components/ModalBox2/api"
 import CustomButton from 'Components/button'
 import Pagination from 'Components/pagination'
+import Moment from "moment"
 
 export default function ManageManualDebitCredit() {
   const limit = 10
@@ -44,10 +45,14 @@ export default function ManageManualDebitCredit() {
         items={retailers}
         loading={!isLoaded}
       >
-        <Table.Column field="retailer_id" title="ID" />
-        <Table.Column field="branch_name" title="Name" />
+        <Table.Column field="retailer_id" title="Retailer ID" />
+        <Table.Column field="branch_name" title="Retailer Name" />
+        <Table.Column field="amount" title="Amount" />
         <Table.Column field="comment" title="Comment" />
         <Table.Column field="code" title="Code" />
+        <Table.Column field="created_at" title="Created at">
+          {item => Moment(item.created_at).format("DD/MM/YYYY, h:m:a")}
+        </Table.Column>
       </Table>
 
       <Pagination
