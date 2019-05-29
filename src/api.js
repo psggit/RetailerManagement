@@ -109,7 +109,10 @@ export function fetchRetailerList(payloadObj, successCallback, failureCallback) 
 		handleError: true
 	})
 		.then((json) => {
-			successCallback(json)
+			if (successCallback) {
+				successCallback(json)
+			}
+			return json
 		})
 		.catch(err => {
 			console.log("Error in fetching retailer list", err)
@@ -343,6 +346,33 @@ export function fetchNoteIssues() {
 	return POST({
 		api: "/Api/listIssues",
 		apiBase: "retailer"
+	})
+		.then(json => json)
+}
+
+export function fetchCreditDebitRetailers(req) {
+	return POST({
+		api: "/Api/listManualCreditDebit",
+		apiBase: "retailer",
+		data: req
+	})
+		.then(json => json)
+}
+
+export function fetchTransactionCode(req) {
+	return POST({
+		api: "/Api/listTransactionCode",
+		apiBase: "retailer",
+		data: req
+	})
+		.then(json => json)
+}
+
+export function insertManualCreditDebit(req) {
+	return POST({
+		api: "/Api/insertManualCreditDebit",
+		apiBase: "retailer",
+		data: req
 	})
 		.then(json => json)
 }
