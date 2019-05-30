@@ -52,7 +52,6 @@ export default function ManageManualDebitCredit(props) {
 
   const handleFilterByChange = e => {
     const { value } = e.target
-    console.log(value)
     setFilterBy(value)
     setFilterValue("")
     setFinalFilterValue("")
@@ -87,8 +86,8 @@ export default function ManageManualDebitCredit(props) {
 
   const handleCodeIDChange = e => {
     const { value } = e.target
-    setFilterValue(value)
-    setFinalFilterValue(value)
+    setFilterValue(parseInt(value))
+    setFinalFilterValue(parseInt(value))
     props.history.push(`/admin/manage-credit-debit?f=${filterBy}&q=${value}&page=${1}`)
   }
 
@@ -160,7 +159,7 @@ export default function ManageManualDebitCredit(props) {
                 filterBy === "2" &&
                 <Select
                   onChange={handleCodeIDChange}
-                  value={filterValue}
+                  value={parseInt(filterValue)}
                   options={transactionCodes}
                   placeholder="Select code ID"
                 />
