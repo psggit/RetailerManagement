@@ -89,6 +89,7 @@ export default function ManageManualDebitCredit(props) {
     const { value } = e.target
     setFilterValue(value)
     setFinalFilterValue(value)
+    props.history.push(`/admin/manage-credit-debit?f=${filterBy}&q=${value}&page=${1}`)
   }
 
   const fetchCreditDebitRetailersReq = {
