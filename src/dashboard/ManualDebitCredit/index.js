@@ -136,7 +136,6 @@ export default function ManageManualDebitCredit(props) {
                 filterBy === "2" &&
                 <TextInput
                   value={filterValue}
-                  pattern="[0-9]+"
                   onChange={handleFilterValueChange}
                   placeholder="Enter code ID"
                 />
