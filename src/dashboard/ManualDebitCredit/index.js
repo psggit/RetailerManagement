@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import Layout from "Components/layout"
 import { Table, Select, TextInput, Form } from "@auth0/cosmos"
-import { fetchCreditDebitRetailers } from "../../api"
+import { fetchCreditDebitRetailers, fetchTransactionCode } from "../../api"
 import CreditDebitModal from "./CreditDebitModal"
 import { mountModal } from "Components/ModalBox2/api"
 import CustomButton from 'Components/button'
@@ -27,6 +27,7 @@ export default function ManageManualDebitCredit(props) {
   const [filterBy, setFilterBy] = useState(filterByValue)
   const [filterValue, setFilterValue] = useState(searchValue)
   const [finalFilterValue, setFinalFilterValue] = useState(searchValue)
+  const [transactionCodes, setTransactionCodes] = useState([])
 
   const filters = {
     "0": null,
@@ -51,6 +52,7 @@ export default function ManageManualDebitCredit(props) {
 
   const handleFilterByChange = e => {
     const { value } = e.target
+    console.log(value)
     setFilterBy(value)
     setFilterValue("")
     setFinalFilterValue("")
@@ -74,13 +76,19 @@ export default function ManageManualDebitCredit(props) {
     setOffset(0)
   }
 
-  const handleFilterValueChange = e => {
+  const handleRetailerIDChange = e => {
     const { value } = e.target
     if (value.length > 0) {
       setFilterValue(value)
     } else {
       reset()
     }
+  }
+
+  const handleCodeIDChange = e => {
+    const { value } = e.target
+    setFilterValue(value)
+    setFinalFilterValue(value)
   }
 
   const fetchCreditDebitRetailersReq = {
@@ -95,6 +103,21 @@ export default function ManageManualDebitCredit(props) {
       value: finalFilterValue
     }
   }
+
+  useEffect(() => {
+    const fetchTransactionCodeReq = {
+      "": ""
+    }
+    fetchTransactionCode(fetchTransactionCodeReq)
+      .then(fetchTransactionCodeRes => {
+        const transactionCodes = fetchTransactionCodeRes.ret_trans_code.map(item => ({
+          value: item.id,
+          text: item.code
+        }))
+        setTransactionCodes(transactionCodes)
+      })
+  }, [])
+
   useEffect(() => {
     fetchCreditDebitRetailers(fetchCreditDebitRetailersReq)
       .then(fetchCreditDebitRetailersRes => {
@@ -128,20 +151,27 @@ export default function ManageManualDebitCredit(props) {
                 <TextInput
                   value={filterValue}
                   pattern="[0-9]+"
-                  onChange={handleFilterValueChange}
+                  onChange={handleRetailerIDChange}
                   placeholder="Enter retailer ID"
                 />
               }
               {
                 filterBy === "2" &&
-                <TextInput
+                <Select
+                  onChange={handleCodeIDChange}
                   value={filterValue}
-                  onChange={handleFilterValueChange}
-                  placeholder="Enter code ID"
+                  options={transactionCodes}
+                  placeholder="Select code ID"
                 />
               }
             </Form>
           </div>
+          {
+            finalFilterValue.length > 0 &&
+            <div style={{ marginLeft: "10px" }}>
+              <CustomButton text="RESET" handleClick={reset} />
+            </div>
+          }
         </div>
       </div>
 
