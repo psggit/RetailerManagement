@@ -34,6 +34,7 @@ import CreateOrUpdateStockPrice from './dashboard/stock-management/retailer-inve
 import StockManagement from "./dashboard/stock-management"
 import ModifiedStockList from "./dashboard/stock-management/modifiedStockSummary"
 import Account from "./dashboard/Account"
+import ManageCreditDebit from "./dashboard/ManualDebitCredit"
 const history = createHistory()
 const supportedRoles = ["admin", "opdataadmin", "opdataentry"]
 const accessRole = localStorage.getItem('x-hasura-role') ? localStorage.getItem('x-hasura-role') : ''
@@ -368,7 +369,8 @@ class App extends React.Component {
 											{ label: 'Device Management', value: 'device-management' },
 											{ label: 'Stock and Price', value: 'stock-and-price' },
 											{ label: 'Access Logs', value: 'access-logs' },
-											{ label: "Account", value: "account" }
+											{ label: "Account", value: "account" },
+											{ label: "Manage Credit & Debit", value: "manage-credit-debit" }
 										]}
 										currentRoute={this.state.currentRoute}
 									/>
@@ -380,6 +382,15 @@ class App extends React.Component {
 										render={
 											props => (
 												<Account {...props} />
+											)
+										}
+									/>
+									<Route
+										exact
+										path="/admin/manage-credit-debit"
+										render={
+											props => (
+												<ManageCreditDebit {...props} />
 											)
 										}
 									/>
