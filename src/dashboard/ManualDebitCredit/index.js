@@ -30,7 +30,8 @@ export default function ManageManualDebitCredit(props) {
 
   const filters = {
     "0": null,
-    "1": "RETAILER_ID"
+    "1": "RETAILER_ID",
+    "2": "CODE_ID"
   }
 
   const handlePageChange = page => {
@@ -68,7 +69,7 @@ export default function ManageManualDebitCredit(props) {
     props.history.push("/admin/manage-credit-debit")
     setFilterValue("")
     setFinalFilterValue("")
-    setFilterBy("0")
+    setFilterBy(0)
     setActivePage(1)
     setOffset(0)
   }
@@ -116,7 +117,7 @@ export default function ManageManualDebitCredit(props) {
         <div style={{ display: "flex" }}>
           <Select
             value={filterBy}
-            options={[{ text: "Retailer ID", value: 1 }]}
+            options={[{ text: "Retailer ID", value: 1 }, { text: "Code ID", value: 2 }]}
             placeholder="Filter by"
             onChange={handleFilterByChange}
           />
@@ -129,6 +130,15 @@ export default function ManageManualDebitCredit(props) {
                   pattern="[0-9]+"
                   onChange={handleFilterValueChange}
                   placeholder="Enter retailer ID"
+                />
+              }
+              {
+                filterBy === "2" &&
+                <TextInput
+                  value={filterValue}
+                  pattern="[0-9]+"
+                  onChange={handleFilterValueChange}
+                  placeholder="Enter code ID"
                 />
               }
             </Form>
