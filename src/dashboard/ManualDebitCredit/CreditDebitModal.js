@@ -48,7 +48,7 @@ export default function CreditDebitModal(props) {
         .then(fetchTransactionCodeRes => {
           const transactionCodes = fetchTransactionCodeRes.ret_trans_code.map(item => ({
             value: item.id,
-            text: item.description
+            text: item.code
           }))
           this.setState({ transactionCodes, showTransactionCodes: true })
         })
@@ -94,7 +94,7 @@ export default function CreditDebitModal(props) {
             value={this.state.activeRetailer}
             disabled={this.state.loading}
             loading={this.state.loading}
-            placeholder="Select retailer"
+            placeholder={this.state.loading === true ? "Loading.." : "Select retailer"}
             options={this.state.retailers}
             onChange={this.handleRetailerChange}
           />
@@ -102,7 +102,6 @@ export default function CreditDebitModal(props) {
             this.state.showTransactionCodes === true &&
             <div style={{ marginTop: "20px" }}>
               <Select
-                value={this.state.activeTransactionCode}
                 value={this.state.activeTransactionCode}
                 options={this.state.transactionCodes}
                 placeholder="Select transaction code"
