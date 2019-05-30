@@ -69,6 +69,8 @@ export default function ManageManualDebitCredit(props) {
     setFilterValue("")
     setFinalFilterValue("")
     setFilterBy("0")
+    setActivePage(1)
+    setOffset(0)
   }
 
   const handleFilterValueChange = e => {
