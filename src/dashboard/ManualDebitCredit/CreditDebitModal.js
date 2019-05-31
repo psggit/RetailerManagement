@@ -81,7 +81,7 @@ export default function CreditDebitModal(props) {
           })
           .catch(err => {
             err.response.json().then(json => {
-              Notify("success", json.message)
+              Notify("error", json.message)
               unmountModal()
             })
           })
