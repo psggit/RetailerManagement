@@ -161,7 +161,7 @@ export default function ManageManualDebitCredit(props) {
               {
                 filterBy === "2" &&
                 <Select
-                  value={parseInt(filterValue)}
+                  value={parseInt(filterValue) || 0}
                   onChange={handleCodeIDChange}
                   options={transactionCodes}
                   placeholder="Select code ID"
