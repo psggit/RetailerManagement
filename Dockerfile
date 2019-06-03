@@ -12,6 +12,6 @@ COPY ./ /app
 # ENV NODE_PATH /app/node_modules/
 # ENV NODE_PATH /usr/lib/node_modules/
 
-RUN npm run build
+RUN yarn run build
 
-ENTRYPOINT ["npm", "run", "start"]
+ENTRYPOINT ["yarn", "run", "start"]
