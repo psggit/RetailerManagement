@@ -52,7 +52,6 @@ export default function ManageManualDebitCredit(props) {
 
   const handleFilterByChange = e => {
     const { value } = e.target
-    console.log(value)
     setFilterBy(value)
     setFilterValue("")
     setFinalFilterValue("")
@@ -85,10 +84,13 @@ export default function ManageManualDebitCredit(props) {
     }
   }
 
+  console.log(finalFilterValue)
+
   const handleCodeIDChange = e => {
     const { value } = e.target
     setFilterValue(value)
     setFinalFilterValue(value)
+    props.history.push(`/admin/manage-credit-debit?f=${filterBy}&q=${value}&page=${1}`)
   }
 
   const fetchCreditDebitRetailersReq = {
@@ -149,6 +151,7 @@ export default function ManageManualDebitCredit(props) {
               {
                 filterBy === "1" &&
                 <TextInput
+                  required
                   value={filterValue}
                   pattern="[0-9]+"
                   onChange={handleRetailerIDChange}
@@ -158,8 +161,8 @@ export default function ManageManualDebitCredit(props) {
               {
                 filterBy === "2" &&
                 <Select
+                  value={parseInt(filterValue) || 0}
                   onChange={handleCodeIDChange}
-                  value={filterValue}
                   options={transactionCodes}
                   placeholder="Select code ID"
                 />
