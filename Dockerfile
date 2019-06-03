@@ -4,7 +4,7 @@ RUN mkdir -p /app
 WORKDIR /app
 
 COPY package.json .
-RUN npm yarn
+RUN yarn
 
 COPY ./ /app
 
