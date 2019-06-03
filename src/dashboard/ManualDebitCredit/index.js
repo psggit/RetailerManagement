@@ -90,6 +90,8 @@ export default function ManageManualDebitCredit(props) {
     const { value } = e.target
     setFilterValue(value)
     setFinalFilterValue(value)
+    setOffset(0)
+    setActivePage(1)
     props.history.push(`/admin/manage-credit-debit?f=${filterBy}&q=${value}&page=${1}`)
   }
 
