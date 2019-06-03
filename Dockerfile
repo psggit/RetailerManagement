@@ -4,14 +4,13 @@ RUN mkdir -p /app
 WORKDIR /app
 
 COPY package.json .
-RUN npm rebuild
-RUN npm install --build-from-source
+RUN yarn
 
 COPY ./ /app
 
 # ENV NODE_PATH /app/node_modules/
 # ENV NODE_PATH /usr/lib/node_modules/
 
-RUN npm run build-p
+RUN yarn run build-p
 
-ENTRYPOINT ["npm", "run", "start"]
+ENTRYPOINT ["yarn", "run", "start"]
