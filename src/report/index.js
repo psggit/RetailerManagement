@@ -67,7 +67,7 @@ class RetailerOnboardingForm extends React.Component {
 		//console.log("organization details", organizationData, "retailer", retailerData)
 		return (
 			<React.Fragment>
-				<div className="container">
+				<div id="report-page" className="container">
 					<div className="wrapper">
 						<div className="organization-info">
 							<div className="title" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
