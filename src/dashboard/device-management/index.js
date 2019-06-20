@@ -12,9 +12,9 @@ import { getQueryObj, getQueryUri } from 'Utils/url-utils'
 import * as Api from './../../api'
 
 class DeviceManagement extends React.Component {
-  constructor() {
-    super()
-    this.defaultFilters = {
+	constructor() {
+		super()
+		this.defaultFilters = {
 			column: '',
 			operator: 'EQUAL',
 			value: ''
@@ -51,26 +51,26 @@ class DeviceManagement extends React.Component {
 		this.fetchDefaultData = this.fetchDefaultData.bind(this)
 		this.fetchRetailerList = this.fetchRetailerList.bind(this)
 		this.setResponseData = this.setResponseData.bind(this)
-  }
+	}
 
-  componentDidMount() {
+	componentDidMount() {
 		if (location.search.length) {
 			this.setQueryParamas()
 		} else {
 			this.fetchDefaultData()
 		}
-  }
+	}
 
-  fetchDefaultData() {
+	fetchDefaultData() {
 		this.setState({ retailerData: [], retailerListCount: 0 })
 		//this.fetchOrganizationList({}, this.formatOrganizationList)
 		this.fetchRetailerList({
 			offset: 0,
 			limit: this.pagesLimit,
 		}, this.setResponseData, this.failureCallback)
-  }
-  
-  setQueryParamas() {
+	}
+
+	setQueryParamas() {
 		const queryUri = location.search.slice(1)
 		const queryObj = getQueryObj(queryUri)
 
@@ -93,9 +93,9 @@ class DeviceManagement extends React.Component {
 			}, this.setResponseData, this.failureCallback)
 		}
 
-  }
-  
-  fetchRetailerList(payloadObj, successCallback, failureCallback) {
+	}
+
+	fetchRetailerList(payloadObj, successCallback, failureCallback) {
 		Api.fetchRetailerList(payloadObj, successCallback, failureCallback)
 	}
 
@@ -135,13 +135,13 @@ class DeviceManagement extends React.Component {
 			filter: this.filter
 		}, this.setResponseData, this.failureCallback)
 	}
-  
-  setResponseData(response) {
+
+	setResponseData(response) {
 		if (response && response.ret_response) {
-			this.setState({ 
-				retailerData: response.ret_response, 
-				retailerListCount: response.count, 
-				loading: false 
+			this.setState({
+				retailerData: response.ret_response,
+				retailerListCount: response.count,
+				loading: false
 			})
 		} else {
 			this.setState({ retailerData: [], retailerListCount: 0, loading: false })
@@ -197,12 +197,12 @@ class DeviceManagement extends React.Component {
 		}
 
 		history.pushState(queryParamsObj, "retailer listing", `/admin/device-management?${getQueryUri(queryParamsObj)}`)
-  }
-  
-  handleChange(e) {
-		if (e.target.name === "column" && 
-				(e.target.value === "ID" || e.target.value === "OrganisationID")
-			 ) {
+	}
+
+	handleChange(e) {
+		if (e.target.name === "column" &&
+			(e.target.value === "ID" || e.target.value === "OrganisationID")
+		) {
 			this.setState({
 				operators: [
 					{ text: 'EQUAL', value: 'EQUAL' },
@@ -232,129 +232,130 @@ class DeviceManagement extends React.Component {
 		})
 		this.fetchDefaultData()
 		this.props.history.push(`/admin/device-management`)
-  }
-  
-  editRetailerDetails(e, item) {
+	}
+
+	editRetailerDetails(e, item) {
 		if (e.target.nodeName === "SPAN") {
 			return
 		}
 		this.props.history.push(`/admin/device-management/${item.id}`, item)
 	}
 
-  render() {
-    const { retailerData } = this.state
-    console.log("this.state", this.state)
-    return(
-      <Layout title="Manage Retailer">
-        <div style={{ marginTop: '20px' }}>
-          <div style={{
-              width: '210px',
-              display: 'inline-block',
-              verticalAlign: 'bottom',
-              marginRight: '20px'
-            }}
-          >
-            <p style={{ margin: '10px 0' }}>Field</p>
-            <Select
-              placeholder="Select an field..."
-              value={this.state.column}
-              name="column"
-              options={[
-                { text: 'RETAILER ID', value: 'ID' },
-                { text: 'RETAILER NAME', value: 'RetailerName' },
-                { text: 'CITY NAME', value: 'CityName' },
-                { text: 'ORGANIZATION ID', value: 'OrganisationID' }
-              ]}
-              onChange={(e) => this.handleChange(e)}
-            />
-          </div>
+	render() {
+		const { retailerData } = this.state
+		console.log("this.state", this.state)
+		return (
+			<Layout title="Manage Retailer">
+				<div style={{ marginTop: '20px' }}>
+					<div style={{
+						width: '210px',
+						display: 'inline-block',
+						verticalAlign: 'bottom',
+						marginRight: '20px'
+					}}
+					>
+						<p style={{ margin: '10px 0' }}>Field</p>
+						<Select
+							placeholder="Select an field..."
+							value={this.state.column}
+							name="column"
+							options={[
+								{ text: 'RETAILER ID', value: 'ID' },
+								{ text: 'RETAILER NAME', value: 'RetailerName' },
+								{ text: 'CITY NAME', value: 'CityName' },
+								{ text: 'ORGANIZATION ID', value: 'OrganisationID' }
+							]}
+							onChange={(e) => this.handleChange(e)}
+						/>
+					</div>
 
-          <div style={{
-              width: '180px',
-              display: 'inline-block',
-              verticalAlign: 'bottom',
-              marginRight: '20px'
-            }}
-          >
-            <p style={{ margin: '10px 0' }}>Operator</p>
-            <Select
-              placeholder="Select an operator..."
-              value={this.state.operator}
-              name="operator"
-              options={this.state.operators}
-              onChange={(e) => this.handleChange(e)}
-            />
-          </div>
+					<div style={{
+						width: '180px',
+						display: 'inline-block',
+						verticalAlign: 'bottom',
+						marginRight: '20px'
+					}}
+					>
+						<p style={{ margin: '10px 0' }}>Operator</p>
+						<Select
+							placeholder="Select an operator..."
+							value={this.state.operator}
+							name="operator"
+							options={this.state.operators}
+							onChange={(e) => this.handleChange(e)}
+						/>
+					</div>
 
-          <div style={{
-              width: '240px',
-              display: 'inline-block',
-              verticalAlign: 'bottom',
-              marginRight: '20px'
-            }}
-          >
-            <p style={{ margin: '10px 0' }}>Search Text</p>
-            <TextInput
-              placeholder="Contains"
-              type="text"
-              size="default"
-              name="value"
-              value={this.state.value}
-              onChange={(e) => this.handleChange(e)}
-            />
-          </div>
-          <div
-            style={{
-              verticalAlign: 'bottom',
-              display: 'inline-block',
-              marginRight: '20px'
-            }}
-          >
-            <CustomButton text="Search" handleClick={this.getFilteredRetailersList} />
-          </div>
-          <div
-            style={{
-              verticalAlign: 'bottom',
-              display: 'inline-block',
-            }}
-          >
-            <CustomButton text="Reset" handleClick={this.resetFilter} />
-          </div>
-        </div>
-        {
-          <div style={{ marginTop: '40px', marginBottom: '20px' }}>
-            <Table
-              emptyMessage={this.state.loading ? <Spinner /> : 'No retailers found'}
-              items={retailerData}
-              //onRowClick={(e, item) => this.handleRowClick(e, item)}
-            >
+					<div style={{
+						width: '240px',
+						display: 'inline-block',
+						verticalAlign: 'bottom',
+						marginRight: '20px'
+					}}
+					>
+						<p style={{ margin: '10px 0' }}>Search Text</p>
+						<TextInput
+							placeholder="Contains"
+							type="text"
+							size="default"
+							name="value"
+							value={this.state.value}
+							onChange={(e) => this.handleChange(e)}
+						/>
+					</div>
+					<div
+						style={{
+							verticalAlign: 'bottom',
+							display: 'inline-block',
+							marginRight: '20px'
+						}}
+					>
+						<CustomButton text="Search" handleClick={this.getFilteredRetailersList} />
+					</div>
+					<div
+						style={{
+							verticalAlign: 'bottom',
+							display: 'inline-block',
+						}}
+					>
+						<CustomButton text="Reset" handleClick={this.resetFilter} />
+					</div>
+				</div>
+				{
+					<div style={{ marginTop: '40px', marginBottom: '20px' }}>
+						<Table
+							emptyMessage={this.state.loading ? <Spinner /> : 'No retailers found'}
+							items={retailerData}
+						//onRowClick={(e, item) => this.handleRowClick(e, item)}
+						>
 							<Table.Column field="actions">
 								{item => (
 									<Button icon="pencil" onClick={(e) => this.editRetailerDetails(e, item)} />
 								)}
 							</Table.Column>
-              <Table.Column field="id" title="Retailer Id" />
-              <Table.Column field="outlet_name" title="Outlet Name" />
-              <Table.Column field="store_address" title="Outlet Address" />
-              <Table.Column field="state_name" title="State" />
-              <Table.Column field="city_name" title="City" />
-              <Table.Column field="organisation_id" title="Organization Id" />
-              <Table.Column field="organisation_name" title="Organization Name" />
-            </Table>
-          </div>
-        }
-        {
-          this.state.retailerData && this.state.retailerData.length >= 10 &&
-          <Pagination
-            activePage={parseInt(this.state.activePage)}
-            itemsCountPerPage={this.pagesLimit}
-            totalItemsCount={parseInt(this.state.retailerListCount)}
-            setPage={this.handlePageChange}
-          />
-        }
-      </Layout>
-    )
-  }
+							<Table.Column field="id" title="Retailer Id" />
+							<Table.Column field="outlet_name" title="Outlet Name" />
+							<Table.Column field="store_address" title="Outlet Address" />
+							<Table.Column field="state_name" title="State" />
+							<Table.Column field="city_name" title="City" />
+							<Table.Column field="organisation_id" title="Organization Id" />
+							<Table.Column field="short_qr_code" title="QR Code"></Table.Column>
+							<Table.Column field="organisation_name" title="Organization Name" />
+						</Table>
+					</div>
+				}
+				{
+					this.state.retailerData && this.state.retailerData.length >= 10 &&
+					<Pagination
+						activePage={parseInt(this.state.activePage)}
+						itemsCountPerPage={this.pagesLimit}
+						totalItemsCount={parseInt(this.state.retailerListCount)}
+						setPage={this.handlePageChange}
+					/>
+				}
+			</Layout>
+		)
+	}
 }
 
 export default DeviceManagement
