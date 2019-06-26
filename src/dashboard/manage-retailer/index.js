@@ -19,11 +19,11 @@ class ManageRetailer extends React.Component {
 
 	constructor() {
 		super()
-		this.defaultFilters = {
-			column: '',
-			operator: 'EQUAL',
-			value: ''
-		}
+		// this.defaultFilters = {
+		// 	column: 'ID',
+		// 	operator: 'EQUAL',
+		// 	value: ''
+		// }
 		this.state = {
 			activePage: 1,
 			offset: 0,
@@ -39,7 +39,11 @@ class ManageRetailer extends React.Component {
 				{ text: 'LIKE', value: 'LIKE' },
 				{ text: 'IGNORE CASE', value: 'CASEIGNORE' },
 			],
-			...this.defaultFilters
+			// filter: {
+			column: 'ID',
+			operator: 'EQUAL',
+			value: ''
+			//}
 		}
 
 		this.filter = {
@@ -91,8 +95,7 @@ class ManageRetailer extends React.Component {
 			this.filter[item[0]] = item[1]
 		})
 		this.setState({ retailerData: [], retailerListCount: 0, loading: true })
-
-		if (queryObj.column && queryObj.column.length > 0) {
+		if (queryObj.column && queryObj.column.trim().length > 0) {
 			this.fetchRetailerList({
 				offset: queryObj.offset ? parseInt(queryObj.offset) : 0,
 				limit: this.pagesLimit,
@@ -226,6 +229,7 @@ class ManageRetailer extends React.Component {
 		} else if (e.target.name === "value") {
 			this.setState({ offset: 0, activePage: 1 })
 		}
+		console.log("state", e.target.name, e.target.value)
 		this.setState({ [e.target.name]: (e.target.value).toString() })
 		//this.setState({[e.target.name]: (e.target.value).toString()})
 	}
@@ -237,7 +241,7 @@ class ManageRetailer extends React.Component {
 
 	resetFilter() {
 		this.setState({
-			column: '',
+			column: 'ID',
 			operator: 'EQUAL',
 			value: ''
 		})
@@ -277,6 +281,7 @@ class ManageRetailer extends React.Component {
 
 	render() {
 		const { retailerData } = this.state
+		console.log("this.state", this.state)
 		return (
 			<Layout title="Manage Retailer">
 

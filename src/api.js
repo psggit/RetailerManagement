@@ -168,6 +168,19 @@ export function fetchAccessLogs(payloadObj) {
 	})
 }
 
+export function downLoadAccessLogs(payloadObj) {
+	return POST({
+		api: `/Api/stockandprice/download/accesslog/report`,
+		apiBase: 'retailer',
+		data: {
+			start_date: payloadObj.start_date,
+			end_date: payloadObj.end_date
+		},
+		handleError: true,
+		parseType: "text"
+	})
+}
+
 export function fetchGenreList(payloadObj, successCallback) {
 	return GET({
 		api: `/Api/stockandprice/listing/genres/${payloadObj.state_id}`,
