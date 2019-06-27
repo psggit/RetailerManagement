@@ -16,7 +16,7 @@ function getAPIObj() {
       api2: 'https://api2.' + appName + '.hasura-app.io',
       catalog: 'https://catalog.' + appName + '.hasura-app.io',
       retailerMgmt: 'https://retailer.' + appName + '.hasura-app.io',
-      //stockandprice: 'https://stockandprice.' + appName + '.hasura-app.io',
+      // stockandprice: 'https://stockandprice.' + appName + '.hasura-app.io',
     }
   } else {
     let scheme = window.location.href.split(':')[0]
@@ -39,7 +39,7 @@ function getAPIObj() {
       api2: scheme + '://api2' + baseHost,
       catalog: scheme + '://catalog' + baseHost,
       retailerMgmt: scheme + '://retailer' + baseHost,
-      //stockandprice: scheme + '://stockandprice' + baseHost,
+      // stockandprice: scheme + '://stockandprice' + baseHost,
     }
   }
 }

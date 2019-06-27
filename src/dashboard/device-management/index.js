@@ -14,11 +14,11 @@ import * as Api from './../../api'
 class DeviceManagement extends React.Component {
 	constructor() {
 		super()
-		this.defaultFilters = {
-			column: '',
-			operator: 'EQUAL',
-			value: ''
-		}
+		// this.defaultFilters = {
+		// 	column: '',
+		// 	operator: 'EQUAL',
+		// 	value: ''
+		// }
 		this.state = {
 			activePage: 1,
 			offset: 0,
@@ -34,7 +34,9 @@ class DeviceManagement extends React.Component {
 				{ text: 'LIKE', value: 'LIKE' },
 				{ text: 'IGNORE CASE', value: 'CASEIGNORE' },
 			],
-			...this.defaultFilters
+			column: 'ID',
+			operator: 'EQUAL',
+			value: ''
 		}
 
 		this.filter = {
@@ -226,7 +228,7 @@ class DeviceManagement extends React.Component {
 
 	resetFilter() {
 		this.setState({
-			column: '',
+			column: 'ID',
 			operator: 'EQUAL',
 			value: ''
 		})
@@ -243,7 +245,7 @@ class DeviceManagement extends React.Component {
 
 	render() {
 		const { retailerData } = this.state
-		console.log("this.state", this.state)
+
 		return (
 			<Layout title="Manage Retailer">
 				<div style={{ marginTop: '20px' }}>

@@ -14,11 +14,11 @@ class ManageOrganization extends React.Component {
 
 	constructor() {
 		super()
-		this.defaultFilters = {
-			column: '',
-			operator: 'EQUAL',
-			value: ''
-		}
+		// this.defaultFilters = {
+		// 	column: '',
+		// 	operator: 'EQUAL',
+		// 	value: ''
+		// }
 		this.state = {
 			activePage: 1,
 			offset: 0,
@@ -30,7 +30,9 @@ class ManageOrganization extends React.Component {
 				{ text: 'LIKE', value: 'LIKE' },
 				{ text: 'IGNORE CASE', value: 'CASEIGNORE' },
 			],
-			...this.defaultFilters
+			column: 'ID',
+			operator: 'EQUAL',
+			value: ''
 		}
 
 		this.filter = {
@@ -229,7 +231,7 @@ class ManageOrganization extends React.Component {
 
 	resetFilter() {
 		this.setState({
-			column: '',
+			column: 'ID',
 			operator: 'EQUAL',
 			value: ''
 		})
@@ -240,7 +242,7 @@ class ManageOrganization extends React.Component {
 	handleRowClick(e, item) {
 		this.props.history.push(`/admin/organization/${item.id}`, item)
 	}
-	
+
 	render() {
 		return (
 			<Layout title="Manage Organization">
