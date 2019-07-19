@@ -216,7 +216,6 @@ class AccessLogs extends React.Component {
 
   render() {
     const { accessLogs, loadingAccessLog, fromDate } = this.state
-    console.log("state", this.state)
     return (
       <Layout title="Access Logs">
         <div style={{

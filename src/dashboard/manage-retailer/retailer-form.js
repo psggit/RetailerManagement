@@ -165,16 +165,17 @@ class RetailerForm extends React.Component {
 
 		if (this.props.organizationMap !== newProps.organizationMap) {
 			this.setState({ organizationMap: newProps.organizationMap })
-			if (location.pathname.includes("edit")) {
-				let updateCityIdx = false
-				this.setState({ cityList: newProps.stateMap[newProps.organizationMap[this.props.data.organisation_id].state_id] })
+			// if (location.pathname.includes("edit")) {
+			// 	console.log("Edit")
+			// 	let updateCityIdx = false
+			// 	this.setState({ cityList: newProps.stateMap[newProps.organizationMap[this.props.data.organisation_id].state_id] })
 
-				const cityFound = newProps.stateMap[newProps.organizationMap[this.props.data.organisation_id].state_id].find((item) => parseInt(item.value) === parseInt(this.state.selectedCityIdx))
+			// 	const cityFound = newProps.stateMap[newProps.organizationMap[this.props.data.organisation_id].state_id].find((item) => parseInt(item.value) === parseInt(this.state.selectedCityIdx))
 
-				if (!cityFound) {
-					this.setState({ selectedCityIdx: newProps.stateMap[newProps.organizationMap[this.props.data.organisation_id].state_id][0].value })
-				}
-			}
+			// 	if (!cityFound) {
+			// 		this.setState({ selectedCityIdx: newProps.stateMap[newProps.organizationMap[this.props.data.organisation_id].state_id][0].value })
+			// 	}
+			// }
 		}
 
 		if (this.props.stateMap !== newProps.stateMap) {
@@ -182,14 +183,14 @@ class RetailerForm extends React.Component {
 		}
 
 		if (newProps.cityList && this.props.cityList !== newProps.cityList) {
-			if (location.pathname.includes("create")) {
-				this.setState({ cityList: newProps.cityList })
-				this.setState({ selectedCityIdx: newProps.cityList[0].value })
-			}
+			//if (location.pathname.includes("create")) {
+			this.setState({ cityList: newProps.cityList })
+			this.setState({ selectedCityIdx: newProps.cityList[0].value })
+			//	}
 		}
 	}
 
-	handleStateChange (e) {
+	handleStateChange(e) {
 		if (e.target.name.toString().includes("StateIdx")) {
 			this.setState({
 				cityList: this.state.stateMap[e.target.value],
