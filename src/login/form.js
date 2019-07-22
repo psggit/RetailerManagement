@@ -55,7 +55,7 @@ class Form extends React.Component {
     }
 
     this.setState({ isSubmitting: true })
-    const authLoginUrl = `https://auth.${process.env.BASE_URL}/login`
+    const authLoginUrl = `https://gremlin.${process.env.BASE_URL}/auth/login`
     fetch(authLoginUrl, fetchOptions)
       .then((response) => {
         if (response.status !== 200) {
