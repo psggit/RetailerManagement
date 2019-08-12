@@ -27,7 +27,7 @@ class RetailerForm extends React.Component {
 			pincode: 'Pincode',
 			email: 'Email'
 		}
-
+		console.log("props", props)
 		this.errorFlag = false,
 			this.orgIndexError = false,
 			this.state = {
@@ -183,10 +183,12 @@ class RetailerForm extends React.Component {
 		}
 
 		if (newProps.cityList && this.props.cityList !== newProps.cityList) {
-			//if (location.pathname.includes("create")) {
+			console.log("city", newProps.cityList, this.state.selectedCityIdx)
+
 			this.setState({ cityList: newProps.cityList })
-			this.setState({ selectedCityIdx: newProps.cityList[0].value })
-			//	}
+			if (location.pathname.includes("create")) {
+				this.setState({ selectedCityIdx: newProps.cityList[0].value })
+			}
 		}
 	}
 
