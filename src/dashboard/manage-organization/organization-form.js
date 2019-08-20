@@ -53,7 +53,7 @@ class OrganizationForm extends React.Component {
 			address: props.data ? props.data.address_proof_auth_signatory : false,
 
 			partnershipPancard: props.data ? props.data.is_pan : false,
-			partnershipDeed: props.data ? props.data.partnershi_deed : false,
+			partnershipDeed: props.data ? props.data.partnership_deed : false,
 			partnershipLOA: props.data ? props.data.loa : false,
 
 			pvtPancard: props.data ? props.data.is_pan : false,
@@ -137,7 +137,7 @@ class OrganizationForm extends React.Component {
 
 		this.errorFlag = false,
 
-		this.handleChange = this.handleChange.bind(this)
+			this.handleChange = this.handleChange.bind(this)
 		this.handleTextChange = this.handleTextChange.bind(this)
 		this.handleNumberChange = this.handleNumberChange.bind(this)
 		this.handleEmailChange = this.handleEmailChange.bind(this)
