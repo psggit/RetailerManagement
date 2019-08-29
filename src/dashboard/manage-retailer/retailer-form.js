@@ -539,8 +539,8 @@ class RetailerForm extends React.Component {
 						>
 							<Form.Radio.Option value="savings">Savings</Form.Radio.Option>
 							<Form.Radio.Option value="current">Current</Form.Radio.Option>
-							<Form.Radio.Option value="overdraft">Overdraft</Form.Radio.Option>
-							<Form.Radio.Option value="cash_credit">Cash Credit</Form.Radio.Option>
+							<Form.Radio.Option value="overdraft">ODCC Account</Form.Radio.Option>
+							{/* <Form.Radio.Option value="cash_credit">Cash Credit</Form.Radio.Option> */}
 						</Form.Radio>
 						<Form.TextInput
 							label="IFSC Code*"
