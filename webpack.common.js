@@ -47,7 +47,7 @@ module.exports = {
       template: './index.html'
     }),
     new webpack.DefinePlugin({
-      "process.env.BASE_URL": JSON.stringify(process.env.BASE_URL || "basketball38.hasura-app.io")
+      "process.env.BASE_URL": JSON.stringify(process.env.BASE_URL || "hipbar-dev.com")
     })
   ],
   output: {
