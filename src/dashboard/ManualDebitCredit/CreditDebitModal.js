@@ -5,9 +5,9 @@ import { Select, TextInput, TextArea } from "@auth0/cosmos"
 import { fetchRetailerList, fetchTransactionCode, insertManualCreditDebit } from "../../api"
 import Notify from "Components/notify"
 
-export default function CreditDebitModal(props) {
+export default function CreditDebitModal (props) {
   return class CreditDebitModal extends React.Component {
-    constructor() {
+    constructor () {
       super()
       this.state = {
         retailers: [],
@@ -24,7 +24,8 @@ export default function CreditDebitModal(props) {
       this.handleCommentChange = this.handleCommentChange.bind(this)
       this.handleSubmit = this.handleSubmit.bind(this)
     }
-    componentDidMount() {
+
+    componentDidMount () {
       const fetchRetailerListReq = {
         offset: 0,
         limit: 9999,
@@ -39,7 +40,8 @@ export default function CreditDebitModal(props) {
           this.setState({ retailers, loading: false })
         })
     }
-    handleRetailerChange(e) {
+
+    handleRetailerChange (e) {
       this.setState({ activeRetailer: parseInt(e.target.value), showTransactionCodes: true })
       const fetchTransactionCodeReq = {
         "": ""
@@ -53,18 +55,22 @@ export default function CreditDebitModal(props) {
           this.setState({ transactionCodes, showTransactionCodes: true })
         })
     }
-    handleTransactionCodeChange(e) {
+
+    handleTransactionCodeChange (e) {
       this.setState({ activeTransactionCode: e.target.value, showAmount: true })
     }
-    handleAmountChange(e) {
+
+    handleAmountChange (e) {
       if (e.target.validity.valid) {
         this.setState({ amount: e.target.value })
       }
     }
-    handleCommentChange(e) {
+
+    handleCommentChange (e) {
       this.setState({ comment: e.target.value })
     }
-    handleSubmit() {
+
+    handleSubmit () {
       const { activeRetailer, activeTransactionCode, amount, comment } = this.state
       const insertManualCreditDebitReq = {
         retailer_id: activeRetailer,
@@ -87,7 +93,8 @@ export default function CreditDebitModal(props) {
           })
       }
     }
-    render() {
+
+    render () {
       return (
         <TitleAndSave handleSave={this.handleSubmit} title="Create new debit/credit">
           <Select

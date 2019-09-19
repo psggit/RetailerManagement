@@ -1,24 +1,17 @@
 import React from "react"
 import Layout from "Components/layout"
 import { Table } from '@auth0/cosmos'
-import { Icon, Spinner, List, Dialog } from '@auth0/cosmos'
+import { Spinner } from '@auth0/cosmos'
 import { Select, TextInput } from '@auth0/cosmos'
 import { Button } from '@auth0/cosmos'
 import Pagination from 'Components/pagination'
-import { NavLink } from 'react-router-dom'
-import Switch2 from 'Components/switch'
 import CustomButton from 'Components/button'
 import { getQueryObj, getQueryUri } from 'Utils/url-utils'
 import * as Api from './../../api'
 
 class DeviceManagement extends React.Component {
-	constructor() {
+	constructor () {
 		super()
-		// this.defaultFilters = {
-		// 	column: '',
-		// 	operator: 'EQUAL',
-		// 	value: ''
-		// }
 		this.state = {
 			activePage: 1,
 			offset: 0,
@@ -55,7 +48,7 @@ class DeviceManagement extends React.Component {
 		this.setResponseData = this.setResponseData.bind(this)
 	}
 
-	componentDidMount() {
+	componentDidMount () {
 		if (location.search.length) {
 			this.setQueryParamas()
 		} else {
@@ -63,16 +56,15 @@ class DeviceManagement extends React.Component {
 		}
 	}
 
-	fetchDefaultData() {
+	fetchDefaultData () {
 		this.setState({ retailerData: [], retailerListCount: 0 })
-		//this.fetchOrganizationList({}, this.formatOrganizationList)
 		this.fetchRetailerList({
 			offset: 0,
 			limit: this.pagesLimit,
 		}, this.setResponseData, this.failureCallback)
 	}
 
-	setQueryParamas() {
+	setQueryParamas () {
 		const queryUri = location.search.slice(1)
 		const queryObj = getQueryObj(queryUri)
 
@@ -97,11 +89,11 @@ class DeviceManagement extends React.Component {
 
 	}
 
-	fetchRetailerList(payloadObj, successCallback, failureCallback) {
+	fetchRetailerList (payloadObj, successCallback, failureCallback) {
 		Api.fetchRetailerList(payloadObj, successCallback, failureCallback)
 	}
 
-	getFilteredRetailersList() {
+	getFilteredRetailersList () {
 		const { column, operator, value, offset, activePage } = this.state
 
 		this.filter = {
@@ -138,7 +130,7 @@ class DeviceManagement extends React.Component {
 		}, this.setResponseData, this.failureCallback)
 	}
 
-	setResponseData(response) {
+	setResponseData (response) {
 		if (response && response.ret_response) {
 			this.setState({
 				retailerData: response.ret_response,
@@ -150,11 +142,11 @@ class DeviceManagement extends React.Component {
 		}
 	}
 
-	failureCallback() {
+	failureCallback () {
 		this.setState({ retailerData: [], retailerListCount: 0, loading: false })
 	}
 
-	handlePageChange(pageObj) {
+	handlePageChange (pageObj) {
 		const queryUri = location.search.slice(1)
 		const queryObj = getQueryObj(queryUri)
 		let queryParamsObj = {}
@@ -201,7 +193,7 @@ class DeviceManagement extends React.Component {
 		history.pushState(queryParamsObj, "retailer listing", `/admin/device-management?${getQueryUri(queryParamsObj)}`)
 	}
 
-	handleChange(e) {
+	handleChange (e) {
 		if (e.target.name === "column" &&
 			(e.target.value === "ID" || e.target.value === "OrganisationID")
 		) {
@@ -226,7 +218,7 @@ class DeviceManagement extends React.Component {
 		//this.setState({[e.target.name]: (e.target.value).toString()})
 	}
 
-	resetFilter() {
+	resetFilter () {
 		this.setState({
 			column: 'ID',
 			operator: 'EQUAL',
@@ -236,14 +228,14 @@ class DeviceManagement extends React.Component {
 		this.props.history.push(`/admin/device-management`)
 	}
 
-	editRetailerDetails(e, item) {
+	editRetailerDetails (e, item) {
 		if (e.target.nodeName === "SPAN") {
 			return
 		}
 		this.props.history.push(`/admin/device-management/${item.id}`, item)
 	}
 
-	render() {
+	render () {
 		const { retailerData } = this.state
 
 		return (
@@ -328,7 +320,6 @@ class DeviceManagement extends React.Component {
 						<Table
 							emptyMessage={this.state.loading ? <Spinner /> : 'No retailers found'}
 							items={retailerData}
-						//onRowClick={(e, item) => this.handleRowClick(e, item)}
 						>
 							<Table.Column field="actions">
 								{item => (

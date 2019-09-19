@@ -1,6 +1,6 @@
 import { emailRegex } from 'Utils/regex'
 
-export function validateTextField(fieldName, fieldValue) {
+export function validateTextField (fieldName, fieldValue) {
   if (!fieldValue.length) {
     return {
       status: true,
@@ -13,7 +13,7 @@ export function validateTextField(fieldName, fieldValue) {
   }
 }
 
-export function validateEmail(fieldName, fieldValue) {
+export function validateEmail (fieldName, fieldValue) {
   if (!fieldValue.length) {
     return {
       status: true,
@@ -32,7 +32,7 @@ export function validateEmail(fieldName, fieldValue) {
   }
 }
 
-export function validateNumberField({fieldName, fieldValue, length, checkLength}) {
+export function validateNumberField ({fieldName, fieldValue, length, checkLength}) {
   if (checkLength && !fieldValue.length) {
     return {
       status: true,

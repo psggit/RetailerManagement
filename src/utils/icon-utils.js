@@ -1,6 +1,6 @@
 import React from 'react'
 
-export function getIcon(name) {
+export function getIcon (name) {
   switch (name) {
     case 'logo':
       return (

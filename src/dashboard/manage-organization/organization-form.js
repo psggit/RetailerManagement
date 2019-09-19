@@ -1,12 +1,12 @@
 import React from 'react'
-import { Form, TextInput, Checkbox, Button, ButtonGroup } from '@auth0/cosmos'
+import { Form, Checkbox, ButtonGroup } from '@auth0/cosmos'
 import { validateTextField, validateEmail, validateNumberField } from 'Utils/validators'
 import { checkCtrlA, validateNumType, checkCtrlV } from 'Utils/logic-utils'
 import CustomButton from 'Components/button'
 
 class OrganizationForm extends React.Component {
 
-	constructor(props) {
+	constructor (props) {
 		super(props)
 		this.inputNameMap = {
 			organizationName: 'Organization name',
@@ -21,13 +21,9 @@ class OrganizationForm extends React.Component {
 			mobileNo: 'Mobile number',
 			pincode: 'Pincode',
 			email: 'Email',
-			// partnershipDoc: 'For partnership firm, Documents attached',
-			// privateDoc: 'For Pvt Ltd, Documents attached',
 			otherOrgType: 'Organization type',
 			otherProof: 'Attached documents'
 		}
-
-		//console.log("data", props.data ? props.data : '')
 
 		this.state = {
 			organizationName: props.data ? props.data.organisation_name : '',
@@ -63,24 +59,10 @@ class OrganizationForm extends React.Component {
 			otherProof: props.data ? props.data.other_documents ? props.data.other_documents : '' : '',
 			isOtherProof: props.data && props.data.other_documents && props.data.other_documents.length > 0 ? true : false,
 
-			// otherParnershipProof: false,
-			// otherPvtLtdProof: false,
-			// partnershipDoc: '',
-			// privateDoc: '',
-
 			stateList: this.props.stateList ? this.props.stateList : '',
 			cityList: this.props.cityList ? this.props.cityList : '',
 			stateMap: this.props.stateMap ? this.props.stateMap : '',
-			//errorFlag: false,
 
-			// partnershipDocErr: {
-			//     value: '',
-			//     status: false
-			// },
-			// privateDocErr: {
-			//     value: '',
-			//     status: false
-			// },
 			otherOrgTypeErr: {
 				value: '',
 				status: false
@@ -146,10 +128,9 @@ class OrganizationForm extends React.Component {
 		this.checkForm = this.checkForm.bind(this)
 		this.handleSave = this.handleSave.bind(this)
 		this.validate = this.validate.bind(this)
-		//this.formIsValid = this.formIsValid.bind(this)
 	}
 
-	componentWillReceiveProps(newProps) {
+	componentWillReceiveProps (newProps) {
 		if (this.props.stateList !== newProps.stateList) {
 			this.setState({ stateList: newProps.stateList })
 			if (location.pathname.includes("create")) {
@@ -169,7 +150,7 @@ class OrganizationForm extends React.Component {
 		}
 	}
 
-	handleChange(e) {
+	handleChange (e) {
 		if (e.target.name.toString().includes("StateIdx")) {
 			this.setState({
 				cityList: this.state.stateMap[e.target.value],
@@ -182,7 +163,7 @@ class OrganizationForm extends React.Component {
 		}
 	}
 
-	handleSelectChange(e) {
+	handleSelectChange (e) {
 		if (!e.target.checked && e.target.name === "isOtherProof") {
 			this.setState({ [e.target.name]: e.target.checked, otherProof: '' })
 		} else {
@@ -190,7 +171,7 @@ class OrganizationForm extends React.Component {
 		}
 	}
 
-	handleTextChange(e) {
+	handleTextChange (e) {
 		const errName = `${e.target.name}Err`
 		this.setState({
 			[e.target.name]: e.target.value,
@@ -198,7 +179,7 @@ class OrganizationForm extends React.Component {
 		})
 	}
 
-	handleEmailChange(e) {
+	handleEmailChange (e) {
 		const errName = `${e.target.name}Err`
 		this.setState({
 			[e.target.name]: e.target.value,
@@ -206,7 +187,7 @@ class OrganizationForm extends React.Component {
 		})
 	}
 
-	handleNumberChange(e) {
+	handleNumberChange (e) {
 		const errName = `${e.target.name}Err`
 		this.length = 0
 		this.checkLength = true
@@ -240,7 +221,7 @@ class OrganizationForm extends React.Component {
 		}
 	}
 
-	handleSave(e) {
+	handleSave (e) {
 		e.preventDefault()
 		this.checkForm()
 
@@ -250,7 +231,7 @@ class OrganizationForm extends React.Component {
 
 	}
 
-	checkForm() {
+	checkForm () {
 		this.errorFlag = false
 		const formEl = document.getElementById('OrgName')
 		const inputCollection = formEl.getElementsByTagName('input')
@@ -268,7 +249,7 @@ class OrganizationForm extends React.Component {
 		})
 	}
 
-	validate(item) {
+	validate (item) {
 		const errName = `${item.name}Err`
 
 		if (item.name === "pincode" || item.name === "mobileNo") {
@@ -306,7 +287,6 @@ class OrganizationForm extends React.Component {
 
 		} else {
 			const error = validateTextField(this.inputNameMap[item.name], item.value)
-			//console.log("error", error, item.name)
 			if (error.status) {
 				this.errorFlag = true
 			}
@@ -316,11 +296,11 @@ class OrganizationForm extends React.Component {
 		}
 	}
 
-	getData() {
+	getData () {
 		return this.state
 	}
 
-	render() {
+	render () {
 		const { organizationNameErr,
 			incorporationDateErr,
 			cinNumberErr,
@@ -332,8 +312,6 @@ class OrganizationForm extends React.Component {
 			authorizedPersonErr,
 			mobileNoErr,
 			emailErr,
-			// partnershipDocErr,
-			// privateDocErr,
 			otherOrgTypeErr,
 			otherProofErr,
 			isOtherProof,
@@ -667,7 +645,6 @@ class OrganizationForm extends React.Component {
 							</div>
 						}
 						<ButtonGroup align="right">
-							{/* <Button onClick={(e) => this.handleSave(e)}>Save</Button> */}
 							<CustomButton
 								text="Save"
 								handleClick={this.handleSave}

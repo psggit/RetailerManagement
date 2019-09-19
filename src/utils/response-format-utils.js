@@ -1,4 +1,4 @@
-export function formatStateAndCityList(data) {
+export function formatStateAndCityList (data) {
     const list = data
     let cityList = [], stateList = [], stateMap = {}
     let index = 0;
@@ -33,7 +33,7 @@ export function formatStateAndCityList(data) {
     return {stateList, cityList, stateMap}
 }
 
-export function formatStateAndOrganizationList(data) {
+export function formatStateAndOrganizationList (data) {
     let organizationList = [], organizationMap = {}
     for(const i in data) {
         let organization={}

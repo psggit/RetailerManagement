@@ -5,7 +5,7 @@ import {  Api } from 'Utils/config'
 
 class Layout extends React.Component {
 
-		handleLogout() {
+		handleLogout () {
 
 			const fetchOptions = {
 					method: 'get',
@@ -34,10 +34,11 @@ class Layout extends React.Component {
 			})
 
 	}
-   render() {
-		 const {title, children} = this.props
+
+   render () {
+		const {title, children} = this.props
     return (
-			<div className='container'
+			<div className="container"
 					// style={{
 					//     marginLeft: '240px',
 					//     marginTop: '60px',

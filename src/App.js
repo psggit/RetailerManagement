@@ -3,14 +3,11 @@ import ReactDOM from 'react-dom'
 import {
 	Switch,
 	Route,
-	Link,
 } from 'react-router-dom'
 import { Router } from 'react-router'
-import { Api } from 'Utils/config'
 import { createSession } from './login/utils'
 
 import Login from './login'
-//import Dashboard from './dashboard'
 import RetailerForm from './report'
 import SideMenu from 'Components/sidemenu'
 import Navbar from 'Components/navbar'
@@ -22,15 +19,13 @@ import OrganizationDetails from './dashboard/manage-organization/organization-de
 import RetailerDetails from './dashboard/manage-retailer/retailer-details'
 import ManageRetailer from './dashboard/manage-retailer/index'
 import RetailerNotes from "./dashboard/RetailerNotes"
-import CreateRetailer from './dashboard/manage-retailer/create-retailer';
-import EditRetailer from './dashboard/manage-retailer/edit-retailer';
-import RetailerList from "./dashboard/device-management/index";
+import CreateRetailer from './dashboard/manage-retailer/create-retailer'
+import EditRetailer from './dashboard/manage-retailer/edit-retailer'
+import RetailerList from "./dashboard/device-management/index"
 import DeviceList from "./dashboard/device-management/device-list"
 import GenerateReport from './dashboard/generate-report'
 import AccessLogs from "./dashboard/access-logs"
-// import StockAndPriceList from './dashboard/stock-and-price'
-import CreateOrUpdateStockPrice from './dashboard/stock-management/retailer-inventory';
-// import RetailerInventory from './dashboard/stock-and-price/retailer-inventory'
+import CreateOrUpdateStockPrice from './dashboard/stock-management/retailer-inventory'
 import StockManagement from "./dashboard/stock-management"
 import ModifiedStockList from "./dashboard/stock-management/modifiedStockSummary"
 import Account from "./dashboard/Account"
@@ -39,14 +34,13 @@ const history = createHistory()
 const supportedRoles = ["admin", "opdataadmin", "opdataentry"]
 const accessRole = localStorage.getItem('x-hasura-role') ? localStorage.getItem('x-hasura-role') : ''
 
-function StockManagementSwitch() {
+function StockManagementSwitch () {
 	if (supportedRoles.indexOf(accessRole) === -1) {
 		return (
 			<Switch>
 				<Route
 					exact
 					path="/admin/stock-and-price"
-					//component={ManageOrganization}
 					render={
 						props => (
 							<StockManagement {...props} />
@@ -57,7 +51,6 @@ function StockManagementSwitch() {
 				<Route
 					exact
 					path="/admin/stock-and-price/list"
-					//component={ManageOrganization}
 					render={
 						props => (
 							<CreateOrUpdateStockPrice {...props} />
@@ -68,7 +61,6 @@ function StockManagementSwitch() {
 				<Route
 					exact
 					path="/admin/stock-and-price/modified-list/:outletName"
-					//component={ManageOrganization}
 					render={
 						props => (
 							<ModifiedStockList {...props} />
@@ -81,14 +73,13 @@ function StockManagementSwitch() {
 	return <div />
 }
 
-function RetailerManagementSwitch() {
+function RetailerManagementSwitch () {
 	if (supportedRoles.indexOf(accessRole) !== -1) {
 		return (
 			<Switch>
 				<Route
 					exact
 					path="/admin/organization/create"
-					//component={CreateOrganization}
 					render={
 						props => (
 							<CreateOrganization {...props} />
@@ -99,7 +90,6 @@ function RetailerManagementSwitch() {
 				<Route
 					exact
 					path="/admin/organization/edit/:organizationId"
-					//component={EditOrganization}
 					render={
 						props => (
 							<EditOrganization {...props} />
@@ -110,7 +100,6 @@ function RetailerManagementSwitch() {
 				<Route
 					exact
 					path="/admin/organization/:organizationId"
-					//component={EditOrganization}
 					render={
 						props => (
 							<OrganizationDetails {...props} />
@@ -121,7 +110,6 @@ function RetailerManagementSwitch() {
 				<Route
 					exact
 					path="/admin/retailer"
-					//component={ManageRetailer}
 					render={
 						props => (
 							<ManageRetailer {...props} />
@@ -132,7 +120,6 @@ function RetailerManagementSwitch() {
 				<Route
 					exact
 					path="/admin/retailer/create"
-					//component={CreateRetailer}
 					render={
 						props => (
 							<CreateRetailer {...props} />
@@ -143,7 +130,6 @@ function RetailerManagementSwitch() {
 				<Route
 					exact
 					path="/admin/retailer/edit/:retailerId"
-					//component={EditOrganization}
 					render={
 						props => (
 							<EditRetailer {...props} />
@@ -156,11 +142,6 @@ function RetailerManagementSwitch() {
 					exact
 					path="/admin/retailer/:retailerId"
 					component={RetailerDetails}
-				// render={
-				//   props => (
-				//     <RetailerDetails {...props} />
-				//   )
-				// }
 				/>
 
 				<Route
@@ -173,11 +154,6 @@ function RetailerManagementSwitch() {
 					exact
 					path="/admin/generate-report"
 					component={GenerateReport}
-				// render={
-				//   props => (
-				//     <GenerateReport {...props} />
-				//   )
-				// }
 				/>
 
 				<Route
@@ -189,7 +165,6 @@ function RetailerManagementSwitch() {
 				<Route
 					exact
 					path="/admin/stock-and-price"
-					//component={ManageOrganization}
 					render={
 						props => (
 							<StockManagement {...props} />
@@ -200,7 +175,6 @@ function RetailerManagementSwitch() {
 				<Route
 					exact
 					path="/admin/stock-and-price/list"
-					//component={ManageOrganization}
 					render={
 						props => (
 							<CreateOrUpdateStockPrice {...props} />
@@ -211,7 +185,6 @@ function RetailerManagementSwitch() {
 				<Route
 					exact
 					path="/admin/stock-and-price/modified-list/:outletName"
-					//component={ManageOrganization}
 					render={
 						props => (
 							<ModifiedStockList {...props} />
@@ -222,7 +195,6 @@ function RetailerManagementSwitch() {
 				<Route
 					exact
 					path="/admin/device-management"
-					//component={ManageOrganization}
 					render={
 						props => (
 							<RetailerList {...props} />
@@ -233,7 +205,6 @@ function RetailerManagementSwitch() {
 				<Route
 					exact
 					path="/admin/device-management/:retailerId"
-					//component={ManageOrganization}
 					render={
 						props => (
 							<DeviceList {...props} />
@@ -244,7 +215,6 @@ function RetailerManagementSwitch() {
 				<Route
 					exact
 					path="/admin"
-					//component={ManageOrganization}
 					render={
 						props => (
 							<ManageOrganization {...props} />
@@ -255,7 +225,6 @@ function RetailerManagementSwitch() {
 				<Route
 					exact
 					path="/admin/organization"
-					//component={ManageOrganization}
 					render={
 						props => (
 							<ManageOrganization {...props} />
@@ -269,13 +238,14 @@ function RetailerManagementSwitch() {
 }
 
 class App extends React.Component {
-	constructor() {
+	constructor () {
 		super()
 		this.state = {
 			currentRoute: location.pathname.split('/')[2] || 'stock-and-price'
 		}
 	}
-	componentDidMount() {
+	
+	componentDidMount () {
 		history.listen((loction) => {
 			const newRoute = location.pathname.split('/')[2]
 			if (newRoute !== this.state.currentRoute) {
@@ -285,7 +255,7 @@ class App extends React.Component {
 		})
 	}
 
-	componentWillMount() {
+	componentWillMount () {
 		const fetchOptions = {
 			method: 'get',
 			credentials: 'include',
@@ -317,7 +287,8 @@ class App extends React.Component {
 				}
 			})
 	}
-	render() {
+
+	render () {
 
 		return (
 			<Router history={history}>

@@ -3,20 +3,20 @@ import { NavLink } from "react-router-dom"
 import './sidemenu.scss'
 
 class SideMenu extends React.Component {
-  checkActiveClass(value) {
+  checkActiveClass (value) {
     if (this.props.currentRoute === value) {
       return 'active'
     }
     return ''
   }
 
-  handleChangeRoute(e, currentRoute) {
+  handleChangeRoute (e, currentRoute) {
     e.preventDefault()
     //this.props.history.push(`/home/${currentRoute}`)
     location.href = `/admin/${currentRoute}`
   }
 
-  render() {
+  render () {
     const { menuItems, menuItemsMap, currentRoute } = this.props
     return (
       <div className="side-menu">

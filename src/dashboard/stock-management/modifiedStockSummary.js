@@ -5,7 +5,7 @@ import CustomButton from 'Components/button'
 import * as Api from './../../api'
 
 class StockSummary extends React.Component {
-  constructor() {
+  constructor () {
     super()
 
     this.state = {
@@ -18,14 +18,13 @@ class StockSummary extends React.Component {
     this.failureCreateInventoryCallback = this.failureCreateInventoryCallback.bind(this)
   }
 
-  componentDidMount() {
+  componentDidMount () {
     if(localStorage.getItem("modifiedInventoryList")) {
       this.setState({modifiedStockList: JSON.parse(localStorage.getItem("modifiedInventoryList"))})
     }
   }
 
-  renderStock(stock) {
-    console.log("props", this.props)
+  renderStock (stock) {
     return (
       <div className="modified-inventory-list">
         <div className="product">
@@ -60,7 +59,7 @@ class StockSummary extends React.Component {
     )
   }
 
-  createOrUpdateInventory() {
+  createOrUpdateInventory () {
     localStorage.removeItem("modifiedInventoryList")
     const payload = {
       inventories: this.state.modifiedStockList
@@ -75,20 +74,20 @@ class StockSummary extends React.Component {
     }
   }
 
-  successCreateInventoryCallback() {
+  successCreateInventoryCallback () {
     this.setState({creatingInventory: false})
   }
 
-  failureCreateInventoryCallback() {
+  failureCreateInventoryCallback () {
     this.setState({creatingInventory: false})
   }
 
-  createOrUpdateRetailerInventory(payload, successcallback) {
+  createOrUpdateRetailerInventory (payload, successcallback) {
     Api.createOrUpdateStockPrice(payload, successcallback)
   }
 
 
-  render() {
+  render () {
     const {modifiedStockList} = this.state
     return (
       <React.Fragment>

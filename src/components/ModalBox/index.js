@@ -3,43 +3,46 @@ import './index.scss'
 import { unmountComponentAtNode } from 'react-dom'
 
 class ModalBox extends React.Component {
-  constructor() {
+  constructor () {
     super()
     this.state = {
       width: "46%",
       maxHeight: '95vh'
     }
   }
-  handleClick(e) {
+
+  handleClick (e) {
     if (e.keyCode == 27) {
       unmountComponentAtNode(document.getElementById('confirm-modal'))
       // document.body.setAttribute('class', '')
     }
   }
 
-  handlePress(e) {
+  handlePress (e) {
       if (e.target.className === 'modal-overlay') {
         unmountComponentAtNode(document.getElementById('confirm-modal'))
         // document.body.setAttribute('class', '')
       }
   }
 
-  setModalContainerWidth(width) {
+  setModalContainerWidth (width) {
     this.setState({ width })
   }
 
-  componentDidMount() {
+  componentDidMount () {
     window.addEventListener('keyup', this.handleClick)
     document.addEventListener('click', this.handlePress)
   }
-  componentWillUnmount() {
+
+  componentWillUnmount () {
     window.removeEventListener('keyup', this.handleClick)
     document.removeEventListener('click', this.handlePress)
   }
+
   render () {
     return (
-      <div className='modal-overlay'>
-        <div className='modal-container' style={{ width: this.state.width, maxHeight: this.state.maxHeight, overflowY: 'auto' }}>
+      <div className="modal-overlay">
+        <div className="modal-container" style={{ width: this.state.width, maxHeight: this.state.maxHeight, overflowY: 'auto' }}>
           { this.props.children }
         </div>
       </div>

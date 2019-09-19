@@ -2,13 +2,12 @@ import React from 'react'
 import Layout from 'Components/layout'
 import RetailerForm from './retailer-form'
 import Card from 'Components/card'
-import { Form, Checkbox, Button, ButtonGroup } from '@auth0/cosmos'
 import * as Api from './../../api'
 import 'Sass/animations.scss'
 import { formatStateAndCityList, formatStateAndOrganizationList } from 'Utils/response-format-utils'
 
 class EditRetailer extends React.Component {
-	constructor() {
+	constructor () {
 		super()
 		this.state = {
 			updatingRetailer: false,
@@ -31,30 +30,30 @@ class EditRetailer extends React.Component {
 		this.formatResponse = this.formatResponse.bind(this)
 	}
 
-	componentDidMount() {
+	componentDidMount () {
 		this.fetchStateAndCityList({}, this.formatResponse)
 		this.fetchOrganizationAndStateList({}, this.formatOrganizationList)
 	}
 
-	fetchOrganizationAndStateList(payloadObj, organizationListSuccessCallback) {
+	fetchOrganizationAndStateList (payloadObj, organizationListSuccessCallback) {
 		Api.fetchOrganizationAndStateList(payloadObj, organizationListSuccessCallback)
 	}
 
-	formatOrganizationList(data) {
+	formatOrganizationList (data) {
 		const { organizationList, organizationMap } = formatStateAndOrganizationList(data.details)
 		this.setState({ organizationList, organizationMap })
 	}
 
-	fetchStateAndCityList(payload, stateListSuccessCallback) {
+	fetchStateAndCityList (payload, stateListSuccessCallback) {
 		Api.fetchStateAndCityList(payload, stateListSuccessCallback)
 	}
 
-	formatResponse(data) {
+	formatResponse (data) {
 		const { stateList, cityList, stateMap } = formatStateAndCityList(data.states)
 		this.setState({ stateList, cityList, stateMap })
 	}
 
-	formIsValid() {
+	formIsValid () {
 		const retailerDataForm = this.retailerDetailsForm.getData()
 		const { storeCodeErr,
 			outletNameErr,
@@ -106,14 +105,13 @@ class EditRetailer extends React.Component {
 		return true
 	}
 
-	handleSave() {
+	handleSave () {
 		const retailerDataForm = this.retailerDetailsForm.getData()
 		this.setState({ isFormValid: this.formIsValid() })
 		if (this.formIsValid()) {
 			const payload = {
 				id: parseInt(this.props.location.state.id),
 				organisation_id: retailerDataForm.selectedOrganizationIdx,
-				branch_status: retailerDataForm.selectedOutletStatusIdx,
 				ksbcl_code: retailerDataForm.storeCode,
 				outlet_name: retailerDataForm.outletName,
 				excise_licence_number: retailerDataForm.exciseLicenceNo,
@@ -146,24 +144,24 @@ class EditRetailer extends React.Component {
 		}
 	}
 
-	updateRetailer(payload, successCallback, failureCallback) {
+	updateRetailer (payload, successCallback, failureCallback) {
 		Api.updateRetailer(payload, successCallback, failureCallback)
 	}
 
-	successCallback() {
+	successCallback () {
 		this.updateState()
 		location.href = '/admin/retailer'
 	}
 
-	failureCallback() {
+	failureCallback () {
 		this.updateState()
 	}
 
-	updateState() {
+	updateState () {
 		this.setState({ updatingRetailer: false })
 	}
 
-	render() {
+	render () {
 		return (
 			<Layout title="Edit Retailer">
 				<Card width="800px" className={!this.state.isFormValid ? 'animated shake' : ''}>

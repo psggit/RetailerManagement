@@ -1,18 +1,14 @@
 import React from 'react'
 import style from './navbar.scss'
-import { Api } from 'Utils/config'
 
 class Navbar extends React.Component {
-  constructor() {
-    super()
-  }
 
-  handleChangeRoute(e, currentRoute) {
+  handleChangeRoute (e, currentRoute) {
     e.preventDefault()
     this.props.history.push(`/admin/${currentRoute}`)
   }
 
-  handleLogout() {
+  handleLogout () {
 
     const fetchOptions = {
       method: 'get',
@@ -42,7 +38,8 @@ class Navbar extends React.Component {
       })
 
   }
-  render() {
+  
+  render () {
     const { menuItems } = this.props
     return <div className="navbar" style={style}>
       <div className="title">

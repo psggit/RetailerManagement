@@ -1,19 +1,19 @@
 import React from "react"
 
 export default {
-  downArrow: (
-    <svg width="20px" height="23px" viewBox="0 0 40 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
-      <g id="V0.3---With-Mobile-Version" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
-        <g id="01a-Gifitng-Website---V0.7---Home-Page" transform="translate(-700.000000, -887.000000)" fill="#000000" fillRule="nonzero">
-          <g id="50%-Off" transform="translate(385.000000, 820.000000)">
-            <g id="Down" transform="translate(315.000000, 67.000000)">
-              <path d="M19.9931858,22.8058407 C19.2765487,22.8058407 18.56,22.5322124 18.0136283,21.9861062 L0.820353982,4.79265487 C-0.273362832,3.69893805 -0.273362832,1.92566372 0.820353982,0.832389381 C1.91362832,-0.260884956 3.68654867,-0.260884956 4.78035398,0.832389381 L19.9931858,16.0461062 L35.2061062,0.832920354 C36.299823,-0.260353982 38.0725664,-0.260353982 39.1657522,0.832920354 C40.26,1.92619469 40.26,3.69946903 39.1657522,4.79318584 L21.9727434,21.9866372 C21.4261062,22.5328319 20.7095575,22.8058407 19.9931858,22.8058407 Z" id="Shape"></path>
-            </g>
-          </g>
-        </g>
-      </g>
-    </svg>
-  ),
+  // downArrow: (
+  //   <svg width="20px" height="23px" viewBox="0 0 40 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
+  //     <g id="V0.3---With-Mobile-Version" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+  //       <g id="01a-Gifitng-Website---V0.7---Home-Page" transform="translate(-700.000000, -887.000000)" fill="#000000" fillRule="nonzero">
+  //         <g id="50%-Off" transform="translate(385.000000, 820.000000)">
+  //           <g id="Down" transform="translate(315.000000, 67.000000)">
+  //             <path d="M19.9931858,22.8058407 C19.2765487,22.8058407 18.56,22.5322124 18.0136283,21.9861062 L0.820353982,4.79265487 C-0.273362832,3.69893805 -0.273362832,1.92566372 0.820353982,0.832389381 C1.91362832,-0.260884956 3.68654867,-0.260884956 4.78035398,0.832389381 L19.9931858,16.0461062 L35.2061062,0.832920354 C36.299823,-0.260353982 38.0725664,-0.260353982 39.1657522,0.832920354 C40.26,1.92619469 40.26,3.69946903 39.1657522,4.79318584 L21.9727434,21.9866372 C21.4261062,22.5328319 20.7095575,22.8058407 19.9931858,22.8058407 Z" id="Shape"></path>
+  //           </g>
+  //         </g>
+  //       </g>
+  //     </g>
+  //   </svg>
+  // ),
   minus: (
     <svg width="18px" height="18px" viewBox="0 0 18 4" version="1.1">
       <g id="V0.3---With-Mobile-Version" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">

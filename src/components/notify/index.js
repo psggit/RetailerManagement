@@ -3,7 +3,7 @@ import { render } from 'react-dom'
 import { Alert } from '@auth0/cosmos'
 import './notification.scss'
 
-function Notify(type, message) {
+function Notify (type, message) {
   const className = "notification-container"
   const el = document.querySelector(`.${className}`)
   

@@ -3,11 +3,8 @@ import Layout from 'Components/layout'
 import Card from 'Components/card'
 
 class RetailerDetails extends React.Component {
-	constructor() {
-		super()
-	}
 
-	render() {
+	render () {
 		const data = this.props.history.location.state
 		return (
 			<Layout title="Retailer Details">

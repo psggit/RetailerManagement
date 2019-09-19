@@ -1,11 +1,11 @@
 import React from 'react'
-import { Form, Checkbox, Button, ButtonGroup } from '@auth0/cosmos'
+import { Form, Checkbox, ButtonGroup } from '@auth0/cosmos'
 import { validateTextField, validateEmail, validateNumberField } from 'Utils/validators'
 import { checkCtrlA, validateNumType, checkCtrlV } from 'Utils/logic-utils'
 import CustomButton from 'Components/button'
 
 class RetailerForm extends React.Component {
-	constructor(props) {
+	constructor (props) {
 		super(props)
 		this.inputNameMap = {
 			storeCode: 'Store code',
@@ -151,7 +151,7 @@ class RetailerForm extends React.Component {
 		this.handleStateChange = this.handleStateChange.bind(this)
 	}
 
-	componentWillReceiveProps(newProps) {
+	componentWillReceiveProps (newProps) {
 		if (this.props.organizationList !== newProps.organizationList) {
 			this.setState({ organizationList: newProps.organizationList })
 		}
@@ -192,7 +192,7 @@ class RetailerForm extends React.Component {
 		}
 	}
 
-	handleStateChange(e) {
+	handleStateChange (e) {
 		if (e.target.name.toString().includes("StateIdx")) {
 			this.setState({
 				cityList: this.state.stateMap[e.target.value],
@@ -201,7 +201,7 @@ class RetailerForm extends React.Component {
 		}
 	}
 
-	handleChange(e) {
+	handleChange (e) {
 		if (e.target.name.includes("OrganizationIdx")) {
 			this.orgIndexError = false
 			this.setState({
@@ -217,11 +217,11 @@ class RetailerForm extends React.Component {
 		}
 	}
 
-	handleSelectChange(e) {
+	handleSelectChange (e) {
 		this.setState({ [e.target.name]: e.target.checked })
 	}
 
-	handleTextChange(e) {
+	handleTextChange (e) {
 		const errName = `${e.target.name}Err`
 
 		this.setState({
@@ -230,7 +230,7 @@ class RetailerForm extends React.Component {
 		})
 	}
 
-	handleNumberChange(e) {
+	handleNumberChange (e) {
 		const errName = `${e.target.name}Err`
 		this.length = 0
 		this.checkLength = true
@@ -266,7 +266,7 @@ class RetailerForm extends React.Component {
 		}
 	}
 
-	handleEmailChange(e) {
+	handleEmailChange (e) {
 		const errName = `${e.target.name}Err`
 
 		this.setState({
@@ -275,11 +275,11 @@ class RetailerForm extends React.Component {
 		})
 	}
 
-	getData() {
+	getData () {
 		return this.state
 	}
 
-	handleSave(e) {
+	handleSave (e) {
 		e.preventDefault()
 		this.checkForm()
 		if (!this.errorFlag && !this.orgIndexError) {
@@ -287,7 +287,7 @@ class RetailerForm extends React.Component {
 		}
 	}
 
-	checkForm() {
+	checkForm () {
 		this.errorFlag = false
 		const formEl = document.getElementById('RetailerForm')
 		const inputCollection = formEl.getElementsByTagName('input')
@@ -302,7 +302,7 @@ class RetailerForm extends React.Component {
 		})
 	}
 
-	validate(item) {
+	validate (item) {
 		const errName = `${item.name}Err`
 
 		if (item.name === "pincode" || item.name === "mobileNo" || item.name === "discountPercent" || item.name === "serviceChargePercent" || item.name === "deliveryDiscountPercent") {
@@ -362,7 +362,7 @@ class RetailerForm extends React.Component {
 		}
 	}
 
-	render() {
+	render () {
 		const {
 			storeCodeErr,
 			outletNameErr,
@@ -382,7 +382,6 @@ class RetailerForm extends React.Component {
 			mobileNoErr,
 			emailErr,
 			gpsCoordinatesErr,
-			//orgIndexError
 		} = this.state
 
 		return (
@@ -399,7 +398,6 @@ class RetailerForm extends React.Component {
 							onChange={(e) => this.handleChange(e)}
 						/>
 						<Form.TextInput
-							//placeholder="101"
 							label="Store Code*"
 							type="text"
 							name="storeCode"
@@ -409,7 +407,6 @@ class RetailerForm extends React.Component {
 							autoComplete="fefef"
 						/>
 						<Form.TextInput
-							//placeholder="Goa Wines Patto"
 							label="Outlet Name*"
 							type="text"
 							name="outletName"
@@ -431,7 +428,6 @@ class RetailerForm extends React.Component {
 							label="Discount Percent*"
 							type="text"
 							name="discountPercent"
-							//value={this.state.discountPercent}
 							defaultValue={this.state.discountPercent}
 							error={discountPercentErr.status ? discountPercentErr.value : ''}
 							onKeyDown={(e) => { this.handleNumberChange(e) }}
@@ -453,10 +449,7 @@ class RetailerForm extends React.Component {
 							type="text"
 							name="deliveryDiscountPercent"
 							defaultValue={this.state.deliveryDiscountPercent}
-							//value={this.state.deliveryDiscountPercent}
 							error={deliveryDiscountPercentErr.status ? deliveryDiscountPercentErr.value : ''}
-							//error={activeFieldName === "deliveryDiscountPercent" && activeField.errStatus ? activeField.errValue : ''}
-							//onChange={(e) => this.handleTextChange(e)}
 							onKeyDown={(e) => { this.handleNumberChange(e) }}
 							onKeyUp={(e) => { this.handleNumberChange(e) }}
 							autoComplete="fefef"
@@ -540,7 +533,6 @@ class RetailerForm extends React.Component {
 							<Form.Radio.Option value="savings">Savings</Form.Radio.Option>
 							<Form.Radio.Option value="current">Current</Form.Radio.Option>
 							<Form.Radio.Option value="overdraft">ODCC Account</Form.Radio.Option>
-							{/* <Form.Radio.Option value="cash_credit">Cash Credit</Form.Radio.Option> */}
 						</Form.Radio>
 						<Form.TextInput
 							label="IFSC Code*"
@@ -657,15 +649,11 @@ class RetailerForm extends React.Component {
 							name="pincode"
 							autoComplete="fefef"
 							defaultValue={this.props.data ? this.props.data.pincode : ''}
-							//value={this.state.pincode}
 							error={pincodeErr.status ? pincodeErr.value : ''}
-							//error={activeFieldName === "pincode" && activeField.errStatus ? activeField.errValue : ''}
 							onKeyDown={(e) => this.handleNumberChange(e)}
 							onKeyUp={(e) => this.handleNumberChange(e)}
-						//onChange={(e) => this.handleNumberChange(e)}
 						/>
 						<ButtonGroup align="right">
-							{/* <Button onClick={(e) => this.handleSave(e)}>Save</Button> */}
 							<CustomButton
 								text="Save"
 								handleClick={this.handleSave}

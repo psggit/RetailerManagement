@@ -1,7 +1,5 @@
-export function getHasuraRole(data) {
+export function getHasuraRole (data) {
   const hasuraRoles = data.hasura_roles
-  console.log(data)
-  // const hasuraRoles = ["user", "support_person", "excise", "support_admin"]
   const rolesMap = {
     admin: 8,
     opdataadmin: 7,
@@ -22,17 +20,12 @@ export function getHasuraRole(data) {
   return xHasuraRole
 }
 
-// export function getAuthToken(data) {
-//   const token = data.auth_token
-//   return token
-// }
-
-export function getHasuraId(data) {
+export function getHasuraId (data) {
   const hasuraId = data.hasura_id
   return hasuraId
 }
 
-export function createSession(data) {
+export function createSession (data) {
   localStorage.setItem('x-hasura-role', getHasuraRole(data))
   localStorage.setItem('hasura-id', getHasuraId(data))
 }

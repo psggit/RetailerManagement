@@ -2,7 +2,7 @@ import React from 'react'
 import Icon from "Components/icon"
 
 class AccordianItem extends React.Component {
-  render() {
+  render () {
     return (
       <div className={`accordian-item ${this.props.activeAccordian === this.props.id ? 'active' : '' }`}>
         <div id={this.props.id} onClick={this.props.handleClick} className="accordian-item__header">

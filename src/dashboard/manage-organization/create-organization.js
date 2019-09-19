@@ -2,13 +2,12 @@ import React from 'react'
 import Layout from 'Components/layout'
 import Card from 'Components/card'
 import OrganizationForm from './organization-form'
-import { Form, Checkbox, Button, ButtonGroup } from '@auth0/cosmos'
 import * as Api from './../../api'
 import 'Sass/animations.scss'
 import { formatStateAndCityList } from 'Utils/response-format-utils'
 
 class CreateOrganization extends React.Component {
-	constructor() {
+	constructor () {
 		super()
 		this.state = {
 			creatingOrg: false,
@@ -25,20 +24,20 @@ class CreateOrganization extends React.Component {
 		this.formatResponse = this.formatResponse.bind(this)
 	}
 
-	componentDidMount() {
+	componentDidMount () {
 		this.fetchStateAndCityList({}, this.formatResponse)
 	}
 
-	fetchStateAndCityList(payload, stateListSuccessCallback) {
+	fetchStateAndCityList (payload, stateListSuccessCallback) {
 		Api.fetchStateAndCityList(payload, stateListSuccessCallback)
 	}
 
-	formatResponse(data) {
+	formatResponse (data) {
 		const { stateList, cityList, stateMap } = formatStateAndCityList(data.states)
 		this.setState({ stateList, cityList, stateMap })
 	}
 
-	handleSave() {
+	handleSave () {
 		const data = this.organizationDetailsForm.getData()
 		const payload = {
 			type_of_organisation: data.organizationType === "others" ? data.otherOrgType : data.organizationType,
@@ -71,24 +70,24 @@ class CreateOrganization extends React.Component {
 		this.createOrganization(payload, this.successCallback, this.failureCallback)
 	}
 
-	successCallback() {
+	successCallback () {
 		this.updateState()
 		location.href = '/admin/organization'
 	}
 
-	failureCallback() {
+	failureCallback () {
 		this.updateState()
 	}
 
-	updateState() {
+	updateState () {
 		this.setState({ creatingOrg: false })
 	}
 
-	createOrganization(payload, successCallback, failureCallback) {
+	createOrganization (payload, successCallback, failureCallback) {
 		Api.createOrganization(payload, successCallback, failureCallback)
 	}
 
-	render() {
+	render () {
 		return (
 			<Layout title="Create Organization">
 				<Card width="800px" className={!this.state.isFormValid ? 'animated shake' : ''}>

@@ -13,7 +13,7 @@ const getToken = () => ({
   "x-hasura-role": `${localStorage.getItem('x-hasura-role')}`
 })
 
-function getHeaders(type) {
+function getHeaders (type) {
   const json_headers = {
     'Accept': 'application/json',
     'Content-Type': 'application/json'
@@ -35,7 +35,7 @@ function getHeaders(type) {
 /**
  * fetch data constructor(s)
  */
-function constructBody({ type, data }) {
+function constructBody ({ type, data }) {
   switch (type) {
     case "FormData":
       return data
@@ -48,7 +48,7 @@ function constructBody({ type, data }) {
 /**
  * Error handling helpers
  */
-export function checkStatus(response) {
+export function checkStatus (response) {
   if (response.status >= 200 && response.status < 305) {
     return response
   } else {
@@ -65,7 +65,7 @@ export function checkStatus(response) {
  * constructFetchUtility - return a window.fetch instance
  * @param {Object} options
  */
-export function constructFetchUtility(options) {
+export function constructFetchUtility (options) {
   const { api, data, method, type, cors, prependBaseUrl = true, apiBase } = options
 
   // construct request url
@@ -95,10 +95,10 @@ export function constructFetchUtility(options) {
       .then((responseData) => responseData)
 }
 
-function parseText(response) {
+function parseText (response) {
   return response.text()
 }
 
-function parseJSON(response) {
+function parseJSON (response) {
   return response.json()
 }

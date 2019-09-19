@@ -2,13 +2,13 @@ import React from "react"
 
 class RetailerList extends React.Component {
 
-  constructor() {
+  constructor () {
     super()
 
     this.listRetailerInventory = this.listRetailerInventory.bind(this)
   }
 
-  renderOutlet(item) {
+  renderOutlet (item) {
     return (
       <div className="retailer" onClick={() => this.listRetailerInventory(item)}>
         <div className="details">
@@ -19,12 +19,11 @@ class RetailerList extends React.Component {
     )
   }
 
-  listRetailerInventory(item) {
-    //this.props.history.push(`/admin/stock-and-price/list/${item.id}`, item)
+  listRetailerInventory (item) {
     this.props.history.push(`/admin/stock-and-price/list?retailerId=${item.id}&outletName=${item.outlet_name}&stateId=${item.state_id}`, item)
   }
 
-  render() {
+  render () {
     const {
       retailerData, 
       isCitySelected,

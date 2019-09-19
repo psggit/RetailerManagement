@@ -1,14 +1,13 @@
 import React from 'react'
 import './accordian.scss'
-import { parse } from 'path';
 
 class Accordian extends React.Component {
-  constructor() {
+  constructor () {
     super()
     this.handleClick = this.handleClick.bind(this)
   }
 
-  handleClick(e) {
+  handleClick (e) {
     // console.log("props", this.props, this.props.children.length, this.props.children[0][0].props.title)
     // if(window.gtag && this.props.children.length === 3) {
     //   gtag("event", "payment_method", {
@@ -33,7 +32,8 @@ class Accordian extends React.Component {
       this.props.setActiveAccordian(parseInt(e.target.id))
     }
   }
-  render() {
+
+  render () {
     const { children } = this.props
     return (
       <div className="accordian">

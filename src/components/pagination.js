@@ -3,20 +3,20 @@ import React from 'react'
 import { PaginationToolbar } from '@auth0/cosmos'
 
 class PaginationBar extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.handlePageChange = this.handlePageChange.bind(this)
     this.resetPagination = this.resetPagination.bind(this)
   }
 
-  resetPagination() {
+  resetPagination () {
     this.props.setPage({
       activePage: 1,
       offset: 0
     })
   }
 
-  handlePageChange(page) {
+  handlePageChange (page) {
     const offset = this.props.itemsCountPerPage * (page - 1)
     this.props.setPage({
       activePage: page,
@@ -24,7 +24,7 @@ class PaginationBar extends React.Component {
     })
   }
 
-  render() {
+  render () {
     //console.log("pag props", this.props)
     return (
       <PaginationToolbar

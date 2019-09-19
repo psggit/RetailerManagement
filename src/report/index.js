@@ -1,11 +1,11 @@
 import React from 'react'
 import * as Api from './../api'
-import style from './report.scss'
+import './report.scss'
 import Moment from 'moment'
 import { getIcon } from 'Utils/icon-utils'
 
 class RetailerOnboardingForm extends React.Component {
-	constructor(props) {
+	constructor (props) {
 		super(props)
 		this.pagesLimit = 1000
 
@@ -18,8 +18,7 @@ class RetailerOnboardingForm extends React.Component {
 		this.setOrganizationData = this.setOrganizationData.bind(this)
 	}
 
-	componentDidMount() {
-		//console.log("props", this.props, this.props.match.params.orgId)
+	componentDidMount () {
 		this.fetchOrganisationList({
 			offset: 0,
 			limit: this.pagesLimit,
@@ -41,20 +40,19 @@ class RetailerOnboardingForm extends React.Component {
 		}, this.setRetailerData)
 	}
 
-	fetchOrganisationList(payload, successCallback) {
+	fetchOrganisationList (payload, successCallback) {
 		Api.fetchOrganizationList(payload, successCallback)
 	}
 
-	fetchRetailerList(payload, successCallback) {
+	fetchRetailerList (payload, successCallback) {
 		Api.fetchRetailerList(payload, successCallback)
 	}
 
-	setOrganizationData(data) {
-		//console.log("data", data)
+	setOrganizationData (data) {
 		this.setState({ organizationData: data.org_response[0] })
 	}
 
-	setRetailerData(data) {
+	setRetailerData (data) {
 		if (data && data.ret_response) {
 			this.setState({ retailerData: data.ret_response })
 		} else {
@@ -62,9 +60,8 @@ class RetailerOnboardingForm extends React.Component {
 		}
 	}
 
-	render() {
+	render () {
 		const { organizationData, retailerData } = this.state
-		//console.log("organization details", organizationData, "retailer", retailerData)
 		return (
 			<React.Fragment>
 				<div id="report-page" className="container">
@@ -207,12 +204,9 @@ class RetailerOnboardingForm extends React.Component {
 									</span>
 								</div>
 							</div>
-							{/* {
-                                (organizationData.other_documents && organizationData.other_documents.length > 0 || organizationData.photo_of_auth_signatory || organizationData.pan_of_auth_signatory || organizationData.address_proof_auth_signatory) && */}
 							<div className="sub-title">
 								<h3>DOCUMENTS ATTACHED</h3>
 							</div>
-							{/* -                           } */}
 							{
 								organizationData.other_documents && organizationData.other_documents.length > 0 &&
 								<div className="content">
@@ -350,163 +344,159 @@ class RetailerOnboardingForm extends React.Component {
 							retailerData && retailerData.length > 0 && retailerData.map((item, index) => {
 								const shouldShowTitle = item.is_cancelled_cheque || item.is_excise_license || item.is_photo_of_outlet
 								return (
-									<React.Fragment>
-										<div className="outlet-info">
+									<div key={index} className="outlet-info">
 
-											<div className="sub-title">
-												<h3>{index + 1}) OUTLET INFORMATION</h3>
-											</div>
-											<div className="content">
-												<div><p>Name of the Outlet</p></div>
-												<div>
-													<span>
-														{item.outlet_name}
-														{/* Outlet 1 */}
-													</span>
-												</div>
-											</div>
-											<div className="content">
-												<div><p>Address</p></div>
-												<div>
-													<span>
-														{item.store_address}
-													</span>
-												</div>
-											</div>
-											<div className="content">
-												<div><p>State</p></div>
-												<div>
-													<span>
-														{item.state_name}
-													</span>
-												</div>
-											</div>
-											<div className="content">
-												<div><p>City</p></div>
-												<div>
-													<span>
-														{item.city_name}
-													</span>
-												</div>
-											</div>
-											<div className="content">
-												<div><p>Pincode</p></div>
-												<div>
-													<span>
-														{item.pincode}
-													</span>
-												</div>
-											</div>
-											<div className="content">
-												<div><p>Store Code</p></div>
-												<div>
-													<span>
-														{item.ksbcl_code}
-													</span>
-												</div>
-											</div>
-											<div className="content">
-												<div><p>Excise License Number</p></div>
-												<div>
-													<span>
-														{item.excise_licence_number}
-													</span>
-												</div>
-											</div>
-											<div className="sub-title">
-												<h3>BANK DETAILS PROVIDED FOR SETTLEMENT</h3>
-											</div>
-											<div className="content">
-												<div><p>Name of the Bank</p></div>
-												<div>
-													<span>
-														{item.bank_name}
-													</span>
-												</div>
-											</div>
-											<div className="content">
-												<div><p>Account Holder Name</p></div>
-												<div>
-													<span>
-														{item.acc_holder_name}
-													</span>
-												</div>
-											</div>
-											<div className="content">
-												<div><p>Account Number</p></div>
-												<div>
-													<span>
-														{item.account_number}
-													</span>
-												</div>
-											</div>
-											<div className="content">
-												<div><p>Branch</p></div>
-												<div>
-													<span>
-														{item.bank_branch}
-													</span>
-												</div>
-											</div>
-											<div className="content">
-												<div><p>Type</p></div>
-												<div>
-													<span>
-														{item.acc_type}
-													</span>
-												</div>
-											</div>
-											<div className="content">
-												<div><p>IFSC Code</p></div>
-												<div>
-													<span>
-														{item.ifsc_code}
-													</span>
-												</div>
-											</div>
-											{
-												//item.is_cancelled_cheque || item.is_excise_license || item.is_photo_of_outlet &&
-												shouldShowTitle &&
-												<div className="sub-title">
-													<h3>DOCUMENTS ATTACHED</h3>
-												</div>
-											}
-
-											{
-												item.is_cancelled_cheque &&
-												<div className="content">
-													<div>
-														<span className="icon">{getIcon('tick')}</span>
-														<span className="text">
-															Cancelled Cheque
-                                                        </span>
-													</div>
-												</div>
-											}
-											{
-												item.is_excise_license &&
-												<div className="content">
-													<div>
-														<span className="icon">{getIcon('tick')}</span>
-														<span className="text">
-															Excise License
-                                                        </span>
-													</div>
-												</div>
-											}
-											{
-												item.is_photo_of_outlet &&
-												<div className="content">
-													<div>
-														<span className="icon">{getIcon('tick')}</span>
-														<span className="text">
-															Photo of the Outlet
-                                                        </span>
-													</div>
-												</div>
-											}
+										<div className="sub-title">
+											<h3>{index + 1}) OUTLET INFORMATION</h3>
 										</div>
-									</React.Fragment>
+										<div className="content">
+											<div><p>Name of the Outlet</p></div>
+											<div>
+												<span>
+													{item.outlet_name}
+												</span>
+											</div>
+										</div>
+										<div className="content">
+											<div><p>Address</p></div>
+											<div>
+												<span>
+													{item.store_address}
+												</span>
+											</div>
+										</div>
+										<div className="content">
+											<div><p>State</p></div>
+											<div>
+												<span>
+													{item.state_name}
+												</span>
+											</div>
+										</div>
+										<div className="content">
+											<div><p>City</p></div>
+											<div>
+												<span>
+													{item.city_name}
+												</span>
+											</div>
+										</div>
+										<div className="content">
+											<div><p>Pincode</p></div>
+											<div>
+												<span>
+													{item.pincode}
+												</span>
+											</div>
+										</div>
+										<div className="content">
+											<div><p>Store Code</p></div>
+											<div>
+												<span>
+													{item.ksbcl_code}
+												</span>
+											</div>
+										</div>
+										<div className="content">
+											<div><p>Excise License Number</p></div>
+											<div>
+												<span>
+													{item.excise_licence_number}
+												</span>
+											</div>
+										</div>
+										<div className="sub-title">
+											<h3>BANK DETAILS PROVIDED FOR SETTLEMENT</h3>
+										</div>
+										<div className="content">
+											<div><p>Name of the Bank</p></div>
+											<div>
+												<span>
+													{item.bank_name}
+												</span>
+											</div>
+										</div>
+										<div className="content">
+											<div><p>Account Holder Name</p></div>
+											<div>
+												<span>
+													{item.acc_holder_name}
+												</span>
+											</div>
+										</div>
+										<div className="content">
+											<div><p>Account Number</p></div>
+											<div>
+												<span>
+													{item.account_number}
+												</span>
+											</div>
+										</div>
+										<div className="content">
+											<div><p>Branch</p></div>
+											<div>
+												<span>
+													{item.bank_branch}
+												</span>
+											</div>
+										</div>
+										<div className="content">
+											<div><p>Type</p></div>
+											<div>
+												<span>
+													{item.acc_type}
+												</span>
+											</div>
+										</div>
+										<div className="content">
+											<div><p>IFSC Code</p></div>
+											<div>
+												<span>
+													{item.ifsc_code}
+												</span>
+											</div>
+										</div>
+										{
+											shouldShowTitle &&
+											<div className="sub-title">
+												<h3>DOCUMENTS ATTACHED</h3>
+											</div>
+										}
+
+										{
+											item.is_cancelled_cheque &&
+											<div className="content">
+												<div>
+													<span className="icon">{getIcon('tick')}</span>
+													<span className="text">
+														Cancelled Cheque
+                                                        </span>
+												</div>
+											</div>
+										}
+										{
+											item.is_excise_license &&
+											<div className="content">
+												<div>
+													<span className="icon">{getIcon('tick')}</span>
+													<span className="text">
+														Excise License
+                                                        </span>
+												</div>
+											</div>
+										}
+										{
+											item.is_photo_of_outlet &&
+											<div className="content">
+												<div>
+													<span className="icon">{getIcon('tick')}</span>
+													<span className="text">
+														Photo of the Outlet
+                                                        </span>
+												</div>
+											</div>
+										}
+									</div>
 								)
 							})
 						}

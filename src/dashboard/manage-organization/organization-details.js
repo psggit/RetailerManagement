@@ -4,11 +4,7 @@ import Card from 'Components/card'
 import Moment from 'moment'
 
 class OrganizationDetails extends React.Component {
-	constructor() {
-		super()
-	}
-
-	render() {
+	render () {
 		const data = this.props.history.location.state
 
 		return (

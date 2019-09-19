@@ -3,15 +3,15 @@ import Layout from 'Components/layout'
 import * as Api from '../../api'
 import Pagination from 'Components/pagination'
 import { Table } from '@auth0/cosmos'
-import { Select, TextInput } from '@auth0/cosmos'
-import { Icon, Spinner, List, Dialog } from '@auth0/cosmos'
+import { TextInput } from '@auth0/cosmos'
+import { Spinner } from '@auth0/cosmos'
 import Moment from "moment"
 import { exportCSV } from 'Utils/logic-utils'
 import CustomButton from 'Components/button'
 import { getQueryObj, getQueryUri } from 'Utils/url-utils'
 
 class AccessLogs extends React.Component {
-  constructor() {
+  constructor () {
     super()
 
     this.pagesLimit = 10
@@ -37,7 +37,7 @@ class AccessLogs extends React.Component {
     this.downLoadAccessLog = this.downLoadAccessLog.bind(this)
   }
 
-  componentDidMount() {
+  componentDidMount () {
     if (location.search.slice(1)) {
       this.setQueryParamas()
     } else {
@@ -45,7 +45,7 @@ class AccessLogs extends React.Component {
     }
   }
 
-  fetchDefaultData() {
+  fetchDefaultData () {
     this.setState({ accessLogs: [], accessLogsCount: 0 })
     //this.fetchOrganizationList({}, this.formatOrganizationList)
     this.fetchAccessLogs({
@@ -54,7 +54,7 @@ class AccessLogs extends React.Component {
     })
   }
 
-  setQueryParamas() {
+  setQueryParamas () {
     const queryUri = location.search.slice(1)
     const queryObj = getQueryObj(queryUri)
 
@@ -84,7 +84,7 @@ class AccessLogs extends React.Component {
     }
   }
 
-  fetchAccessLogs(payloadObj) {
+  fetchAccessLogs (payloadObj) {
     Api.fetchAccessLogs(payloadObj)
       .then((response) => {
         this.setState({
@@ -94,11 +94,11 @@ class AccessLogs extends React.Component {
         })
       })
       .catch((error) => {
-        console.log("Error in fetching access logs")
+        console.log("Error in fetching access logs", error)
       })
   }
 
-  handleSearch() {
+  handleSearch () {
     let filter = {}
 
     if (this.state.fromDate) {
@@ -133,7 +133,7 @@ class AccessLogs extends React.Component {
     })
   }
 
-  downLoadAccessLog() {
+  downLoadAccessLog () {
     this.setState({ downloadingAccessLog: true })
     Api.downLoadAccessLogs({
       start_date: new Date(this.state.fromDate).toISOString(),
@@ -149,17 +149,17 @@ class AccessLogs extends React.Component {
         this.setState({
           downloadingAccessLog: false
         })
-        console.log("Error in fetching access logs", err)
+        console.log("Error in fetching access logs", error)
       })
   }
 
-  handlePageChange(pageObj) {
+  handlePageChange (pageObj) {
     const queryUri = location.search.slice(1)
     const queryObj = getQueryObj(queryUri)
     let queryParamsObj = {}
 
     let pageNumber = pageObj.activePage
-    let offset = pageObj.offset
+    //let offset = pageObj.offset
 
     this.setState({
       activePage: pageNumber,
@@ -198,13 +198,13 @@ class AccessLogs extends React.Component {
     history.pushState(queryParamsObj, "access logs listing", `/admin/access-logs?${getQueryUri(queryParamsObj)}`)
   }
 
-  handleDateChange(e) {
+  handleDateChange (e) {
     this.setState({
       [e.target.name]: (e.target.value)
     })
   }
 
-  resetFilter() {
+  resetFilter () {
     this.setState({
       toDate: new Date().toISOString(),
       fromDate: "",
@@ -214,8 +214,8 @@ class AccessLogs extends React.Component {
     this.props.history.push(`/admin/access-logs`)
   }
 
-  render() {
-    const { accessLogs, loadingAccessLog, fromDate } = this.state
+  render () {
+    const { accessLogs, fromDate } = this.state
     return (
       <Layout title="Access Logs">
         <div style={{

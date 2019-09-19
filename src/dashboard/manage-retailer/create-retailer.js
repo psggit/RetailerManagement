@@ -2,14 +2,12 @@ import React from 'react'
 import Layout from 'Components/layout'
 import Card from 'Components/card'
 import RetailerForm from './retailer-form'
-import { Form, Checkbox, Button, ButtonGroup } from '@auth0/cosmos'
 import * as Api from './../../api'
 import 'Sass/animations.scss'
 import { formatStateAndCityList, formatStateAndOrganizationList } from 'Utils/response-format-utils'
-import { organizationAndStateList, stateAndCityList } from './../../mockData'
 
 class CreateRetailer extends React.Component {
-	constructor() {
+	constructor () {
 		super()
 		this.state = {
 			creatingRetailer: false,
@@ -31,34 +29,34 @@ class CreateRetailer extends React.Component {
 		this.formatResponse = this.formatResponse.bind(this)
 	}
 
-	componentDidMount() {
+	componentDidMount () {
 		this.fetchStateAndCityList({}, this.formatResponse)
 		this.fetchOrganizationAndStateList({}, this.formatOrganizationList)
 	}
 
-	fetchOrganizationAndStateList(payloadObj, organizationListSuccessCallback) {
+	fetchOrganizationAndStateList (payloadObj, organizationListSuccessCallback) {
 		Api.fetchOrganizationAndStateList(payloadObj, organizationListSuccessCallback)
 	}
 
-	formatOrganizationList(data) {
+	formatOrganizationList (data) {
 		const { organizationList, organizationMap } = formatStateAndOrganizationList(data.details)
 		this.setState({ organizationList, organizationMap })
 	}
 
-	fetchStateAndCityList(payload, stateListSuccessCallback) {
+	fetchStateAndCityList (payload, stateListSuccessCallback) {
 		Api.fetchStateAndCityList(payload, stateListSuccessCallback)
 	}
 
-	formatResponse(data) {
+	formatResponse (data) {
 		const { stateList, cityList, stateMap } = formatStateAndCityList(data.states)
 		this.setState({ stateList, cityList, stateMap })
 	}
 
-	handleSave() {
+	handleSave () {
 		const retailerDataForm = this.retailerDetailsForm.getData()
 		const payload = {
 			organisation_id: retailerDataForm.selectedOrganizationIdx,
-			branch_status: retailerDataForm.selectedOutletStatusIdx,
+			//branch_status: retailerDataForm.selectedOutletStatusIdx,
 			ksbcl_code: retailerDataForm.storeCode,
 			outlet_name: retailerDataForm.outletName,
 			excise_licence_number: retailerDataForm.exciseLicenceNo,
@@ -90,24 +88,24 @@ class CreateRetailer extends React.Component {
 		this.createRetailer(payload, this.successCallback, this.failureCallback)
 	}
 
-	successCallback() {
+	successCallback () {
 		this.updateState()
 		location.href = '/admin/retailer'
 	}
 
-	failureCallback() {
+	failureCallback () {
 		this.updateState()
 	}
 
-	updateState() {
+	updateState () {
 		this.setState({ creatingRetailer: false })
 	}
 
-	createRetailer(payload, successCallback, failureCallback) {
+	createRetailer (payload, successCallback, failureCallback) {
 		Api.createRetailer(payload, successCallback, failureCallback)
 	}
 
-	render() {
+	render () {
 		return (
 			<Layout title="Create Retailer">
 				<Card width="800px" className={!this.state.isFormValid ? 'animated shake' : ''}>

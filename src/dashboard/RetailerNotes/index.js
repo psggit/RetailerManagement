@@ -1,19 +1,15 @@
 import React, { useState, useEffect } from "react"
-import Pagination from "Components/pagination"
-// import { getOffsetUsingPageNo } from "Utils/helpers"
 import { Spinner } from '@auth0/cosmos'
 import { Table } from '@auth0/cosmos'
 import { fetchRetailerNotes } from "./../../api"
 import { mountModal } from "Components/ModalBox/utils"
-// import CreateNoteModal from "./CreateNoteModal"
 import Layout from 'Components/layout'
 import CustomButton from 'Components/button'
-import { Button } from '@auth0/cosmos'
 import CreateNoteModal from "./CreateNote"
 import Moment from "moment"
 
 
-export default function RetailerNotes(props) {
+export default function RetailerNotes (props) {
   const retailer_id = parseInt(props.match.params.retailerId)
   const limit = 50
   const [retailerNotes, setRetailerNotes] = useState([])

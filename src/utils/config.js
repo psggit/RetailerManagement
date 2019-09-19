@@ -1,5 +1,5 @@
 
-function getAPIObj() {
+function getAPIObj () {
   if (window.location.href.split(':')[1] === '//localhost') {
 
     let scheme = 'https'
@@ -22,10 +22,6 @@ function getAPIObj() {
     let scheme = window.location.href.split(':')[0]
     let baseHost = window.location.hostname.match(/.*?(\..*)/)[1]
     let subdomain = window.location.hostname.split('.')[0]
-    //console.log("scheme", scheme, "baseHost", baseHost, "subdomain", subdomain)
-    // let authUrl = subdomain === 'support' || subdomain === 'delivery'
-    //               ? scheme + '://auth' + baseHost
-    //               : scheme + '://gremlin' + baseHost
     let authUrl = scheme + '://auth' + baseHost
 
     return {
@@ -43,8 +39,5 @@ function getAPIObj() {
     }
   }
 }
-
-// export const api_base_url = getApiBaseUrl()
-// export const host_server = getHostServer()
 
 export const Api = getAPIObj()

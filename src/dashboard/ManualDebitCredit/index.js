@@ -13,7 +13,7 @@ import {
   getQueryUri
 } from "./../../utils/helpers"
 
-export default function ManageManualDebitCredit(props) {
+export default function ManageManualDebitCredit (props) {
   const pageNo = parseInt(getQueryParamByName("page")) || 1
   const searchValue = getQueryParamByName("q") || ""
   const filterByValue = getQueryParamByName("f") || 0

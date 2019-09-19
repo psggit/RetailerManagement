@@ -5,7 +5,7 @@ import CustomButton from "Components/button"
 import { authChangePassword } from "../../api"
 import Notify from "Components/notify"
 
-export default function ChangePassword() {
+export default function ChangePassword () {
   const [oldPassword, setOldPassword] = useState("")
   const [newPassword, setNewPassword] = useState("")
 

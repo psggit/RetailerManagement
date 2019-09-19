@@ -2,13 +2,12 @@ import React from 'react'
 import Layout from 'Components/layout'
 import OrganizationForm from './organization-form';
 import Card from 'Components/card'
-import { Form, Checkbox, Button, ButtonGroup } from '@auth0/cosmos'
 import * as Api from './../../api'
 import 'Sass/animations.scss'
 import { formatStateAndCityList } from 'Utils/response-format-utils'
 
 class EditOrganization extends React.Component {
-	constructor() {
+	constructor () {
 		super()
 		this.state = {
 			updatingOrg: false,
@@ -27,20 +26,20 @@ class EditOrganization extends React.Component {
 		this.formatResponse = this.formatResponse.bind(this)
 	}
 
-	componentDidMount() {
+	componentDidMount () {
 		this.fetchStateAndCityList({}, this.formatResponse)
 	}
 
-	fetchStateAndCityList(payload, stateListSuccessCallback) {
+	fetchStateAndCityList (payload, stateListSuccessCallback) {
 		Api.fetchStateAndCityList(payload, stateListSuccessCallback)
 	}
 
-	formatResponse(data) {
+	formatResponse (data) {
 		const { stateList, cityList, stateMap } = formatStateAndCityList(data.states)
 		this.setState({ stateList, cityList, stateMap })
 	}
 
-	formIsValid() {
+	formIsValid () {
 		const organizationDetailsForm = this.organizationDetailsForm.getData()
 
 		const { organizationNameErr,
@@ -95,7 +94,7 @@ class EditOrganization extends React.Component {
 		return true
 	}
 
-	handleSave() {
+	handleSave () {
 		const data = this.organizationDetailsForm.getData()
 		this.setState({ isFormValid: this.formIsValid() })
 		if (this.formIsValid()) {
@@ -132,24 +131,24 @@ class EditOrganization extends React.Component {
 		}
 	}
 
-	successCallback() {
+	successCallback () {
 		this.updateState()
 		location.href = '/admin/organization'
 	}
 
-	failureCallback() {
+	failureCallback () {
 		this.updateState()
 	}
 
-	updateState() {
+	updateState () {
 		this.setState({ updatingOrg: false })
 	}
 
-	updateOrganization(payload, successCallback, failureCallback) {
+	updateOrganization (payload, successCallback, failureCallback) {
 		Api.updateOrganization(payload, successCallback, failureCallback)
 	}
 
-	render() {
+	render () {
 		const { stateList, cityList } = this.state
 		return (
 			<Layout title="Edit Organization">

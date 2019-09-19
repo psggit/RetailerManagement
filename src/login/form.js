@@ -1,6 +1,6 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { createSession } from './utils'
-import { Api } from 'Utils/config'
+// import { Api } from 'Utils/config'
 //import "whatwg-fetch"
 import 'Sass/_input.scss'
 import 'Sass/_form.scss'
@@ -8,7 +8,7 @@ import 'Sass/_button.scss'
 import { getIcon } from 'Utils/icon-utils'
 
 class Form extends React.Component {
-  constructor() {
+  constructor () {
     super()
     this.state = {
       isSubmitting: false,
@@ -24,16 +24,16 @@ class Form extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  handleChange(e) {
+  handleChange (e) {
     this.setState({ [e.target.name]: e.target.value, error: false })
   }
 
-  handlePress(e) {
+  handlePress (e) {
     if (e.keyCode === 13) this.handleSubmit()
   }
 
 
-  handleSubmit() {
+  handleSubmit () {
     const { username, password } = this.state
     if (!(username.length && password.length)) {
       return;
@@ -75,7 +75,7 @@ class Form extends React.Component {
       })
   }
 
-  render() {
+  render () {
     return (
       <div className="form">
         <div className="login-header">

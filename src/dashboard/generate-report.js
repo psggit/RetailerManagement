@@ -1,16 +1,15 @@
 import React from 'react'
-import html2canvas from 'html2canvas'
-import jsPDF from 'jspdf'
+// import html2canvas from 'html2canvas'
+// import jsPDF from 'jspdf'
 import Layout from 'Components/layout'
-import { Form, Button, ButtonGroup } from '@auth0/cosmos'
+import { Form } from '@auth0/cosmos'
 import Card from 'Components/card'
 import * as Api from './../api'
 import { formatStateAndCityList, formatStateAndOrganizationList } from 'Utils/response-format-utils'
 import CustomButton from 'Components/button'
-// import {organizationAndStateList, stateAndCityList} from './../mockData'
 
 class GenerateReport extends React.Component {
-	constructor() {
+	constructor () {
 		super()
 		this.state = {
 			selectedOrganizationIdx: 1,
@@ -28,37 +27,37 @@ class GenerateReport extends React.Component {
 		this.handleClick = this.handleClick.bind(this)
 	}
 
-	componentDidMount() {
+	componentDidMount () {
 		this.fetchStateAndCityList({}, this.formatResponse)
 		this.fetchOrganizationList({}, this.formatOrganizationList)
 	}
 
-	handleChange(e) {
+	handleChange (e) {
 		this.setState({
 			selectedStateIdx: parseInt(this.state.organizationMap[e.target.value].state_id),
 			[e.target.name]: e.target.value
 		})
 	}
 
-	fetchOrganizationList(payloadOj, organizationListSuccessCallback) {
+	fetchOrganizationList (payloadOj, organizationListSuccessCallback) {
 		Api.fetchOrganizationAndStateList(payloadOj, organizationListSuccessCallback)
 	}
 
-	formatOrganizationList(data) {
+	formatOrganizationList (data) {
 		const { organizationList, organizationMap } = formatStateAndOrganizationList(data.details)
 		this.setState({ organizationList, organizationMap, selectedOrganizationIdx: organizationList[0].value })
 	}
 
-	fetchStateAndCityList(payload, stateListSuccessCallback) {
+	fetchStateAndCityList (payload, stateListSuccessCallback) {
 		Api.fetchStateAndCityList(payload, stateListSuccessCallback)
 	}
 
-	formatResponse(data) {
+	formatResponse (data) {
 		const { stateList } = formatStateAndCityList(data.states)
 		this.setState({ stateList, selectedStateIdx: stateList[0].value })
 	}
 
-	printDocument() {
+	printDocument () {
 		// html2canvas(document.querySelector("#root")).then(canvas => {
 		//     document.body.appendChild(canvas)
 		// })
@@ -86,11 +85,11 @@ class GenerateReport extends React.Component {
 		// doc.save('file.pdf');
 	}
 
-	handleClick() {
+	handleClick () {
 		window.open(`/admin/retailer-onboarding-form/${this.state.selectedOrganizationIdx}`, '_blank')
 	}
 
-	render() {
+	render () {
 		const { organizationList, stateList } = this.state
 		return (
 			<Layout title="Generate Report">

@@ -4,9 +4,9 @@ import Button from "Components/Button"
 import { unmountModal } from "Components/ModalBox/api"
 import "./ConfirmModal.scss"
 
-export default function ConfirmModal(props) {
+export default function ConfirmModal (props) {
   return class ConfirmModal extends React.Component {
-    render() {
+    render () {
       const { title, message, handleConfirm } = props
       return (
         <div id="confirm-modal">

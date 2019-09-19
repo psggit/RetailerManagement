@@ -1,7 +1,7 @@
 import React from 'react'
 import Layout from 'Components/layout'
 import { Table } from '@auth0/cosmos'
-import { Icon, Spinner, List, Dialog } from '@auth0/cosmos'
+import { Spinner } from '@auth0/cosmos'
 import { Select, TextInput } from '@auth0/cosmos'
 import { Button } from '@auth0/cosmos'
 import Pagination from 'Components/pagination'
@@ -17,13 +17,8 @@ import ModalFooter from '../../components/ModalBox/ModalFooter';
 
 class ManageRetailer extends React.Component {
 
-	constructor() {
+	constructor () {
 		super()
-		// this.defaultFilters = {
-		// 	column: 'ID',
-		// 	operator: 'EQUAL',
-		// 	value: ''
-		// }
 		this.state = {
 			activePage: 1,
 			offset: 0,
@@ -69,16 +64,15 @@ class ManageRetailer extends React.Component {
 		this.deactivateRetailer = this.deactivateRetailer.bind(this)
 	}
 
-	fetchDefaultData() {
+	fetchDefaultData () {
 		this.setState({ retailerData: [], retailerListCount: 0 })
-		//this.fetchOrganizationList({}, this.formatOrganizationList)
 		this.fetchRetailerList({
 			offset: 0,
 			limit: this.pagesLimit,
 		}, this.setResponseData, this.failureCallback)
 	}
 
-	componentDidMount() {
+	componentDidMount () {
 		if (location.search.length) {
 			this.setQueryParamas()
 		} else {
@@ -86,7 +80,7 @@ class ManageRetailer extends React.Component {
 		}
 	}
 
-	setQueryParamas() {
+	setQueryParamas () {
 		const queryUri = location.search.slice(1)
 		const queryObj = getQueryObj(queryUri)
 
@@ -110,11 +104,11 @@ class ManageRetailer extends React.Component {
 
 	}
 
-	fetchRetailerList(payloadObj, successCallback, failureCallback) {
+	fetchRetailerList (payloadObj, successCallback, failureCallback) {
 		Api.fetchRetailerList(payloadObj, successCallback, failureCallback)
 	}
 
-	getFilteredRetailersList() {
+	getFilteredRetailersList () {
 		const { column, operator, value, offset, activePage } = this.state
 
 		this.filter = {
@@ -151,7 +145,7 @@ class ManageRetailer extends React.Component {
 		}, this.setResponseData, this.failureCallback)
 	}
 
-	setResponseData(response) {
+	setResponseData (response) {
 		if (response && response.ret_response) {
 			this.setState({ retailerData: response.ret_response, retailerListCount: response.count, loading: false })
 		} else {
@@ -159,11 +153,11 @@ class ManageRetailer extends React.Component {
 		}
 	}
 
-	failureCallback() {
+	failureCallback () {
 		this.setState({ retailerData: [], retailerListCount: 0, loading: false })
 	}
 
-	handlePageChange(pageObj) {
+	handlePageChange (pageObj) {
 		const queryUri = location.search.slice(1)
 		const queryObj = getQueryObj(queryUri)
 		let queryParamsObj = {}
@@ -210,7 +204,7 @@ class ManageRetailer extends React.Component {
 		history.pushState(queryParamsObj, "retailer listing", `/admin/retailer?${getQueryUri(queryParamsObj)}`)
 	}
 
-	handleChange(e) {
+	handleChange (e) {
 		if (e.target.name === "column" && (e.target.value === "ID" || e.target.value === "OrganisationID")) {
 			this.setState({
 				operators: [
@@ -229,17 +223,16 @@ class ManageRetailer extends React.Component {
 		} else if (e.target.name === "value") {
 			this.setState({ offset: 0, activePage: 1 })
 		}
-		console.log("state", e.target.name, e.target.value)
+
 		this.setState({ [e.target.name]: (e.target.value).toString() })
-		//this.setState({[e.target.name]: (e.target.value).toString()})
 	}
 
-	editOutletDetail(e, item, action) {
+	editOutletDetail (e, item, action) {
 		e.stopPropagation()
 		this.props.history.push(`/admin/retailer/edit/${item.id}`, item)
 	}
 
-	resetFilter() {
+	resetFilter () {
 		this.setState({
 			column: 'ID',
 			operator: 'EQUAL',
@@ -249,15 +242,15 @@ class ManageRetailer extends React.Component {
 		this.props.history.push(`/admin/retailer`)
 	}
 
-	onToggleChange(item, value) {
+	onToggleChange (item, value) {
 		this.setState({ mountDialog: true, retailerId: item.id, retailerStatus: item.branch_status, outletName: item.outlet_name })
 	}
 
-	setDialogState() {
+	setDialogState () {
 		this.setState({ mountDialog: false })
 	}
 
-	deactivateRetailer() {
+	deactivateRetailer () {
 		this.setDialogState()
 		Api.deactivateRetailer({
 			Id: this.state.retailerId,
@@ -265,21 +258,21 @@ class ManageRetailer extends React.Component {
 		}, this.callback)
 	}
 
-	callback() {
+	callback () {
 		this.handlePageChange({
 			activePage: this.state.activePage,
 			offset: this.state.offset
 		})
 	}
 
-	handleRowClick(e, item) {
+	handleRowClick (e, item) {
 		if (["SPAN", "A"].indexOf(e.target.nodeName) > -1) {
 			return
 		}
 		this.props.history.push(`/admin/retailer/${item.id}`, item)
 	}
 
-	render() {
+	render () {
 		const { retailerData } = this.state
 		console.log("this.state", this.state)
 		return (

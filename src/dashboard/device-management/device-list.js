@@ -1,8 +1,8 @@
 import React from "react"
 import Layout from "Components/layout"
 import { Table } from '@auth0/cosmos'
-import { Icon, Spinner, List, Dialog } from '@auth0/cosmos'
-import { Form, Checkbox, ButtonGroup } from '@auth0/cosmos'
+import { Spinner } from '@auth0/cosmos'
+import { Form } from '@auth0/cosmos'
 import Button from "Components/button"
 import * as Api from './../../api'
 import "./device-management.scss"
@@ -13,7 +13,7 @@ import ModalBox from 'Components/ModalBox'
 import ModalFooter from 'Components/ModalBox/ModalFooter'
 
 class DeviceList extends React.Component {
-  constructor() {
+  constructor () {
     super()
     this.state = {
       retailerData: {},
@@ -22,7 +22,6 @@ class DeviceList extends React.Component {
       mountDialog: false,
       mountAddDevice: false,
       mountNotification: false,
-      //addingDevice: false,
       posId: "",
       deviceStatus: "",
       deviceNumber: "",
@@ -71,65 +70,65 @@ class DeviceList extends React.Component {
     this.failureAddDeviceCallback = this.failureAddDeviceCallback.bind(this)
   }
 
-  componentDidMount() {
-    this.setState({retailerData: this.props.location.state})
+  componentDidMount () {
+    this.setState({ retailerData: this.props.location.state })
     this.fetchDeviceList({
       retailer_id: this.props.location.state.id
     })
   }
 
-  fetchDeviceList(payload) {
+  fetchDeviceList (payload) {
     Api.fetchDeviceList(payload, this.successDeviceListCallback, this.failureDeviceListCallback)
   }
 
-  successDeviceListCallback(response) {
-		if (response && response.device_details) {
-			this.setState({ deviceList: response.device_details, loadingDeviceList: false })
-		} else {
-			this.setState({ deviceList: [], loadingDeviceList: false })
-		}
-	}
-
-	failureDeviceListCallback() {
-		this.setState({ deviceList: [], loadingDeviceList: false })
-	}
-
-  onToggleChange(item, value) {
-		this.setState({ mountConfirmationDialog: true, posId: item.id, deviceStatus: item.is_active, deviceNumber: item.device_number })
+  successDeviceListCallback (response) {
+    if (response && response.device_details) {
+      this.setState({ deviceList: response.device_details, loadingDeviceList: false })
+    } else {
+      this.setState({ deviceList: [], loadingDeviceList: false })
+    }
   }
 
-  handleStatusChange(e) {
+  failureDeviceListCallback () {
+    this.setState({ deviceList: [], loadingDeviceList: false })
+  }
+
+  onToggleChange (item, value) {
+    this.setState({ mountConfirmationDialog: true, posId: item.id, deviceStatus: item.is_active, deviceNumber: item.device_number })
+  }
+
+  handleStatusChange (e) {
     this.setState({
       newDeviceStatus: e.target.value === 1 ? true : false,
-      selectedDeviceStatusIdx: e.target.value})
+      selectedDeviceStatusIdx: e.target.value
+    })
   }
-  
-  unmountDialog(modalName) {
-    this.setDefaultState()
-		this.setState({ [modalName]: false })
-	}
 
-	deactivateDevice() {
-		this.unmountDialog('mountConfirmationDialog')
-		Api.deactivateDevice({
-			pos_id: this.state.posId,
-			is_active: this.state.deviceStatus === true ? false : true
-		}, this.successCallback)
-	}
-
-	successCallback() {
-    // this.unmountDialog('mountAddDevice')
+  unmountDialog (modalName) {
     this.setDefaultState()
-		this.fetchDeviceList({
+    this.setState({ [modalName]: false })
+  }
+
+  deactivateDevice () {
+    this.unmountDialog('mountConfirmationDialog')
+    Api.deactivateDevice({
+      pos_id: this.state.posId,
+      is_active: this.state.deviceStatus === true ? false : true
+    }, this.successCallback)
+  }
+
+  successCallback () {
+    this.setDefaultState()
+    this.fetchDeviceList({
       retailer_id: this.props.location.state.id,
-		})
+    })
   }
 
-  failureAddDeviceCallback() {
-    this.setState({mountNotification: true})
+  failureAddDeviceCallback () {
+    this.setState({ mountNotification: true })
   }
 
-  setDefaultState() {
+  setDefaultState () {
     this.setState({
       email: "",
       mobile: "",
@@ -162,37 +161,35 @@ class DeviceList extends React.Component {
     })
   }
 
-  handleFieldChange(evt) {
+  handleFieldChange (evt) {
     const errName = `${evt.target.name}Err`
     this.setState({
-      [errName] : {
+      [errName]: {
         value: "",
         status: false
       }
     })
-    if(!evt.target.validity.patternMismatch) {
-      //console.log("log")
-      this.setState({ [evt.target.name]: evt.target.value})
-    } else { 
-      //console.log("else")
+    if (!evt.target.validity.patternMismatch) {
+      this.setState({ [evt.target.name]: evt.target.value })
+    } else {
       evt.preventDefault()
     }
   }
 
-  handleTextChange(e) {
+  handleTextChange (e) {
     const errName = `${e.target.name}Err`
     this.setState({
-      [errName] : {
+      [errName]: {
         value: "",
         status: false
       }
     })
-    this.setState({[e.target.name]: e.target.value})
+    this.setState({ [e.target.name]: e.target.value })
   }
 
-  isFormValid() {
+  isFormValid () {
     const emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    if(this.state.newDeviceNumber.trim().length === 0) {
+    if (this.state.newDeviceNumber.trim().length === 0) {
       this.setState({
         newDeviceNumberErr: {
           value: "Device number is required",
@@ -200,7 +197,7 @@ class DeviceList extends React.Component {
         }
       })
       return false;
-    } else if(this.state.password.trim().length === 0) {
+    } else if (this.state.password.trim().length === 0) {
       this.setState({
         passwordErr: {
           value: "Password is required",
@@ -208,7 +205,7 @@ class DeviceList extends React.Component {
         }
       })
       return false;
-    } else if(this.state.email.trim().length === 0) {
+    } else if (this.state.email.trim().length === 0) {
       this.setState({
         emailErr: {
           value: "Email is required",
@@ -216,7 +213,7 @@ class DeviceList extends React.Component {
         }
       })
       return false;
-    } else if(!emailRegex.test(this.state.email.trim())) {
+    } else if (!emailRegex.test(this.state.email.trim())) {
       this.setState({
         emailErr: {
           value: "Email is invalid",
@@ -224,7 +221,7 @@ class DeviceList extends React.Component {
         }
       })
       return false;
-    } else if(this.state.mobile.trim().length === 0) {
+    } else if (this.state.mobile.trim().length === 0) {
       this.setState({
         mobileErr: {
           value: "Mobile is required",
@@ -232,7 +229,7 @@ class DeviceList extends React.Component {
         }
       })
       return false;
-    } else if(this.state.operator.trim().length === 0) {
+    } else if (this.state.operator.trim().length === 0) {
       this.setState({
         operatorErr: {
           value: "Operator is required",
@@ -244,12 +241,12 @@ class DeviceList extends React.Component {
     return true;
   }
 
-  mountAddDeviceModal() {
-    this.setState({mountAddDevice: true})
+  mountAddDeviceModal () {
+    this.setState({ mountAddDevice: true })
   }
 
-  addDevice() {
-    if(this.isFormValid()) {
+  addDevice () {
+    if (this.isFormValid()) {
       this.unmountDialog('mountAddDevice')
       //this.setState({addingDevice: true})
       Api.addDevice({
@@ -263,9 +260,9 @@ class DeviceList extends React.Component {
       }, this.successCallback, this.failureAddDeviceCallback)
     }
   }
- 
-  render() {
-    const {retailerData, deviceList, emailErr, newDeviceNumberErr, mobileErr, passwordErr, operatorErr} = this.state
+
+  render () {
+    const { retailerData, deviceList, emailErr, newDeviceNumberErr, mobileErr, passwordErr, operatorErr } = this.state
     return (
       <Layout title="Device Management">
         <div id="deviceManagement">
@@ -298,7 +295,7 @@ class DeviceList extends React.Component {
               <Table
                 emptyMessage={this.state.loadingDeviceList ? <Spinner /> : 'No devices found'}
                 items={deviceList}
-                //onRowClick={(e, item) => this.handleRowClick(e, item)}
+              //onRowClick={(e, item) => this.handleRowClick(e, item)}
               >
                 <Table.Column field="email" title="Email" />
                 <Table.Column field="mobile_number" title="Mobile" />
@@ -319,8 +316,8 @@ class DeviceList extends React.Component {
                   <div style={{ fontSize: '18px' }}>{this.state.deviceStatus === true ? 'Deactivate' : 'Activate'} Device</div>
                 </div>
               </ModalHeader>
-              <ModalBody height='60px'>
-                <table className='table--hovered'>
+              <ModalBody height="60px">
+                <table className="table--hovered">
                   <tbody>
                     Are you sure you want to {this.state.deviceStatus === true ? 'Deactivate' : 'Activate'} this device - {this.state.deviceNumber}
                   </tbody>
@@ -328,8 +325,8 @@ class DeviceList extends React.Component {
               </ModalBody>
               <ModalFooter>
                 <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', fontWeight: '600' }}>
-                  <button className='btn btn-primary' onClick={() => this.deactivateDevice()}> OK </button>
-                  <button className='btn btn-secondary' onClick={() => this.unmountDialog('mountConfirmationDialog')}> Cancel </button>
+                  <button className="btn btn-primary" onClick={() => this.deactivateDevice()}> OK </button>
+                  <button className="btn btn-secondary" onClick={() => this.unmountDialog('mountConfirmationDialog')}> Cancel </button>
                 </div>
               </ModalFooter>
 
@@ -416,8 +413,8 @@ class DeviceList extends React.Component {
               </ModalBody>
               <ModalFooter>
                 <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', fontWeight: '600' }}>
-                  <button className='btn btn-primary' onClick={() => this.addDevice()}> Add </button>
-                  <button className='btn btn-secondary' onClick={() => this.unmountDialog('mountAddDevice')}> Cancel </button>
+                  <button className="btn btn-primary" onClick={() => this.addDevice()}> Add </button>
+                  <button className="btn btn-secondary" onClick={() => this.unmountDialog('mountAddDevice')}> Cancel </button>
                 </div>
               </ModalFooter>
             </ModalBox>
@@ -428,8 +425,8 @@ class DeviceList extends React.Component {
               <ModalHeader>
                 Notification
               </ModalHeader>
-              <ModalBody height='60px'>
-                <table className='table--hovered'>
+              <ModalBody height="60px">
+                <table className="table--hovered">
                   <tbody>
                     Something went wrong
                   </tbody>
@@ -437,7 +434,7 @@ class DeviceList extends React.Component {
               </ModalBody>
               <ModalFooter>
                 <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', fontWeight: '600' }}>
-                  <button className='btn btn-primary' onClick={() => this.unmountDialog('mountNotification')}> OK </button>
+                  <button className="btn btn-primary" onClick={() => this.unmountDialog('mountNotification')}> OK </button>
                 </div>
               </ModalFooter>
             </ModalBox>

@@ -1,17 +1,17 @@
-export function getBreadCrumbPath() {
+export function getBreadCrumbPath () {
   return decodeURI(location.pathname.slice(1))
 }
 
-export function getQueryUri(queryObj) {
+export function getQueryUri (queryObj) {
   const queryUri = Object.entries(queryObj).map(obj => obj.join('=')).join('&')
   return queryUri
 }
 
-export function getUriFromBreadCrumb(path) {
+export function getUriFromBreadCrumb (path) {
   return path.split('/').map(item => item.split(' ').join('-')).join('/')
 }
 
-export function getQueryObj(queryUri) {
+export function getQueryObj (queryUri) {
   if (!queryUri.length) return {}
 
   const queryObj = queryUri.replace(/%20/g, ' ').split('&').reduce((a, b) => {

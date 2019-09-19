@@ -8,9 +8,9 @@ import Notify from "Components/notify"
 import { fetchNoteIssues, createRetailerNote } from "./../../api"
 import "./CreateNote.scss"
 
-export default function CreateNoteModal(props) {
+export default function CreateNoteModal (props) {
   return class CreateNoteModal extends React.Component {
-    constructor() {
+    constructor () {
       super()
       const retailer_id = parseInt(location.pathname.split("/").pop())
       this.state = {
@@ -23,7 +23,8 @@ export default function CreateNoteModal(props) {
       this.setNoteIssues = this.setNoteIssues.bind(this)
       this.setIssueId = this.setIssueId.bind(this)
     }
-    handleSave() {
+
+    handleSave () {
       const { retailer_id, issueId, noteDescription } = this.state
       const createRetailerNoteReq = {
         retailer_id,
@@ -45,23 +46,28 @@ export default function CreateNoteModal(props) {
           })
       }
     }
-    setNoteIssues(noteIssues) {
+
+    setNoteIssues (noteIssues) {
       this.setState({ noteIssues })
     }
-    setIssueId(issueId) {
+
+    setIssueId (issueId) {
       this.setState({ issueId })
     }
-    setNoteDescription(noteDescription) {
+
+    setNoteDescription (noteDescription) {
       this.setState({ noteDescription })
     }
-    componentDidMount() {
+
+    componentDidMount () {
       fetchNoteIssues()
         .then(fetchNoteIssuesRes => {
           this.setNoteIssues(fetchNoteIssuesRes.issue_details)
           this.setIssueId(fetchNoteIssuesRes.issue_details[0].id)
         })
     }
-    render() {
+
+    render () {
       return (
         <div id="create-note">
           <ModalBox>
@@ -78,8 +84,8 @@ export default function CreateNoteModal(props) {
             </ModalBody>
             <ModalFooter>
               <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', fontWeight: '600' }}>
-                <button className='btn btn-primary' onClick={this.handleSave}> OK </button>
-                <button className='btn btn-secondary' onClick={unMountModal}> Cancel </button>
+                <button className="btn btn-primary" onClick={this.handleSave}> OK </button>
+                <button className="btn btn-secondary" onClick={unMountModal}> Cancel </button>
               </div>
             </ModalFooter>
           </ModalBox>

@@ -1,7 +1,7 @@
 import React from 'react'
 import Layout from 'Components/layout'
 import { Table } from '@auth0/cosmos'
-import { Icon, Spinner, List } from '@auth0/cosmos'
+import { Spinner } from '@auth0/cosmos'
 import { Select, TextInput } from '@auth0/cosmos'
 import { Button } from '@auth0/cosmos'
 import Pagination from 'Components/pagination'
@@ -12,13 +12,8 @@ import CustomButton from 'Components/button'
 
 class ManageOrganization extends React.Component {
 
-	constructor() {
+	constructor () {
 		super()
-		// this.defaultFilters = {
-		// 	column: '',
-		// 	operator: 'EQUAL',
-		// 	value: ''
-		// }
 		this.state = {
 			activePage: 1,
 			offset: 0,
@@ -54,7 +49,7 @@ class ManageOrganization extends React.Component {
 		this.failureCallback = this.failureCallback.bind(this)
 	}
 
-	fetchDefaultData() {
+	fetchDefaultData () {
 		this.setState({ organizationData: [], organisationCount: 0 })
 		this.fetchOrganisationList({
 			offset: 0,
@@ -62,7 +57,7 @@ class ManageOrganization extends React.Component {
 		}, this.setResponseData, this.failureCallback)
 	}
 
-	componentDidMount() {
+	componentDidMount () {
 		if (location.search.length) {
 			this.setQueryParamas()
 		} else {
@@ -70,7 +65,7 @@ class ManageOrganization extends React.Component {
 		}
 	}
 
-	setQueryParamas() {
+	setQueryParamas () {
 		const queryUri = location.search.slice(1)
 		const queryObj = getQueryObj(queryUri)
 
@@ -96,11 +91,11 @@ class ManageOrganization extends React.Component {
 		}
 	}
 
-	fetchOrganisationList(payloadObj, successCallback, failureCallback) {
+	fetchOrganisationList (payloadObj, successCallback, failureCallback) {
 		Api.fetchOrganizationList(payloadObj, successCallback, failureCallback)
 	}
 
-	getFilteredOrganisationList() {
+	getFilteredOrganisationList () {
 		const { column, operator, value, activePage, offset } = this.state
 
 		this.filter = {
@@ -135,7 +130,7 @@ class ManageOrganization extends React.Component {
 		}, this.setResponseData, this.failureCallback)
 	}
 
-	setResponseData(response) {
+	setResponseData (response) {
 		if (response && response.org_response && response.org_response.length > 0) {
 			response.org_response.map((item) => {
 				return (
@@ -150,11 +145,11 @@ class ManageOrganization extends React.Component {
 		}
 	}
 
-	failureCallback() {
+	failureCallback () {
 		this.setState({ organizationData: [], organizationCount: 0, loading: false })
 	}
 
-	handlePageChange(pageObj) {
+	handlePageChange (pageObj) {
 		const queryUri = location.search.slice(1)
 		const queryObj = getQueryObj(queryUri)
 		let queryParamsObj = {}
@@ -200,7 +195,7 @@ class ManageOrganization extends React.Component {
 		history.pushState(queryParamsObj, "organisation listing", `/admin/organization?${getQueryUri(queryParamsObj)}`)
 	}
 
-	handleChange(e) {
+	handleChange (e) {
 
 		if (e.target.name === "column" && e.target.value === "ID") {
 			this.setState({
@@ -224,12 +219,12 @@ class ManageOrganization extends React.Component {
 		this.setState({ [e.target.name]: e.target.value })
 	}
 
-	handleEditOrg(e, item, action) {
+	handleEditOrg (e, item, action) {
 		e.stopPropagation()
 		this.props.history.push(`/admin/organization/edit/${item.id}`, item)
 	}
 
-	resetFilter() {
+	resetFilter () {
 		this.setState({
 			column: 'ID',
 			operator: 'EQUAL',
@@ -239,11 +234,11 @@ class ManageOrganization extends React.Component {
 		this.props.history.push(`/admin/organization`)
 	}
 
-	handleRowClick(e, item) {
+	handleRowClick (e, item) {
 		this.props.history.push(`/admin/organization/${item.id}`, item)
 	}
 
-	render() {
+	render () {
 		return (
 			<Layout title="Manage Organization">
 				<div style={{ width: '200px', marginTop: '20px' }}>
@@ -348,11 +343,6 @@ class ManageOrganization extends React.Component {
 						<Table.Column field="state_name" title="State Name" width="7%" />
 						<Table.Column field="pan_number" title="PAN Number" width="10%" />
 						<Table.Column field="cin_no" title="CIN Number" width="10%" />
-						{/* <Table.Column field="actions" title="hello">
-							{item => (
-								<input style={{width: '30px'}} onClick={this.handleInputEdit} />
-							)}
-						</Table.Column> */}
 					</Table>
 				</div>
 				{
