@@ -19,7 +19,7 @@ class AccessLogs extends React.Component {
       loadingAccessLog: true,
       downloadingAccessLog: false,
       accessLogs: [],
-      toDate: new Date().toISOString(),
+      toDate: "",
       fromDate: "",
       activePage: 1,
       filter: {
@@ -103,14 +103,16 @@ class AccessLogs extends React.Component {
 
     if (this.state.fromDate) {
       filter = {
-        from: new Date(this.state.fromDate),
+        from: new Date(this.state.fromDate).toISOString(),
         to: new Date(new Date(this.state.toDate).setHours(23, 59, 0)).toISOString()
       }
-      this.setState({ toDate: (this.state.toDate).toString().substr(0, 10) })
+      //console.log("filter", filter)
+      //this.setState({ toDate: new Date(this.state.toDate).toISOString() })
     } else {
       filter = {
         to: new Date(new Date(this.state.toDate).setHours(23, 59, 0)).toISOString()
       }
+      //console.log("filter", filter)
     }
 
     const queryObj = {
@@ -137,7 +139,7 @@ class AccessLogs extends React.Component {
     this.setState({ downloadingAccessLog: true })
     Api.downLoadAccessLogs({
       start_date: new Date(this.state.fromDate).toISOString(),
-      end_date: new Date(this.state.toDate).toISOString()
+      end_date: new Date(new Date(this.state.toDate).setHours(23, 59, 0)).toISOString()
     })
       .then((csv) => {
         this.setState({
