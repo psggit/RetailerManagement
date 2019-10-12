@@ -261,7 +261,7 @@ export function createRetailer (payloadObj, successCallback, failureCallback) {
 		})
 		.catch(err => {
 			console.log("Error in create retailer", err)
-			Notify("danger", "Error in creating retailer")
+			err.response.json().then(json => {Notify("danger", json.message)})
 			failureCallback()
 		})
 }
