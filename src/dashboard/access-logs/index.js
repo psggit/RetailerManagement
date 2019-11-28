@@ -300,37 +300,48 @@ class AccessLogs extends React.Component {
               emptyMessage={this.state.loadingAccessLog ? <Spinner /> : 'No logs found'}
               items={accessLogs}
             >
+              <Table.Column field="id" title="ID" />
               <Table.Column field="user_id" title="User Id" />
+              <Table.Column field="owner" title="Owner" />
+              <Table.Column field="outlet" title="Outlet Name" />
+              <Table.Column field="BrandName" title="Brand Name" />
+              <Table.Column field="volume" title="Volume" />
+              <Table.Column field="price" title="Price"/>
+              <Table.Column field="IsActive" title="Status">
+                {item => (
+                  item.IsActive === "true" ? "Active" : "Inactive"
+                )}
+              </Table.Column>
               <Table.Column field="actions" title="Created At">
                 {item => (
                   Moment(item.created_at).format("DD-MM-YYYY h:mm:s A")
                 )}
               </Table.Column>
-              <Table.Column field="actions" title="Updated At">
+              {/* <Table.Column field="actions" title="Updated At">
                 {item => (
                   Moment(item.updated_at).format("DD-MM-YYYY h:mm:s A")
                 )}
-              </Table.Column>
-              <Table.Column field="actions" title="Sku Pricing ID">
+              </Table.Column> */}
+              {/* <Table.Column field="actions" title="Sku Pricing ID">
                 {item => (
                   JSON.parse(item.request_params).SkuPricingID
                 )}
-              </Table.Column>
-              <Table.Column field="actions" title="Retailer ID">
+              </Table.Column> */}
+              {/* <Table.Column field="actions" title="Retailer ID">
                 {item => (
                   JSON.parse(item.request_params).RetailerID
                 )}
-              </Table.Column>
-              <Table.Column field="actions" title="Retailer Price">
+              </Table.Column> */}
+              {/* <Table.Column field="actions" title="Retailer Price">
                 {item => (
                   JSON.parse(item.request_params).Price
                 )}
-              </Table.Column>
-              <Table.Column field="actions" title="Status">
+              </Table.Column> */}
+              {/* <Table.Column field="actions" title="Status">
                 {item => (
                   JSON.parse(item.request_params).IsActive ? "Active" : "Inactive"
                 )}
-              </Table.Column>
+              </Table.Column> */}
             </Table>
           </div>
         }
