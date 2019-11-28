@@ -151,43 +151,73 @@ class RetailerForm extends React.Component {
 		this.handleStateChange = this.handleStateChange.bind(this)
 	}
 
-	componentWillReceiveProps (newProps) {
-		if (this.props.organizationList !== newProps.organizationList) {
-			this.setState({ organizationList: newProps.organizationList })
+	// componentWillReceiveProps (newProps) {
+	// 	if (this.props.organizationList !== newProps.organizationList) {
+	// 		this.setState({ organizationList: newProps.organizationList })
+	// 	}
+
+	// 	if (this.props.stateList !== newProps.stateList) {
+	// 		this.setState({ stateList: newProps.stateList })
+	// 		if (location.pathname.includes("create")) {
+	// 			this.setState({ selectedStateIdx: newProps.stateList[0].value })
+	// 		}
+	// 	}
+
+	// 	if (this.props.organizationMap !== newProps.organizationMap) {
+	// 		this.setState({ organizationMap: newProps.organizationMap })
+	// 		// if (location.pathname.includes("edit")) {
+	// 		// 	console.log("Edit")
+	// 		// 	let updateCityIdx = false
+	// 		// 	this.setState({ cityList: newProps.stateMap[newProps.organizationMap[this.props.data.organisation_id].state_id] })
+
+	// 		// 	const cityFound = newProps.stateMap[newProps.organizationMap[this.props.data.organisation_id].state_id].find((item) => parseInt(item.value) === parseInt(this.state.selectedCityIdx))
+
+	// 		// 	if (!cityFound) {
+	// 		// 		this.setState({ selectedCityIdx: newProps.stateMap[newProps.organizationMap[this.props.data.organisation_id].state_id][0].value })
+	// 		// 	}
+	// 		// }
+	// 	}
+
+	// 	if (this.props.stateMap !== newProps.stateMap) {
+	// 		this.setState({ stateMap: newProps.stateMap })
+	// 	}
+
+	// 	if (newProps.cityList && this.props.cityList !== newProps.cityList) {
+	// 		console.log("city", newProps.cityList, this.state.selectedCityIdx)
+
+	// 		this.setState({ cityList: newProps.cityList })
+	// 		if (location.pathname.includes("create")) {
+	// 			this.setState({ selectedCityIdx: newProps.cityList[0].value })
+	// 		}
+	// 	}
+	// }
+
+	componentDidUpdate(prevProps, prevState) {
+		if (this.props.organizationList !== prevProps.organizationList) {
+			this.setState({ organizationList: this.props.organizationList })
 		}
 
-		if (this.props.stateList !== newProps.stateList) {
-			this.setState({ stateList: newProps.stateList })
+		if (this.props.stateList !== prevProps.stateList) {
+			this.setState({ stateList: this.props.stateList })
 			if (location.pathname.includes("create")) {
-				this.setState({ selectedStateIdx: newProps.stateList[0].value })
+				this.setState({ selectedStateIdx: this.props.stateList[0].value })
 			}
 		}
 
-		if (this.props.organizationMap !== newProps.organizationMap) {
-			this.setState({ organizationMap: newProps.organizationMap })
-			// if (location.pathname.includes("edit")) {
-			// 	console.log("Edit")
-			// 	let updateCityIdx = false
-			// 	this.setState({ cityList: newProps.stateMap[newProps.organizationMap[this.props.data.organisation_id].state_id] })
-
-			// 	const cityFound = newProps.stateMap[newProps.organizationMap[this.props.data.organisation_id].state_id].find((item) => parseInt(item.value) === parseInt(this.state.selectedCityIdx))
-
-			// 	if (!cityFound) {
-			// 		this.setState({ selectedCityIdx: newProps.stateMap[newProps.organizationMap[this.props.data.organisation_id].state_id][0].value })
-			// 	}
-			// }
+		if (this.props.organizationMap !== prevProps.organizationMap) {
+			this.setState({ organizationMap: this.props.organizationMap })
 		}
 
-		if (this.props.stateMap !== newProps.stateMap) {
-			this.setState({ stateMap: newProps.stateMap })
+		if (this.props.stateMap !== prevProps.stateMap) {
+			this.setState({ stateMap: this.props.stateMap })
 		}
 
-		if (newProps.cityList && this.props.cityList !== newProps.cityList) {
-			console.log("city", newProps.cityList, this.state.selectedCityIdx)
+		if (prevProps.cityList && this.props.cityList !== prevProps.cityList) {
+			console.log("city", prevProps.cityList, this.state.selectedCityIdx)
 
-			this.setState({ cityList: newProps.cityList })
+			this.setState({ cityList: this.props.cityList })
 			if (location.pathname.includes("create")) {
-				this.setState({ selectedCityIdx: newProps.cityList[0].value })
+				this.setState({ selectedCityIdx: this.props.cityList[0].value })
 			}
 		}
 	}

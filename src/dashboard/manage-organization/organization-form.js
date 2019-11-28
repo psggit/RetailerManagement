@@ -130,33 +130,74 @@ class OrganizationForm extends React.Component {
 		this.validate = this.validate.bind(this)
 	}
 
-	componentWillReceiveProps (newProps) {
-		if (this.props.stateList !== newProps.stateList) {
-			this.setState({ stateList: newProps.stateList })
+	// static getDerivedStateFromProps(nextProps, prevState) {
+	// 	console.log("next props", nextProps, "pres state", prevState)
+	// 	let newData = {}
+	// 	if(nextProps.stateList !== prevState.stateList) {
+	// 		newData.stateList = nextProps.stateList
+	// 		newData.selectedStateIdx = nextProps.stateList[0].value
+	// 		// return ({ stateList: nextProps.stateList, selectedStateIdx: nextProps.stateList[0].value })
+	// 	} 
+	// 	if (nextProps.cityList !== prevState.cityList) {
+	// 		newData.cityList = nextProps.cityList
+	// 		newData.selectedCityIdx = nextProps.cityList[0].value
+	// 	}
+
+	// 	if (nextProps.stateMap !== prevState.stateMap) {
+	// 		newData.stateMap = nextProps.stateMap
+	// 	}
+
+	// 	return newData
+	// }
+
+	componentDidUpdate(prevProps, prevState) {
+		if (prevProps.cityList !== this.props.cityList) {
+			this.setState({cityList: this.props.cityList})
 			if (location.pathname.includes("create")) {
-				this.setState({ selectedStateIdx: newProps.stateList[0].value })
+				this.setState({ selectedCityIdx: this.props.cityList[0].value })
 			}
 		}
-
-		if (this.props.cityList !== newProps.cityList) {
-			this.setState({ cityList: newProps.cityList })
+		if (this.props.stateList !== prevProps.stateList) {
+			this.setState({ stateList: this.props.stateList })
 			if (location.pathname.includes("create")) {
-				this.setState({ selectedCityIdx: newProps.cityList[0].value })
+				this.setState({ selectedStateIdx: this.props.stateList[0].value })
 			}
 		}
-
-		if (this.props.stateMap !== newProps.stateMap) {
-			this.setState({ stateMap: newProps.stateMap })
+		if (this.props.stateMap !== prevProps.stateMap) {
+			this.setState({ stateMap: this.props.stateMap })
 		}
 	}
 
+	// componentWillReceiveProps (newProps) {
+	// 	if (this.props.stateList !== newProps.stateList) {
+	// 		this.setState({ stateList: newProps.stateList })
+	// 		if (location.pathname.includes("create")) {
+	// 			this.setState({ selectedStateIdx: newProps.stateList[0].value })
+	// 		}
+	// 	}
+
+	// 	if (this.props.cityList !== newProps.cityList) {
+	// 		this.setState({ cityList: newProps.cityList })
+	// 		if (location.pathname.includes("create")) {
+	// 			this.setState({ selectedCityIdx: newProps.cityList[0].value })
+	// 		}
+	// 	}
+
+	// 	if (this.props.stateMap !== newProps.stateMap) {
+	// 		this.setState({ stateMap: newProps.stateMap })
+	// 	}
+	// }
+
 	handleChange (e) {
+		console.log("this", this.state, e.target.value, this.state.stateMap[e.target.value])
 		if (e.target.name.toString().includes("StateIdx")) {
+			console.log("if")
 			this.setState({
 				cityList: this.state.stateMap[e.target.value],
 				[e.target.name]: e.target.value
 			})
 		} else {
+			console.log("else")
 			this.setState({
 				[e.target.name]: e.target.value
 			})
@@ -301,6 +342,7 @@ class OrganizationForm extends React.Component {
 	}
 
 	render () {
+		console.log("render", this.state)
 		const { organizationNameErr,
 			incorporationDateErr,
 			cinNumberErr,

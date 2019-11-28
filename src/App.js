@@ -255,7 +255,7 @@ class App extends React.Component {
 		})
 	}
 
-	componentWillMount () {
+	UNSAFE_componentWillMount () {
 		const fetchOptions = {
 			method: 'get',
 			credentials: 'include',
