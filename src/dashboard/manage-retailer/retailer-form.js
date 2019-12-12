@@ -3,6 +3,7 @@ import { Form, Checkbox, ButtonGroup } from '@auth0/cosmos'
 import { validateTextField, validateEmail, validateNumberField } from 'Utils/validators'
 import { checkCtrlA, validateNumType, checkCtrlV } from 'Utils/logic-utils'
 import CustomButton from 'Components/button'
+import PropTypes from "prop-types"
 
 class RetailerForm extends React.Component {
 	constructor (props) {
@@ -192,7 +193,8 @@ class RetailerForm extends React.Component {
 	// 	}
 	// }
 
-	componentDidUpdate(prevProps, prevState) {
+	// eslint-disable-next-line no-unused-vars
+	componentDidUpdate (prevProps, prevState) {
 		if (this.props.organizationList !== prevProps.organizationList) {
 			this.setState({ organizationList: this.props.organizationList })
 		}
@@ -213,8 +215,6 @@ class RetailerForm extends React.Component {
 		}
 
 		if (prevProps.cityList && this.props.cityList !== prevProps.cityList) {
-			console.log("city", prevProps.cityList, this.state.selectedCityIdx)
-
 			this.setState({ cityList: this.props.cityList })
 			if (location.pathname.includes("create")) {
 				this.setState({ selectedCityIdx: this.props.cityList[0].value })
@@ -696,6 +696,14 @@ class RetailerForm extends React.Component {
 			</div>
 		)
 	}
+}
+
+RetailerForm.propTypes = {
+	organizationList: PropTypes.array,
+	stateList: PropTypes.array,
+	cityList: PropTypes.array,
+	organizationMap: PropTypes.object,
+	stateMap: PropTypes.object
 }
 
 export default RetailerForm

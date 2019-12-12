@@ -3,6 +3,7 @@ import { Form, Checkbox, ButtonGroup } from '@auth0/cosmos'
 import { validateTextField, validateEmail, validateNumberField } from 'Utils/validators'
 import { checkCtrlA, validateNumType, checkCtrlV } from 'Utils/logic-utils'
 import CustomButton from 'Components/button'
+import PropTypes from "prop-types"
 
 class OrganizationForm extends React.Component {
 
@@ -119,7 +120,7 @@ class OrganizationForm extends React.Component {
 
 		this.errorFlag = false,
 
-			this.handleChange = this.handleChange.bind(this)
+		this.handleChange = this.handleChange.bind(this)
 		this.handleTextChange = this.handleTextChange.bind(this)
 		this.handleNumberChange = this.handleNumberChange.bind(this)
 		this.handleEmailChange = this.handleEmailChange.bind(this)
@@ -150,7 +151,8 @@ class OrganizationForm extends React.Component {
 	// 	return newData
 	// }
 
-	componentDidUpdate(prevProps, prevState) {
+  // eslint-disable-next-line no-unused-vars
+	componentDidUpdate (prevProps, prevState) {
 		if (prevProps.cityList !== this.props.cityList) {
 			this.setState({cityList: this.props.cityList})
 			if (location.pathname.includes("create")) {
@@ -698,6 +700,12 @@ class OrganizationForm extends React.Component {
 			</div>
 		)
 	}
+}
+
+OrganizationForm.propTypes = {
+	cityList: PropTypes.array,
+	stateList: PropTypes.array,
+	stateMap: PropTypes.object
 }
 
 export default OrganizationForm

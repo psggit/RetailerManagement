@@ -372,6 +372,9 @@ class ManageRetailer extends React.Component {
 								)}
 							</Table.Column>
 							<Table.Column>
+								{item => <NavLink to={`/admin/retailer/soa/${item.id}`}>SOA</NavLink>}
+							</Table.Column>
+							<Table.Column>
 								{item => <NavLink to={`/admin/retailer/notes/${item.id}`}>Notes</NavLink>}
 							</Table.Column>
 							<Table.Column field="id" title="Retailer Id" />

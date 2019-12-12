@@ -19,6 +19,7 @@ import OrganizationDetails from './dashboard/manage-organization/organization-de
 import RetailerDetails from './dashboard/manage-retailer/retailer-details'
 import ManageRetailer from './dashboard/manage-retailer/index'
 import RetailerNotes from "./dashboard/RetailerNotes"
+import RetailerSOA from "./dashboard/RetailerSOA"
 import CreateRetailer from './dashboard/manage-retailer/create-retailer'
 import EditRetailer from './dashboard/manage-retailer/edit-retailer'
 import RetailerList from "./dashboard/device-management/index"
@@ -148,6 +149,12 @@ function RetailerManagementSwitch () {
 					exact
 					path="/admin/retailer/notes/:retailerId"
 					render={props => <RetailerNotes {...props} />}
+				/>
+
+				<Route
+					exact
+					path="/admin/retailer/soa/:retailerId"
+					render={props => <RetailerSOA {...props} />}
 				/>
 
 				<Route

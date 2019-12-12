@@ -328,6 +328,15 @@ export function fetchNoteIssues () {
 		.then(json => json)
 }
 
+export function fetchRetailerSOA (req) {
+	return POST({
+		api: "/Api/soa",
+		apiBase: "retailer",
+		data: req
+	})
+		.then(json => json)
+}
+
 export function fetchCreditDebitRetailers (req) {
 	return POST({
 		api: "/Api/listManualCreditDebit",
