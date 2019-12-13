@@ -67,7 +67,7 @@ class RetailerSOA extends React.Component {
   fetchRetailerSOAList (payload) {
     fetchRetailerSOA(payload)
     .then((retailerSOAData) => {
-      if(Object.keys(retailerSOAData) > 0) {
+      if(Object.keys(retailerSOAData).length > 0) {
         this.setState({
           retailerSOA: retailerSOAData.transactions,
           retailerSOACount: retailerSOAData.Count,
