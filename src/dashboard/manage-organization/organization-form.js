@@ -131,6 +131,9 @@ class OrganizationForm extends React.Component {
 		this.validate = this.validate.bind(this)
 	}
 
+// 	componentWillReceiveProps (newProps) {
+// 		if (this.props.stateList !== newProps.stateList) {
+// 			this.setState({ stateList: newProps.stateList })
 	// static getDerivedStateFromProps(nextProps, prevState) {
 	// 	console.log("next props", nextProps, "pres state", prevState)
 	// 	let newData = {}
@@ -170,6 +173,7 @@ class OrganizationForm extends React.Component {
 		}
 	}
 
+// 	handleChange (e) {
 	// componentWillReceiveProps (newProps) {
 	// 	if (this.props.stateList !== newProps.stateList) {
 	// 		this.setState({ stateList: newProps.stateList })
@@ -344,7 +348,6 @@ class OrganizationForm extends React.Component {
 	}
 
 	render () {
-		console.log("render", this.state)
 		const { organizationNameErr,
 			incorporationDateErr,
 			cinNumberErr,

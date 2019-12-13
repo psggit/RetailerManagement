@@ -152,6 +152,9 @@ class RetailerForm extends React.Component {
 		this.handleStateChange = this.handleStateChange.bind(this)
 	}
 
+// 	componentWillReceiveProps (newProps) {
+// 		if (this.props.organizationList !== newProps.organizationList) {
+// 			this.setState({ organizationList: newProps.organizationList })
 	// componentWillReceiveProps (newProps) {
 	// 	if (this.props.organizationList !== newProps.organizationList) {
 	// 		this.setState({ organizationList: newProps.organizationList })
