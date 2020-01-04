@@ -12,7 +12,7 @@ class AccountManagerForm extends React.Component {
 
     this.inputNameMap = {
       accountManagerName: 'Account Manager Name',
-      mobile: 'Mobile'
+      mobile: 'Mobile Number'
     }
 
     this.state = {

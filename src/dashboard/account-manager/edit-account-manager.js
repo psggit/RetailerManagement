@@ -43,7 +43,7 @@ class EditAccountManager extends React.Component {
 
   render () {
     return (
-      <Layout title="Create Account Manager">
+      <Layout title="Edit Account Manager">
         <Card width="800px">
           <AccountManagerForm
             handleSave={this.handleSaveAccountManager}
