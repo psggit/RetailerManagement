@@ -4,6 +4,7 @@ import { updateAccountManager } from "./../../api"
 import Layout from 'Components/layout'
 import Card from 'Components/card'
 import Notify from "Components/notify"
+import PropTypes from "prop-types"
 
 class EditAccountManager extends React.Component {
 
@@ -54,6 +55,15 @@ class EditAccountManager extends React.Component {
       </Layout>
     )
   }
+}
+
+EditAccountManager.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      organizationId: PropTypes.string,
+    }),
+  }),
+  history: PropTypes.object
 }
 
 export default EditAccountManager

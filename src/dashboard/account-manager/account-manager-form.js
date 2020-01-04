@@ -11,7 +11,7 @@ class AccountManagerForm extends React.Component {
     super(props)
 
     this.inputNameMap = {
-      accountManager: 'Account Manager',
+      accountManagerName: 'Account Manager Name',
       mobile: 'Mobile'
     }
 

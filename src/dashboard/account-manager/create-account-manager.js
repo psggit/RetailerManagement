@@ -4,6 +4,7 @@ import { createAccountManager} from "./../../api"
 import Layout from 'Components/layout'
 import Card from 'Components/card'
 import Notify from "Components/notify"
+import PropTypes from "prop-types"
 
 class CreateAccountManager extends React.Component {
 
@@ -55,6 +56,14 @@ class CreateAccountManager extends React.Component {
       </Layout>
     )
   }
+}
+
+CreateAccountManager.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      organizationId: PropTypes.string,
+    }),
+  })
 }
 
 export default CreateAccountManager
