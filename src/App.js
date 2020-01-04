@@ -31,6 +31,9 @@ import StockManagement from "./dashboard/stock-management"
 import ModifiedStockList from "./dashboard/stock-management/modifiedStockSummary"
 import Account from "./dashboard/Account"
 import ManageCreditDebit from "./dashboard/ManualDebitCredit"
+import ManageAccountManager from "./dashboard/account-manager"
+import CreateAccountManager from "./dashboard/account-manager/create-account-manager"
+import EditAccountManager from "./dashboard/account-manager/edit-account-manager"
 const history = createHistory()
 const supportedRoles = ["admin", "opdataadmin", "opdataentry"]
 const accessRole = localStorage.getItem('x-hasura-role') ? localStorage.getItem('x-hasura-role') : ''
@@ -94,6 +97,36 @@ function RetailerManagementSwitch () {
 					render={
 						props => (
 							<EditOrganization {...props} />
+						)
+					}
+				/>
+
+				<Route
+					exact
+					path="/admin/account-manager/:organizationId"
+					render={
+						props => (
+							<ManageAccountManager {...props} />
+						)
+					}
+				/>
+
+				<Route
+					exact
+					path="/admin/account-manager/create/:organizationId"
+					render={
+						props => (
+							<CreateAccountManager {...props} />
+						)
+					}
+				/>
+
+				<Route
+					exact
+					path="/admin/account-manager/edit/:organizationId"
+					render={
+						props => (
+							<EditAccountManager {...props} />
 						)
 					}
 				/>

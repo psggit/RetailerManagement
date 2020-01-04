@@ -346,6 +346,30 @@ export function fetchCreditDebitRetailers (req) {
 		.then(json => json)
 }
 
+export function fetchAccountManagers (payload) {
+	return POST({
+		api: "/Api/listAccountManager",
+		apiBase: "retailer",
+		data: payload
+	})
+}
+
+export function createAccountManager (payload) {
+	return POST({
+		api: "/Api/addAccountManager",
+		apiBase: "retailer",
+		data: payload
+	})
+}
+
+export function updateAccountManager (payload) {
+	return POST({
+		api: "/Api/editAccountManager",
+		apiBase: "retailer",
+		data: payload
+	})
+}
+
 export function fetchTransactionCode (req) {
 	return POST({
 		api: "/Api/listTransactionCode",

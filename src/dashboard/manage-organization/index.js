@@ -235,6 +235,7 @@ class ManageOrganization extends React.Component {
 	}
 
 	handleRowClick (e, item) {
+		e.stopPropagation()
 		this.props.history.push(`/admin/organization/${item.id}`, item)
 	}
 
@@ -327,17 +328,20 @@ class ManageOrganization extends React.Component {
 					<Table
 						emptyMessage={this.state.loading ? <Spinner /> : 'No records found'}
 						items={this.state.organizationData}
-						onRowClick={(e, item) => this.handleRowClick(e, item)}
+						//onRowClick={(e, item) => this.handleRowClick(e, item)}
 					>
 						<Table.Column field="actions">
 							{item => (
 								<Button icon="pencil" onClick={(e) => this.handleEditOrg(e, item, 'edit')} />
 							)}
 						</Table.Column>
+						<Table.Column width="6%">
+							{item => <NavLink to={`/admin/account-manager/${item.id}`}>Account Managers</NavLink>}
+						</Table.Column>
 						<Table.Column field="id" title="ID" width="7%" />
 						<Table.Column field="organisation_name" title="Organization Name" width="15%" />
 						<Table.Column field="type_of_organisation" title="Organization Type" width="10%" />
-						<Table.Column field="no_of_outlets" title="Outlets Count" width="13%" />
+						<Table.Column field="no_of_outlets" title="Outlets Count" width="7%" />
 						<Table.Column field="kyc_status" title="KYC Status" width="10%" />
 						<Table.Column field="status" title="Organization Status" width="13%" />
 						<Table.Column field="state_name" title="State Name" width="7%" />
