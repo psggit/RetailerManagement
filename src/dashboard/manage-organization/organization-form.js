@@ -4,6 +4,7 @@ import { validateTextField, validateEmail, validateNumberField } from 'Utils/val
 import { checkCtrlA, validateNumType, checkCtrlV } from 'Utils/logic-utils'
 import CustomButton from 'Components/button'
 import PropTypes from "prop-types"
+import SettlementUserCard from "./settlementUserCard"
 
 class OrganizationForm extends React.Component {
 
@@ -64,6 +65,8 @@ class OrganizationForm extends React.Component {
 			cityList: this.props.cityList ? this.props.cityList : '',
 			stateMap: this.props.stateMap ? this.props.stateMap : '',
 
+			settlementUsers: this.props.settlementUsers ? this.props.settlementUsers : [],
+
 			otherOrgTypeErr: {
 				value: '',
 				status: false
@@ -119,7 +122,7 @@ class OrganizationForm extends React.Component {
 		}
 
 		this.errorFlag = false,
-
+		this.settlementUserCount = 0
 		this.handleChange = this.handleChange.bind(this)
 		this.handleTextChange = this.handleTextChange.bind(this)
 		this.handleNumberChange = this.handleNumberChange.bind(this)
@@ -127,8 +130,10 @@ class OrganizationForm extends React.Component {
 		this.handleSelectChange = this.handleSelectChange.bind(this)
 		this.getData = this.getData.bind(this)
 		this.checkForm = this.checkForm.bind(this)
-		this.handleSave = this.handleSave.bind(this)
+		this.createOrganization = this.createOrganization.bind(this)
+		this.handleAddUser = this.handleAddUser.bind(this)
 		this.validate = this.validate.bind(this)
+		this.handleSaveUser = this.handleSaveUser.bind(this)
 	}
 
 // 	componentWillReceiveProps (newProps) {
@@ -195,9 +200,7 @@ class OrganizationForm extends React.Component {
 	// }
 
 	handleChange (e) {
-		console.log("this", this.state, e.target.value, this.state.stateMap[e.target.value])
 		if (e.target.name.toString().includes("StateIdx")) {
-			console.log("if")
 			this.setState({
 				cityList: this.state.stateMap[e.target.value],
 				[e.target.name]: e.target.value
@@ -268,9 +271,34 @@ class OrganizationForm extends React.Component {
 		}
 	}
 
-	handleSave (e) {
+	handleAddUser (e) {
 		e.preventDefault()
-		this.checkForm()
+		this.settlementUserCount = this.settlementUserCount + 1
+		let userDetail = {
+			username: '',
+			mobile: '',
+			id: this.settlementUserCount
+		}
+
+		this.setState({
+			settlementUsers: [...this.state.settlementUsers, userDetail]
+		})
+	}
+
+	handleSaveUser () {
+		const userFormData = this.settlementUserForm.getData()
+		let userDetail = this.state.settlementUsers.pop()
+		userDetail.username = userFormData.username
+		userDetail.mobile = userFormData.mobile
+		userDetail.status = userFormData.selectedStatusIdx === "1" ? "true" : "false",
+		this.setState({
+			settlementUsers: [...this.state.settlementUsers, userDetail]
+		})
+	}
+
+	createOrganization (e) {
+		e.preventDefault()
+		this.checkForm('OrganizationDetails')
 
 		if (!this.errorFlag) {
 			this.props.handleSave()
@@ -280,7 +308,7 @@ class OrganizationForm extends React.Component {
 
 	checkForm () {
 		this.errorFlag = false
-		const formEl = document.getElementById('OrgName')
+		const formEl = document.getElementById('OrganizationDetails')
 		const inputCollection = formEl.getElementsByTagName('input')
 		const inputsArr = Array.prototype.slice.call(inputCollection)
 
@@ -370,7 +398,7 @@ class OrganizationForm extends React.Component {
 		} = this.state
 
 		return (
-			<div id="OrgName">
+			<div id="OrganizationDetails">
 				<Form layout="label-on-top">
 					<Form.FieldSet label="Organization Details">
 						<Form.TextInput
@@ -691,14 +719,52 @@ class OrganizationForm extends React.Component {
 								</div>
 							</div>
 						}
-						<ButtonGroup align="right">
-							<CustomButton
-								text="Save"
-								handleClick={this.handleSave}
-								disableSave={this.props.disableSave}
-							/>
-						</ButtonGroup>
 					</Form.FieldSet>
+					<div id="SettlementUsers" style={{marginTop: "40px"}}>
+						{
+							location.pathname.includes("create") &&
+							<Form.FieldSet label="Settlement User Details">
+								<ButtonGroup align="left">
+									<CustomButton
+										text="Add"
+										handleClick={this.handleAddUser}
+										//disableSave={this.props.disableSave}
+									/>
+								</ButtonGroup>
+								{
+									this.state.settlementUsers.map((item, i) => {
+										return <SettlementUserCard 
+															key={i} 
+															handleSave={this.handleSaveUser}
+															username={item.username}
+															password={item.password}
+															ref={input => (this.settlementUserForm = input)}
+														/>
+													
+									})
+								}
+							</Form.FieldSet>
+						}
+						{
+							location.pathname.includes("edit") &&
+							this.state.settlementUsers.map((item, i) => {
+								return <SettlementUserCard
+													key={i}
+													//handleSave={this.handleSaveUser}
+													username={item.username}
+													password={item.password}
+													ref={input => (this.settlementUserForm = input)}
+												/>
+							})
+						}
+					</div>
+					<ButtonGroup align="right">
+						<CustomButton
+							text="Save"
+							handleClick={this.createOrganization}
+							disableSave={this.props.disableSave}
+						/>
+					</ButtonGroup>
 				</Form>
 			</div>
 		)
@@ -708,7 +774,9 @@ class OrganizationForm extends React.Component {
 OrganizationForm.propTypes = {
 	cityList: PropTypes.array,
 	stateList: PropTypes.array,
-	stateMap: PropTypes.object
+	stateMap: PropTypes.object,
+	settlementUsers: PropTypes.array,
+	handleSave: PropTypes.func
 }
 
 export default OrganizationForm

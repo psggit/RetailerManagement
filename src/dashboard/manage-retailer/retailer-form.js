@@ -47,6 +47,7 @@ class RetailerForm extends React.Component {
 				KYCVerified: props.data ? props.data.KYCVerified : '',
 				selectedKycIdx: props.data ? (props.data.kyc_status === "true" ? "1" : "2") : "1",
 				selectedOutletStatusIdx: props.data ? (props.data.branch_status === "true" ? "1" : "2") : "1",
+				// selectedUpiStoreTypeIdx: props.data ? (props.data.store_type === "P2PM" ? "1" : "2") : "1",
 				FSSAINumber: props.data ? props.data.fssai_no : '',
 				selectedCityIdx: props.data ? props.data.city_id : 0,
 				selectedStateIdx: props.data ? props.data.state_id : 0,
@@ -61,8 +62,15 @@ class RetailerForm extends React.Component {
 				accountNumber: props.data ? props.data.account_number : '',
 				branch: props.data ? props.data.bank_branch : '',
 				accountType: props.data ? props.data.acc_type : 'savings',
+				// customerFilterTag: props.data ? props.data.customer_filter_tag : 'mall',
 				IFSC: props.data ? props.data.ifsc_code : '',
 				cancelledCheck: props.data ? props.data.is_cancelled_cheque : false,
+				isHipbarWalletEnabled: props.data ? props.data.hbwallet_enabled : false,
+				isUpiEnabled: props.data ? props.data.upi_enabled : false,
+				isGiftWalletEnabled: props.data ? props.data.gift_wallet_enabled : false,
+				catalogEnabled: props.data ? props.data.catalog_enabled : false,
+				hbRecommended: props.data ? props.data.recommended_retailer : false,
+				inventoryEnabled: props.data ? props.data.inventory_enabled : false,
 				exciseLicense: props.data ? props.data.is_excise_license : false,
 				outletPhoto: props.data ? props.data.is_photo_of_outlet : false,
 
@@ -416,7 +424,7 @@ class RetailerForm extends React.Component {
 			emailErr,
 			gpsCoordinatesErr,
 		} = this.state
-
+		console.log("state", this.state)
 		return (
 			<div id="RetailerForm">
 				<Form layout="label-on-top">
@@ -448,6 +456,99 @@ class RetailerForm extends React.Component {
 							onChange={(e) => this.handleTextChange(e)}
 							autoComplete="fefef"
 						/>
+						{/* <Form.Radio
+							name="customerFilterTag"
+							label="Customer Filter Tag*"
+							type="radio"
+							selected={this.state.customerFilterTag}
+							autoComplete="fefef"
+							onChange={e => this.handleChange(e)}
+							align="horizontal"
+						>
+							<Form.Radio.Option value="mall">Mall Store</Form.Radio.Option>
+							<Form.Radio.Option value="non-mall">Non-Mall Store</Form.Radio.Option>
+						</Form.Radio> */}
+						<div style={{ marginBottom: '20px' }}>
+							<div style={{ marginBottom: '8px' }}>
+								<label style={{fontWeight: "500"}}> Payment Type*</label>
+							</div>
+							<div style={{ display: 'flex' }}>
+								<div style={{ marginRight: '24px' }}>
+									<Checkbox
+										name="isHipbarWalletEnabled"
+										onChange={e => this.handleSelectChange(e)}
+										value="isHipbarWalletEnabled"
+										checked={this.state.isHipbarWalletEnabled}
+									>
+										Hipbar Wallet
+									</Checkbox>
+								</div>
+								<div style={{ marginRight: '24px' }}>
+									<Checkbox
+										name="isGiftWalletEnabled"
+										onChange={e => this.handleSelectChange(e)}
+										value="isGiftWalletEnabled"
+										checked={this.state.isGiftWalletEnabled}
+									>
+										Gift Wallet
+									</Checkbox>
+								</div>
+								<div style={{ marginRight: '24px' }}>
+									<Checkbox
+										name="isUpiEnabled"
+										onChange={e => this.handleSelectChange(e)}
+										value="isUpiEnabled"
+										checked={this.state.isUpiEnabled}
+									>
+										UPI
+									</Checkbox>
+								</div>
+							</div>
+						</div>
+						<div style={{ marginBottom: '20px' }}>
+							<div style={{ display: 'flex' }}>
+								<div style={{ marginRight: '24px' }}>
+									<Checkbox
+										name="catalogEnabled"
+										onChange={e => this.handleSelectChange(e)}
+										value="catalogEnabled"
+										checked={this.state.catalogEnabled}
+									>
+										Catalog Enabled
+									</Checkbox>
+								</div>
+								<div style={{ marginRight: '24px' }}>
+									<Checkbox
+										name="hbRecommended"
+										onChange={e => this.handleSelectChange(e)}
+										value="hbRecommended"
+										checked={this.state.hbRecommended}
+									>
+										Hipbar Recommended
+									</Checkbox>
+								</div>
+								<div style={{ marginRight: '24px' }}>
+									<Checkbox
+										name="inventoryEnabled"
+										onChange={e => this.handleSelectChange(e)}
+										value="inventoryEnabled"
+										checked={this.state.inventoryEnabled}
+									>
+										Inventory Enabled
+									</Checkbox>
+								</div>
+							</div>
+						</div>
+						{/* <Form.Select
+							label="UPI Store Type*"
+							value={this.state.selectedUpiStoreTypeIdx}
+							name="selectedUpiStoreTypeIdx"
+							options={[
+								{ text: 'P2PM', value: '1' },
+								{ text: 'P2M', value: '2' },
+							]}
+							onChange={(e) => this.handleChange(e)}
+						/> */}
 						<Form.TextInput
 							label="Excise License Number*"
 							type="text"

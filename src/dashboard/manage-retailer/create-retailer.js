@@ -82,7 +82,15 @@ class CreateRetailer extends React.Component {
 			ifsc_code: retailerDataForm.IFSC,
 			is_cancelled_cheque: retailerDataForm.cancelledCheck,
 			is_excise_license: retailerDataForm.exciseLicense,
-			is_photo_of_outlet: retailerDataForm.outletPhoto
+			is_photo_of_outlet: retailerDataForm.outletPhoto,
+			hbwallet_enabled: retailerDataForm.isHipbarWalletEnabled,
+			gift_wallet_enabled: retailerDataForm.isGiftWalletEnabled,
+			upi_enabled: retailerDataForm.isUpiEnabled,
+			catalog_enabled: retailerDataForm.catalogEnabled,
+			inventory_enabled: retailerDataForm.inventoryEnabled,
+			recommended_retailer: retailerDataForm.hbRecommended,
+			// store_type: retailerDataForm.customerFilterTag,
+			// upi_store_type: retailerDataForm.selectedUpiStoreTypeIdx === "1" ? "P2PM" : "P2M"
 		}
 		this.setState({ creatingRetailer: true })
 		this.createRetailer(payload, this.successCallback, this.failureCallback)

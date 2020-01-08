@@ -16,7 +16,7 @@ class Button2 extends React.Component {
     render () {
         return (
             <Button 
-                style={{border: '1px solid #757575'}} 
+                style={{border: '1px solid #757575', marginBottom: "20px"}} 
                 onClick={(e) => this.handleClick(e)}
                 disabled={this.props.disableSave ? this.props.disableSave : false}
             >
