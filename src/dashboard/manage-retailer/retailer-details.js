@@ -35,6 +35,14 @@ class RetailerDetails extends React.Component {
 						<p><b>Excise Licence</b>: {data.is_excise_license ? 'Attached' : 'Not Attached'} </p>
 						<p><b>Photo of the Outlet</b>: {data.is_photo_of_outlet ? 'Attached' : 'Not Attached'} </p>
 
+						<h3>Payment Type</h3>
+						<p><b>UPI</b>: {data.upi_enabled ? 'Enabled' : 'Disabled'} </p>
+						<p><b>Gift Wallet</b>: {data.gift_wallet_enabled ? 'Enabled' : 'Disabled'} </p>
+						<p><b>Hipbar Wallet</b>: {data.hbwallet_enabled ? 'Enabled' : 'Disabled'} </p>
+
+						<p><b>Catalog Enabled</b>: {data.catalog_enabled ? 'Enabled' : 'Disabled'} </p>
+						<p><b>Inventory Enabled</b>: {data.inventory_enabled ? 'Enabled' : 'Disabled'} </p>
+						<p><b>Hipbar Recommended</b>: {data.recommended_retailer ? 'Yes' : 'No'} </p>
 
 						<h3>Bank Details</h3>
 						<p><b>Bank Name</b>: {data.bank_name} </p>
