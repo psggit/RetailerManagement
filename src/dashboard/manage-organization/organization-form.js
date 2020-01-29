@@ -720,7 +720,7 @@ class OrganizationForm extends React.Component {
 							</div>
 						}
 					</Form.FieldSet>
-					<div id="SettlementUsers" style={{marginTop: "40px"}}>
+					{/* <div id="SettlementUsers" style={{marginTop: "40px"}}>
 						{
 							location.pathname.includes("create") &&
 							<Form.FieldSet label="Settlement User Details">
@@ -757,7 +757,7 @@ class OrganizationForm extends React.Component {
 												/>
 							})
 						}
-					</div>
+					</div> */}
 					<ButtonGroup align="right">
 						<CustomButton
 							text="Save"
