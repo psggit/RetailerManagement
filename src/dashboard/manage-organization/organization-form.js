@@ -632,6 +632,7 @@ class OrganizationForm extends React.Component {
 									type="text"
 									name="otherProof"
 									autoComplete="fefef"
+									style={{ marginBottom: '20px' }}
 									error={((isOtherProof && otherProof.length === 0) || otherProofErr.status) ? "Attached documents are required" : ''}
 									value={this.state.otherProof}
 									//size="small"
