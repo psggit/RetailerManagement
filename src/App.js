@@ -34,6 +34,7 @@ import ManageCreditDebit from "./dashboard/ManualDebitCredit"
 import ManageAccountManager from "./dashboard/account-manager"
 import CreateAccountManager from "./dashboard/account-manager/create-account-manager"
 import EditAccountManager from "./dashboard/account-manager/edit-account-manager"
+import ManageDMO from './dashboard/manage-dmo'
 const history = createHistory()
 const supportedRoles = ["admin", "opdataadmin", "opdataentry"]
 const accessRole = localStorage.getItem('x-hasura-role') ? localStorage.getItem('x-hasura-role') : ''
@@ -151,6 +152,15 @@ function RetailerManagementSwitch () {
 					}
 				/>
 
+				<Route
+					exact
+					path="/admin/dmo"
+					render={
+						props => (
+							<ManageDMO {...props} />
+						)
+					}
+				/>
 				<Route
 					exact
 					path="/admin/retailer/create"
@@ -376,6 +386,7 @@ class App extends React.Component {
 										menuItems={[
 											{ label: 'Manage Organization', value: 'organization' },
 											{ label: 'Manage Retailer', value: 'retailer' },
+											{ label: 'Manage DMO', value:'dmo' },
 											{ label: 'Generate Report', value: 'generate-report' },
 											{ label: 'Device Management', value: 'device-management' },
 											{ label: 'Stock and Price', value: 'stock-and-price' },
