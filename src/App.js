@@ -34,9 +34,9 @@ import ManageCreditDebit from "./dashboard/ManualDebitCredit"
 import ManageAccountManager from "./dashboard/account-manager"
 import CreateAccountManager from "./dashboard/account-manager/create-account-manager"
 import EditAccountManager from "./dashboard/account-manager/edit-account-manager"
-import ManageDMO from "./dashboard/ManageDmo/index"
-import CreateDMO from './dashboard/ManageDmo/create-dmo'
-import EditDMO from "./dashboard/ManageDmo/edit-dmo"
+import ManageDMO from "./dashboard/manage-dmo/index"
+import CreateDMO from './dashboard/manage-dmo/create-dmo'
+import EditDMO from "./dashboard/manage-dmo/edit-dmo"
 
 const history = createHistory()
 const supportedRoles = ["admin", "opdataadmin", "opdataentry"]

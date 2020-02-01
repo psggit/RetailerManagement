@@ -4,7 +4,6 @@ import { validateTextField, validateEmail, validateNumberField } from 'Utils/val
 import { checkCtrlA, validateNumType, checkCtrlV } from 'Utils/logic-utils'
 import CustomButton from 'Components/button'
 import PropTypes from "prop-types"
-import SettlementUserCard from "./settlementUserCard"
 
 class OrganizationForm extends React.Component {
 
