@@ -95,22 +95,22 @@ class EditDMO extends React.Component {
     }
   }
 
-  updateDMO (payload, successCallback, failureCallback) {
-    Api.updateDMOr(payload, successCallback, failureCallback)
-  }
+  // updateDMO (payload, successCallback, failureCallback) {
+  //   Api.updateDMOr(payload, successCallback, failureCallback)
+  // }
 
-  successCallback () {
-    this.updateState()
-    location.href = '/admin/dmo'
-  }
+  // successCallback () {
+  //   this.updateState()
+  //   location.href = '/admin/dmo'
+  // }
 
-  failureCallback () {
-    this.updateState()
-  }
+  // failureCallback () {
+  //   this.updateState()
+  // }
 
-  updateState () {
-    this.setState({ updatingDMO: false })
-  }
+  // updateState () {
+  //   this.setState({ updatingDMO: false })
+  // }
 
   render () {
     return (

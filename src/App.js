@@ -35,7 +35,7 @@ import ManageAccountManager from "./dashboard/account-manager"
 import CreateAccountManager from "./dashboard/account-manager/create-account-manager"
 import EditAccountManager from "./dashboard/account-manager/edit-account-manager"
 import ManageDMO from "./dashboard/manage-dmo/index"
-import CreateDMO from './dashboard/manage-dmo/create-dmo'
+import CreateDMO from "./dashboard/manage-dmo/create-dmo"
 import EditDMO from "./dashboard/manage-dmo/edit-dmo"
 
 const history = createHistory()
@@ -216,24 +216,13 @@ function RetailerManagementSwitch () {
 
 				<Route
 					exact
-					path="/admin/retailer/edit:dmoId"
+					path="/admin/dmo/edit:dmoId"
 					render={
 						props => (
 							<EditDMO {...props} />
 						)
 					}
 				/>
-
-				{/* <Route
-					exact
-					path="/admin/dmo/create"
-					render={
-						props => (
-							<CreateDmo {...props} />
-						)
-					}
-				/> */}
-
 				<Route
 					exact
 					path="/admin/generate-report"
