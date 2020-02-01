@@ -1,0 +1,76 @@
+import React from 'react'
+
+export const data = [
+  {
+    easypay_merchant_id: '1',
+    dmo_id: 'D1',
+    outlet_name: 'perungudi',
+    outlet_address: 'chennai',
+    state: 'tamil nadu',
+    city: 'vellore',
+    qr_code: '7689cbdbi',
+    dmo_status: 'active',
+  },
+  {
+    easypay_merchant_id: '2',
+    dmo_id: 'D2',
+    outlet_name: 'kandanchavadi',
+    outlet_address: 'Banglore',
+    state: 'tamil nadu',
+    city: 'chennai',
+    qr_code: 'hedd7898ued',
+    dmo_status: 'active',
+  },
+  {
+    easypay_merchant_id: '3',
+    dmo_id: 'D3',
+    outlet_name: 'siruseri',
+    outlet_address: 'Goa',
+    state: 'mharastra',
+    city: 'panzi',
+    qr_code: 'swdwddw534',
+    dmo_status: 'active',
+  },
+  {
+    easypay_merchant_id: '4',
+    dmo_id: 'D4',
+    outlet_name: 'navalur',
+    outlet_address: 'kolkata',
+    state: 'west bangal',
+    city: 'kolkata',
+    qr_code: '357rtuyf56',
+    dmo_status: 'active',
+  },
+  {
+    easypay_merchant_id: '5',
+    dmo_id: 'D5',
+    outlet_name: 'thoraipakkam',
+    outlet_address: 'combatour',
+    state: 'andhra',
+    city: 'malapakkam',
+    qr_code: '789hgfty',
+    dmo_status: 'active',
+  },
+  {
+    easypay_merchant_id: '6',
+    dmo_id: 'D6',
+    outlet_name: 'kottivakam',
+    outlet_address: 'madurai',
+    state: 'karanataka',
+    city: 'banglore',
+    qr_code: '35798wer90',
+    dmo_status: 'active',
+  },
+  {
+    easypay_merchant_id: '7',
+    dmo_id: 'D7',
+    outlet_name: 'sholinganur',
+    outlet_address: 'chennai',
+    state: 'Tamil nadu',
+    city: 'chennai',
+    qr_code: '98764tyuu',
+    dmo_status: 'active',
+  }
+]
+
+export default data
