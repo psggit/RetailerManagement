@@ -132,7 +132,7 @@ export default function ManageManualDebitCredit (props) {
   }, [offset, isReset, finalFilterValue])
   return (
     <Layout title="Manual credit and debit">
-      <div style={{ margin: "10px 0 20px 0", display: "flex", justifyContent: "space-between" }}>
+      <div style={{ margin: "20px 0 20px 0", display: "flex", justifyContent: "space-between" }}>
         <CustomButton text="Create new" handleClick={() => {
           mountModal(CreditDebitModal({
             history: props.history,
