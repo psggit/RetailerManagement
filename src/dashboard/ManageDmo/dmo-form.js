@@ -15,7 +15,7 @@ class DMOForm extends React.Component {
       PAN: 'PAN',
       merchantAddress: 'Merchant address',
       merchantPIN: 'Merchant PIN',
-      parentMerchantId: 'Parent merchant id',
+      // parentMerchantId: 'Parent merchant id',
       accountNumber: 'Account number',
       IFSC: 'IFSC code',
       mobileNo: 'Mobile number',
@@ -30,14 +30,14 @@ class DMOForm extends React.Component {
         retailerId: this.props.retailerId,
         merchantBusinessName: this.props.merchantBusinessName,
         merchantLegalName: this.props.merchantLegalName,
-        merchantCategoryCode: this.props.merchantCategoryCode,
+        //merchantCategoryCode: this.props.merchantCategoryCode,
         PAN: this.props.PAN,
         merchantType: this.props.merchantType,
         merchantAddress: this.props.merchantAddress,
         merchantState: this.props.merchantState,
         merchantCity: this.props.merchantCity,
         merchantPIN: this.props.merchantPIN,
-        parentMerchantId: this.props.parentMerchantId,
+        //parentMerchantId: this.props.parentMerchantId,
         accountNumber: props.data ? props.data.account_number : '',
         IFSC: props.data ? props.data.ifsc_code : '',
         mobileNo: props.data ? props.data.mobile_number : '',
@@ -73,10 +73,10 @@ class DMOForm extends React.Component {
           value: '',
           status: false
         },
-        parentMerchantIdErr: {
-          value: '',
-          status: false
-        },
+        // parentMerchantIdErr: {
+        //   value: '',
+        //   status: false
+        // },
         accountNumberErr: {
         value: '',
         status: false
@@ -270,7 +270,7 @@ class DMOForm extends React.Component {
       PANErr,
       merchantAddressErr,
       merchantPINErr,
-      parentMerchantIdErr,
+      //parentMerchantIdErr,
       accountNumberErr,
       IFSCErr,
       mobileNoErr,
@@ -310,7 +310,7 @@ class DMOForm extends React.Component {
               onChange={(e) => this.handleTextChange(e)}
               autoComplete="fefef"
             />
-            <Form.Select
+            {/* <Form.Select
               label="Merchant Category Code*"
               value={this.state.merchantCategoryCode}
               name="merchantCategoryCode"
@@ -319,7 +319,7 @@ class DMOForm extends React.Component {
                 { text: 'Not Verified', value: '2' },
               ]}
               onChange={(e) => this.handleChange(e)}
-            />
+            /> */}
               <Form.TextInput
               label="PAN*"
               type="text"
@@ -377,7 +377,7 @@ class DMOForm extends React.Component {
             />
           </Form.FieldSet>
           <Form.FieldSet label="Bank Account Details">
-            <Form.TextInput
+            {/* <Form.TextInput
               label="Parent Merchant ID*"
               type="text"
               name="parentMerchantId"
@@ -385,7 +385,7 @@ class DMOForm extends React.Component {
               autoComplete="fefef"
               error={parentMerchantIdErr.status ? parentMerchantIdErr.value : ''}
               onChange={(e) => this.handleTextChange(e)}
-            />
+            /> */}
             <Form.TextInput
               label="Account Number*"
               type="text"
