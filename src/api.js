@@ -387,3 +387,19 @@ export function insertManualCreditDebit (req) {
 	})
 		.then(json => json)
 }
+
+export function createDMO (payload) {
+	return POST({
+		api: "/Api/dmo/create",
+		apiBase: "retailer",
+		data: payload
+	})
+}
+
+export function updateDMO (payload) {
+	return POST({
+		api: "/Api/dmo/edit",
+		apiBase: "retailer",
+		data: payload
+	})
+}

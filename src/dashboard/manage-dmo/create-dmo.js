@@ -1,16 +1,36 @@
+/* eslint-disable no-undef */
 import React from 'react'
 import Layout from 'Components/layout'
 import Card from 'Components/card'
 import DMOForm from './dmo-form'
 import * as Api from './../../api'
+import { formatStateAndCityList } from 'Utils/response-format-utils'
 
 class CreateDMO extends React.Component {
   constructor () {
     super()
     this.state = {
-      creatingDMO: false
+      creatingDMO: false,
+      stateList: [],
+      cityList: [],
+      stateMap: {}
     }
     this.handleSave = this.handleSave.bind(this)
+    this.fetchStateAndCityList = this.fetchStateAndCityList.bind(this)
+    this.formatResponse = this.formatResponse.bind(this)
+  }
+
+  componentDidMount () {
+    this.fetchStateAndCityList({}, this.formatResponse)
+  }
+
+  fetchStateAndCityList (payload, stateListSuccessCallback) {
+    Api.fetchStateAndCityList(payload, stateListSuccessCallback)
+  }
+
+  formatResponse (data) {
+    const { stateList, cityList, stateMap } = formatStateAndCityList (data.states)
+    this.setState({ stateList, cityList, stateMap })
   }
 
  handleSave () {
@@ -19,20 +39,18 @@ class CreateDMO extends React.Component {
       retailer_id: DMODataForm.retailerId,
       merchant_business_name: DMODataForm.merchantBusinessName,
       merchant_legal_name: DMODataForm.merchantLegalName,
-      merchant_category_code: DMODataForm.merchantCategoryCode,
       pan:DMODataForm.PAN,
       merchant_type: DMODataForm.merchantType,
       merchant_address:DMODataForm.merchantAddress,
       merchant_state:DMODataForm.merchantState,
       merchant_city:DMODataForm.merchantCity,
       merchant_pin:DMODataForm.merchantPIN,
-      parent_merchant_id:DMODataForm.parentMerchantId,
       account_number:DMODataForm.accountNumber,
       ifsc_code:DMODataForm.IFSC,
       mobile_number:DMODataForm.mobileNo,
       email:DMODataForm.email,
       bank_name:DMODataForm.bankName,
-      gps:DMODataForm.GPS,
+      merchant_latlng:DMODataForm.GPS,
       gst:DMODataForm.GST,
       daily_transaction_limit:DMODataForm.dailyTransactionLimit,
       monthly_transaction_limit:DMODataForm.monthlyTransactionLimit,
@@ -42,7 +60,9 @@ class CreateDMO extends React.Component {
     this.createDMO(payload)
   }
 
-  CreateDMO (payload) {
+  createDMO (payload) {
+    console.log("hellooo..")
+    console.log("payload", payload)
     Api.createDMO(payload)
       .then((response) => {
         this.setState({ creatingDMO: false })
@@ -61,6 +81,9 @@ class CreateDMO extends React.Component {
           <DMOForm
             ref={(node) => { this.DMODetailsForm = node }}
             handleSave={this.handleSave}
+            stateList={this.state.stateList}
+            cityList={this.state.cityList}
+            stateMap={this.state.stateMap}
             disableSave={this.state.creatingDMO}
           />
         </Card>

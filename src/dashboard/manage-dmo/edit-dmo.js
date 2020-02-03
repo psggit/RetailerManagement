@@ -1,10 +1,11 @@
+/* eslint-disable react/prop-types */
 import React from 'react'
 import Layout from 'Components/layout'
 import DMOForm from './dmo-form'
 import Card from 'Components/card'
-//import * as Api from './../../api'
+import * as Api from './../../api'
 import 'Sass/animations.scss'
-//import { formatStateAndCityList, formatStateAndOrganizationList } from 'Utils/response-format-utils'
+import { formatStateAndCityList } from 'Utils/response-format-utils'
 
 class EditDMO extends React.Component {
   constructor () {
@@ -12,13 +13,26 @@ class EditDMO extends React.Component {
     this.state = {
       updatingDMO: false,
       isFormValid: true,
+      stateList: [],
+      cityList: [],
+      stateMap: {}
     }
     this.handleSave = this.handleSave.bind(this)
     this.updateDMO = this.updateDMO.bind(this)
-    this.successCallback = this.successCallback.bind(this)
-    this.failureCallback = this.failureCallback.bind(this)
-    this.updateState = this.updateState.bind(this)
     this.formIsValid = this.formIsValid.bind(this)
+  }
+
+  componentDidMount () {
+    this.fetchStateAndCityList({}, this.formatResponse)
+  }
+
+  fetchStateAndCityList (payload, stateListSuccessCallback) {
+    Api.fetchStateAndCityList(payload, stateListSuccessCallback)
+  }
+
+  formatResponse (data) {
+    const { stateList, cityList, stateMap } = formatStateAndCityList(data.states)
+    this.setState({ stateList, cityList, stateMap })
   }
 
   formIsValid () {
@@ -34,8 +48,6 @@ class EditDMO extends React.Component {
       IFSCErr,
       mobileNoErr,
       emailErr,
-      GPSErr,
-      GSTErr
     } = DMODataForm
 
     const formData = {
@@ -50,8 +62,6 @@ class EditDMO extends React.Component {
       IFSCErr,
       mobileNoErr,
       emailErr,
-      GPSErr,
-      GSTErr
     }
 
     for (const key in formData) {
@@ -68,6 +78,7 @@ class EditDMO extends React.Component {
     this.setState({ isFormValid: this.formIsValid() })
     if (this.formIsValid()) {
       const payload = {
+      id: parseInt(this.props.location.state.id),
       retailer_id: DMODataForm.retailerId,
       merchant_business_name: DMODataForm.merchantBusinessName,
       merchant_legal_name: DMODataForm.merchantLegalName,
@@ -84,33 +95,29 @@ class EditDMO extends React.Component {
       mobile_number:DMODataForm.mobileNo,
       email:DMODataForm.email,
       bank_name:DMODataForm.bankName,
-      gps:DMODataForm.GPS,
+      merchant_latlng:DMODataForm.GPS,
       gst:DMODataForm.GST,
       daily_transaction_limit:DMODataForm.dailyTransactionLimit,
       monthly_transaction_limit:DMODataForm.monthlyTransactionLimit,
-      limit_per_transaction:DMODataForm.limitPerTransaction       
+      limit_per_transaction:DMODataForm.limitPerTransaction,
+      virtual_address:DMODataForm.virtual_address      
       }
       this.setState({ updatingDMO: true })
-      this.updateDMO(payload, this.successCallback, this.failureCallback)
+      this.updateDMO(payload)
     }
   }
 
-  // updateDMO (payload, successCallback, failureCallback) {
-  //   Api.updateDMOr(payload, successCallback, failureCallback)
-  // }
-
-  // successCallback () {
-  //   this.updateState()
-  //   location.href = '/admin/dmo'
-  // }
-
-  // failureCallback () {
-  //   this.updateState()
-  // }
-
-  // updateState () {
-  //   this.setState({ updatingDMO: false })
-  // }
+  UpdateDMO (payload) {
+    Api.updateDMO(payload)
+      .then((response) => {
+        this.setState({ updatingDMO: false })
+        console.log("Updating dmo", response)
+      })
+      .catch((error) => {
+        this.setState({ updatingDMO: false })
+        console.log("Error in updating dmo", error)
+      })
+  }
 
   render () {
     return (
@@ -120,6 +127,11 @@ class EditDMO extends React.Component {
             ref={(node) => { this.dmoDetailsForm = node }}
             // eslint-disable-next-line react/prop-types
             data={this.props.history.location.state}
+            // eslint-disable-next-line no-undef
+            stateList={stateList}
+            // eslint-disable-next-line no-undef
+            cityList={cityList}
+            stateMap={this.state.stateMap}
             handleSave={this.handleSave}
             disableSave={this.state.updatingDMO}
           />

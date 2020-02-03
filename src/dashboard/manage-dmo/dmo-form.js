@@ -1,9 +1,11 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React from 'react'
 import { Form, ButtonGroup } from '@auth0/cosmos'
 import { validateTextField, validateEmail, validateNumberField } from 'Utils/validators'
 import { checkCtrlA, validateNumType, checkCtrlV } from 'Utils/logic-utils'
 import CustomButton from 'Components/button'
+import PropTypes from "prop-types"
 
 class DMOForm extends React.Component {
   constructor (props) {
@@ -21,23 +23,24 @@ class DMOForm extends React.Component {
       mobileNo: 'Mobile Number',
       email: 'Email',
       GPS: 'GPS',
-      GST: 'GST',   
+      GST: 'GST',
+      dailyTransactionLimit: 'Daily Transaction Limit',
+      monthlyTransactionLimit: 'Monthly Transaction Limit',
+      limitPerTransaction: 'Limit Per Transaction'  
     }
   
     this.errorFlag = false,
       this.state = {
-        // eslint-disable-next-line react/prop-types
         retailerId: this.props.retailerId,
         merchantBusinessName: this.props.merchantBusinessName,
         merchantLegalName: this.props.merchantLegalName,
-        //merchantCategoryCode: this.props.merchantCategoryCode,
         PAN: this.props.PAN,
         merchantType: this.props.merchantType,
         merchantAddress: this.props.merchantAddress,
-        merchantState: this.props.merchantState,
-        merchantCity: this.props.merchantCity,
+        stateList: this.props.stateList,
+        stateMap: this.props.stateMap,
+        cityList: this.props.cityList,
         merchantPIN: this.props.merchantPIN,
-        //parentMerchantId: this.props.parentMerchantId,
         accountNumber: props.data ? props.data.account_number : '',
         IFSC: props.data ? props.data.ifsc_code : '',
         mobileNo: props.data ? props.data.mobile_number : '',
@@ -48,6 +51,8 @@ class DMOForm extends React.Component {
         dailyTransactionLimit: this.props.dailyTransactionLimit,
         monthlyTransactionLimit: this.props.monthlyTransactionLimit,
         limitPerTransaction: this.props.limitPerTransaction,
+        selectedCityIdx: props.data ? props.data.city_id : 0,
+        selectedStateIdx: props.data ? props.data.state_id : 0,
 
         retailerIdErr: {
           value: '',
@@ -73,10 +78,6 @@ class DMOForm extends React.Component {
           value: '',
           status: false
         },
-        // parentMerchantIdErr: {
-        //   value: '',
-        //   status: false
-        // },
         accountNumberErr: {
         value: '',
         status: false
@@ -93,14 +94,6 @@ class DMOForm extends React.Component {
         value: '',
         status: false
         },
-        GPSErr: {
-        value: '',
-        status: false
-        },
-        GSTErr: {
-        value: '',
-        status: false
-        },
       }
 
     this.handleChange = this.handleChange.bind(this)
@@ -111,12 +104,50 @@ class DMOForm extends React.Component {
     this.handleSave = this.handleSave.bind(this)
     this.validate = this.validate.bind(this)
     this.getData = this.getData.bind(this)
+    this.handleStateChange = this.handleStateChange.bind(this)
+  }
+
+  componentDidUpdate (prevProps, prevState) {
+    if (this.props.stateList !== prevProps.stateList) {
+      this.setState({ stateList: this.props.stateList })
+      if (location.pathname.includes("create")) {
+        this.setState({ selectedStateIdx: this.props.stateList[0].value })
+      }
+    }
+
+    if (this.props.stateMap !== prevProps.stateMap) {
+      this.setState({ stateMap: this.props.stateMap })
+    }
+
+    if (prevProps.cityList && this.props.cityList !== prevProps.cityList) {
+      this.setState({ cityList: this.props.cityList })
+      if (location.pathname.includes("create")) {
+        this.setState({ selectedCityIdx: this.props.cityList[0].value })
+      }
+    }
+  }
+
+  handleStateChange (e) {
+    if (e.target.name.toString().includes("StateIdx")) {
+      this.setState({
+        cityList: this.state.stateMap[e.target.value],
+        [e.target.name]: e.target.value
+      })
+    }
   }
 
   handleChange (e) {
-    this.setState({
-      [e.target.name]: e.target.value
-    })
+    if (e.target.name.toString().includes("StateIdx")) {
+      this.setState({
+        cityList: this.state.stateMap[e.target.value],
+        [e.target.name]: e.target.value
+      })
+    } else {
+      console.log("else")
+      this.setState({
+        [e.target.name]: e.target.value
+      })
+    }
   }
 
   handleTextChange (e) {
@@ -175,9 +206,6 @@ class DMOForm extends React.Component {
   handleSave (e) {
     e.preventDefault()
     console.log("value-name", this.state)
-    // this.setState({
-    //   [e.target.name]:e.target.value
-    // })
     this.checkForm()
     if (!this.errorFlag) {
       // eslint-disable-next-line react/prop-types
@@ -259,13 +287,10 @@ class DMOForm extends React.Component {
       PANErr,
       merchantAddressErr,
       merchantPINErr,
-      //parentMerchantIdErr,
       accountNumberErr,
       IFSCErr,
       mobileNoErr,
       emailErr,
-      GPSErr,
-      GSTErr
     } = this.state
    
     return (
@@ -299,16 +324,6 @@ class DMOForm extends React.Component {
               onChange={(e) => this.handleTextChange(e)}
               autoComplete="fefef"
             />
-            {/* <Form.Select
-              label="Merchant Category Code*"
-              value={this.state.merchantCategoryCode}
-              name="merchantCategoryCode"
-              options={[
-                { text: 'Verified', value: '1' },
-                { text: 'Not Verified', value: '2' },
-              ]}
-              onChange={(e) => this.handleChange(e)}
-            /> */}
               <Form.TextInput
               label="PAN*"
               type="text"
@@ -324,7 +339,7 @@ class DMOForm extends React.Component {
               name="merchantType"
               options={[
                 { text: 'Select Merchant Type', value: '1' },
-                { text: 'Not Verified', value: '2' },
+                { text: 'Individual', value: 'Individual' },
               ]}
               onChange={(e) => this.handleChange(e)}
             />
@@ -334,47 +349,35 @@ class DMOForm extends React.Component {
               type="text"
               name="merchantAddress"
               value={this.state.merchantAddress}
-              //defaultValue={this.state.merchantAddress}
               error={merchantAddressErr.status ? merchantAddressErr.value : ''}
               onChange={(e) => this.handleTextChange(e)}
               autoComplete="fefef"
             />
               <Form.Select
                 label="Merchant State*"
-                value={this.state.merchantState}
-                name="merchantState"
-                //error={this.orgIndexError ? 'Organization name is required' : ''}
-                options={this.state.merchantStateList}
-                onChange={(e) => this.handleChange(e)}
+                value={this.state.selectedStateIdx}
+                name="selectedStateIdx"
+                options={this.state.stateList}
+                onChange={(e) => this.handleStateChange(e)}
               />
               <Form.Select
                 label="Merchant City*"
-                value={this.state.merchantCity}
-                name="merchantCity"
-                //error={this.orgIndexError ? 'Organization name is required' : ''}
-                options={this.state.merchantCityList}
+                value={this.state.selectedCityIdx}
+                name="selectedCityIdx"
+                options={this.state.cityList}
                 onChange={(e) => this.handleChange(e)}
               />
-            <Form.TextInput
-              label="Merchant PIN*"
-              type="text"
-              name="merchantPIN"
-              value={this.state.merchantPIN}
-              error={merchantPINErr.status ? merchantPINErr.value : ''}
-              onChange={(e) => this.handleTextChange(e)}
-              autoComplete="fefef"
+              <Form.TextInput
+                label="Merchant PIN*"
+                type="text"
+                name="merchantPIN"
+                value={this.state.merchantPIN}
+                error={merchantPINErr.status ? merchantPINErr.value : ''}
+                onChange={(e) => this.handleTextChange(e)}
+                autoComplete="fefef"
             />
           </Form.FieldSet>
           <Form.FieldSet label="Bank Account Details">
-            {/* <Form.TextInput
-              label="Parent Merchant ID*"
-              type="text"
-              name="parentMerchantId"
-              value={this.state.parentMerchantId}
-              autoComplete="fefef"
-              error={parentMerchantIdErr.status ? parentMerchantIdErr.value : ''}
-              onChange={(e) => this.handleTextChange(e)}
-            /> */}
             <Form.TextInput
               label="Account Number*"
               type="text"
@@ -397,7 +400,6 @@ class DMOForm extends React.Component {
               label="Mobile No*"
               defaultValue={this.state.mobileNo}
               name="mobileNo"
-              //value={this.state.mobileNo}
               autoComplete="fefef"
               error={mobileNoErr.status ? mobileNoErr.value : ''}
               onKeyDown={(e) => { this.handleNumberChange(e) }}
@@ -416,7 +418,11 @@ class DMOForm extends React.Component {
                 label="Bank Name*"
                 value={this.state.bankName}
                 name="bankName"
-                options={this.state.bankNameList}
+                options={[
+                  { text: 'Select Bank', value: '' },
+                  { text: 'ICICI', value: 'ICICI' },
+                  { text: 'Others', value: 'Others' },
+                ]}
                 onChange={(e) => this.handleChange(e)}
               />
               <Form.TextInput
@@ -424,7 +430,6 @@ class DMOForm extends React.Component {
                 type="text"
                 name="GPS"
                 autoComplete="fefef"
-                error={GPSErr.status ? GPSErr.value : ''}
                 value={this.state.GPS}
                 onChange={(e) => this.handleTextChange(e)}
               />
@@ -433,48 +438,41 @@ class DMOForm extends React.Component {
                 type="text"
                 name="GST"
                 autoComplete="fefef"
-                error={GSTErr.status ? GSTErr.value : ''}
                 value={this.state.GST}
                 onChange={(e) => this.handleTextChange(e)}
               />
-              <Form.Select
+              
+              <Form.TextInput
                 label="Daily Transaction Limit*"
-                value={this.state.dailyTransactionLimit}
+                type="text"
                 name="dailyTransactionLimit"
-                options={[
-                  { text: ' ', value: '0' },
-                  { text: '20,000', value: '1' },
-                  
-                ]}
-                onChange={(e) => this.handleChange(e)}
-              /> 
-              <Form.Select
+                autoComplete="fefef"
+                value={this.state.dailyTransactionLimit}
+                onChange={(e) => this.handleTextChange(e)}
+              />
+
+              <Form.TextInput
                 label="Monthly Transaction Limit*"
-                value={this.state.monthlyTransactionLimit}
+                type="text"
                 name="monthlyTransactionLimit"
-                options={[
-                  { text: '', value: '' },
-                  { text: '50,000', value: '2' },
-                ]}
-                onChange={(e) => this.handleChange(e)}
-              /> 
-              <Form.Select
+                autoComplete="fefef"
+                value={this.state.monthlyTransactionLimit}
+                onChange={(e) => this.handleTextChange(e)}
+              />
+
+              <Form.TextInput
                 label="Limit Per Transaction*"
-                value={this.state.limitPerTransaction}
+                type="text"
                 name="limitPerTransaction"
-                options={[
-                  { text: '', value: '' },
-                  { text: '5000', value: '2' },
-                ]}
-                onChange={(e) => this.handleChange(e)}
-              /> 
-         
+                autoComplete="fefef"
+                value={this.state.limitPerTransaction}
+                onChange={(e) => this.handleTextChange(e)}
+              />
            
             <ButtonGroup align="right">
               <CustomButton
                 text="Register"
                 handleClick={this.handleSave}
-                // eslint-disable-next-line react/prop-types
                 disableSave={this.props.disableSave}
               />
             </ButtonGroup>
@@ -485,6 +483,12 @@ class DMOForm extends React.Component {
       </div>
     )
   }
+}
+
+DMOForm.propTypes = {
+  stateList: PropTypes.array,
+  cityList: PropTypes.array,
+  stateMap: PropTypes.object
 }
 
 export default DMOForm
