@@ -45,16 +45,16 @@ class CreateDMO extends React.Component {
       merchant_state:DMODataForm.merchantState,
       merchant_city:DMODataForm.merchantCity,
       merchant_pin:DMODataForm.merchantPIN,
-      account_number:DMODataForm.accountNumber,
+      account_no:DMODataForm.accountNumber,
       ifsc_code:DMODataForm.IFSC,
-      mobile_number:DMODataForm.mobileNo,
-      email:DMODataForm.email,
+      mobile_no:DMODataForm.mobileNo,
+      email_id:DMODataForm.email,
       bank_name:DMODataForm.bankName,
       merchant_latlng:DMODataForm.GPS,
-      gst:DMODataForm.GST,
-      daily_transaction_limit:DMODataForm.dailyTransactionLimit,
+      gst_no:DMODataForm.GST,
+      daily_txn_limit:DMODataForm.dailyTransactionLimit,
       monthly_transaction_limit:DMODataForm.monthlyTransactionLimit,
-      limit_per_transaction:DMODataForm.limitPerTransaction
+      limit_per_txn:DMODataForm.limitPerTransaction
     }
     this.setState({ creatingDMO: true })
     this.createDMO(payload)

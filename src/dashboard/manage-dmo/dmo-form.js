@@ -426,7 +426,7 @@ class DMOForm extends React.Component {
                 onChange={(e) => this.handleChange(e)}
               />
               <Form.TextInput
-                label="GPS*"
+                label="GPS"
                 type="text"
                 name="GPS"
                 autoComplete="fefef"
@@ -434,7 +434,7 @@ class DMOForm extends React.Component {
                 onChange={(e) => this.handleTextChange(e)}
               />
               <Form.TextInput
-                label="GST*"
+                label="GST"
                 type="text"
                 name="GST"
                 autoComplete="fefef"
@@ -443,7 +443,7 @@ class DMOForm extends React.Component {
               />
               
               <Form.TextInput
-                label="Daily Transaction Limit*"
+                label="Daily Transaction Limit"
                 type="text"
                 name="dailyTransactionLimit"
                 autoComplete="fefef"
@@ -452,7 +452,7 @@ class DMOForm extends React.Component {
               />
 
               <Form.TextInput
-                label="Monthly Transaction Limit*"
+                label="Monthly Transaction Limit"
                 type="text"
                 name="monthlyTransactionLimit"
                 autoComplete="fefef"
@@ -461,7 +461,7 @@ class DMOForm extends React.Component {
               />
 
               <Form.TextInput
-                label="Limit Per Transaction*"
+                label="Limit Per Transaction"
                 type="text"
                 name="limitPerTransaction"
                 autoComplete="fefef"
