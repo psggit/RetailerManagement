@@ -68,7 +68,7 @@ class ManageOrganization extends React.Component {
 	setQueryParamas () {
 		const queryUri = location.search.slice(1)
 		const queryObj = getQueryObj(queryUri)
-
+		console.log("queryob",queryObj)
 		Object.entries(queryObj).forEach((item) => {
 			this.setState({ [item[0]]: item[1] })
 			this.filter[item[0]] = item[1]

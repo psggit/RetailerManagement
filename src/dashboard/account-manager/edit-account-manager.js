@@ -25,7 +25,7 @@ class EditAccountManager extends React.Component {
     })
     updateAccountManager({
       user_id: parseInt(this.props.history.location.state.user_id),
-      account_status: accountManagerData.selectedStatusIdx === "1" ? true : false
+      is_active: accountManagerData.selectedStatusIdx === "1" ? true : false
     })
       .then((response) => {
         Notify("success", "Successfully updated")

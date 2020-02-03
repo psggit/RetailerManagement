@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import React from "react"
 import { NavLink } from 'react-router-dom'
 import Layout from 'Components/layout'
@@ -6,6 +7,13 @@ import { Select, TextInput } from '@auth0/cosmos'
 import { Table } from '@auth0/cosmos'
 import Switch2 from 'Components/switch'
 import { Button } from '@auth0/cosmos'
+import { dmoData } from './mock-data'
+import * as Api from './../../api'
+import Pagination from 'Components/pagination'
+import ModalBox from 'Components/ModalBox'
+import ModalHeader from 'Components/ModalBox/ModalHeader'
+import ModalBody from 'Components/ModalBox/ModalBody'
+import ModalFooter from '../../components/ModalBox/ModalFooter';
 
 class ManageDMO extends React.Component {
 
@@ -15,8 +23,9 @@ class ManageDMO extends React.Component {
       activePage: 1,
       offset: 0,
       loading: true,
-      retailerListCount: 0,
-      retailerData: [],
+      dmoListCount: dmoData.count,
+      dmoData: dmoData.data,
+      dmo_status: dmoData.data,
       retailerId: '',
       mountDialog: false,
       operators: [
@@ -32,8 +41,11 @@ class ManageDMO extends React.Component {
       operator: '',
       value: ''
     }
+    this.pagesLimit=10
     this.onToggleChange = this.onToggleChange.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.setDialogState = this.setDialogState.bind(this)
+    this.deactivateDmo = this.deactivateDmo.bind(this)
   }
 
 
@@ -58,7 +70,45 @@ class ManageDMO extends React.Component {
   }
 
   getFilteredDmoList () {
+    const { column, operator, value, activePage, offset } = this.state
 
+    this.filter = {
+      column,
+      operator,
+      value
+    }
+
+    const queryObj = {
+      column,
+      operator,
+      value,
+      offset,
+      activePage,
+    }
+    this.setState({
+      organizationData: [],
+      organisationCount: 0,
+      loading: true,
+      offset,
+      activePage,
+      column,
+      operator,
+      value,
+    })
+    history.pushState(queryObj, "organisation listing", `/admin/organization?${getQueryUri(queryObj)}`)
+  }
+
+  deactivateDmo () {
+    console.log("dmodata")
+    this.setDialogState()
+    Api.deactivateDmo({
+      Id: this.state.retailerId,
+      BranchStatus: this.state.retailerStatus === "true" ? "false" : "true"
+    }, this.callback)
+  }
+
+  setDialogState () {
+    this.setState({ mountDialog: false })
   }
 
   render () {
@@ -145,15 +195,15 @@ class ManageDMO extends React.Component {
           {
             <div style={{ marginTop: '40px', marginBottom: '20px' }}>
               <Table
-                items={}
-                onRowClick={(evt, item) => alert(`${item.name} was clicked!`)}
+                items={this.state.dmoData}
+                //onRowClick={(evt, item) => alert(`${item.name} was clicked!`)}
               >
                 <Table.Column field="actions">
                   {item => (
                     <Button icon="pencil" onClick={(e) => this.editOutletDetail(e, item, 'edit')} />
                   )}
                 </Table.Column>
-                <Table.Column field="dmo_id" title="Retailer ID" />
+                  <Table.Column field="dmo_id" title="Retailer ID"/>
                 <Table.Column field="merchant_name" title="Merchant Name" />
                 <Table.Column field="merchant_adress" title="Merchant Address" />
                 <Table.Column field="state" title="State" />
@@ -162,11 +212,44 @@ class ManageDMO extends React.Component {
                 <Table.Column field="qr_code" title="QR Code" />
                 <Table.Column field="dmo_status" title="DMO Status">
                   {items => (
-                    <Switch2 on={items.dmo_status === 'true' ? true : false} accessibleLabels={[]} onToggle={this.onToggleChange} value={items} />
+                    <Switch2 on={items.dmo_status === 'active' ? true : false} accessibleLabels={[]} onToggle={this.onToggleChange} value={items} />
                   )}
                 </Table.Column>
               </Table>
             </div>
+          }
+          {
+            this.state.mountDialog &&
+            <ModalBox>
+              <ModalHeader>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <div style={{ fontSize: '18px' }}>{this.state.dmo_status === "active" ? 'Unblock' : 'Block'} DMO</div>
+                </div>
+              </ModalHeader>
+              <ModalBody height="60px">
+                <table className="table--hovered">
+                  <tbody>
+                    Are you sure you want to {this.state.dmo_status === "active" ? 'Unblock' : 'Block'} this merchant ? {this.state.outletName} {this.state.retailerId}
+                                </tbody>
+                </table>
+              </ModalBody>
+              <ModalFooter>
+                <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', fontWeight: '600' }}>
+                  <button className="btn btn-primary" onClick={() => this.deactivateDmo()}> Yes </button>
+                  <button className="btn btn-secondary" onClick={() => this.setDialogState()}> Cancel </button>
+                </div>
+              </ModalFooter>
+
+            </ModalBox>
+          }
+          {
+            // this.state.dmoData && this.state.dmoDataData.length > 0 &&
+            <Pagination
+              activePage={parseInt(this.state.activePage)}
+              itemsCountPerPage={this.pagesLimit}
+              totalItemsCount={parseInt(this.state.dmoListCount)}
+              setPage={this.handlePageChange}
+            />
           }
         </div>
       </Layout>

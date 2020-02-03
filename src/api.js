@@ -301,6 +301,23 @@ export function deactivateRetailer (payloadObj, callback) {
 		})
 }
 
+export function deactivateDmo(payloadObj, callback) {
+	return POST({
+		api: '/Api/changeRetailerStatus',
+		apiBase: 'retailer',
+		data: payloadObj,
+		handleError: true
+	})
+		.then((json) => {
+			callback()
+		})
+		.catch(err => {
+			console.log("Error in updating retailer status", err)
+			Notify("danger", "Error in updating branch status")
+			err.response.json().then(json => { Notify("danger", json.message) })
+		})
+}
+
 /** Notes Endpoints */
 export function fetchRetailerNotes (req) {
 	return POST({
@@ -353,6 +370,7 @@ export function fetchAccountManagers (payload) {
 		data: payload
 	})
 }
+
 
 export function createAccountManager (payload) {
 	return POST({
