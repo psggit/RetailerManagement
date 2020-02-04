@@ -42,8 +42,8 @@ class CreateDMO extends React.Component {
       pan:DMODataForm.PAN,
       merchant_type: DMODataForm.merchantType,
       merchant_address:DMODataForm.merchantAddress,
-      merchant_state:DMODataForm.merchantState,
-      merchant_city:DMODataForm.merchantCity,
+      merchant_state:DMODataForm.selectedStateIdx,
+      merchant_city:DMODataForm.selectedCityIdx,
       merchant_pin:DMODataForm.merchantPIN,
       account_no:DMODataForm.accountNumber,
       ifsc_code:DMODataForm.IFSC,
@@ -53,7 +53,7 @@ class CreateDMO extends React.Component {
       merchant_latlng:DMODataForm.GPS,
       gst_no:DMODataForm.GST,
       daily_txn_limit:DMODataForm.dailyTransactionLimit,
-      monthly_transaction_limit:DMODataForm.monthlyTransactionLimit,
+      monthly_txn_limit:DMODataForm.monthlyTransactionLimit,
       limit_per_txn:DMODataForm.limitPerTransaction
     }
     this.setState({ creatingDMO: true })

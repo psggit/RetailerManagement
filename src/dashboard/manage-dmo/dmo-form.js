@@ -17,16 +17,15 @@ class DMOForm extends React.Component {
       PAN: 'PAN',
       merchantAddress: 'Merchant Address',
       merchantPIN: 'Merchant PIN',
-      // parentMerchantId: 'Parent merchant id',
       accountNumber: 'Account Number',
       IFSC: 'IFSC Code',
       mobileNo: 'Mobile Number',
       email: 'Email',
-      GPS: 'GPS',
-      GST: 'GST',
-      dailyTransactionLimit: 'Daily Transaction Limit',
-      monthlyTransactionLimit: 'Monthly Transaction Limit',
-      limitPerTransaction: 'Limit Per Transaction'  
+      // GPS: 'GPS',
+      // GST: 'GST',
+      // dailyTransactionLimit: 'Daily Transaction Limit',
+      // monthlyTransactionLimit: 'Monthly Transaction Limit',
+      // limitPerTransaction: 'Limit Per Transaction'  
     }
   
     this.errorFlag = false,
@@ -46,13 +45,15 @@ class DMOForm extends React.Component {
         mobileNo: props.data ? props.data.mobile_number : '',
         email: props.data ? props.data.email : '',
         bankName: props.data ? props.data.bank_name : '',
-        GPS: this.props.GPS,
-        GST: this.props.GST,
-        dailyTransactionLimit: this.props.dailyTransactionLimit,
-        monthlyTransactionLimit: this.props.monthlyTransactionLimit,
-        limitPerTransaction: this.props.limitPerTransaction,
+      
         selectedCityIdx: props.data ? props.data.city_id : 0,
         selectedStateIdx: props.data ? props.data.state_id : 0,
+
+        GPS: props.data ? props.data.GPS : '',
+        GST: props.data ? props.data.GST : '',
+        dailyTransactionLimit: props.data ? props.data.dailyTransactionLimit : '',
+        monthlyTransactionLimit: props.data ? props.data.monthlyTransactionLimit : '',
+        limitPerTransaction: props.data ? props.data.limitPerTransaction : '',
 
         retailerIdErr: {
           value: '',
@@ -104,7 +105,8 @@ class DMOForm extends React.Component {
     this.handleSave = this.handleSave.bind(this)
     this.validate = this.validate.bind(this)
     this.getData = this.getData.bind(this)
-    this.handleStateChange = this.handleStateChange.bind(this)
+    this.handleOptionalTextChange = this.handleOptionalTextChange.bind(this)
+    //this.handleStateChange = this.handleStateChange.bind(this)
   }
 
   componentDidUpdate (prevProps, prevState) {
@@ -126,16 +128,7 @@ class DMOForm extends React.Component {
       }
     }
   }
-
-  handleStateChange (e) {
-    if (e.target.name.toString().includes("StateIdx")) {
-      this.setState({
-        cityList: this.state.stateMap[e.target.value],
-        [e.target.name]: e.target.value
-      })
-    }
-  }
-
+  
   handleChange (e) {
     if (e.target.name.toString().includes("StateIdx")) {
       this.setState({
@@ -150,9 +143,16 @@ class DMOForm extends React.Component {
     }
   }
 
+  handleOptionalTextChange (e){
+    console.log("inside", e.target.value )
+    this.setState({
+      [e.target.name]: e.target.value,
+    })
+  }
+  
+
   handleTextChange (e) {
     const errName = `${e.target.name}Err`
-
     this.setState({
       [e.target.name]: e.target.value,
       [errName]: validateTextField(this.inputNameMap[e.target.name], e.target.value),
@@ -176,9 +176,10 @@ class DMOForm extends React.Component {
     }
 
     if (validateNumType(e.keyCode) || checkCtrlA(e) || checkCtrlV(e)) {
+      console.log("fieldName", this.inputNameMap[e.target.name])
       this.setState({
-        [e.target.name]: e.target.value,
-        [errName]: validateNumberField({
+          [e.target.name]: e.target.value,
+          [errName]: validateNumberField({
           fieldName: this.inputNameMap[e.target.name],
           fieldValue: e.target.value,
           length: this.length,
@@ -205,7 +206,7 @@ class DMOForm extends React.Component {
 
   handleSave (e) {
     e.preventDefault()
-    console.log("value-name", this.state)
+    console.log("data", this.state)
     this.checkForm()
     if (!this.errorFlag) {
       // eslint-disable-next-line react/prop-types
@@ -218,7 +219,6 @@ class DMOForm extends React.Component {
     const formEl = document.getElementById('DMOForm')
     const inputCollection = formEl.getElementsByTagName('input')
     const inputsArr = Array.prototype.slice.call(inputCollection)
-
     const textInputs = inputsArr.filter(item => item.type == 'text')
     textInputs.forEach(item => {
       this.validate(item)
@@ -358,7 +358,7 @@ class DMOForm extends React.Component {
                 value={this.state.selectedStateIdx}
                 name="selectedStateIdx"
                 options={this.state.stateList}
-                onChange={(e) => this.handleStateChange(e)}
+                onChange={(e) => this.handleChange(e)}
               />
               <Form.Select
                 label="Merchant City*"
@@ -375,6 +375,7 @@ class DMOForm extends React.Component {
                 error={merchantPINErr.status ? merchantPINErr.value : ''}
                 onChange={(e) => this.handleTextChange(e)}
                 autoComplete="fefef"
+                
             />
           </Form.FieldSet>
           <Form.FieldSet label="Bank Account Details">
@@ -430,16 +431,16 @@ class DMOForm extends React.Component {
                 type="text"
                 name="GPS"
                 autoComplete="fefef"
-                value={this.state.GPS}
-                onChange={(e) => this.handleTextChange(e)}
+                defaultValue={this.state.GPS}
+                onChange={(e) => this.handleOptionalTextChange(e)}
               />
               <Form.TextInput
                 label="GST"
                 type="text"
                 name="GST"
                 autoComplete="fefef"
-                value={this.state.GST}
-                onChange={(e) => this.handleTextChange(e)}
+                defaultValue={this.state.GST}
+                onChange={(e) => this.handleOptionalTextChange(e)}
               />
               
               <Form.TextInput
@@ -447,8 +448,8 @@ class DMOForm extends React.Component {
                 type="text"
                 name="dailyTransactionLimit"
                 autoComplete="fefef"
-                value={this.state.dailyTransactionLimit}
-                onChange={(e) => this.handleTextChange(e)}
+                defaultValue={this.state.dailyTransactionLimit}
+                onChange={(e) => this.handleOptionalTextChange(e)}
               />
 
               <Form.TextInput
@@ -456,8 +457,8 @@ class DMOForm extends React.Component {
                 type="text"
                 name="monthlyTransactionLimit"
                 autoComplete="fefef"
-                value={this.state.monthlyTransactionLimit}
-                onChange={(e) => this.handleTextChange(e)}
+                defaultValue={this.state.monthlyTransactionLimit}
+                onChange={(e) => this.handleOptionalTextChange(e)}
               />
 
               <Form.TextInput
@@ -465,8 +466,8 @@ class DMOForm extends React.Component {
                 type="text"
                 name="limitPerTransaction"
                 autoComplete="fefef"
-                value={this.state.limitPerTransaction}
-                onChange={(e) => this.handleTextChange(e)}
+                defaultValue={this.state.limitPerTransaction}
+                onChange={(e) => this.handleOptionalTextChange(e)}
               />
            
             <ButtonGroup align="right">

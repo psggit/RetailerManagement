@@ -319,7 +319,7 @@ class App extends React.Component {
 	}
 	
 	componentDidMount () {
-		history.listen((loction) => {
+		history.listen((location) => {
 			const newRoute = location.pathname.split('/')[2]
 			if (newRoute !== this.state.currentRoute) {
 				//unmountNotify()
