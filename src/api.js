@@ -333,7 +333,6 @@ export function deactivateDmo (payloadObj, callback) {
 		})
 		.catch(err => {
 			console.log("Error in updating dmo status", err)
-			Notify("danger", "Error in updating branch status")
 			err.response.json().then(json => { Notify("danger", json.message) })
 		})
 }

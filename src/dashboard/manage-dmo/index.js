@@ -29,7 +29,7 @@ class ManageDMO extends React.Component {
       dmoStatus:'',
       retailerId: '',
       eazypayId:'',
-      virtualAdress:'',
+      virtualAddress:'',
       mountDialog: false,
       operators: [
         { text: 'EQUAL', value: 'EQUAL' }
@@ -51,10 +51,10 @@ class ManageDMO extends React.Component {
     this.deactivateDmo = this.deactivateDmo.bind(this)
     this.fetchDefaultData = this.fetchDefaultData.bind(this)
     this.fetchDmoList = this.fetchDmoList.bind(this)
-    this.setResponseData = this.setResponseData.bind(this)
-    this.failureCallback= this.failureCallback.bind(this)
     this.getFilteredDmoList = this.getFilteredDmoList.bind(this)
     this.callback= this.callback.bind(this)
+    this.resetFilter = this.resetFilter.bind(this)
+    this.handlePageChange = this.handlePageChange.bind(this)
   }
 
   fetchDefaultData () {
@@ -87,30 +87,27 @@ class ManageDMO extends React.Component {
         offset: queryObj.offset ? parseInt(queryObj.offset) : 0,
         limit: this.pagesLimit,
         filter: this.filter
-      }, this.setResponseData, this.failureCallback)
+      })
     } else {
       this.fetchDmoList({
         offset: queryObj.offset ? parseInt(queryObj.offset) : 0,
         limit: this.pagesLimit,
-      }, this.setResponseData, this.failureCallback)
-    }
-
-  }
-
-  fetchDmoList (payloadObj, successCallback, failureCallback) {
-    Api.fetchDmoList(payloadObj, successCallback, failureCallback)
-  }
-
-  setResponseData (response) {
-    if (response && response.dmo_details) {
-      this.setState({ dmoData: response.dmo_details, dmoListCount: response.count, loading: false })
-    } else {
-      this.setState({ dmoData: [], dmoListCount: 0, loading: false })
+      })
     }
   }
 
-  failureCallback () {
-    this.setState({ dmoData: [], dmoListCount: 0, loading: false })
+  fetchDmoList (payloadObj) {
+    Api.fetchDmoList(payloadObj)
+      .then((response) => {
+        if (response && response.dmo_details) {
+          this.setState({ dmoData: response.dmo_details, dmoListCount: response.count, loading: false })
+        } else {
+          this.setState({ dmoData: [], dmoListCount: 0, loading: false })
+        }
+      })
+      .catch((error) => {
+        this.setState({ dmoData: [], dmoListCount: 0, loading: false })
+      })
   }
 
   handleChange (e) {
@@ -135,7 +132,12 @@ class ManageDMO extends React.Component {
   }
 
   onToggleChange (item, value) {
-    this.setState({ mountDialog: true, eazypayId:item.eazypay_id, dmoStatus: item.is_blocked})
+    this.setState({ 
+      mountDialog: true, 
+      eazypayId:item.eazypay_id, 
+      dmoStatus: item.is_blocked,
+      virtualAddress: item.virtual_address
+    })
   }
 
   getFilteredDmoList () {
@@ -172,16 +174,15 @@ class ManageDMO extends React.Component {
       limit: this.pagesLimit,
       offset: 0,
       filter: this.filter
-    }, this.setResponseData, this.failureCallback)
+    })
   }
 
   deactivateDmo () {
-    console.log("dmodata")
     this.setDialogState()
     Api.deactivateDmo({
-      VirtualAddress:this.state.virtualAdress,
-      EazypayId:this.state.eazypayId,
-      BranchStatus: this.state.dmoStatus === "true" ? "false" : "true"
+      virtual_address:this.state.virtualAddress,
+      eazypay_id:this.state.eazypayId,
+      is_blocked: this.state.dmoStatus === "true" ? false : true
     }, this.callback)
   }
 
@@ -192,11 +193,65 @@ class ManageDMO extends React.Component {
     })
   }
 
+  handlePageChange (pageObj) {
+    const queryUri = location.search.slice(1)
+    const queryObj = getQueryObj(queryUri)
+    let queryParamsObj = {}
+
+    let pageNumber = pageObj.activePage
+    let offset = pageObj.offset
+    this.setState({ activePage: pageNumber, offset, loading: true })
+
+    if (queryObj && queryObj.column && queryObj.column.length > 0) {
+      queryParamsObj = {
+        column: queryObj.column,
+        operator: queryObj.operator,
+        value: queryObj.value,
+        offset: pageObj.offset,
+        activePage: pageObj.activePage,
+      }
+    } else {
+      queryParamsObj = {
+        offset: pageObj.offset,
+        activePage: pageObj.activePage,
+      }
+    }
+
+    if (location.search.length && queryObj.column && queryObj.column.length > 0) {
+      let filterObj = {
+        column: queryObj.column,
+        operator: queryObj.operator,
+        value: queryObj.value
+      }
+      this.fetchDmoList({
+        offset: pageObj.offset,
+        limit: this.pagesLimit,
+        filter: filterObj
+      }, this.setResponseData, this.failureCallback)
+
+    } else {
+
+      this.fetchDmoList({
+        offset: pageObj.offset,
+        limit: this.pagesLimit
+      }, this.setResponseData, this.failureCallback)
+    }
+    history.pushState(queryParamsObj, "dmo listing", `/admin/dmo?${getQueryUri(queryParamsObj)}`)
+  }
+
+  resetFilter () {
+    this.setState({
+      column: 'ID',
+      operator: 'EQUAL',
+      value: ''
+    })
+    this.fetchDefaultData()
+    this.props.history.push(`/admin/dmo`)
+  }
+
   setDialogState () {
     this.setState({ mountDialog: false })
   }
-
-  
 
   render () {
     return (
@@ -299,7 +354,7 @@ class ManageDMO extends React.Component {
                 <Table.Column field="virtual_address" title="VPA" />
                 <Table.Column field="is_blocked" title="DMO Status">
                   {items => (
-                    <Switch2 on={items.dmoStatus === 'true' ? true : false} accessibleLabels={[]} onToggle={this.onToggleChange} value={items} />
+                    <Switch2 on={items.is_blocked === 'true' ? true : false} accessibleLabels={[]} onToggle={this.onToggleChange} value={items} />
                   )}
                 </Table.Column>
               </Table>
@@ -317,7 +372,7 @@ class ManageDMO extends React.Component {
                 <table className="table--hovered">
                   <tbody>
                     Are you sure you want to {this.state.dmoStatus === "true" ? 'Unblock' : 'Block'} this merchant ? {this.state.retailerId}
-                                </tbody>
+                  </tbody>
                 </table>
               </ModalBody>
               <ModalFooter>
@@ -326,7 +381,6 @@ class ManageDMO extends React.Component {
                   <button className="btn btn-secondary" onClick={() => this.setDialogState()}> Cancel </button>
                 </div>
               </ModalFooter>
-
             </ModalBox>
           }
           {
