@@ -61,12 +61,9 @@ class CreateDMO extends React.Component {
   }
 
   createDMO (payload) {
-    console.log("hellooo..")
-    console.log("payload", payload)
     Api.createDMO(payload)
       .then((response) => {
         this.setState({ creatingDMO: false })
-        console.log("Creating dmo", response)
       })
       .catch((error) => {
         this.setState({ creatingDMO: false })

@@ -136,7 +136,6 @@ class DMOForm extends React.Component {
         [e.target.name]: e.target.value
       })
     } else {
-      console.log("else")
       this.setState({
         [e.target.name]: e.target.value
       })
@@ -144,13 +143,11 @@ class DMOForm extends React.Component {
   }
 
   handleOptionalTextChange (e){
-    console.log("inside", e.target.value )
     this.setState({
       [e.target.name]: e.target.value,
     })
   }
   
-
   handleTextChange (e) {
     const errName = `${e.target.name}Err`
     this.setState({
@@ -176,7 +173,6 @@ class DMOForm extends React.Component {
     }
 
     if (validateNumType(e.keyCode) || checkCtrlA(e) || checkCtrlV(e)) {
-      console.log("fieldName", this.inputNameMap[e.target.name])
       this.setState({
           [e.target.name]: e.target.value,
           [errName]: validateNumberField({
@@ -206,7 +202,6 @@ class DMOForm extends React.Component {
 
   handleSave (e) {
     e.preventDefault()
-    console.log("data", this.state)
     this.checkForm()
     if (!this.errorFlag) {
       // eslint-disable-next-line react/prop-types
