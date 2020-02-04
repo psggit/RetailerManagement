@@ -120,6 +120,26 @@ export function fetchRetailerList (payloadObj, successCallback, failureCallback)
 		})
 }
 
+export function fetchDmoList (payloadObj, successCallback, failureCallback) {
+	return POST({
+		api: '/Api/dmo/list',
+		apiBase: 'retailer',
+		data: payloadObj,
+		handleError: true
+	})
+		.then((json) => {
+			if (successCallback) {
+				successCallback(json)
+			}
+			return json
+		})
+		.catch(err => {
+			console.log("Error in fetching dmo list", err)
+			err.response.json().then(json => { Notify("danger", json.message) })
+			failureCallback()
+		})
+}
+
 export function createOrUpdateStockPrice (payloadObj, successCallback, failureCallback) {
 	return POST({
 		api: '/Api/stockandprice/inventory/createorupdate',
@@ -301,9 +321,9 @@ export function deactivateRetailer (payloadObj, callback) {
 		})
 }
 
-export function deactivateDmo(payloadObj, callback) {
+export function deactivateDmo (payloadObj, callback) {
 	return POST({
-		api: '/Api/changeRetailerStatus',
+		api: '/Api/dmo/blockunblock',
 		apiBase: 'retailer',
 		data: payloadObj,
 		handleError: true
@@ -312,7 +332,7 @@ export function deactivateDmo(payloadObj, callback) {
 			callback()
 		})
 		.catch(err => {
-			console.log("Error in updating retailer status", err)
+			console.log("Error in updating dmo status", err)
 			Notify("danger", "Error in updating branch status")
 			err.response.json().then(json => { Notify("danger", json.message) })
 		})
