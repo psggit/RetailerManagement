@@ -24,10 +24,10 @@ class CreateAccountManager extends React.Component {
       isSaved: true
     })
     createAccountManager({
-      account_manager: accountManagerData.accountManagerName,
+      name: accountManagerData.accountManagerName,
       mobile_number: accountManagerData.mobile,
       organisation_id: parseInt(this.props.match.params.organizationId),
-      account_status: accountManagerData.selectedStatusIdx === "1" ? true : false
+      is_active: accountManagerData.selectedStatusIdx === "1" ? true : false
     }) 
     .then((response) => {
       Notify("success", "Successfully created account manager")

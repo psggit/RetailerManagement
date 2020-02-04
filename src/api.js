@@ -120,6 +120,15 @@ export function fetchRetailerList (payloadObj, successCallback, failureCallback)
 		})
 }
 
+export function fetchDmoList (payloadObj) {
+	return POST({
+		api: '/Api/dmo/list',
+		apiBase: 'retailer',
+		data: payloadObj,
+		handleError: true
+	})
+}
+
 export function createOrUpdateStockPrice (payloadObj, successCallback, failureCallback) {
 	return POST({
 		api: '/Api/stockandprice/inventory/createorupdate',
@@ -301,6 +310,22 @@ export function deactivateRetailer (payloadObj, callback) {
 		})
 }
 
+export function deactivateDmo (payloadObj, callback) {
+	return POST({
+		api: '/Api/dmo/blockunblock',
+		apiBase: 'retailer',
+		data: payloadObj,
+		handleError: true
+	})
+		.then((json) => {
+			callback()
+		})
+		.catch(err => {
+			console.log("Error in updating dmo status", err)
+			err.response.json().then(json => { Notify("danger", json.message) })
+		})
+}
+
 /** Notes Endpoints */
 export function fetchRetailerNotes (req) {
 	return POST({
@@ -353,6 +378,7 @@ export function fetchAccountManagers (payload) {
 		data: payload
 	})
 }
+
 
 export function createAccountManager (payload) {
 	return POST({

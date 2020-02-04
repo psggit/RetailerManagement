@@ -94,7 +94,7 @@ class GenerateReport extends React.Component {
 		return (
 			<Layout title="Generate Report">
 				<Card>
-					<Form layout="label-on-top">
+					<Form layout="label-on-top" style={{marginBottom: "20px"}}>
 						<Form.Select
 							label="Organization Name*"
 							value={this.state.selectedOrganizationIdx}

@@ -16,9 +16,9 @@ class AccountManagerForm extends React.Component {
     }
 
     this.state = {
-      accountManagerName: this.props.data ? this.props.data.account_manager : "",
+      accountManagerName: this.props.data ? this.props.data.name : "",
       mobile: this.props.data ? this.props.data.mobile_number : "",
-      selectedStatusIdx: this.props.data ? this.props.data.account_status ? "1" : "2" : "1",
+      selectedStatusIdx: this.props.data ? this.props.data.is_active ? "1" : "2" : "1",
       accountManagerNameErr: {
         status: false,
         value: ""

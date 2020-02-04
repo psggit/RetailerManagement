@@ -133,7 +133,7 @@ class EditOrganization extends React.Component {
 
 	successCallback () {
 		this.updateState()
-		location.href = '/admin/organization'
+		location.itemhref = '/admin/organization'
 	}
 
 	failureCallback () {

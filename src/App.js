@@ -34,7 +34,7 @@ import ManageCreditDebit from "./dashboard/ManualDebitCredit"
 import ManageAccountManager from "./dashboard/account-manager"
 import CreateAccountManager from "./dashboard/account-manager/create-account-manager"
 import EditAccountManager from "./dashboard/account-manager/edit-account-manager"
-import ManageDMO from "./dashboard/manage-dmo/index"
+import ManageDMO from "./dashboard/manage-dmo"
 import CreateDMO from "./dashboard/manage-dmo/create-dmo"
 import EditDMO from "./dashboard/manage-dmo/edit-dmo"
 
@@ -155,6 +155,15 @@ function RetailerManagementSwitch () {
 					}
 				/>
 
+				<Route
+					exact
+					path="/admin/dmo"
+					render={
+						props => (
+							<ManageDMO {...props} />
+						)
+					}
+				/>
 				<Route
 					exact
 					path="/admin/retailer/create"
@@ -409,7 +418,7 @@ class App extends React.Component {
 										menuItems={[
 											{ label: 'Manage Organization', value: 'organization' },
 											{ label: 'Manage Retailer', value: 'retailer' },
-											{ label: 'Manage DMO', value: 'dmo' },
+											{ label: 'Manage DMO', value:'dmo' },
 											{ label: 'Generate Report', value: 'generate-report' },
 											{ label: 'Device Management', value: 'device-management' },
 											{ label: 'Stock and Price', value: 'stock-and-price' },
