@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-undef */
 import React from "react"
 import { NavLink } from 'react-router-dom'
@@ -55,6 +56,7 @@ class ManageDMO extends React.Component {
     this.callback= this.callback.bind(this)
     this.resetFilter = this.resetFilter.bind(this)
     this.handlePageChange = this.handlePageChange.bind(this)
+    this.handleEditDmoDetail = this.handleEditDmoDetail.bind(this)
   }
 
   fetchDefaultData () {
@@ -168,7 +170,7 @@ class ManageDMO extends React.Component {
       value
     })
 
-    history.pushState(queryObj, "retailer listing", `/admin/dmo?${getQueryUri(queryObj)}`)
+    history.pushState(queryObj, "dmo listing", `/admin/dmo?${getQueryUri(queryObj)}`)
 
     this.fetchDmoList({
       limit: this.pagesLimit,
@@ -239,6 +241,11 @@ class ManageDMO extends React.Component {
     history.pushState(queryParamsObj, "dmo listing", `/admin/dmo?${getQueryUri(queryParamsObj)}`)
   }
 
+  handleEditDmoDetail (e, item, action) {
+    e.stopPropagation()
+    this.props.history.push(`/admin/dmo/edit/${item.retailer_id}`, item)
+  }
+
   resetFilter () {
     this.setState({
       column: 'ID',
@@ -258,7 +265,7 @@ class ManageDMO extends React.Component {
       <Layout title="Manage DMO">
 
         <div style={{ width: '200px', marginTop: '20px' }}>
-          <NavLink to={`/admin/retailer/create`}>
+          <NavLink to={`/admin/dmo/create`}>
             <CustomButton text="CREATE DMO" />
           </NavLink>
         </div>
@@ -338,11 +345,10 @@ class ManageDMO extends React.Component {
             <div style={{ marginTop: '40px', marginBottom: '20px' }}>
               <Table
                 items={this.state.dmoData}
-                //onRowClick={(evt, item) => alert(`${item.name} was clicked!`)}
               >
                 <Table.Column field="actions">
                   {item => (
-                    <Button icon="pencil" onClick={(e) => this.editOutletDetail(e, item, 'edit')} />
+                    <Button icon="pencil" onClick={(e) => this.handleEditDmoDetail(e, item, 'edit')} />
                   )}
                 </Table.Column>
                   <Table.Column field="retailer_id" title="Retailer ID"/>

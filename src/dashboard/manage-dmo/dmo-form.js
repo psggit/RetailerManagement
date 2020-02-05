@@ -21,39 +21,43 @@ class DMOForm extends React.Component {
       IFSC: 'IFSC Code',
       mobileNo: 'Mobile Number',
       email: 'Email',
+      merchantState: 'Merchant State',
+      merchantCity: 'Merchant City',
       // GPS: 'GPS',
       // GST: 'GST',
       // dailyTransactionLimit: 'Daily Transaction Limit',
       // monthlyTransactionLimit: 'Monthly Transaction Limit',
       // limitPerTransaction: 'Limit Per Transaction'  
     }
-  
+    console.log("props", props)
     this.errorFlag = false,
       this.state = {
-        retailerId: this.props.retailerId,
-        merchantBusinessName: this.props.merchantBusinessName,
-        merchantLegalName: this.props.merchantLegalName,
-        PAN: this.props.PAN,
-        merchantType: this.props.merchantType,
-        merchantAddress: this.props.merchantAddress,
-        stateList: this.props.stateList,
-        stateMap: this.props.stateMap,
-        cityList: this.props.cityList,
-        merchantPIN: this.props.merchantPIN,
-        accountNumber: props.data ? props.data.account_number : '',
-        IFSC: props.data ? props.data.ifsc_code : '',
-        mobileNo: props.data ? props.data.mobile_number : '',
-        email: props.data ? props.data.email : '',
-        bankName: props.data ? props.data.bank_name : '',
-      
-        selectedCityIdx: props.data ? props.data.city_id : 0,
-        selectedStateIdx: props.data ? props.data.state_id : 0,
-
-        GPS: props.data ? props.data.GPS : '',
-        GST: props.data ? props.data.GST : '',
-        dailyTransactionLimit: props.data ? props.data.dailyTransactionLimit : '',
-        monthlyTransactionLimit: props.data ? props.data.monthlyTransactionLimit : '',
-        limitPerTransaction: props.data ? props.data.limitPerTransaction : '',
+      retailerId: props.data ? props.data.retailer_id : '',
+      merchantBusinessName: props.data ? props.data.merchant_business_name : '',
+      merchantLegalName: props.data ? props.data.merchant_legal_name : '',
+      PAN: props.data ? props.data.pan : '',
+      merchantType: props.data ? props.data.merchant_type : '',
+      merchantAddress: props.data ? props.data.merchant_address : '',
+      // stateList: this.props.stateList,
+      // stateMap: this.props.stateMap,
+      // cityList: this.props.cityList,
+      merchantPIN: props.data ? props.data.merchant_pin : '',
+      accountNumber: props.data ? props.data.account_no : '',
+      IFSC: props.data ? props.data.ifsc_code : '',
+      mobileNo: props.data ? props.data.mobile_no : '',
+      email: props.data ? props.data.email_id : '',
+      bankName: props.data ? props.data.bank_name : '',
+      // selectedCityIdx: props.data ? props.data.merchant_city : 0,
+      // selectedStateIdx: props.data ? props.data.merchant_state : 0,
+      merchantState: this.props.merchant_state,
+      merchantCity: this.props.merchant_city,
+      // merchantState: props.data ? props.data.merchant_state: '',
+      // merchantCity: props.data ? props.data.merchant_city: '',
+      GPS: props.data ? props.data.merchant_latlng : '',
+      GST: props.data ? props.data.gst_no : '',
+      dailyTransactionLimit: props.data ? props.data.daily_txn_limit : '',
+      monthlyTransactionLimit: props.data ? props.data.monthly_txn_limit : '',
+      limitPerTransaction: props.data ? props.data.limit_per_txn : '',
 
         retailerIdErr: {
           value: '',
@@ -95,6 +99,14 @@ class DMOForm extends React.Component {
         value: '',
         status: false
         },
+        merchantStateErr: {
+          value: '',
+          status: false
+        },
+        merchantCityErr: {
+          value: '',
+          status: false
+        }
       }
 
     this.handleChange = this.handleChange.bind(this)
@@ -109,37 +121,43 @@ class DMOForm extends React.Component {
     //this.handleStateChange = this.handleStateChange.bind(this)
   }
 
-  componentDidUpdate (prevProps, prevState) {
-    if (this.props.stateList !== prevProps.stateList) {
-      this.setState({ stateList: this.props.stateList })
-      if (location.pathname.includes("create")) {
-        this.setState({ selectedStateIdx: this.props.stateList[0].value })
-      }
-    }
+  // componentDidUpdate (prevProps, prevState) {
+  //   if (this.props.stateList !== prevProps.stateList) {
+  //     this.setState({ stateList: this.props.stateList })
+  //     if (location.pathname.includes("create")) {
+  //       this.setState({ selectedStateIdx: this.props.stateList[0].value })
+  //     }
+  //   }
 
-    if (this.props.stateMap !== prevProps.stateMap) {
-      this.setState({ stateMap: this.props.stateMap })
-    }
+  //   if (this.props.stateMap !== prevProps.stateMap) {
+  //     this.setState({ stateMap: this.props.stateMap })
+  //   }
 
-    if (prevProps.cityList && this.props.cityList !== prevProps.cityList) {
-      this.setState({ cityList: this.props.cityList })
-      if (location.pathname.includes("create")) {
-        this.setState({ selectedCityIdx: this.props.cityList[0].value })
-      }
-    }
-  }
+  //   if (prevProps.cityList && this.props.cityList !== prevProps.cityList) {
+  //     this.setState({ cityList: this.props.cityList })
+  //     if (location.pathname.includes("create")) {
+  //       this.setState({ selectedCityIdx: this.props.cityList[0].value })
+  //     }
+  //   }
+  // }
   
-  handleChange (e) {
-    if (e.target.name.toString().includes("StateIdx")) {
-      this.setState({
-        cityList: this.state.stateMap[e.target.value],
-        [e.target.name]: e.target.value
-      })
-    } else {
-      this.setState({
-        [e.target.name]: e.target.value
-      })
-    }
+  // handleChange (e) {
+  //   if (e.target.name.toString().includes("StateIdx")) {
+  //     this.setState({
+  //       cityList: this.state.stateMap[e.target.value],
+  //       [e.target.name]: e.target.value
+  //     })
+  //   } else {
+  //     this.setState({
+  //       [e.target.name]: e.target.value
+  //     })
+  //   }
+  // }
+
+  handleChange (e){
+    this.setState({
+      [e.target.name]: e.target.value
+    })
   }
 
   handleOptionalTextChange (e){
@@ -202,6 +220,7 @@ class DMOForm extends React.Component {
 
   handleSave (e) {
     e.preventDefault()
+    console.log("state", this.state)
     this.checkForm()
     if (!this.errorFlag) {
       // eslint-disable-next-line react/prop-types
@@ -286,8 +305,10 @@ class DMOForm extends React.Component {
       IFSCErr,
       mobileNoErr,
       emailErr,
+      merchantStateErr,
+      merchantCityErr,
     } = this.state
-   
+   console.log("state", this.state)
     return (
       <div id="DMOForm">
         <Form layout="label-on-top">
@@ -348,7 +369,7 @@ class DMOForm extends React.Component {
               onChange={(e) => this.handleTextChange(e)}
               autoComplete="fefef"
             />
-              <Form.Select
+              {/* <Form.Select
                 label="Merchant State*"
                 value={this.state.selectedStateIdx}
                 name="selectedStateIdx"
@@ -361,6 +382,26 @@ class DMOForm extends React.Component {
                 name="selectedCityIdx"
                 options={this.state.cityList}
                 onChange={(e) => this.handleChange(e)}
+              /> */}
+
+              <Form.TextInput
+                label="Merchant State*"
+                type="text"
+                name="merchantState"
+                value={this.state.merchantState}
+                error={merchantStateErr.status ? merchantStateErr.value : ''}
+                onChange={(e) => this.handleTextChange(e)}
+                autoComplete="fefef"
+              />
+
+              <Form.TextInput
+                label="Merchant City*"
+                type="text"
+                name="merchantCity"
+                value={this.state.merchantCity}
+                error={merchantCityErr.status ? merchantCityErr.value : ''}
+                onChange={(e) => this.handleTextChange(e)}
+                autoComplete="fefef"
               />
               <Form.TextInput
                 label="Merchant PIN*"
@@ -369,8 +410,7 @@ class DMOForm extends React.Component {
                 value={this.state.merchantPIN}
                 error={merchantPINErr.status ? merchantPINErr.value : ''}
                 onChange={(e) => this.handleTextChange(e)}
-                autoComplete="fefef"
-                
+                autoComplete="fefef"               
             />
           </Form.FieldSet>
           <Form.FieldSet label="Bank Account Details">

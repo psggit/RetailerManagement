@@ -105,7 +105,7 @@ class EditRetailer extends React.Component {
     return true
   }
 
-  handleSave() {
+  handleSave () {
     const retailerDataForm = this.retailerDetailsForm.getData()
     this.setState({ isFormValid: this.formIsValid() })
     if (this.formIsValid()) {

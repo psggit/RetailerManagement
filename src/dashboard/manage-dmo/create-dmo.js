@@ -4,34 +4,35 @@ import Layout from 'Components/layout'
 import Card from 'Components/card'
 import DMOForm from './dmo-form'
 import * as Api from './../../api'
-import { formatStateAndCityList } from 'Utils/response-format-utils'
+//import { formatStateAndCityList } from 'Utils/response-format-utils'
 
 class CreateDMO extends React.Component {
   constructor () {
     super()
     this.state = {
       creatingDMO: false,
-      stateList: [],
-      cityList: [],
-      stateMap: {}
+      // stateList: [],
+      // cityList: [],
+      // stateMap: {}
     }
     this.handleSave = this.handleSave.bind(this)
-    this.fetchStateAndCityList = this.fetchStateAndCityList.bind(this)
-    this.formatResponse = this.formatResponse.bind(this)
+    this.createDMO = this.createDMO.bind(this)
+    // this.fetchStateAndCityList = this.fetchStateAndCityList.bind(this)
+    // this.formatResponse = this.formatResponse.bind(this)
   }
 
-  componentDidMount () {
-    this.fetchStateAndCityList({}, this.formatResponse)
-  }
+  // componentDidMount () {
+  //   this.fetchStateAndCityList({}, this.formatResponse)
+  // }
 
-  fetchStateAndCityList (payload, stateListSuccessCallback) {
-    Api.fetchStateAndCityList(payload, stateListSuccessCallback)
-  }
+  // fetchStateAndCityList (payload, stateListSuccessCallback) {
+  //   Api.fetchStateAndCityList(payload, stateListSuccessCallback)
+  // }
 
-  formatResponse (data) {
-    const { stateList, cityList, stateMap } = formatStateAndCityList (data.states)
-    this.setState({ stateList, cityList, stateMap })
-  }
+  // formatResponse (data) {
+  //   const { stateList, cityList, stateMap } = formatStateAndCityList (data.states)
+  //   this.setState({ stateList, cityList, stateMap })
+  // }
 
  handleSave () {
     const DMODataForm = this.DMODetailsForm.getData()
@@ -42,8 +43,10 @@ class CreateDMO extends React.Component {
       pan:DMODataForm.PAN,
       merchant_type: DMODataForm.merchantType,
       merchant_address:DMODataForm.merchantAddress,
-      merchant_state:DMODataForm.selectedStateIdx,
-      merchant_city:DMODataForm.selectedCityIdx,
+      // merchant_state:DMODataForm.selectedStateIdx,
+      // merchant_city:DMODataForm.selectedCityIdx,
+      merchant_state:DMODataForm.merchantState,
+      merchant_city:DMODataForm.merchantCity,
       merchant_pin:DMODataForm.merchantPIN,
       account_no:DMODataForm.accountNumber,
       ifsc_code:DMODataForm.IFSC,
@@ -78,9 +81,9 @@ class CreateDMO extends React.Component {
           <DMOForm
             ref={(node) => { this.DMODetailsForm = node }}
             handleSave={this.handleSave}
-            stateList={this.state.stateList}
-            cityList={this.state.cityList}
-            stateMap={this.state.stateMap}
+            // stateList={this.state.stateList}
+            // cityList={this.state.cityList}
+            // stateMap={this.state.stateMap}
             disableSave={this.state.creatingDMO}
           />
         </Card>

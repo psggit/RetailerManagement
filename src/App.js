@@ -225,7 +225,7 @@ function RetailerManagementSwitch () {
 
 				<Route
 					exact
-					path="/admin/dmo/edit:dmoId"
+					path="/admin/dmo/edit/:retailerId"
 					render={
 						props => (
 							<EditDMO {...props} />
