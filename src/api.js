@@ -159,6 +159,15 @@ export function fetchAccessLogs (payloadObj) {
 	})
 }
 
+export function fetchRetailers (payloadObj) {
+	return POST({
+		api: `/retailer/fetch`,
+		apiBase: 'odin',
+		data: payloadObj,
+		handleError: true
+	})
+}
+
 export function downLoadAccessLogs (payloadObj) {
 	return POST({
 		api: `/Api/stockandprice/download/accesslog/report`,
