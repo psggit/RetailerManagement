@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+
 import React from 'react'
 import { Form, ButtonGroup } from '@auth0/cosmos'
 import { validateTextField, validateEmail, validateNumberField } from 'Utils/validators'
@@ -11,7 +11,6 @@ class DMOForm extends React.Component {
   constructor (props) {
     super(props)
     this.inputNameMap = {
-      retailerId: 'Retailer Id',
       merchantBusinessName: 'Merchant Business Name',
       merchantLegalName: 'Merchant Legal Name',
       PAN: 'PAN',
@@ -21,10 +20,9 @@ class DMOForm extends React.Component {
       IFSC: 'IFSC Code',
       mobileNo: 'Mobile Number',
       email: 'Email',
-      merchantState: 'Merchant State',
-      merchantCity: 'Merchant City'
     }
     console.log("props", props)
+
     this.errorFlag = false,
       this.state = {
       retailerId: props.data ? props.data.retailer_id : '',
@@ -36,7 +34,7 @@ class DMOForm extends React.Component {
       stateList: this.props.stateList,
       stateMap: this.props.stateMap,
       cityList: this.props.cityList,
-      retailerList: [],
+      retailerList: [], 
       merchantPIN: props.data ? props.data.merchant_pin : '',
       accountNumber: props.data ? props.data.account_no : '',
       IFSC: props.data ? props.data.ifsc_code : '',
@@ -45,8 +43,6 @@ class DMOForm extends React.Component {
       bankName: props.data ? props.data.bank_name : '',
       selectedCityIdx: props.data ? props.data.merchant_city : 0,
       selectedStateIdx: props.data ? props.data.merchant_state : 0,
-      merchantState: this.props.merchant_state,
-      merchantCity: this.props.merchant_city,
       GPS: props.data ? props.data.merchant_latlng : '',
       GST: props.data ? props.data.gst_no : '',
       dailyTransactionLimit: props.data ? props.data.daily_txn_limit : '',
@@ -93,14 +89,6 @@ class DMOForm extends React.Component {
         value: '',
         status: false
         },
-        merchantStateErr: {
-          value: '',
-          status: false
-        },
-        merchantCityErr: {
-          value: '',
-          status: false
-        }
       }
 
     this.handleChange = this.handleChange.bind(this)
@@ -235,7 +223,8 @@ class DMOForm extends React.Component {
     e.preventDefault()
     this.checkForm()
     if (!this.errorFlag) {
-      this.props.handleSave()
+
+      this.props.handleSave ()
     }
   }
 
@@ -307,7 +296,6 @@ class DMOForm extends React.Component {
 
   render () {
     const {
-      retailerIdErr,
       merchantBusinessNameErr,
       merchantLegalNameErr,
       PANErr,
@@ -317,8 +305,6 @@ class DMOForm extends React.Component {
       IFSCErr,
       mobileNoErr,
       emailErr,
-      merchantStateErr,
-      merchantCityErr,
     } = this.state
    console.log("state", this.state)
     return (
@@ -498,7 +484,7 @@ class DMOForm extends React.Component {
            
             <ButtonGroup align="right">
               <CustomButton
-                text="Register"
+                text="Save"
                 handleClick={this.handleSave}
                 disableSave={this.props.disableSave}
               />

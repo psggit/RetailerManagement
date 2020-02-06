@@ -47,8 +47,6 @@ class EditDMO extends React.Component {
       IFSCErr,
       mobileNoErr,
       emailErr,
-      merchantStateErr,
-      merchantCityErr,
     } = DMODataForm
 
     const formData = {
@@ -62,12 +60,10 @@ class EditDMO extends React.Component {
       IFSCErr,
       mobileNoErr,
       emailErr,
-      merchantStateErr,
-      merchantCityErr,
     }
 
     for (const key in formData) {
-      if (formData[key].status && formData[key].value.toString().length === 0) {
+      if (formData[key].status && formData[key].value().length === 0) {
         return false
       }
     }
@@ -76,7 +72,7 @@ class EditDMO extends React.Component {
   }
 
   handleSave () {
-    const DMODataForm = this.DMODetailsForm.getData()
+     const DMODataForm = this.DMODetailsForm.getData()
     if (this.formIsValid()) {
       const payload = {
         retailer_id: DMODataForm.retailerId.toString(),
@@ -86,7 +82,7 @@ class EditDMO extends React.Component {
         merchant_type: DMODataForm.merchantType,
         merchant_address: DMODataForm.merchantAddress,
         merchant_state: DMODataForm.selectedStateIdx.toString(),
-        merchant_city: DMODataForm.selectedCityIdx.toString(),
+        merchant_city: DMODataForm.selectedCityIdx,
         merchant_pin: DMODataForm.merchantPIN,
         account_no: DMODataForm.accountNumber,
         ifsc_code: DMODataForm.IFSC,
@@ -98,7 +94,7 @@ class EditDMO extends React.Component {
         daily_txn_limit: DMODataForm.dailyTransactionLimit,
         monthly_txn_limit: DMODataForm.monthlyTransactionLimit,
         limit_per_txn: DMODataForm.limitPerTransaction,
-        virtual_address: this.props.history.location.state.virtual_address      
+        virtual_address: this.props.history.location.state.virtual_address,     
       }
       this.setState({ updatingDMO: true })
       this.updateDMO(payload)
@@ -122,7 +118,7 @@ class EditDMO extends React.Component {
       <Layout title="Edit DMO">
         <Card width="800px">
           <DMOForm
-            ref={(node) => { this.dmoDetailsForm = node }}
+            ref={(node) => { this.DMODetailsForm = node }}
             data={this.props.history.location.state}
             stateList={this.state.stateList}
             cityList={this.state.cityList}

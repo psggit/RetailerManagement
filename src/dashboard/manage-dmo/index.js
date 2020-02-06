@@ -13,8 +13,9 @@ import Pagination from 'Components/pagination'
 import ModalBox from 'Components/ModalBox'
 import ModalHeader from 'Components/ModalBox/ModalHeader'
 import ModalBody from 'Components/ModalBox/ModalBody'
-import ModalFooter from '../../components/ModalBox/ModalFooter';
+import ModalFooter from '../../components/ModalBox/ModalFooter'
 import { getQueryObj, getQueryUri } from 'Utils/url-utils'
+import { Spinner } from '@auth0/cosmos'
 
 
 class ManageDMO extends React.Component {
@@ -344,6 +345,7 @@ class ManageDMO extends React.Component {
           {
             <div style={{ marginTop: '40px', marginBottom: '20px' }}>
               <Table
+                emptyMessage={this.state.loading ? <Spinner /> : 'No records found'}
                 items={this.state.dmoData}
               >
                 <Table.Column field="actions">
