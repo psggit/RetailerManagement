@@ -63,7 +63,7 @@ class EditDMO extends React.Component {
     }
 
     for (const key in formData) {
-      if (formData[key].status && formData[key].value().length === 0) {
+      if (formData[key].status && formData[key].value.toString().length === 0) {
         return false
       }
     }
