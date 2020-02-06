@@ -10,6 +10,15 @@ export function authChangePassword (req) {
 		.then(json => json)
 }
 
+export function uploadRefundReport (req) {
+	return POST({
+		api: "/Api/upload/refundreport",
+		apiBase: "retailer",
+		data: req,
+		type: 'FormData'
+	})
+}
+
 export function fetchOrganizationList (payloadObj, successCallback, failureCallback) {
 	return POST({
 		api: '/Api/listOrganisations',
