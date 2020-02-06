@@ -1,0 +1,16 @@
+.file-uploader-container {
+  margin-bottom: 30px;
+  .file-uploader {
+    cursor: pointer;
+    border: 1px dashed #dfdfdf;
+    padding: 40px;
+    text-align: center;
+    width: 300px;
+    &:hover {
+      border-color: #616161;
+      svg {
+        fill: #616161;
+      }
+    }
+  }
+}
