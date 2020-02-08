@@ -71,7 +71,7 @@ class UploadReport extends React.Component {
 
   render () {
     return (
-      <Layout title="Upload Refund Report">
+      <Layout title="Upload Report">
         <Card width="340px" className="file-uploader-container">
           <Form layout="label-on-top" style={{ marginBottom: "20px" }}>
             <Form.Select
