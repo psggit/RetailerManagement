@@ -16,6 +16,7 @@ import ModalBody from 'Components/ModalBox/ModalBody'
 import ModalFooter from '../../components/ModalBox/ModalFooter'
 import { getQueryObj, getQueryUri } from 'Utils/url-utils'
 import { Spinner } from '@auth0/cosmos'
+import PropTypes from "prop-types"
 
 
 class ManageDMO extends React.Component {
@@ -405,6 +406,10 @@ class ManageDMO extends React.Component {
       </Layout>
     );
   }
+}
+
+ManageDMO.propTypes = {
+  history: PropTypes.object
 }
 
 export default ManageDMO

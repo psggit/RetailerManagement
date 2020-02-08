@@ -1,17 +1,17 @@
 
-import React from 'react'
-import { Form, ButtonGroup } from '@auth0/cosmos'
-import { validateTextField, validateEmail, validateNumberField } from 'Utils/validators'
-import { checkCtrlA, validateNumType, checkCtrlV } from 'Utils/logic-utils'
-import CustomButton from 'Components/button'
+import React from "react"
+import { Form, ButtonGroup } from "@auth0/cosmos"
+import { validateTextField, validateEmail, validateNumberField } from "Utils/validators"
+import { checkCtrlA, validateNumType, checkCtrlV } from "Utils/logic-utils"
+import CustomButton from "Components/button"
 import PropTypes from "prop-types"
-import * as Api from './../../api'
+import * as Api from "./../../api"
 
 class DMOForm extends React.Component {
   constructor (props) {
     super(props)
     this.inputNameMap = {
-      merchantBusinessName: 'Merchant Business Name',
+      merchantBusinessName: "Merchant Business Name",
       merchantLegalName: 'Merchant Legal Name',
       PAN: 'PAN',
       merchantAddress: 'Merchant Address',
@@ -103,7 +103,7 @@ class DMOForm extends React.Component {
     this.fetchRetailers = this.fetchRetailers.bind(this)
   }
 
-  componentDidUpdate (prevProps, prevState) {
+  componentDidUpdate (prevProps) {
     if (this.props.stateList !== prevProps.stateList) {
       this.setState({ stateList: this.props.stateList })
       if (location.pathname.includes("create")) {
@@ -316,6 +316,7 @@ class DMOForm extends React.Component {
       emailErr,
     } = this.state
    console.log("state", this.state)
+   console.log("retailerId", this.state.retailerId)
     return (
       <div id="DMOForm">
         <Form layout="label-on-top">
@@ -510,7 +511,8 @@ class DMOForm extends React.Component {
 DMOForm.propTypes = {
   stateList: PropTypes.array,
   cityList: PropTypes.array,
-  stateMap: PropTypes.object
+  stateMap: PropTypes.object,
+  data:PropTypes.object
 }
 
 export default DMOForm

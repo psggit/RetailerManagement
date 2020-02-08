@@ -4,6 +4,7 @@ import DMOForm from './dmo-form'
 import Card from 'Components/card'
 import * as Api from './../../api'
 import { formatStateAndCityList } from 'Utils/response-format-utils'
+import PropTypes from "prop-types"
 
 class EditDMO extends React.Component {
   constructor () {
@@ -130,6 +131,10 @@ class EditDMO extends React.Component {
       </Layout>
     )
   }
+}
+
+EditDMO.propTypes = {
+history: PropTypes.object
 }
 
 export default EditDMO
