@@ -82,7 +82,7 @@ class EditDMO extends React.Component {
         merchant_type: DMODataForm.merchantType,
         merchant_address: DMODataForm.merchantAddress,
         merchant_state: DMODataForm.selectedStateIdx.toString(),
-        merchant_city: DMODataForm.selectedCityIdx,
+        merchant_city: DMODataForm.selectedCityIdx.toString(),
         merchant_pin: DMODataForm.merchantPIN,
         account_no: DMODataForm.accountNumber,
         ifsc_code: DMODataForm.IFSC,
