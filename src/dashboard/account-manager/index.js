@@ -79,13 +79,13 @@ class AccountManagerList extends React.Component {
                   <Button icon="pencil" onClick={(e) => this.handleEditAccountManager(e, item, 'edit')} />
                 )}
               </Table.Column>
-              <Table.Column field="account_manager" title="Account Manager" />
+              <Table.Column field="name" title="Account Manager" />
               <Table.Column field="user_id" title="User Id" />
               <Table.Column field="mobile_number" title="Mobile Number" />
               <Table.Column field="organisation_id" title="Organization Id" />
               <Table.Column field="actions" title="Status">
                 {item => (
-                  <div>{item.account_status ? "Active" : "Inactive"}</div>
+                  <div>{item.is_active ? "Active" : "Inactive"}</div>
                 )}
               </Table.Column>
             </Table>

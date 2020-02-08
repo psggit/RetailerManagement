@@ -129,6 +129,15 @@ export function fetchRetailerList (payloadObj, successCallback, failureCallback)
 		})
 }
 
+export function fetchDmoList (payloadObj) {
+	return POST({
+		api: '/Api/dmo/list',
+		apiBase: 'retailer',
+		data: payloadObj,
+		handleError: true
+	})
+}
+
 export function createOrUpdateStockPrice (payloadObj, successCallback, failureCallback) {
 	return POST({
 		api: '/Api/stockandprice/inventory/createorupdate',
@@ -154,6 +163,15 @@ export function fetchAccessLogs (payloadObj) {
 	return POST({
 		api: `/Api/stockandprice/inventory/accesslog`,
 		apiBase: 'retailer',
+		data: payloadObj,
+		handleError: true
+	})
+}
+
+export function fetchRetailers (payloadObj) {
+	return POST({
+		api: `/retailer/fetch`,
+		apiBase: 'odin',
 		data: payloadObj,
 		handleError: true
 	})
@@ -310,6 +328,22 @@ export function deactivateRetailer (payloadObj, callback) {
 		})
 }
 
+export function deactivateDmo (payloadObj, callback) {
+	return POST({
+		api: '/Api/dmo/blockunblock',
+		apiBase: 'retailer',
+		data: payloadObj,
+		handleError: true
+	})
+		.then((json) => {
+			callback()
+		})
+		.catch(err => {
+			console.log("Error in updating dmo status", err)
+			err.response.json().then(json => { Notify("danger", json.message) })
+		})
+}
+
 /** Notes Endpoints */
 export function fetchRetailerNotes (req) {
 	return POST({
@@ -363,6 +397,7 @@ export function fetchAccountManagers (payload) {
 	})
 }
 
+
 export function createAccountManager (payload) {
 	return POST({
 		api: "/Api/addAccountManager",
@@ -395,4 +430,20 @@ export function insertManualCreditDebit (req) {
 		data: req
 	})
 		.then(json => json)
+}
+
+export function createDMO (payload) {
+	return POST({
+		api: "/Api/dmo/create",
+		apiBase: "retailer",
+		data: payload
+	})
+}
+
+export function updateDMO (payload) {
+	return POST({
+		api: "/Api/dmo/edit",
+		apiBase: "retailer",
+		data: payload
+	})
 }

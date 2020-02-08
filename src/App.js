@@ -35,6 +35,10 @@ import ManageCreditDebit from "./dashboard/ManualDebitCredit"
 import ManageAccountManager from "./dashboard/account-manager"
 import CreateAccountManager from "./dashboard/account-manager/create-account-manager"
 import EditAccountManager from "./dashboard/account-manager/edit-account-manager"
+import ManageDMO from "./dashboard/manage-dmo"
+import CreateDMO from "./dashboard/manage-dmo/create-dmo"
+import EditDMO from "./dashboard/manage-dmo/edit-dmo"
+
 const history = createHistory()
 const supportedRoles = ["admin", "opdataadmin", "opdataentry"]
 const accessRole = localStorage.getItem('x-hasura-role') ? localStorage.getItem('x-hasura-role') : ''
@@ -154,6 +158,15 @@ function RetailerManagementSwitch () {
 
 				<Route
 					exact
+					path="/admin/dmo"
+					render={
+						props => (
+							<ManageDMO {...props} />
+						)
+					}
+				/>
+				<Route
+					exact
 					path="/admin/retailer/create"
 					render={
 						props => (
@@ -191,6 +204,35 @@ function RetailerManagementSwitch () {
 					render={props => <RetailerSOA {...props} />}
 				/>
 
+				<Route
+					exact
+					path="/admin/dmo"
+					render={
+						props => (
+							<ManageDMO {...props} />
+						)
+					}
+				/>
+        
+				<Route
+					exact
+					path="/admin/dmo/create"
+					render={
+						props => (
+							<CreateDMO {...props} />
+						)
+					}
+				/>
+
+				<Route
+					exact
+					path="/admin/dmo/edit/:retailerId"
+					render={
+						props => (
+							<EditDMO {...props} />
+						)
+					}
+				/>
 				<Route
 					exact
 					path="/admin/generate-report"
@@ -287,7 +329,7 @@ class App extends React.Component {
 	}
 	
 	componentDidMount () {
-		history.listen((loction) => {
+		history.listen((location) => {
 			const newRoute = location.pathname.split('/')[2]
 			if (newRoute !== this.state.currentRoute) {
 				//unmountNotify()
@@ -377,6 +419,7 @@ class App extends React.Component {
 										menuItems={[
 											{ label: 'Manage Organization', value: 'organization' },
 											{ label: 'Manage Retailer', value: 'retailer' },
+											{ label: 'Manage DMO', value:'dmo' },
 											{ label: 'Generate Report', value: 'generate-report' },
 											{ label: 'Device Management', value: 'device-management' },
 											{ label: 'Stock and Price', value: 'stock-and-price' },
