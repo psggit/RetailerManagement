@@ -353,8 +353,9 @@ class ManageDMO extends React.Component {
                     <Button icon="pencil" onClick={(e) => this.handleEditDmoDetail(e, item, 'edit')} />
                   )}
                 </Table.Column>
-                  <Table.Column field="retailer_id" title="Retailer ID"/>
-                <Table.Column field="merchant_legal_name" title="Merchant Name" />
+                <Table.Column field="retailer_id" title="Retailer ID"/>
+                <Table.Column field="retailer_name" title="Retailer Name" />
+                <Table.Column field="merchant_legal_name" title="Merchant Business Name" />
                 <Table.Column field="merchant_address" title="Merchant Address" />
                 <Table.Column field="merchant_state" title="State" />
                 <Table.Column field="merchant_city" title="City" />
