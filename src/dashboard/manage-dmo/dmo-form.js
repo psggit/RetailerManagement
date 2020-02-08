@@ -128,7 +128,7 @@ class DMOForm extends React.Component {
     const payload = {
       limit: 1000,
       offset: 0,
-      city_id: cityId
+      city_id: parseInt(cityId)
     }
     Api.fetchRetailers(payload)
       .then((response) => {
@@ -153,6 +153,7 @@ class DMOForm extends React.Component {
       })
       this.fetchRetailers(this.state.stateMap[e.target.value][0].value)
     } else if (e.target.name.toString().includes("CityIdx")) {
+      this.setState({ [e.target.name]: e.target.value })
       this.fetchRetailers(e.target.value)
     } else {
       this.setState({
@@ -326,7 +327,7 @@ class DMOForm extends React.Component {
             onChange={(e) => this.handleChange(e)}
           />
           <Form.Select
-            label="Retailer ID*"
+            label="Retailer Name*"
             value={this.state.retailerId}
             name="retailerId"
             options={this.state.retailerList}
