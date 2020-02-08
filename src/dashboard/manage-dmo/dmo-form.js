@@ -145,7 +145,16 @@ class DMOForm extends React.Component {
             value: retailer.id
           })
         })
-        this.setState({ retailerList: retailerData, retailerId: retailerData[0].value })
+        if (location.pathname.includes("create")) {
+          this.setState({
+            retailerList: retailerData, 
+            retailerId: retailerData[0].value
+          })
+        } else {
+          this.setState({
+            retailerList: retailerData
+          })
+        }
       })
       .catch((error) => {
         console.log("Error in fetching retailers", error)
@@ -303,7 +312,6 @@ class DMOForm extends React.Component {
   }
 
   render () {
-    console.log("state", this.state.selectedStateIdx, "city", this.state.selectedCityIdx)
     const {
       merchantBusinessNameErr,
       merchantLegalNameErr,
@@ -315,7 +323,7 @@ class DMOForm extends React.Component {
       mobileNoErr,
       emailErr,
     } = this.state
-   console.log("state", this.state)
+    console.log("retailerId", this.state.retailerId)
     return (
       <div id="DMOForm">
         <Form layout="label-on-top">
