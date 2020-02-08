@@ -25,29 +25,29 @@ class DMOForm extends React.Component {
 
     this.errorFlag = false,
       this.state = {
-      retailerId: props.data ? props.data.retailer_id : '',
-      merchantBusinessName: props.data ? props.data.merchant_business_name : '',
-      merchantLegalName: props.data ? props.data.merchant_legal_name : '',
-      PAN: props.data ? props.data.pan : '',
-      merchantType: props.data ? props.data.merchant_type : '',
-      merchantAddress: props.data ? props.data.merchant_address : '',
-      stateList: this.props.stateList,
-      stateMap: this.props.stateMap,
-      cityList: this.props.cityList,
-      retailerList: [], 
-      merchantPIN: props.data ? props.data.merchant_pin : '',
-      accountNumber: props.data ? props.data.account_no : '',
-      IFSC: props.data ? props.data.ifsc_code : '',
-      mobileNo: props.data ? props.data.mobile_no : '',
-      email: props.data ? props.data.email_id : '',
-      bankName: props.data ? props.data.bank_name : '',
-      selectedCityIdx: props.data ? props.data.merchant_city : 0,
-      selectedStateIdx: props.data ? props.data.merchant_state : 0,
-      GPS: props.data ? props.data.merchant_latlng : '',
-      GST: props.data ? props.data.gst_no : '',
-      dailyTransactionLimit: props.data ? props.data.daily_txn_limit : '',
-      monthlyTransactionLimit: props.data ? props.data.monthly_txn_limit : '',
-      limitPerTransaction: props.data ? props.data.limit_per_txn : '',
+        retailerId: props.data ? props.data.retailer_id : '',
+        merchantBusinessName: props.data ? props.data.merchant_business_name : '',
+        merchantLegalName: props.data ? props.data.merchant_legal_name : '',
+        PAN: props.data ? props.data.pan : '',
+        merchantType: props.data ? props.data.merchant_type : '',
+        merchantAddress: props.data ? props.data.merchant_address : '',
+        stateList: this.props.stateList,
+        stateMap: this.props.stateMap,
+        cityList: this.props.cityList,
+        retailerList: [], 
+        merchantPIN: props.data ? props.data.merchant_pin : '',
+        accountNumber: props.data ? props.data.account_no : '',
+        IFSC: props.data ? props.data.ifsc_code : '',
+        mobileNo: props.data ? props.data.mobile_no : '',
+        email: props.data ? props.data.email_id : '',
+        bankName: props.data ? props.data.bank_name : '',
+        selectedCityIdx: props.data ? props.data.city_id : 0,
+        selectedStateIdx: props.data ? props.data.state_id : 0,
+        GPS: props.data ? props.data.merchant_latlng : '',
+        GST: props.data ? props.data.gst_no : '',
+        dailyTransactionLimit: props.data ? props.data.daily_txn_limit : '',
+        monthlyTransactionLimit: props.data ? props.data.monthly_txn_limit : '',
+        limitPerTransaction: props.data ? props.data.limit_per_txn : '',
 
         retailerIdErr: {
           value: '',
@@ -116,10 +116,17 @@ class DMOForm extends React.Component {
     }
 
     if (prevProps.cityList && this.props.cityList !== prevProps.cityList) {
-      this.setState({ cityList: this.props.cityList })
       if (location.pathname.includes("create")) {
-        this.setState({ selectedCityIdx: this.props.cityList[0].value })
+        this.setState({ 
+          cityList: this.props.stateMap[this.props.stateList[0].value],
+          selectedCityIdx: this.props.cityList[0].value
+        })
         this.fetchRetailers(this.props.cityList[0].value)
+      } else {
+        this.setState({ 
+          cityList: this.props.stateMap[parseInt(this.state.selectedStateIdx)]
+        })
+        this.fetchRetailers(this.state.selectedCityIdx)
       }
     }
   }
@@ -296,6 +303,7 @@ class DMOForm extends React.Component {
   }
 
   render () {
+    console.log("state", this.state.selectedStateIdx, "city", this.state.selectedCityIdx)
     const {
       merchantBusinessNameErr,
       merchantLegalNameErr,
