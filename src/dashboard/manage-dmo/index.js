@@ -9,6 +9,7 @@ import { Table } from '@auth0/cosmos'
 import Switch2 from 'Components/switch'
 import { Button } from '@auth0/cosmos'
 import * as Api from './../../api'
+import Notify from "Components/notify"
 import Pagination from 'Components/pagination'
 import ModalBox from 'Components/ModalBox'
 import ModalHeader from 'Components/ModalBox/ModalHeader'
@@ -55,7 +56,7 @@ class ManageDMO extends React.Component {
     this.fetchDefaultData = this.fetchDefaultData.bind(this)
     this.fetchDmoList = this.fetchDmoList.bind(this)
     this.getFilteredDmoList = this.getFilteredDmoList.bind(this)
-    this.callback= this.callback.bind(this)
+    //this.callback= this.callback.bind(this)
     this.resetFilter = this.resetFilter.bind(this)
     this.handlePageChange = this.handlePageChange.bind(this)
     this.handleEditDmoDetail = this.handleEditDmoDetail.bind(this)
@@ -187,13 +188,16 @@ class ManageDMO extends React.Component {
       virtual_address:this.state.virtualAddress,
       eazypay_id:this.state.eazypayId,
       is_blocked: this.state.dmoStatus === "true" ? false : true
-    }, this.callback)
-  }
-
-  callback () {
-    this.handlePageChange({
-      activePage: this.state.activePage,
-      offset: this.state.offset
+    })
+    .then((response) => {
+      this.handlePageChange({
+        activePage: this.state.activePage,
+        offset: this.state.offset
+      })
+    })
+    .catch((error) => {
+      console.log("Error in updating dmo status", err)
+      error.response.json().then(json => { Notify("danger", json.message) })
     })
   }
 

@@ -3,6 +3,7 @@ import Layout from 'Components/layout'
 import DMOForm from './dmo-form'
 import Card from 'Components/card'
 import * as Api from './../../api'
+import Notify from "Components/notify"
 import { formatStateAndCityList } from 'Utils/response-format-utils'
 import PropTypes from "prop-types"
 
@@ -106,10 +107,11 @@ class EditDMO extends React.Component {
     Api.updateDMO(payload)
       .then((response) => {
         this.setState({ updatingDMO: false })
-        console.log("Updating dmo", response)
+        Notify("success", response.message)
       })
       .catch((error) => {
         this.setState({ updatingDMO: false })
+        error.response.json().then(json => { Notify("danger", json.message) })
         console.log("Error in updating dmo", error)
       })
   }

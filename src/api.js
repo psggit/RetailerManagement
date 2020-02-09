@@ -326,13 +326,6 @@ export function deactivateDmo (payloadObj, callback) {
 		data: payloadObj,
 		handleError: true
 	})
-		.then((json) => {
-			callback()
-		})
-		.catch(err => {
-			console.log("Error in updating dmo status", err)
-			err.response.json().then(json => { Notify("danger", json.message) })
-		})
 }
 
 /** Notes Endpoints */
