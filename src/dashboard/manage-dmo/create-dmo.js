@@ -4,6 +4,7 @@ import Layout from 'Components/layout'
 import Card from 'Components/card'
 import DMOForm from './dmo-form'
 import * as Api from './../../api'
+import Notify from "Components/notify"
 import { formatStateAndCityList } from 'Utils/response-format-utils'
 
 class CreateDMO extends React.Component {
@@ -65,10 +66,11 @@ class CreateDMO extends React.Component {
     Api.createDMO(payload)
       .then((response) => {
         this.setState({ creatingDMO: false })
+        Notify("success", response.message)
       })
       .catch((error) => {
         this.setState({ creatingDMO: false })
-        console.log("Error in creating dmo", error)
+        error.response.json().then(json => { Notify("danger", json.message) })
       })
   }
 
