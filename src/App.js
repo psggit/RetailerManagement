@@ -30,6 +30,7 @@ import CreateOrUpdateStockPrice from './dashboard/stock-management/retailer-inve
 import StockManagement from "./dashboard/stock-management"
 import ModifiedStockList from "./dashboard/stock-management/modifiedStockSummary"
 import Account from "./dashboard/Account"
+import ManageReport from "./dashboard/manage-report"
 import ManageCreditDebit from "./dashboard/ManualDebitCredit"
 import ManageAccountManager from "./dashboard/account-manager"
 import CreateAccountManager from "./dashboard/account-manager/create-account-manager"
@@ -424,7 +425,8 @@ class App extends React.Component {
 											{ label: 'Stock and Price', value: 'stock-and-price' },
 											{ label: 'Access Logs', value: 'access-logs' },
 											{ label: "Account", value: "account" },
-											{ label: "Manage Credit & Debit", value: "manage-credit-debit" }
+											{ label: "Manage Credit & Debit", value: "manage-credit-debit" },
+											{ label: "Manage Reports", value: "manage-report" }
 										]}
 										currentRoute={this.state.currentRoute}
 									/>
@@ -445,6 +447,15 @@ class App extends React.Component {
 										render={
 											props => (
 												<ManageCreditDebit {...props} />
+											)
+										}
+									/>
+									<Route
+										exact
+										path="/admin/manage-report"
+										render={
+											props => (
+												<ManageReport {...props} />
 											)
 										}
 									/>

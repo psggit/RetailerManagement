@@ -14,6 +14,46 @@ export default {
   //     </g>
   //   </svg>
   // ),
+  upload: (
+    <svg style={{ pointerEvents: 'none' }} fill="#dfdfdf" version="1.1" id="Capa_1" x="0px" y="0px" width="100px" height="100px" viewBox="0 0 433.5 433.5">
+        <g>
+        	<g id="file-upload">
+        		<polygon points="140.25,331.5 293.25,331.5 293.25,178.5 395.25,178.5 216.75,0 38.25,178.5 140.25,178.5"/>
+        		<rect x="38.25" y="382.5" width="357" height="51"/>
+        	</g>
+        </g>
+        <g>
+        </g>
+        <g>
+        </g>
+        <g>
+        </g>
+        <g>
+        </g>
+        <g>
+        </g>
+        <g>
+        </g>
+        <g>
+        </g>
+        <g>
+        </g>
+        <g>
+        </g>
+        <g>
+        </g>
+        <g>
+        </g>
+        <g>
+        </g>
+        <g>
+        </g>
+        <g>
+        </g>
+        <g>
+        </g>
+        </svg>
+      ),
   minus: (
     <svg width="18px" height="18px" viewBox="0 0 18 4" version="1.1">
       <g id="V0.3---With-Mobile-Version" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">

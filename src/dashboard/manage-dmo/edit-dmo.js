@@ -112,7 +112,6 @@ class EditDMO extends React.Component {
       .catch((error) => {
         this.setState({ updatingDMO: false })
         error.response.json().then(json => { Notify("danger", json.message) })
-        console.log("Error in updating dmo", error)
       })
   }
 

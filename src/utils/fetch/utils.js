@@ -21,6 +21,7 @@ function getHeaders (type) {
 
   switch (type) {
     case "FormData":
+      //return Object.assign({}, {'Content-Type': 'application/x-www-form-urlencoded'})
       return getToken()
     case "Public":
       return Object.assign({}, json_headers)

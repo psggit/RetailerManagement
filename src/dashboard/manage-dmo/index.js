@@ -56,7 +56,6 @@ class ManageDMO extends React.Component {
     this.fetchDefaultData = this.fetchDefaultData.bind(this)
     this.fetchDmoList = this.fetchDmoList.bind(this)
     this.getFilteredDmoList = this.getFilteredDmoList.bind(this)
-    //this.callback= this.callback.bind(this)
     this.resetFilter = this.resetFilter.bind(this)
     this.handlePageChange = this.handlePageChange.bind(this)
     this.handleEditDmoDetail = this.handleEditDmoDetail.bind(this)

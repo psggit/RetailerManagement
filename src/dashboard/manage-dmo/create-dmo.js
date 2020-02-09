@@ -71,7 +71,6 @@ class CreateDMO extends React.Component {
       .catch((error) => {
         this.setState({ creatingDMO: false })
         error.response.json().then(json => { Notify("danger", json.message) })
-        console.log("Error in creating dmo", error)
       })
   }
 
