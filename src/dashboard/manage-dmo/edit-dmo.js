@@ -39,7 +39,6 @@ class EditDMO extends React.Component {
   formIsValid () {
     const DMODataForm = this.DMODetailsForm.getData()
     const {
-      retailerIdErr,
       merchantBusinessNameErr,
       merchantLegalNameErr,
       PANErr,
@@ -52,7 +51,6 @@ class EditDMO extends React.Component {
     } = DMODataForm
 
     const formData = {
-      retailerIdErr,
       merchantBusinessNameErr,
       merchantLegalNameErr,
       PANErr,
@@ -137,7 +135,7 @@ class EditDMO extends React.Component {
 }
 
 EditDMO.propTypes = {
-history: PropTypes.object
+  history: PropTypes.object
 }
 
 export default EditDMO

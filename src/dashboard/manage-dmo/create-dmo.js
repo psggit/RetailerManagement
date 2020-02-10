@@ -35,7 +35,7 @@ class CreateDMO extends React.Component {
     this.setState({ stateList, cityList, stateMap })
   }
 
- handleSave () {
+  handleSave () {
     const DMODataForm = this.DMODetailsForm.getData()
     const payload = {
       retailer_id: DMODataForm.retailerId.toString(),

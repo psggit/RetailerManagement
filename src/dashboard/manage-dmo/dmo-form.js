@@ -21,75 +21,70 @@ class DMOForm extends React.Component {
       mobileNo: 'Mobile Number',
       email: 'Email',
     }
-    console.log("props", props)
-
+  
     this.errorFlag = false,
-      this.state = {
-        retailerId: props.data ? props.data.retailer_id : '',
-        merchantBusinessName: props.data ? props.data.merchant_business_name : '',
-        merchantLegalName: props.data ? props.data.merchant_legal_name : '',
-        PAN: props.data ? props.data.pan : '',
-        merchantType: props.data ? props.data.merchant_type : '',
-        merchantAddress: props.data ? props.data.merchant_address : '',
-        stateList: this.props.stateList,
-        stateMap: this.props.stateMap,
-        cityList: this.props.cityList,
-        retailerList: [], 
-        merchantPIN: props.data ? props.data.merchant_pin : '',
-        accountNumber: props.data ? props.data.account_no : '',
-        IFSC: props.data ? props.data.ifsc_code : '',
-        mobileNo: props.data ? props.data.mobile_no : '',
-        email: props.data ? props.data.email_id : '',
-        bankName: props.data ? props.data.bank_name : '',
-        selectedCityIdx: props.data ? props.data.city_id : 0,
-        selectedStateIdx: props.data ? props.data.state_id : 0,
-        GPS: props.data ? props.data.merchant_latlng : '',
-        GST: props.data ? props.data.gst_no : '',
-        dailyTransactionLimit: props.data ? props.data.daily_txn_limit : '',
-        monthlyTransactionLimit: props.data ? props.data.monthly_txn_limit : '',
-        limitPerTransaction: props.data ? props.data.limit_per_txn : '',
+    this.state = {
+      retailerId: props.data ? props.data.retailer_id : '',
+      merchantBusinessName: props.data ? props.data.merchant_business_name : '',
+      merchantLegalName: props.data ? props.data.merchant_legal_name : '',
+      PAN: props.data ? props.data.pan : '',
+      merchantType: props.data ? props.data.merchant_type : '',
+      merchantAddress: props.data ? props.data.merchant_address : '',
+      stateList: this.props.stateList,
+      stateMap: this.props.stateMap,
+      cityList: this.props.cityList,
+      retailerList: [], 
+      merchantPIN: props.data ? props.data.merchant_pin : '',
+      accountNumber: props.data ? props.data.account_no : '',
+      IFSC: props.data ? props.data.ifsc_code : '',
+      mobileNo: props.data ? props.data.mobile_no : '',
+      email: props.data ? props.data.email_id : '',
+      bankName: props.data ? props.data.bank_name : '',
+      selectedCityIdx: props.data ? props.data.city_id : 0,
+      selectedStateIdx: props.data ? props.data.state_id : 0,
+      GPS: props.data ? props.data.merchant_latlng : '',
+      GST: props.data ? props.data.gst_no : '',
+      dailyTransactionLimit: props.data ? props.data.daily_txn_limit : '',
+      monthlyTransactionLimit: props.data ? props.data.monthly_txn_limit : '',
+      limitPerTransaction: props.data ? props.data.limit_per_txn : '',
 
-        retailerIdErr: {
-          value: '',
-          status: false
-        },
-        merchantBusinessNameErr: {
-          value: '',
-          status: false
-        },
-        merchantLegalNameErr: {
-          value: '',
-          status: false
-        },
-        PANErr: {
-          value: '',
-          status: false
-        },
-        merchantAddressErr: {
-          value: '',
-          status: false
-        },
-        merchantPINErr: {
-          value: '',
-          status: false
-        },
-        accountNumberErr: {
+      merchantBusinessNameErr: {
         value: '',
         status: false
-        },
-        IFSCErr: {
+      },
+      merchantLegalNameErr: {
         value: '',
         status: false
-        },
-        mobileNoErr: {
+      },
+      PANErr: {
         value: '',
         status: false
-        },
-        emailErr: {
+      },
+      merchantAddressErr: {
         value: '',
         status: false
-        },
-      }
+      },
+      merchantPINErr: {
+        value: '',
+        status: false
+      },
+      accountNumberErr: {
+      value: '',
+      status: false
+      },
+      IFSCErr: {
+      value: '',
+      status: false
+      },
+      mobileNoErr: {
+      value: '',
+      status: false
+      },
+      emailErr: {
+      value: '',
+      status: false
+      },
+    }
 
     this.handleChange = this.handleChange.bind(this)
     this.handleTextChange = this.handleTextChange.bind(this)
@@ -522,7 +517,8 @@ DMOForm.propTypes = {
   stateList: PropTypes.array,
   cityList: PropTypes.array,
   stateMap: PropTypes.object,
-  data:PropTypes.object
+  data:PropTypes.object,
+  disableSave: PropTypes.func
 }
 
 export default DMOForm

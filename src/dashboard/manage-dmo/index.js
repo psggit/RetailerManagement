@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable no-undef */
 import React from "react"
 import { NavLink } from 'react-router-dom'
 import Layout from 'Components/layout'
@@ -18,7 +16,6 @@ import ModalFooter from '../../components/ModalBox/ModalFooter'
 import { getQueryObj, getQueryUri } from 'Utils/url-utils'
 import { Spinner } from '@auth0/cosmos'
 import PropTypes from "prop-types"
-
 
 class ManageDMO extends React.Component {
 
@@ -48,7 +45,7 @@ class ManageDMO extends React.Component {
       operator: '',
       value: ''
     }
-    this.pagesLimit=10
+    this.pagesLimit = 10
     this.onToggleChange = this.onToggleChange.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.setDialogState = this.setDialogState.bind(this)
@@ -66,7 +63,7 @@ class ManageDMO extends React.Component {
     this.fetchDmoList({
       offset: 0,
       limit: this.pagesLimit,
-    }, this.setResponseData, this.failureCallback)
+    })
   }
 
   componentDidMount () {
@@ -110,6 +107,7 @@ class ManageDMO extends React.Component {
         }
       })
       .catch((error) => {
+        console.log("Error in fetch dmo list", error)
         this.setState({ dmoData: [], dmoListCount: 0, loading: false })
       })
   }
@@ -195,7 +193,7 @@ class ManageDMO extends React.Component {
       })
     })
     .catch((error) => {
-      console.log("Error in updating dmo status", err)
+      console.log("Error in updating dmo status", error)
       error.response.json().then(json => { Notify("danger", json.message) })
     })
   }
@@ -234,14 +232,14 @@ class ManageDMO extends React.Component {
         offset: pageObj.offset,
         limit: this.pagesLimit,
         filter: filterObj
-      }, this.setResponseData, this.failureCallback)
+      })
 
     } else {
 
       this.fetchDmoList({
         offset: pageObj.offset,
         limit: this.pagesLimit
-      }, this.setResponseData, this.failureCallback)
+      })
     }
     history.pushState(queryParamsObj, "dmo listing", `/admin/dmo?${getQueryUri(queryParamsObj)}`)
   }
@@ -407,7 +405,7 @@ class ManageDMO extends React.Component {
           }
         </div>
       </Layout>
-    );
+    )
   }
 }
 
