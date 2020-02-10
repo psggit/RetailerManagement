@@ -331,6 +331,7 @@ class DMOForm extends React.Component {
             label="Merchant State*"
             value={this.state.selectedStateIdx}
             name="selectedStateIdx"
+            disabled={location.pathname.includes("edit")}
             options={this.state.stateList}
             onChange={(e) => this.handleChange(e)}
           />
@@ -339,6 +340,7 @@ class DMOForm extends React.Component {
             label="Merchant City*"
             value={this.state.selectedCityIdx}
             name="selectedCityIdx"
+            disabled={location.pathname.includes("edit")}
             options={this.state.cityList}
             onChange={(e) => this.handleChange(e)}
           />
@@ -346,6 +348,7 @@ class DMOForm extends React.Component {
             label="Retailer Name*"
             value={this.state.retailerId}
             name="retailerId"
+            disabled={location.pathname.includes("edit")}
             options={this.state.retailerList}
             onChange={(e) => this.handleChange(e)}
           />

@@ -378,13 +378,13 @@ class ManageDMO extends React.Component {
             <ModalBox>
               <ModalHeader>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <div style={{ fontSize: '18px' }}>{this.state.dmoStatus === "true" ? 'Unblock' : 'Block'} DMO</div>
+                  <div style={{ fontSize: '18px' }}>{this.state.dmoStatus === "true" ? 'unblock' : 'block'} DMO</div>
                 </div>
               </ModalHeader>
               <ModalBody height="60px">
                 <table className="table--hovered">
                   <tbody>
-                    Are you sure you want to {this.state.dmoStatus === "true" ? 'Unblock' : 'Block'} this merchant ? {this.state.retailerId}
+                    Are you sure you want to {this.state.dmoStatus === "true" ? 'unblock' : 'block'} this merchant ? {this.state.retailerId}
                   </tbody>
                 </table>
               </ModalBody>

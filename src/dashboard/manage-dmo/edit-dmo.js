@@ -109,6 +109,7 @@ class EditDMO extends React.Component {
       .then((response) => {
         this.setState({ updatingDMO: false })
         Notify("success", response.message)
+        location.href = '/admin/dmo'
       })
       .catch((error) => {
         this.setState({ updatingDMO: false })

@@ -67,6 +67,7 @@ class CreateDMO extends React.Component {
       .then((response) => {
         this.setState({ creatingDMO: false })
         Notify("success", response.message)
+        location.href = '/admin/dmo'
       })
       .catch((error) => {
         this.setState({ creatingDMO: false })
