@@ -517,6 +517,7 @@ DMOForm.propTypes = {
   stateList: PropTypes.array,
   cityList: PropTypes.array,
   stateMap: PropTypes.object,
+  retailerList:PropTypes.array,
   data:PropTypes.object,
   disableSave: PropTypes.func
 }

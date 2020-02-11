@@ -227,7 +227,7 @@ class ManageRetailer extends React.Component {
 		this.setState({ [e.target.name]: (e.target.value).toString() })
 	}
 
-	editOutletDetail (e, item, action) {
+	editOutletDetail (e, item) {
 		e.stopPropagation()
 		this.props.history.push(`/admin/retailer/edit/${item.id}`, item)
 	}
@@ -242,7 +242,7 @@ class ManageRetailer extends React.Component {
 		this.props.history.push(`/admin/retailer`)
 	}
 
-	onToggleChange (item, value) {
+	onToggleChange (item) {
 		this.setState({ mountDialog: true, retailerId: item.id, retailerStatus: item.branch_status, outletName: item.outlet_name })
 	}
 
@@ -401,8 +401,8 @@ class ManageRetailer extends React.Component {
 								<div style={{ fontSize: '18px' }}>{this.state.retailerStatus === "true" ? 'Deactivate' : 'Activate'} Outlet</div>
 							</div>
 						</ModalHeader>
-						<ModalBody height='60px'>
-							<table className='table--hovered'>
+						<ModalBody height="60px">
+							<table className="table--hovered">
 								<tbody>
 									Are you sure you want to {this.state.retailerStatus === "true" ? 'Deactivate' : 'Activate'} this outlet - {this.state.outletName} ({this.state.retailerId})
                                 </tbody>
@@ -410,8 +410,8 @@ class ManageRetailer extends React.Component {
 						</ModalBody>
 						<ModalFooter>
 							<div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', fontWeight: '600' }}>
-								<button className='btn btn-primary' onClick={() => this.deactivateRetailer()}> OK </button>
-								<button className='btn btn-secondary' onClick={() => this.setDialogState()}> Cancel </button>
+								<button className="btn btn-primary" onClick={() => this.deactivateRetailer()}> OK </button>
+								<button className="btn btn-secondary" onClick={() => this.setDialogState()}> Cancel </button>
 							</div>
 						</ModalFooter>
 

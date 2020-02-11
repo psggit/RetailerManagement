@@ -13,6 +13,7 @@ class EditDMO extends React.Component {
     this.state = {
       updatingDMO: false,
       stateList: [],
+      retailerList:["Heloo"],
       cityList: [],
       stateMap: {}
     }
@@ -123,6 +124,7 @@ class EditDMO extends React.Component {
             ref={(node) => { this.DMODetailsForm = node }}
             data={this.props.history.location.state}
             stateList={this.state.stateList}
+            retailerList={this.state.retailerList}
             cityList={this.state.cityList}
             stateMap={this.state.stateMap}
             handleSave={this.handleSave}

@@ -133,7 +133,7 @@ class ManageDMO extends React.Component {
     this.setState({ [e.target.name]: (e.target.value).toString() })
   }
 
-  onToggleChange (item, value) {
+  onToggleChange (item) {
     this.setState({ 
       mountDialog: true, 
       eazypayId:item.eazypay_id, 
@@ -244,7 +244,7 @@ class ManageDMO extends React.Component {
     history.pushState(queryParamsObj, "dmo listing", `/admin/dmo?${getQueryUri(queryParamsObj)}`)
   }
 
-  handleEditDmoDetail (e, item, action) {
+  handleEditDmoDetail (e, item) {
     e.stopPropagation()
     this.props.history.push(`/admin/dmo/edit/${item.retailer_id}`, item)
   }
@@ -407,8 +407,8 @@ class ManageDMO extends React.Component {
       </Layout>
     )
   }
+ 
 }
-
 ManageDMO.propTypes = {
   history: PropTypes.object
 }
