@@ -6,6 +6,7 @@ import Card from 'Components/card'
 import Icon from "Components/icon"
 import "Sass/upload-report.scss"
 import { Form } from '@auth0/cosmos'
+import Notify from 'Components/notify'
 
 class UploadReport extends React.Component {
   constructor () {
@@ -36,6 +37,12 @@ class UploadReport extends React.Component {
       url: this.url
     }
     Api.uploadReport(payload)
+      .then((response) => {
+        Notify("success", response.message)
+      })
+      .catch((error) => {
+        console.log("Error in uploading report", error)
+      })
   }
 
   handleUploadClick () {

@@ -357,7 +357,7 @@ class ManageDMO extends React.Component {
                 </Table.Column>
                 <Table.Column field="retailer_id" title="Retailer ID"/>
                 <Table.Column field="retailer_name" title="Retailer Name" />
-                <Table.Column field="merchant_legal_name" title="Merchant Business Name" />
+                <Table.Column field="merchant_business_name" title="Merchant Business Name" />
                 <Table.Column field="merchant_address" title="Merchant Address" />
                 <Table.Column field="merchant_state" title="State" />
                 <Table.Column field="merchant_city" title="City" />
