@@ -57,7 +57,7 @@ class AccessLogs extends React.Component {
   setQueryParamas () {
     const queryUri = location.search.slice(1)
     const queryObj = getQueryObj(queryUri)
-
+    
     Object.entries(queryObj).forEach((item) => {
       this.setState({ [item[0]]: item[1] })
       //this.filter[item[0]] = item[1]
@@ -106,13 +106,10 @@ class AccessLogs extends React.Component {
         from: new Date(this.state.fromDate).toISOString(),
         to: new Date(new Date(this.state.toDate).setHours(23, 59, 0)).toISOString()
       }
-      //console.log("filter", filter)
-      //this.setState({ toDate: new Date(this.state.toDate).toISOString() })
     } else {
       filter = {
         to: new Date(new Date(this.state.toDate).setHours(23, 59, 0)).toISOString()
       }
-      //console.log("filter", filter)
     }
 
     const queryObj = {
@@ -123,7 +120,7 @@ class AccessLogs extends React.Component {
       accessLogs: [],
       accessLogsCount: 0,
       loadingAccessLog: true,
-      activePage: this.state.activePage,
+      activePage: 1,
       filter
     })
     history.pushState(queryObj, "access logs listing", `/admin/access-logs?${getQueryUri(queryObj)}`)

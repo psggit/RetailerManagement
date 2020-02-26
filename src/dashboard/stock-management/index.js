@@ -180,7 +180,7 @@ class RetailerList extends React.Component {
     console.log("state", this.state)
     return (
       <React.Fragment>
-        <Layout title="Manage Retailer">
+        <Layout title="Stock and Price">
           <div className="select-container">
             <select
               id="city"

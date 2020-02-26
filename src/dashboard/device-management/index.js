@@ -239,7 +239,7 @@ class DeviceManagement extends React.Component {
 		const { retailerData } = this.state
 
 		return (
-			<Layout title="Manage Retailer">
+			<Layout title="Device Management">
 				<div style={{ marginTop: '20px' }}>
 					<div style={{
 						width: '210px',
