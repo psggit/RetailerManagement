@@ -120,15 +120,15 @@ class RetailerSOA extends React.Component {
 
     if (this.state.fromDate) {
       SOAfilter = {
-        consumerId: parseInt(this.state.consumerId),
-        fromDate: this.state.fromDate ? new Date(this.state.fromDate) : "",
-        toDate: this.state.toDate ? new Date(new Date(this.state.toDate).setHours(23, 59, 0)) : ""
+        ConsumerID: parseInt(this.state.consumerId),
+        Fromdate: this.state.fromDate ? new Date(this.state.fromDate) : "",
+        Todate: this.state.toDate ? new Date(new Date(this.state.toDate).setHours(23, 59, 0)) : ""
       }
     } else {
       SOAfilter = {
-        consumerId: parseInt(this.state.consumerId),
-        fromDate: this.state.fromDate ? new Date(this.state.fromDate) : "",
-        toDate: this.state.toDate ? new Date(new Date(this.state.toDate).setHours(23, 59, 0)) : ""
+        ConsumerID: parseInt(this.state.consumerId),
+        Fromdate: this.state.fromDate ? new Date(this.state.fromDate) : "",
+        Todate: this.state.toDate ? new Date(new Date(this.state.toDate).setHours(23, 59, 0)) : ""
       }
     }
 
