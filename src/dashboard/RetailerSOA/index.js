@@ -104,12 +104,12 @@ class RetailerSOA extends React.Component {
     if(e.target.name === "toDate") {
       this.setState({
         [e.target.name]: e.target.value,
-        fromDate: !this.state.fromDate ? new Date(new Date(e.target.value) - 1 * 24 * 60 * 60 * 1000) : this.state.fromDate,
+        fromDate: !this.state.fromDate ? new Date(e.target.value) : this.state.fromDate,
       })
     } else if (e.target.name === "fromDate") {
       this.setState({
         [e.target.name]: e.target.value,
-        toDate: new Date(new Date(e.target.value) - (-1) * 24 * 60 * 60 * 1000),
+        toDate: !this.state.toDate ? new Date(e.target.value) : this.state.toDate,
       })
     }
   }
