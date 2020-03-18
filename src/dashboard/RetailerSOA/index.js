@@ -336,6 +336,7 @@ class RetailerSOA extends React.Component {
               <Table.Column field="hipbar_wallet_amount" title="Hipbar Wallet Amount" />
               <Table.Column field="promo_used" title="Promo Used" />
               <Table.Column field="promo_cashback" title="Promo Cashback" />
+              <Table.Column field="nodal_amount" title="Direct Payment" />
               <Table.Column field="brands" title="Cart Items">
                 {item => (
                   <div
