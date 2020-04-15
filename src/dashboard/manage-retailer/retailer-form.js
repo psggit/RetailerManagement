@@ -71,6 +71,7 @@ class RetailerForm extends React.Component {
 				catalogEnabled: props.data ? props.data.catalog_enabled : false,
 				hbRecommended: props.data ? props.data.recommended_retailer : false,
 				inventoryEnabled: props.data ? props.data.inventory_enabled : false,
+				deliveryEnabled: props.data ? props.data.is_deliverable : false,
 				exciseLicense: props.data ? props.data.is_excise_license : false,
 				outletPhoto: props.data ? props.data.is_photo_of_outlet : false,
 
@@ -535,6 +536,16 @@ class RetailerForm extends React.Component {
 										checked={this.state.inventoryEnabled}
 									>
 										Inventory Enabled
+									</Checkbox>
+								</div>
+								<div style={{ marginRight: '24px' }}>
+									<Checkbox
+										name="deliveryEnabled"
+										onChange={e => this.handleSelectChange(e)}
+										value="deliveryEnabled"
+										checked={this.state.deliveryEnabled}
+									>
+										Delivery Enabled
 									</Checkbox>
 								</div>
 							</div>

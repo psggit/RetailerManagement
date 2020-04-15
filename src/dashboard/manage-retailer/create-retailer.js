@@ -88,6 +88,7 @@ class CreateRetailer extends React.Component {
 			upi_enabled: retailerDataForm.isUpiEnabled,
 			catalog_enabled: retailerDataForm.catalogEnabled,
 			inventory_enabled: retailerDataForm.inventoryEnabled,
+			is_deliverable: retailerDataForm.deliveryEnabled,
 			recommended_retailer: retailerDataForm.hbRecommended,
 			// store_type: retailerDataForm.customerFilterTag,
 			// upi_store_type: retailerDataForm.selectedUpiStoreTypeIdx === "1" ? "P2PM" : "P2M"

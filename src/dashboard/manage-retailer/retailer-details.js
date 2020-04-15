@@ -42,6 +42,7 @@ class RetailerDetails extends React.Component {
 
 						<p><b>Catalog Enabled</b>: {data.catalog_enabled ? 'Enabled' : 'Disabled'} </p>
 						<p><b>Inventory Enabled</b>: {data.inventory_enabled ? 'Enabled' : 'Disabled'} </p>
+						<p><b>Delivery Enabled</b>: {data.is_deliverable ? 'Enabled' : 'Disabled'} </p>
 						<p><b>Hipbar Recommended</b>: {data.recommended_retailer ? 'Yes' : 'No'} </p>
 
 						<h3>Bank Details</h3>

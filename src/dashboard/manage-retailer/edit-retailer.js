@@ -143,6 +143,7 @@ class EditRetailer extends React.Component {
         upi_enabled: retailerDataForm.isUpiEnabled,
         catalog_enabled: retailerDataForm.catalogEnabled,
         inventory_enabled: retailerDataForm.inventoryEnabled,
+        is_deliverable: retailerDataForm.deliveryEnabled,
         recommended_retailer: retailerDataForm.hbRecommended,
         // is_hipbar_wallet_enabled: retailerDataForm.isHipbarWalletEnabled,
         // is_gift_wallet_enabled: retailerDataForm.isGiftWalletEnabled,
