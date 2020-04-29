@@ -365,7 +365,7 @@ class ManageDMO extends React.Component {
                 <Table.Column field="virtual_address" title="VPA" />
                 <Table.Column field="is_blocked" title="DMO Status">
                   {items => (
-                    <Switch2 on={items.is_blocked === 'true' ? true : false} accessibleLabels={[]} onToggle={this.onToggleChange} value={items} />
+                    <Switch2 on={items.is_blocked === 'true' ? false : true} accessibleLabels={[]} onToggle={this.onToggleChange} value={items} />
                   )}
                 </Table.Column>
               </Table>

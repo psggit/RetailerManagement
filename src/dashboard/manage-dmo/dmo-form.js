@@ -411,6 +411,7 @@ class DMOForm extends React.Component {
               type="text"
               name="accountNumber"
               value={this.state.accountNumber}
+              disabled={location.pathname.includes("edit")}
               autoComplete="fefef"
               error={accountNumberErr.status ? accountNumberErr.value : ''}
               onChange={(e) => this.handleTextChange(e)}
@@ -421,6 +422,7 @@ class DMOForm extends React.Component {
               name="IFSC"
               value={this.state.IFSC}
               autoComplete="fefef"
+              disabled={location.pathname.includes("edit")}
               error={IFSCErr.status ? IFSCErr.value : ''}
               onChange={(e) => this.handleTextChange(e)}
             />
