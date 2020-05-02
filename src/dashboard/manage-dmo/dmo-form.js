@@ -252,7 +252,7 @@ class DMOForm extends React.Component {
     const inputCollection = formEl.getElementsByTagName('input')
     const inputsArr = Array.prototype.slice.call(inputCollection)
     const excludeValidation = ["GPS", "GST", "dailyTransactionLimit", "monthlyTransactionLimit", "limitPerTransaction"]  
-    const textInputs = inputsArr.filter(item => item.type == 'text' && excludeValidation.indexOf() !== -1 )
+    const textInputs = inputsArr.filter(item => item.type === 'text' && excludeValidation.indexOf(item.name) === -1 )
     textInputs.forEach(item => {
       this.validate(item)
     })
@@ -260,7 +260,6 @@ class DMOForm extends React.Component {
 
   validate (item) {
     const errName = `${item.name}Err`
-
     if (item.name === "mobileNo") {
       this.length = 0
       this.checkLength = true
