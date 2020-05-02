@@ -506,7 +506,7 @@ class DMOForm extends React.Component {
               />
 
               <Form.TextInput
-                label="Charge Per Transaction"
+                label="Credit Per Transaction"
                 type="text"
                 name="chargePerTransaction"
                 autoComplete="fefef"
