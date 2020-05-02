@@ -20,6 +20,7 @@ class DMOForm extends React.Component {
       IFSC: 'IFSC Code',
       mobileNo: 'Mobile Number',
       email: 'Email',
+      chargePerTransaction: 'Charge Per Transaction'
     }
   
     this.errorFlag = false,
@@ -47,6 +48,7 @@ class DMOForm extends React.Component {
       dailyTransactionLimit: props.data ? props.data.daily_txn_limit : '',
       monthlyTransactionLimit: props.data ? props.data.monthly_txn_limit : '',
       limitPerTransaction: props.data ? props.data.limit_per_txn : '',
+      chargePerTransaction: props.data ? props.data.charge_per_transaction : '',
 
       merchantBusinessNameErr: {
         value: '',
@@ -65,6 +67,10 @@ class DMOForm extends React.Component {
         status: false
       },
       merchantPINErr: {
+        value: '',
+        status: false
+      },
+      chargePerTransactionErr: {
         value: '',
         status: false
       },
@@ -317,6 +323,7 @@ class DMOForm extends React.Component {
       IFSCErr,
       mobileNoErr,
       emailErr,
+      chargePerTransactionErr
     } = this.state
     console.log("retailerId", this.state.retailerId)
     return (
@@ -497,6 +504,16 @@ class DMOForm extends React.Component {
                 autoComplete="fefef"
                 defaultValue={this.state.limitPerTransaction}
                 onChange={(e) => this.handleOptionalTextChange(e)}
+              />
+
+              <Form.TextInput
+                label="Charge Per Transaction"
+                type="text"
+                name="chargePerTransaction"
+                autoComplete="fefef"
+                defaultValue={this.state.chargePerTransaction}
+                error={chargePerTransactionErr.status ? chargePerTransactionErr.value : ''}
+                onChange={(e) => this.handleTextChange(e)}
               />
            
             <ButtonGroup align="right">

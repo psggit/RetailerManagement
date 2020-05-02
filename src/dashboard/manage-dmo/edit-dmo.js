@@ -95,6 +95,7 @@ class EditDMO extends React.Component {
         daily_txn_limit: DMODataForm.dailyTransactionLimit,
         monthly_txn_limit: DMODataForm.monthlyTransactionLimit,
         limit_per_txn: DMODataForm.limitPerTransaction,
+        charge_per_transaction: parseFloat(DMODataForm.chargePerTransaction),
         eazypay_id: this.props.history.location.state.eazypay_id,
         virtual_address: this.props.history.location.state.virtual_address,     
       }

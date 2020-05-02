@@ -56,7 +56,8 @@ class CreateDMO extends React.Component {
       gst_no:DMODataForm.GST,
       daily_txn_limit:DMODataForm.dailyTransactionLimit,
       monthly_txn_limit:DMODataForm.monthlyTransactionLimit,
-      limit_per_txn:DMODataForm.limitPerTransaction
+      limit_per_txn:DMODataForm.limitPerTransaction,
+      charge_per_transaction: parseFloat(DMODataForm.chargePerTransaction)
     }
     this.setState({ creatingDMO: true })
     this.createDMO(payload)
