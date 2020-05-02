@@ -331,7 +331,11 @@ class DmoSoa extends React.Component {
             //onRowClick={(e, item) => this.handleRowClick(e, item)}
             >
               <Table.Column field="Transaction_id" title="Transaction Id" />
-              <Table.Column field="Type" title="Transaction Type" />
+              <Table.Column field="Transaction_type" title="Transaction Type" />
+              <Table.Column field="Opening_balance" title="Opening Balance" />
+              <Table.Column field="Closing_balance" title="Closing Balance" />
+              <Table.Column field="Amount" title="Amount" />
+              <Table.Column field="Description" title="Description" />
               <Table.Column field="Opening_balance" title="Opening Balance" />
               <Table.Column field="Closing_balance" title="Closing Balance" />
               <Table.Column field="Amount" title="Amount" />

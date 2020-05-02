@@ -120,7 +120,7 @@ export default function DmoCreditDebitModal (props) {
             this.state.showAmount === true &&
             <div style={{ marginTop: "20px" }}>
               <TextInput
-                pattern="[0-9]+"
+                pattern="[-0-9]+"
                 value={this.state.amount}
                 onChange={this.handleAmountChange}
                 placeholder="Enter amount"
