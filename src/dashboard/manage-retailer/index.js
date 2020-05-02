@@ -360,11 +360,12 @@ class ManageRetailer extends React.Component {
 					</div>
 				</div>
 				{
-					<div style={{ marginTop: '40px', marginBottom: '20px' }}>
+					<div style={{ marginTop: '40px', marginBottom: '20px', overflowX: "scroll"}}>
 						<Table
 							emptyMessage={this.state.loading ? <Spinner /> : 'No records found'}
 							items={retailerData}
 							onRowClick={(e, item) => this.handleRowClick(e, item)}
+							style={{tableLayout: "unset"}}
 						>
 							<Table.Column field="actions">
 								{item => (
@@ -376,6 +377,9 @@ class ManageRetailer extends React.Component {
 							</Table.Column>
 							<Table.Column>
 								{item => <NavLink to={`/admin/retailer/notes/${item.id}`}>Notes</NavLink>}
+							</Table.Column>
+							<Table.Column>
+								{item => <NavLink to={`/admin/retailer/dmo-soa/${item.id}`}>DMO SOA</NavLink>}
 							</Table.Column>
 							<Table.Column field="id" title="Retailer Id" />
 							<Table.Column field="outlet_name" title="Outlet Name" />

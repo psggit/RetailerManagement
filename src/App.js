@@ -32,12 +32,15 @@ import ModifiedStockList from "./dashboard/stock-management/modifiedStockSummary
 import Account from "./dashboard/Account"
 import ManageReport from "./dashboard/manage-report"
 import ManageCreditDebit from "./dashboard/ManualDebitCredit"
+import ManageDmoCreditDebit from "./dashboard/ManageDmoCredit&Debits"
 import ManageAccountManager from "./dashboard/account-manager"
 import CreateAccountManager from "./dashboard/account-manager/create-account-manager"
 import EditAccountManager from "./dashboard/account-manager/edit-account-manager"
 import ManageDMO from "./dashboard/manage-dmo"
 import CreateDMO from "./dashboard/manage-dmo/create-dmo"
 import EditDMO from "./dashboard/manage-dmo/edit-dmo"
+import DMOSOA from "./dashboard/DmoSoa"
+import ManageDmoOrders from "./dashboard/dmoOrders"
 
 const history = createHistory()
 const supportedRoles = ["admin", "opdataadmin", "opdataentry"]
@@ -206,6 +209,12 @@ function RetailerManagementSwitch () {
 
 				<Route
 					exact
+					path="/admin/retailer/dmo-soa/:retailerId"
+					render={props => <DMOSOA {...props} />}
+				/>
+
+				<Route
+					exact
 					path="/admin/dmo"
 					render={
 						props => (
@@ -213,7 +222,7 @@ function RetailerManagementSwitch () {
 						)
 					}
 				/>
-        
+
 				<Route
 					exact
 					path="/admin/dmo/create"
@@ -314,6 +323,16 @@ function RetailerManagementSwitch () {
 						)
 					}
 				/>
+
+				<Route
+					exact
+					path="/admin/manage-dmo-orders"
+					render={
+						props => (
+							<ManageDmoOrders {...props} />
+						)
+					}
+				/>
 			</Switch>
 		)
 	}
@@ -327,8 +346,8 @@ class App extends React.Component {
 			currentRoute: location.pathname.split('/')[2] || 'stock-and-price'
 		}
 	}
-	
-	componentDidMount () {
+
+	componentDidMount() {
 		history.listen((location) => {
 			const newRoute = location.pathname.split('/')[2]
 			if (newRoute !== this.state.currentRoute) {
@@ -419,14 +438,16 @@ class App extends React.Component {
 										menuItems={[
 											{ label: 'Manage Organization', value: 'organization' },
 											{ label: 'Manage Retailer', value: 'retailer' },
-											{ label: 'Manage DMO', value:'dmo' },
+											{ label: 'Manage DMO', value: 'dmo' },
 											{ label: 'Generate Report', value: 'generate-report' },
 											{ label: 'Device Management', value: 'device-management' },
 											{ label: 'Stock and Price', value: 'stock-and-price' },
 											{ label: 'Access Logs', value: 'access-logs' },
 											{ label: "Account", value: "account" },
 											{ label: "Manage Credit & Debit", value: "manage-credit-debit" },
-											{ label: "Manage Reports", value: "manage-report" }
+											{ label: "Manage DMO Credit & Debit", value: "manage-dmo-credit-debit" },
+											{ label: "Manage Reports", value: "manage-report" },
+											{ label: "Manage DMO Orders", value: "manage-dmo-orders" }
 										]}
 										currentRoute={this.state.currentRoute}
 									/>
@@ -447,6 +468,15 @@ class App extends React.Component {
 										render={
 											props => (
 												<ManageCreditDebit {...props} />
+											)
+										}
+									/>
+									<Route
+										exact
+										path="/admin/manage-dmo-credit-debit"
+										render={
+											props => (
+												<ManageDmoCreditDebit {...props} />
 											)
 										}
 									/>

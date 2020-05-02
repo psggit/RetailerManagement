@@ -1,3 +1,4 @@
+//api.js
 import { POST, GET } from 'Utils/fetch'
 import Notify from 'Components/notify'
 
@@ -132,6 +133,24 @@ export function fetchRetailerList (payloadObj, successCallback, failureCallback)
 export function fetchDmoList (payloadObj) {
 	return POST({
 		api: '/Api/dmo/list',
+		apiBase: 'retailer',
+		data: payloadObj,
+		handleError: true
+	})
+}
+
+export function fetchDmoSoa (payloadObj) {
+	return POST({
+		api: '/Api/dmo/retailersoa',
+		apiBase: 'retailer',
+		data: payloadObj,
+		handleError: true
+	})
+}
+
+export function fetchDmoOrdersList (payloadObj) {
+	return POST({
+		api: '/Api/transactions/dmo/list',
 		apiBase: 'retailer',
 		data: payloadObj,
 		handleError: true
@@ -288,7 +307,7 @@ export function createRetailer (payloadObj, successCallback, failureCallback) {
 		})
 		.catch(err => {
 			console.log("Error in create retailer", err)
-			err.response.json().then(json => {Notify("danger", json.message)})
+			err.response.json().then(json => { Notify("danger", json.message) })
 			failureCallback()
 		})
 }
@@ -382,6 +401,15 @@ export function fetchCreditDebitRetailers (req) {
 		.then(json => json)
 }
 
+export function fetchDmoCreditDebitRetailers (req) {
+	return POST({
+		api: "/Api/listDMOManualCreditDebit",
+		apiBase: "retailer",
+		data: req
+	})
+		.then(json => json)
+}
+
 export function fetchAccountManagers (payload) {
 	return POST({
 		api: "/Api/listAccountManager",
@@ -416,9 +444,27 @@ export function fetchTransactionCode (req) {
 		.then(json => json)
 }
 
+export function fetchDmoTransactionCode (req) {
+	return POST({
+		api: "/Api/listDMOTransactionCode",
+		apiBase: "retailer",
+		data: req
+	})
+		.then(json => json)
+}
+
 export function insertManualCreditDebit (req) {
 	return POST({
 		api: "/Api/insertManualCreditDebit",
+		apiBase: "retailer",
+		data: req
+	})
+		.then(json => json)
+}
+
+export function insertDmoManualCreditDebit (req) {
+	return POST({
+		api: "/Api/insertDMOManualCreditDebit",
 		apiBase: "retailer",
 		data: req
 	})
