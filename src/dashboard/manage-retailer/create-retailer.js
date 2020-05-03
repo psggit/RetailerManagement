@@ -75,6 +75,7 @@ class CreateRetailer extends React.Component {
 			email: retailerDataForm.email,
 			gps_cordinates: retailerDataForm.gpsCoordinates,
 			bank_name: retailerDataForm.bankName,
+			active_delivery_order_limit: parseInt(retailerDataForm.activeDeliveryOrderLimit),
 			acc_holder_name: retailerDataForm.accountHolderName,
 			account_number: retailerDataForm.accountNumber,
 			bank_branch: retailerDataForm.branch,

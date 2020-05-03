@@ -26,7 +26,8 @@ class RetailerForm extends React.Component {
 			mobileNo: 'Mobile number',
 			gpsCoordinates: 'GPS coordinates',
 			pincode: 'Pincode',
-			email: 'Email'
+			email: 'Email',
+			activeDeliveryOrderLimit: 'Active delivery order limit'
 		}
 		console.log("props", props)
 		this.errorFlag = false,
@@ -74,6 +75,7 @@ class RetailerForm extends React.Component {
 				deliveryEnabled: props.data ? props.data.is_deliverable : false,
 				exciseLicense: props.data ? props.data.is_excise_license : false,
 				outletPhoto: props.data ? props.data.is_photo_of_outlet : false,
+				activeDeliveryOrderLimit: props.data ? props.data.active_delivery_order_limit : '',
 
 				storeCodeErr: {
 					value: '',
@@ -116,6 +118,10 @@ class RetailerForm extends React.Component {
 					status: false
 				},
 				mobileNoErr: {
+					value: '',
+					status: false
+				},
+				activeDeliveryOrderLimitErr: {
 					value: '',
 					status: false
 				},
@@ -347,7 +353,7 @@ class RetailerForm extends React.Component {
 	validate (item) {
 		const errName = `${item.name}Err`
 
-		if (item.name === "pincode" || item.name === "mobileNo" || item.name === "discountPercent" || item.name === "serviceChargePercent" || item.name === "deliveryDiscountPercent") {
+		if (item.name === "pincode" || item.name === "mobileNo" || item.name === "discountPercent" || item.name === "serviceChargePercent" || item.name === "deliveryDiscountPercent" || item.name === "activeDeliveryOrderLimit") {
 			this.length = 0
 			this.checkLength = true
 
@@ -417,6 +423,7 @@ class RetailerForm extends React.Component {
 			accountHolderNameErr,
 			accountNumberErr,
 			branchErr,
+			activeDeliveryOrderLimitErr,
 			IFSCErr,
 			outletAddressErr,
 			pincodeErr,
@@ -585,6 +592,16 @@ class RetailerForm extends React.Component {
 							name="serviceChargePercent"
 							defaultValue={this.state.serviceChargePercent}
 							error={serviceChargePercentErr.status ? serviceChargePercentErr.value : ''}
+							onKeyDown={(e) => { this.handleNumberChange(e) }}
+							onKeyUp={(e) => { this.handleNumberChange(e) }}
+							autoComplete="fefef"
+						/>
+						<Form.TextInput
+							label="Active Delivery Order Limit*"
+							type="text"
+							name="activeDeliveryOrderLimit"
+							defaultValue={this.state.activeDeliveryOrderLimit}
+							error={activeDeliveryOrderLimitErr.status ? activeDeliveryOrderLimitErr.value : ''}
 							onKeyDown={(e) => { this.handleNumberChange(e) }}
 							onKeyUp={(e) => { this.handleNumberChange(e) }}
 							autoComplete="fefef"

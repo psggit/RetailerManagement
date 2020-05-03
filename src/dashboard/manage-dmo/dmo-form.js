@@ -402,7 +402,7 @@ class DMOForm extends React.Component {
               autoComplete="fefef"
             />
             <Form.TextInput
-              label="Merchant PIN*"
+              label="Merchant Pincode*"
               type="text"
               name="merchantPIN"
               value={this.state.merchantPIN}
@@ -506,7 +506,7 @@ class DMOForm extends React.Component {
               />
 
               <Form.TextInput
-                label="Credit Per Transaction"
+                label="Credit Per Transaction*"
                 type="text"
                 name="chargePerTransaction"
                 autoComplete="fefef"

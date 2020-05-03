@@ -132,6 +132,7 @@ class EditRetailer extends React.Component {
         bank_name: retailerDataForm.bankName,
         acc_holder_name: retailerDataForm.accountHolderName,
         account_number: retailerDataForm.accountNumber,
+        active_delivery_order_limit: parseInt(retailerDataForm.activeDeliveryOrderLimit),
         bank_branch: retailerDataForm.branch,
         acc_type: retailerDataForm.accountType,
         ifsc_code: retailerDataForm.IFSC,
