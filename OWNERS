@@ -2,6 +2,7 @@ filters:
   ".*":
     approvers:
       - hl05
+      - syedHipbar
       - AparnaRada
     lables:
       - approved

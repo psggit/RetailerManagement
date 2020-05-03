@@ -22,7 +22,7 @@ class DMOForm extends React.Component {
       email: 'Email',
       chargePerTransaction: 'Charge Per Transaction'
     }
-  
+
     this.errorFlag = false,
     this.state = {
       retailerId: props.data ? props.data.retailer_id : '',
@@ -34,7 +34,7 @@ class DMOForm extends React.Component {
       stateList: this.props.stateList,
       stateMap: this.props.stateMap,
       cityList: this.props.cityList,
-      retailerList: [], 
+      retailerList: [],
       merchantPIN: props.data ? props.data.merchant_pin : '',
       accountNumber: props.data ? props.data.account_no : '',
       IFSC: props.data ? props.data.ifsc_code : '',
@@ -118,13 +118,13 @@ class DMOForm extends React.Component {
 
     if (prevProps.cityList && this.props.cityList !== prevProps.cityList) {
       if (location.pathname.includes("create")) {
-        this.setState({ 
+        this.setState({
           cityList: this.props.stateMap[this.props.stateList[0].value],
           selectedCityIdx: this.props.cityList[0].value
         })
         this.fetchRetailers(this.props.cityList[0].value)
       } else {
-        this.setState({ 
+        this.setState({
           cityList: this.props.stateMap[parseInt(this.state.selectedStateIdx)]
         })
         this.fetchRetailers(this.state.selectedCityIdx)
@@ -148,7 +148,7 @@ class DMOForm extends React.Component {
         })
         if (location.pathname.includes("create")) {
           this.setState({
-            retailerList: retailerData, 
+            retailerList: retailerData,
             retailerId: retailerData[0].value
           })
         } else {
@@ -161,13 +161,13 @@ class DMOForm extends React.Component {
         console.log("Error in fetching retailers", error)
       })
   }
-  
+
   handleChange (e) {
     if (e.target.name.toString().includes("StateIdx")) {
       this.setState({
         cityList: this.state.stateMap[e.target.value],
-        CityIdx: this.state.stateMap[e.target.value][0].value,
-        [e.target.name]: e.target.value
+        selectedCityIdx: this.state.stateMap[e.target.value][0].value,
+        [e.target.name]: e.target.value,
       })
       //console.log("city idx", this.state.stateMap[e.target.value][0].value)
       this.fetchRetailers(this.state.stateMap[e.target.value][0].value)
@@ -186,7 +186,7 @@ class DMOForm extends React.Component {
       [e.target.name]: e.target.value,
     })
   }
-  
+
   handleTextChange (e) {
     const errName = `${e.target.name}Err`
     this.setState({
@@ -253,7 +253,7 @@ class DMOForm extends React.Component {
     const formEl = document.getElementById('DMOForm')
     const inputCollection = formEl.getElementsByTagName('input')
     const inputsArr = Array.prototype.slice.call(inputCollection)
-    const excludeValidation = ["GPS", "GST", "dailyTransactionLimit", "monthlyTransactionLimit", "limitPerTransaction"]  
+    const excludeValidation = ["GPS", "GST", "dailyTransactionLimit", "monthlyTransactionLimit", "limitPerTransaction"]
     const textInputs = inputsArr.filter(item => item.type === 'text' && excludeValidation.indexOf(item.name) === -1 )
     textInputs.forEach(item => {
       this.validate(item)
@@ -410,7 +410,7 @@ class DMOForm extends React.Component {
               value={this.state.merchantPIN}
               error={merchantPINErr.status ? merchantPINErr.value : ''}
               onChange={(e) => this.handleTextChange(e)}
-              autoComplete="fefef"               
+              autoComplete="fefef"
             />
           </Form.FieldSet>
           <Form.FieldSet label="Bank Account Details">
@@ -479,7 +479,7 @@ class DMOForm extends React.Component {
                 defaultValue={this.state.GST}
                 onChange={(e) => this.handleOptionalTextChange(e)}
               />
-              
+
               <Form.TextInput
                 label="Daily Transaction Limit"
                 type="text"
@@ -516,7 +516,7 @@ class DMOForm extends React.Component {
                 error={chargePerTransactionErr.status ? chargePerTransactionErr.value : ''}
                 onChange={(e) => this.handleTextChange(e)}
               />
-           
+
             <ButtonGroup align="right">
               <CustomButton
                 text="Save"
