@@ -166,8 +166,10 @@ class DMOForm extends React.Component {
     if (e.target.name.toString().includes("StateIdx")) {
       this.setState({
         cityList: this.state.stateMap[e.target.value],
+        CityIdx: this.state.stateMap[e.target.value][0].value,
         [e.target.name]: e.target.value
       })
+      //console.log("city idx", this.state.stateMap[e.target.value][0].value)
       this.fetchRetailers(this.state.stateMap[e.target.value][0].value)
     } else if (e.target.name.toString().includes("CityIdx")) {
       this.setState({ [e.target.name]: e.target.value })
