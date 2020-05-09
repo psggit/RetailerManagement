@@ -72,7 +72,11 @@ class EditRetailer extends React.Component {
       landlineNoErr,
       mobileNoErr,
       emailErr,
-      gpsCoordinatesErr
+      gpsCoordinatesErr,
+      minimumCartValueErr,
+      maximumDeliveryOrdersPerDayErr,
+      deliveryFeeErr,
+      feeTitleErr,
     } = retailerDataForm
 
     const formData = {
@@ -93,7 +97,11 @@ class EditRetailer extends React.Component {
       landlineNoErr,
       mobileNoErr,
       emailErr,
-      gpsCoordinatesErr
+      gpsCoordinatesErr,
+      minimumCartValueErr,
+      maximumDeliveryOrdersPerDayErr,
+      deliveryFeeErr,
+      feeTitleErr,
     }
 
     for (const key in formData) {
@@ -133,6 +141,10 @@ class EditRetailer extends React.Component {
         acc_holder_name: retailerDataForm.accountHolderName,
         account_number: retailerDataForm.accountNumber,
         active_delivery_order_limit: parseInt(retailerDataForm.activeDeliveryOrderLimit),
+        min_cart_value:retailerDataForm.minimumCartValue,
+        fee_value:retailerDataForm.deliveryFee,
+        max_dorders_per_day:retailerDataForm.maximumDeliveryOrdersPerDay,
+        fee_title:retailerDataForm.feeTitle,
         bank_branch: retailerDataForm.branch,
         acc_type: retailerDataForm.accountType,
         ifsc_code: retailerDataForm.IFSC,
@@ -146,6 +158,7 @@ class EditRetailer extends React.Component {
         inventory_enabled: retailerDataForm.inventoryEnabled,
         is_deliverable: retailerDataForm.deliveryEnabled,
         recommended_retailer: retailerDataForm.hbRecommended,
+        is_consider_fee:retailerDataForm.considerFee,
         // is_hipbar_wallet_enabled: retailerDataForm.isHipbarWalletEnabled,
         // is_gift_wallet_enabled: retailerDataForm.isGiftWalletEnabled,
         // is_upi_enabled: retailerDataForm.isUpiEnabled,
@@ -157,24 +170,24 @@ class EditRetailer extends React.Component {
     }
   }
 
-  updateRetailer(payload, successCallback, failureCallback) {
+  updateRetailer (payload, successCallback, failureCallback) {
     Api.updateRetailer(payload, successCallback, failureCallback)
   }
 
-  successCallback() {
+  successCallback () {
     this.updateState()
     location.href = '/admin/retailer'
   }
 
-  failureCallback() {
+  failureCallback () {
     this.updateState()
   }
 
-  updateState() {
+  updateState () {
     this.setState({ updatingRetailer: false })
   }
 
-  render() {
+  render () {
     return (
       <Layout title="Edit Retailer">
         <Card width="800px" className={!this.state.isFormValid ? 'animated shake' : ''}>

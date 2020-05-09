@@ -8,7 +8,7 @@ import PropTypes from "prop-types"
 import * as Api from "./../../api"
 
 class DMOForm extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.inputNameMap = {
       merchantBusinessName: "Merchant Business Name",
@@ -28,6 +28,7 @@ class DMOForm extends React.Component {
       retailerId: props.data ? props.data.retailer_id : '',
       merchantBusinessName: props.data ? props.data.merchant_business_name : '',
       merchantLegalName: props.data ? props.data.merchant_legal_name : '',
+      retailerName: props.data ? props.data.retailer_name : '',
       PAN: props.data ? props.data.pan : '',
       merchantType: props.data ? props.data.merchant_type : '',
       merchantAddress: props.data ? props.data.merchant_address : '',
@@ -75,20 +76,20 @@ class DMOForm extends React.Component {
         status: false
       },
       accountNumberErr: {
-      value: '',
-      status: false
+        value: '',
+        status: false
       },
       IFSCErr: {
-      value: '',
-      status: false
+        value: '',
+        status: false
       },
       mobileNoErr: {
-      value: '',
-      status: false
+        value: '',
+        status: false
       },
       emailErr: {
-      value: '',
-      status: false
+        value: '',
+        status: false
       },
     }
 
@@ -104,7 +105,7 @@ class DMOForm extends React.Component {
     this.fetchRetailers = this.fetchRetailers.bind(this)
   }
 
-  componentDidUpdate (prevProps) {
+  componentDidUpdate(prevProps) {
     if (this.props.stateList !== prevProps.stateList) {
       this.setState({ stateList: this.props.stateList })
       if (location.pathname.includes("create")) {
@@ -132,7 +133,7 @@ class DMOForm extends React.Component {
     }
   }
 
-  fetchRetailers (cityId) {
+  fetchRetailers(cityId) {
     const payload = {
       limit: 1000,
       offset: 0,
@@ -162,12 +163,12 @@ class DMOForm extends React.Component {
       })
   }
 
-  handleChange (e) {
+  handleChange(e) {
     if (e.target.name.toString().includes("StateIdx")) {
       this.setState({
         cityList: this.state.stateMap[e.target.value],
-        selectedCityIdx: this.state.stateMap[e.target.value][0].value,
-        [e.target.name]: e.target.value,
+        CityIdx: this.state.stateMap[e.target.value][0].value,
+        [e.target.name]: e.target.value
       })
       //console.log("city idx", this.state.stateMap[e.target.value][0].value)
       this.fetchRetailers(this.state.stateMap[e.target.value][0].value)
@@ -181,13 +182,13 @@ class DMOForm extends React.Component {
     }
   }
 
-  handleOptionalTextChange (e){
+  handleOptionalTextChange(e) {
     this.setState({
       [e.target.name]: e.target.value,
     })
   }
 
-  handleTextChange (e) {
+  handleTextChange(e) {
     const errName = `${e.target.name}Err`
     this.setState({
       [e.target.name]: e.target.value,
@@ -195,7 +196,7 @@ class DMOForm extends React.Component {
     })
   }
 
-  handleNumberChange (e) {
+  handleNumberChange(e) {
     const errName = `${e.target.name}Err`
     this.length = 0
     this.checkLength = true
@@ -213,8 +214,8 @@ class DMOForm extends React.Component {
 
     if (validateNumType(e.keyCode) || checkCtrlA(e) || checkCtrlV(e)) {
       this.setState({
-          [e.target.name]: e.target.value,
-          [errName]: validateNumberField({
+        [e.target.name]: e.target.value,
+        [errName]: validateNumberField({
           fieldName: this.inputNameMap[e.target.name],
           fieldValue: e.target.value,
           length: this.length,
@@ -226,7 +227,7 @@ class DMOForm extends React.Component {
     }
   }
 
-  handleEmailChange (e) {
+  handleEmailChange(e) {
     const errName = `${e.target.name}Err`
 
     this.setState({
@@ -235,32 +236,32 @@ class DMOForm extends React.Component {
     })
   }
 
-  getData () {
+  getData() {
     return this.state
   }
 
-  handleSave (e) {
+  handleSave(e) {
     e.preventDefault()
     this.checkForm()
     if (!this.errorFlag) {
 
-      this.props.handleSave ()
+      this.props.handleSave()
     }
   }
 
-  checkForm () {
+  checkForm() {
     this.errorFlag = false
     const formEl = document.getElementById('DMOForm')
     const inputCollection = formEl.getElementsByTagName('input')
     const inputsArr = Array.prototype.slice.call(inputCollection)
     const excludeValidation = ["GPS", "GST", "dailyTransactionLimit", "monthlyTransactionLimit", "limitPerTransaction"]
-    const textInputs = inputsArr.filter(item => item.type === 'text' && excludeValidation.indexOf(item.name) === -1 )
+    const textInputs = inputsArr.filter(item => item.type === 'text' && excludeValidation.indexOf(item.name) === -1)
     textInputs.forEach(item => {
       this.validate(item)
     })
   }
 
-  validate (item) {
+  validate(item) {
     const errName = `${item.name}Err`
     if (item.name === "mobileNo") {
       this.length = 0
@@ -313,7 +314,7 @@ class DMOForm extends React.Component {
     }
   }
 
-  render () {
+  render() {
     const {
       merchantBusinessNameErr,
       merchantLegalNameErr,
@@ -347,14 +348,23 @@ class DMOForm extends React.Component {
             options={this.state.cityList}
             onChange={(e) => this.handleChange(e)}
           />
-          <Form.Select
-            label="Retailer Name*"
-            value={this.state.retailerId}
-            name="retailerId"
-            disabled={location.pathname.includes("edit")}
-            options={this.state.retailerList}
-            onChange={(e) => this.handleChange(e)}
-          />
+          {
+            location.pathname.includes("edit") ?
+            <Form.TextInput
+              label="Retailer Name*"
+              value={this.state.retailerName}
+              type="text"
+              disabled={location.pathname.includes("edit")}
+            /> :
+            <Form.Select
+              label="Retailer Name*"
+              value={this.state.retailerId}
+              name="retailerId"
+              disabled={location.pathname.includes("edit")}
+              options={this.state.retailerList}
+              onChange={(e) => this.handleChange(e)}
+            />
+          }
           <Form.FieldSet label="Merchant Details">
             <Form.TextInput
               label="Merchant Business Name*"
@@ -389,69 +399,71 @@ class DMOForm extends React.Component {
               name="merchantType"
               options={[
                 { text: 'Select Merchant Type', value: '1' },
-                { text: 'Individual', value: 'Individual' },
+                { text: 'Proprietorship', value: 'proprietorship' },
+                { text: 'Partnership', value: 'partnership' },
+                { text: 'Pvt Ltd', value: 'pvtltd' },
               ]}
               onChange={(e) => this.handleChange(e)}
             />
             <Form.FieldSet label="Merchant Details">
-            <Form.TextInput
-              label="Merchant Address*"
-              type="text"
-              name="merchantAddress"
-              value={this.state.merchantAddress}
-              error={merchantAddressErr.status ? merchantAddressErr.value : ''}
-              onChange={(e) => this.handleTextChange(e)}
-              autoComplete="fefef"
-            />
-            <Form.TextInput
-              label="Merchant Pincode*"
-              type="text"
-              name="merchantPIN"
-              value={this.state.merchantPIN}
-              error={merchantPINErr.status ? merchantPINErr.value : ''}
-              onChange={(e) => this.handleTextChange(e)}
-              autoComplete="fefef"
-            />
-          </Form.FieldSet>
-          <Form.FieldSet label="Bank Account Details">
-            <Form.TextInput
-              label="Account Number*"
-              type="text"
-              name="accountNumber"
-              value={this.state.accountNumber}
-              disabled={location.pathname.includes("edit")}
-              autoComplete="fefef"
-              error={accountNumberErr.status ? accountNumberErr.value : ''}
-              onChange={(e) => this.handleTextChange(e)}
-            />
-            <Form.TextInput
-              label="IFSC Code*"
-              type="text"
-              name="IFSC"
-              value={this.state.IFSC}
-              autoComplete="fefef"
-              disabled={location.pathname.includes("edit")}
-              error={IFSCErr.status ? IFSCErr.value : ''}
-              onChange={(e) => this.handleTextChange(e)}
-            />
-            <Form.TextInput
-              label="Mobile No*"
-              defaultValue={this.state.mobileNo}
-              name="mobileNo"
-              autoComplete="fefef"
-              error={mobileNoErr.status ? mobileNoErr.value : ''}
-              onKeyDown={(e) => { this.handleNumberChange(e) }}
-              onKeyUp={(e) => { this.handleNumberChange(e) }}
-            />
-            <Form.TextInput
-              label="Email*"
-              type="text"
-              name="email"
-              autoComplete="fefef"
-              error={emailErr.status ? emailErr.value : ''}
-              value={this.state.email}
-              onChange={(e) => this.handleEmailChange(e)}
-            />
+              <Form.TextInput
+                label="Merchant Address*"
+                type="text"
+                name="merchantAddress"
+                value={this.state.merchantAddress}
+                error={merchantAddressErr.status ? merchantAddressErr.value : ''}
+                onChange={(e) => this.handleTextChange(e)}
+                autoComplete="fefef"
+              />
+              <Form.TextInput
+                label="Merchant Pincode*"
+                type="text"
+                name="merchantPIN"
+                value={this.state.merchantPIN}
+                error={merchantPINErr.status ? merchantPINErr.value : ''}
+                onChange={(e) => this.handleTextChange(e)}
+                autoComplete="fefef"
+              />
+            </Form.FieldSet>
+            <Form.FieldSet label="Bank Account Details">
+              <Form.TextInput
+                label="Account Number*"
+                type="text"
+                name="accountNumber"
+                value={this.state.accountNumber}
+                disabled={location.pathname.includes("edit")}
+                autoComplete="fefef"
+                error={accountNumberErr.status ? accountNumberErr.value : ''}
+                onChange={(e) => this.handleTextChange(e)}
+              />
+              <Form.TextInput
+                label="IFSC Code*"
+                type="text"
+                name="IFSC"
+                value={this.state.IFSC}
+                autoComplete="fefef"
+                disabled={location.pathname.includes("edit")}
+                error={IFSCErr.status ? IFSCErr.value : ''}
+                onChange={(e) => this.handleTextChange(e)}
+              />
+              <Form.TextInput
+                label="Mobile No*"
+                defaultValue={this.state.mobileNo}
+                name="mobileNo"
+                autoComplete="fefef"
+                error={mobileNoErr.status ? mobileNoErr.value : ''}
+                onKeyDown={(e) => { this.handleNumberChange(e) }}
+                onKeyUp={(e) => { this.handleNumberChange(e) }}
+              />
+              <Form.TextInput
+                label="Email*"
+                type="text"
+                name="email"
+                autoComplete="fefef"
+                error={emailErr.status ? emailErr.value : ''}
+                value={this.state.email}
+                onChange={(e) => this.handleEmailChange(e)}
+              />
               <Form.Select
                 label="Bank Name*"
                 value={this.state.bankName}
@@ -517,15 +529,15 @@ class DMOForm extends React.Component {
                 onChange={(e) => this.handleTextChange(e)}
               />
 
-            <ButtonGroup align="right">
-              <CustomButton
-                text="Save"
-                handleClick={this.handleSave}
-                disableSave={this.props.disableSave}
-              />
-            </ButtonGroup>
+              <ButtonGroup align="right">
+                <CustomButton
+                  text="Save"
+                  handleClick={this.handleSave}
+                  disableSave={this.props.disableSave}
+                />
+              </ButtonGroup>
 
-          </Form.FieldSet>
+            </Form.FieldSet>
           </Form.FieldSet>
         </Form>
       </div>
@@ -537,8 +549,8 @@ DMOForm.propTypes = {
   stateList: PropTypes.array,
   cityList: PropTypes.array,
   stateMap: PropTypes.object,
-  retailerList:PropTypes.array,
-  data:PropTypes.object,
+  retailerList: PropTypes.array,
+  data: PropTypes.object,
   disableSave: PropTypes.func
 }
 

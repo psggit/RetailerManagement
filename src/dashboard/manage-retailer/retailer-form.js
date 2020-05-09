@@ -27,7 +27,12 @@ class RetailerForm extends React.Component {
 			gpsCoordinates: 'GPS coordinates',
 			pincode: 'Pincode',
 			email: 'Email',
-			activeDeliveryOrderLimit: 'Active delivery order limit'
+			activeDeliveryOrderLimit: 'Active delivery order limit',
+			minimumCartValue: 'Minimum Cart Value',
+			deliveryFee:'Delivery Fee',
+			maximumDeliveryOrdersPerDay:'Maximum Delivery Orders per Day',
+			feeTitle: 'Fee Title',
+
 		}
 		console.log("props", props)
 		this.errorFlag = false,
@@ -66,6 +71,7 @@ class RetailerForm extends React.Component {
 				// customerFilterTag: props.data ? props.data.customer_filter_tag : 'mall',
 				IFSC: props.data ? props.data.ifsc_code : '',
 				cancelledCheck: props.data ? props.data.is_cancelled_cheque : false,
+				considerFee: props.data ? props.data.is_consider_fee : false,
 				isHipbarWalletEnabled: props.data ? props.data.hbwallet_enabled : false,
 				isUpiEnabled: props.data ? props.data.upi_enabled : false,
 				isGiftWalletEnabled: props.data ? props.data.gift_wallet_enabled : false,
@@ -76,6 +82,10 @@ class RetailerForm extends React.Component {
 				exciseLicense: props.data ? props.data.is_excise_license : false,
 				outletPhoto: props.data ? props.data.is_photo_of_outlet : false,
 				activeDeliveryOrderLimit: props.data ? props.data.active_delivery_order_limit : '',
+				minimumCartValue: props.data ? props.data.min_cart_value: '',
+				deliveryFee: props.data ? props.data.fee_value : '',
+				maximumDeliveryOrdersPerDay: props.data ? props.data.max_dorders_per_day : '',
+				feeTitle: props.data ? props.data.fee_title : '',
 
 				storeCodeErr: {
 					value: '',
@@ -125,6 +135,22 @@ class RetailerForm extends React.Component {
 					value: '',
 					status: false
 				},
+			minimumCartValueErr: {
+				value: '',
+				status: false
+			},
+			deliveryFeeErr: {
+				value: '',
+				status: false
+			},
+			maximumDeliveryOrdersPerDayErr: {
+				value: '',
+				status: false
+			},
+			feeTitleErr: {
+				value: '',
+				status: false
+			},
 				emailErr: {
 					value: '',
 					status: false
@@ -353,7 +379,7 @@ class RetailerForm extends React.Component {
 	validate (item) {
 		const errName = `${item.name}Err`
 
-		if (item.name === "pincode" || item.name === "mobileNo" || item.name === "discountPercent" || item.name === "serviceChargePercent" || item.name === "deliveryDiscountPercent" || item.name === "activeDeliveryOrderLimit") {
+		if (item.name === "pincode" || item.name === "mobileNo" || item.name === "discountPercent" || item.name === "serviceChargePercent" || item.name === "deliveryDiscountPercent" || item.name === "activeDeliveryOrderLimit" || item.name === "minimumCartValue" || item.name === "deliveryFee" || item.name === "maximumDeliveryOrdersPerDay" || item.name === "feeTitle") {
 			this.length = 0
 			this.checkLength = true
 
@@ -424,6 +450,10 @@ class RetailerForm extends React.Component {
 			accountNumberErr,
 			branchErr,
 			activeDeliveryOrderLimitErr,
+			minimumCartValueErr,
+			deliveryFeeErr,
+			maximumDeliveryOrdersPerDayErr,
+			feeTitleErr,
 			IFSCErr,
 			outletAddressErr,
 			pincodeErr,
@@ -606,6 +636,61 @@ class RetailerForm extends React.Component {
 							onKeyUp={(e) => { this.handleNumberChange(e) }}
 							autoComplete="fefef"
 						/>
+
+						<Form.TextInput
+							label="Minimum Cart Value*"
+							type="text"
+							name="minimumCartValue"
+							defaultValue={this.state.minimumCartValue}
+							error={minimumCartValueErr.status ? minimumCartValueErr.value : ''}
+							onKeyDown={(e) => { this.handleNumberChange(e) }}
+							onKeyUp={(e) => { this.handleNumberChange(e) }}
+							autoComplete="fefef"
+						/>
+
+						<Form.TextInput
+							label="Delivery Fee*"
+							type="text"
+							name="deliveryFee"
+							defaultValue={this.state.deliveryFee}
+							error={deliveryFeeErr.status ? deliveryFeeErr.value : ''}
+							onKeyDown={(e) => { this.handleNumberChange(e) }}
+							onKeyUp={(e) => { this.handleNumberChange(e) }}
+							autoComplete="fefef"
+						/>
+
+						<div style={{ marginRight: '24px',marginBottom:"20px" }}>
+							<Checkbox
+								name="considerFee"
+								onChange={e => this.handleSelectChange(e)}
+								value="considerFee"
+								checked={this.state.considerFee}
+							>
+								Consider Fee
+              </Checkbox>
+						</div>
+
+						<Form.TextInput
+							label="Maximum Delivery Orders per Day*"
+							type="text"
+							name="maximumDeliveryOrdersPerDay"
+							defaultValue={this.state.maximumDeliveryOrdersPerDay}
+							error={maximumDeliveryOrdersPerDayErr.status ? maximumDeliveryOrdersPerDayErr.value : ''}
+							onKeyDown={(e) => { this.handleNumberChange(e) }}
+							onKeyUp={(e) => { this.handleNumberChange(e) }}
+							autoComplete="fefef"
+						/>
+
+						<Form.TextInput
+							label="Fee Title*"
+							type="text"
+							name="feeTitle"
+							value={this.state.feeTitle}
+							error={feeTitleErr.status ? feeTitleErr.value : ''}
+							onChange={(e) => this.handleTextChange(e)}
+							autoComplete="fefef"
+						/>
+
 						<Form.TextInput
 							label="Delivery Discount Percent*"
 							type="text"
