@@ -341,7 +341,7 @@ class DmoSoa extends React.Component {
               <Table.Column field="Amount" title="Amount" />
               <Table.Column field="actions" title="Created At">
                 {item => (
-                  Moment(item.created_at).format("DD-MM-YYYY h:mm:s A")
+                  Moment(item.Created_at).format("DD-MM-YYYY h:mm:s A")
                 )}
               </Table.Column>
             </Table>
