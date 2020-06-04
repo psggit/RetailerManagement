@@ -389,7 +389,7 @@ class DeviceList extends React.Component {
                       onChange={(e) => this.handleFieldChange(e)}
                     />
                     <Form.TextInput
-                      placeholder="Enter a minimum of 6 characters"
+                      placeholder="Enter a minimum of 8 characters"
                       label="Password*"
                       type="text"
                       name="password"
