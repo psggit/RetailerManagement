@@ -257,8 +257,9 @@ class DeviceList extends React.Component {
         operator: this.state.operator.trim(),
         password: this.state.password.trim(),
         is_active: this.state.newDeviceStatus
-      }, this.successCallback, this.failureAddDeviceCallback)
-    }
+      }
+       ,this.successCallback )
+      }
   }
 
   render () {
@@ -388,7 +389,7 @@ class DeviceList extends React.Component {
                       onChange={(e) => this.handleFieldChange(e)}
                     />
                     <Form.TextInput
-                      //placeholder="Crystal Wines"
+                      placeholder="Enter a minimum of 6 characters"
                       label="Password*"
                       type="text"
                       name="password"
