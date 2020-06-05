@@ -33,14 +33,21 @@ import Account from "./dashboard/Account"
 import ManageReport from "./dashboard/manage-report"
 import ManageCreditDebit from "./dashboard/ManualDebitCredit"
 import ManageDmoCreditDebit from "./dashboard/ManageDmoCredit&Debits"
+
 import ManageAccountManager from "./dashboard/account-manager"
 import CreateAccountManager from "./dashboard/account-manager/create-account-manager"
 import EditAccountManager from "./dashboard/account-manager/edit-account-manager"
+
+import ManageDeliveryFee from "./dashboard/delivery-fee"
+import CreateDeliveryFee from "./dashboard/delivery-fee/create-delivery-fee"
+import EditDeliveryFee from "./dashboard/delivery-fee/edit-delivery-fee"
+
 import ManageDMO from "./dashboard/manage-dmo"
 import CreateDMO from "./dashboard/manage-dmo/create-dmo"
 import EditDMO from "./dashboard/manage-dmo/edit-dmo"
 import DMOSOA from "./dashboard/DmoSoa"
 import ManageDmoOrders from "./dashboard/dmoOrders"
+
 
 const history = createHistory()
 const supportedRoles = ["admin", "opdataadmin", "opdataentry"]
@@ -330,6 +337,36 @@ function RetailerManagementSwitch () {
 					render={
 						props => (
 							<ManageDmoOrders {...props} />
+						)
+					}
+				/>
+
+				<Route
+					exact
+					path="/admin/delivery-fee/:retailerId"
+					render={
+						props => (
+							<ManageDeliveryFee {...props} />
+						)
+					}
+				/>
+
+				<Route
+					exact
+					path="/admin/delivery-fee/create/:retailerId"
+					render={
+						props => (
+							<CreateDeliveryFee {...props} />
+						)
+					}
+				/>
+
+				<Route
+					exact
+					path="/admin/delivery-fee/edit/:retailerId"
+					render={
+						props => (
+							<EditDeliveryFee {...props} />
 						)
 					}
 				/>

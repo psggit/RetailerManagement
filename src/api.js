@@ -487,3 +487,27 @@ export function updateDMO (payload) {
 		data: payload
 	})
 }
+
+export function createDeliveryFee (payload) {
+	return POST({
+		api: "/retailer/api/1/create/retailerdeliveryfeeslab",
+		apiBase: "api",
+		data: payload
+	})
+}
+
+export function updateDeliveryFee (payload) {
+	return POST({
+		api: "/retailer/api/1/update/retailerdeliveryfeeslab",
+		apiBase: "api",
+		data: payload
+	})
+}
+
+export function listDeliveryFee (payload) {
+	return POST({
+		api: "/retailer/api/1/list/retailerdeliveryfeeslab",
+		apiBase: "api",
+		data: payload
+	})
+}

@@ -7,6 +7,7 @@ import { Button } from '@auth0/cosmos'
 import Pagination from 'Components/pagination'
 import CustomButton from 'Components/button'
 import { getQueryObj, getQueryUri } from 'Utils/url-utils'
+import { NavLink } from 'react-router-dom'
 import * as Api from './../../api'
 
 class DeviceManagement extends React.Component {
@@ -325,6 +326,9 @@ class DeviceManagement extends React.Component {
 								{item => (
 									<Button icon="pencil" onClick={(e) => this.editRetailerDetails(e, item)} />
 								)}
+							</Table.Column>
+							<Table.Column field="actions">
+								{item => <NavLink to={`/admin/delivery-fee/${item.id}`}>Delivery Fee</NavLink>}
 							</Table.Column>
 							<Table.Column field="id" title="Retailer Id" />
 							<Table.Column field="outlet_name" title="Outlet Name" />
