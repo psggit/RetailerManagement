@@ -18,7 +18,7 @@ class DeliveryFeeList extends React.Component {
       activePage: 1,
       retailerId: parseInt(this.props.match.params.retailerId),
       offset: 0,
-      loadingDeliveryFee: true,
+      loadingDeliveryFee: false,
       deliveryFeeList: [],
       deliveryFeeCount: 0
     }
@@ -59,6 +59,7 @@ class DeliveryFeeList extends React.Component {
   }
 
   fetchDeliveryFeeList (payloadObj) {
+    this.setState({ deliveryFeeList: [], deliveryFeeCount: 0, loadingDeliveryFee: true })
     listDeliveryFee(payloadObj)
       .then((response) => {
         if (Object.keys(response.retailerdeliveryfeeslab).length > 0) {
@@ -69,6 +70,7 @@ class DeliveryFeeList extends React.Component {
            })}
        })
       .catch((error) => {
+        this.setState({ loadingDeliveryFee: false})
         console.log("Error in fetching delivery fee", error)
       })
   }
