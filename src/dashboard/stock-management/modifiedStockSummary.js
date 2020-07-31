@@ -94,7 +94,7 @@ class StockSummary extends React.Component {
         <Layout title="Modified Stock List">
           <div>
             <div className="header">
-              <p>Retailer Name: {this.props.match.params.outletName}</p>
+              <p>Retailer Name: {this.props.location.state.outletName}</p>
             </div>
             {
               modifiedStockList.length > 0 && modifiedStockList.map((item) => (

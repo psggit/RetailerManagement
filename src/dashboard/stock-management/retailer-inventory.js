@@ -279,7 +279,10 @@ class RetailerInventory extends React.Component {
   }
 
   showModifiedStockList() {
-    this.props.history.push(`/admin/stock-and-price/modified-list/${this.state.outletName}`)
+    const data = {
+      outletName: this.state.outletName
+    }
+    this.props.history.push(`/admin/stock-and-price/modified-list`, data)
   }
 
   render() {

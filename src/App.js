@@ -79,7 +79,7 @@ function StockManagementSwitch () {
 
 				<Route
 					exact
-					path="/admin/stock-and-price/modified-list/:outletName"
+					path="/admin/stock-and-price/modified-list"
 					render={
 						props => (
 							<ModifiedStockList {...props} />
@@ -283,7 +283,7 @@ function RetailerManagementSwitch () {
 
 				<Route
 					exact
-					path="/admin/stock-and-price/modified-list/:outletName"
+					path="/admin/stock-and-price/modified-list"
 					render={
 						props => (
 							<ModifiedStockList {...props} />
