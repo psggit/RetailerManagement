@@ -14,7 +14,9 @@ class DeliveryFeeForm extends React.Component {
       flatValue: "Flat value",
       percentageValue: "Percentage Value",
       feeMin: "Fee Min",
-      feeMax: "Fee Max"
+      feeMax: "Fee Max",
+      startTime: "Start Time",
+      endTime: "End Time"
     }
 
     this.errorFlag = false,
@@ -26,6 +28,8 @@ class DeliveryFeeForm extends React.Component {
       percentageValue: props.data ? props.data.percentage_value : '',
       feeMin: props.data ? props.data.fee_min : '',
       feeMax: props.data ? props.data.fee_max : '',
+      startTime: props.data ? props.data.start_time.substring(11, 16) : "",
+      endTime: props.data ? props.data.end_time.substring(11, 16) : "",
 
       cartMinErr: {
         value: '',
@@ -51,6 +55,14 @@ class DeliveryFeeForm extends React.Component {
         value: '',
         status: false
       },
+      startTimeErr: {
+        value: '',
+        status: false
+      },
+      endTimeErr: {
+        value: '',
+        status: false
+      }
     }
 
     this.handleTextChange = this.handleTextChange.bind(this)
@@ -58,9 +70,18 @@ class DeliveryFeeForm extends React.Component {
     this.handleSave = this.handleSave.bind(this)
     this.validate = this.validate.bind(this)
     this.getData = this.getData.bind(this)
+    this.handleTimeChange = this.handleTimeChange.bind(this)
   }
 
   handleTextChange (e) {
+    const errName = `${e.target.name}Err`
+    this.setState({
+      [e.target.name]: e.target.value,
+      [errName]: validateTextField(this.inputNameMap[e.target.name], e.target.value),
+    })
+  }
+
+  handleTimeChange (e) {
     const errName = `${e.target.name}Err`
     this.setState({
       [e.target.name]: e.target.value,
@@ -86,7 +107,7 @@ class DeliveryFeeForm extends React.Component {
     const formEl = document.getElementById('DeliveryFeeForm')
     const inputCollection = formEl.getElementsByTagName('input')
     const inputsArr = Array.prototype.slice.call(inputCollection)
-    const textInputs = inputsArr.filter(item => item.type === 'text')
+    const textInputs = inputsArr.filter(item => item.type === 'text' || item.type === 'time')
     textInputs.forEach(item => {
       this.validate(item)
     })
@@ -110,7 +131,9 @@ class DeliveryFeeForm extends React.Component {
       percentageValueErr,
       flatValueErr,
       feeMinErr,
-      feeMaxErr
+      feeMaxErr,
+      startTimeErr,
+      endTimeErr
     } = this.state
     console.log("retailerId", this.state.retailerId)
     return (
@@ -171,7 +194,27 @@ class DeliveryFeeForm extends React.Component {
               error={feeMaxErr.status ? feeMaxErr.value : ''}
               onChange={(e) => this.handleTextChange(e)}
             />
+                
+            <Form.TextInput
+              label="Start Time*"
+              type="time"
+              name="startTime"
+              value={this.state.startTime}
+              error={startTimeErr.status ? startTimeErr.value : ''}
+              onChange={(e) => this.handleTimeChange(e)}
+              autoComplete="fefef"
+            />
 
+            <Form.TextInput
+              label="End Time*"
+              type="time"
+              name="endTime"
+              value={this.state.endTime}
+              error={endTimeErr.status ? endTimeErr.value : ''}
+              onChange={(e) => this.handleTimeChange(e)}
+              autoComplete="fefef"
+            />
+                
             <ButtonGroup align="right">
               <CustomButton
                 text="Save"

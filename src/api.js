@@ -196,6 +196,15 @@ export function fetchRetailers (payloadObj) {
 	})
 }
 
+export function updateDeliveryFeeStatus(payloadObj) {
+	return POST({
+		api: `/retailer/api/1/enable/retailerdeliveryfeeslab`,
+		apiBase: 'api',
+		data: payloadObj,
+		handleError: true
+	})
+}
+
 export function downLoadAccessLogs (payloadObj) {
 	return POST({
 		api: `/Api/stockandprice/download/accesslog/report`,

@@ -25,7 +25,9 @@ class CreateDeliveryFee extends React.Component {
       flat_value: parseFloat(deliveryDataForm.flatValue),
       percentage_value: parseFloat(deliveryDataForm.percentageValue),
       fee_min: parseFloat(deliveryDataForm.feeMin),
-      fee_max: parseFloat(deliveryDataForm.feeMax)
+      fee_max: parseFloat(deliveryDataForm.feeMax),
+      start_time: deliveryDataForm.startTime + ":00+05:30",
+      end_time: deliveryDataForm.endTime + ":00+05:30",
     }
     this.setState({ creatingDeliveryFee: true })
     this.createDeliveryFee(payload)

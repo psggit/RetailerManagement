@@ -7,6 +7,12 @@ import CustomButton from 'Components/button'
 import { Button } from '@auth0/cosmos'
 import { NavLink } from 'react-router-dom'
 import Pagination from 'Components/pagination'
+import Switch2 from 'Components/switch'
+import ModalBox from 'Components/ModalBox'
+import * as Api from './../../api'
+import ModalHeader from 'Components/ModalBox/ModalHeader'
+import ModalBody from 'Components/ModalBox/ModalBody'
+import ModalFooter from '../../components/ModalBox/ModalFooter'
 //import Pagination from "../../components/pagination"
 import { getQueryUri,getQueryObj } from 'Utils/url-utils'
 
@@ -20,7 +26,9 @@ class DeliveryFeeList extends React.Component {
       offset: 0,
       loadingDeliveryFee: false,
       deliveryFeeList: [],
-      deliveryFeeCount: 0
+      deliveryFeeCount: 0,
+      feeId: "",
+      feeStatus: false
     }
     this.pagesLimit = 10
 
@@ -28,6 +36,9 @@ class DeliveryFeeList extends React.Component {
     this.handleEditDeliveryFee = this.handleEditDeliveryFee.bind(this)
     this.handlePageChange = this.handlePageChange.bind(this)
     this.setQueryParamas = this.setQueryParamas.bind(this)
+    this.onToggleChange = this.onToggleChange.bind(this)
+    this.setDialogState = this.setDialogState.bind(this)
+    this.updateStatus = this.updateStatus.bind(this)
   }
 
   componentDidMount () {
@@ -99,6 +110,33 @@ class DeliveryFeeList extends React.Component {
     this.props.history.push(`/admin/delivery-fee/edit/${item.retailer_id}`, item)
   }
 
+  onToggleChange (item) {
+    this.setState({
+      mountDialog: true,
+      feeId: item.id,
+      feeStatus: item.is_active
+    })
+  }
+
+  setDialogState() {
+    this.setState({ mountDialog: false })
+  }
+
+  updateStatus() {
+    this.setDialogState()
+    Api.updateDeliveryFeeStatus({
+      id: this.state.feeId,
+      is_active: this.state.feeStatus ? false : true
+    })
+      .then((response) => {
+        location.reload()
+      })
+      .catch((error) => {
+        console.log("Error in updating delivery fee status", error)
+        error.response.json().then(json => { Notify("danger", json.message) })
+      })
+  }
+  
   render () {
     const { loadingDeliveryFee, deliveryFeeList, retailerId } = this.state
     return (
@@ -128,6 +166,21 @@ class DeliveryFeeList extends React.Component {
               <Table.Column field="percentage_value" title="Percentage Value" />
               <Table.Column field="fee_min" title="Fee Min" />
               <Table.Column field="fee_max" title="Fee Max" />
+              <Table.Column field="actions" title="Start Time">
+                {item => (
+                  <div>{item.start_time.substring(11, 16)}</div>
+                )}
+              </Table.Column>
+              <Table.Column field="actions" title="End Time">
+                {item => (
+                  <div>{item.end_time.substring(11, 16)}</div>
+                )}
+              </Table.Column>
+              <Table.Column field="is_active" title="STATUS">
+                {items => (
+                  <Switch2 on={items.is_active ? true : false} accessibleLabels={[]} onToggle={this.onToggleChange} value={items} />
+                )}
+              </Table.Column>
             </Table>
           </div> 
         }
@@ -139,6 +192,29 @@ class DeliveryFeeList extends React.Component {
             totalItemsCount={parseInt(this.state.deliveryFeeCount)}
             setPage={this.handlePageChange}
           />
+        }
+        {
+          this.state.mountDialog &&
+          <ModalBox>
+            <ModalHeader>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <div style={{ fontSize: '18px' }}>{this.state.feeStatus ? 'UnActivate' : 'Activate'} Delivery Fee</div>
+              </div>
+            </ModalHeader>
+            <ModalBody height="60px">
+              <table className="table--hovered">
+                <tbody>
+                  Are you sure you want to {this.state.feeStatus ? 'UnActivate' : 'Activate'} Delivery Fee ? {this.state.feeId}
+                </tbody>
+              </table>
+            </ModalBody>
+            <ModalFooter>
+              <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', fontWeight: '600' }}>
+                <button className="btn btn-primary" onClick={() => this.updateStatus()}> Yes </button>
+                <button className="btn btn-secondary" onClick={() => this.setDialogState()}> Cancel </button>
+              </div>
+            </ModalFooter>
+          </ModalBox>
         }
       </Layout>
     )
