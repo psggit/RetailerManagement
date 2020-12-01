@@ -168,12 +168,12 @@ class DeliveryFeeList extends React.Component {
               <Table.Column field="fee_max" title="Fee Max" />
               <Table.Column field="actions" title="Start Time">
                 {item => (
-                  <div>{item.start_time.substring(11, 16)}</div>
+                  <div>{item.start_time.substring(11, 19)}</div>
                 )}
               </Table.Column>
               <Table.Column field="actions" title="End Time">
                 {item => (
-                  <div>{item.end_time.substring(11, 16)}</div>
+                  <div>{item.end_time.substring(11, 19)}</div>
                 )}
               </Table.Column>
               <Table.Column field="is_active" title="STATUS">

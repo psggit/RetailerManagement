@@ -27,7 +27,7 @@ class EditDeliveryFee extends React.Component {
       fee_max: parseFloat(deliveryDataForm.feeMax),
       id: parseInt(this.props.history.location.state.id),
       start_time: deliveryDataForm.startTime + ":00+05:30",
-      end_time: deliveryDataForm.endTime + ":00+05:30",
+      end_time: deliveryDataForm.endTime + ":00+05:30"
     }
     this.setState({ updatingDeliveryFee: true })
     this.updateDeliveryFees(payload)
@@ -42,7 +42,7 @@ class EditDeliveryFee extends React.Component {
       })
       .catch((error) => {
         this.setState({ updatingDeliveryFee: false })
-        error.response.json().then(json => { Notify("danger", json.Message) })
+        error.response.json().then(json => { Notify("danger", json.message) })
       })
   }
 

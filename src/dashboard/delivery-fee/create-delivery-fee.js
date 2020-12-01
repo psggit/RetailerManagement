@@ -27,7 +27,7 @@ class CreateDeliveryFee extends React.Component {
       fee_min: parseFloat(deliveryDataForm.feeMin),
       fee_max: parseFloat(deliveryDataForm.feeMax),
       start_time: deliveryDataForm.startTime + ":00+05:30",
-      end_time: deliveryDataForm.endTime + ":00+05:30",
+      end_time: deliveryDataForm.endTime + ":00+05:30"
     }
     this.setState({ creatingDeliveryFee: true })
     this.createDeliveryFee(payload)
@@ -42,7 +42,7 @@ class CreateDeliveryFee extends React.Component {
       })
       .catch((error) => {
         this.setState({ creatingDeliveryFee: false })
-        error.response.json().then(json => { Notify("danger", json.Message) })
+        error.response.json().then(json => { Notify("danger", json.message) })
       })
   }
 

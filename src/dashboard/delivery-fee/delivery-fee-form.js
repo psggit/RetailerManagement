@@ -28,8 +28,8 @@ class DeliveryFeeForm extends React.Component {
       percentageValue: props.data ? props.data.percentage_value : '',
       feeMin: props.data ? props.data.fee_min : '',
       feeMax: props.data ? props.data.fee_max : '',
-      startTime: props.data ? props.data.start_time.substring(11, 16) : "",
-      endTime: props.data ? props.data.end_time.substring(11, 16) : "",
+      startTime: props.data ? props.data.start_time.substring(11, 19) : "00:00:00",
+      endTime: props.data ? props.data.end_time.substring(11, 19) : "23:59:59",
 
       cartMinErr: {
         value: '',
@@ -198,6 +198,7 @@ class DeliveryFeeForm extends React.Component {
             <Form.TextInput
               label="Start Time*"
               type="time"
+              step="2"
               name="startTime"
               value={this.state.startTime}
               error={startTimeErr.status ? startTimeErr.value : ''}
@@ -208,6 +209,7 @@ class DeliveryFeeForm extends React.Component {
             <Form.TextInput
               label="End Time*"
               type="time"
+              step="2"
               name="endTime"
               value={this.state.endTime}
               error={endTimeErr.status ? endTimeErr.value : ''}
