@@ -26,8 +26,8 @@ class EditDeliveryFee extends React.Component {
       fee_min: parseFloat(deliveryDataForm.feeMin),
       fee_max: parseFloat(deliveryDataForm.feeMax),
       id: parseInt(this.props.history.location.state.id),
-      start_time: deliveryDataForm.startTime + ":00+05:30",
-      end_time: deliveryDataForm.endTime + ":00+05:30"
+      start_time: deliveryDataForm.startTime + "+05:30",
+      end_time: deliveryDataForm.endTime + "+05:30",
     }
     this.setState({ updatingDeliveryFee: true })
     this.updateDeliveryFees(payload)

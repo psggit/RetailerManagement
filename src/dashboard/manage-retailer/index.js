@@ -389,6 +389,7 @@ class ManageRetailer extends React.Component {
 							<Table.Column field="organisation_id" title="Organization Id" />
 							<Table.Column field="organisation_name" title="Organization Name" />
 							<Table.Column field="short_qr_code" title="QR Code"></Table.Column>
+							<Table.Column field="max_dorders_per_day" title="Max. Delivery Orders/Day" />
 							<Table.Column field="active_delivery_order_limit" title="Active Delivery Order Limit" />
 							<Table.Column field="actions" title="Outlet Status">
 								{item => (
