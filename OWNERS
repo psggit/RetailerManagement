@@ -4,6 +4,8 @@ filters:
       - hl05
       - syedHipbar
       - AparnaRada
+      - PurvaSawant16123
+      - puja-agrawal
     lables:
       - approved
       - lgtm
